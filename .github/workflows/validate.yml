@@ -85,17 +85,27 @@ jobs:
           "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=3000 --window-size=1440,6000             --screenshot=docs/evidence/4g-006/website.png             http://127.0.0.1:3000/
           "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=3000 --window-size=1440,1800             --screenshot=docs/evidence/4g-006/backoffice.png             http://127.0.0.1:3001/
 
-      - name: Commit rendered evidence
+      - name: Upload rendered evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: 4g-006-rendered-ui
+          path: |
+            docs/evidence/4g-006/website.png
+            docs/evidence/4g-006/backoffice.png
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Commit lockfile and rendered evidence
         if: github.event_name == 'push' && github.ref_name == 'feature/agent-memory-bank'
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/evidence/4g-006/website.png docs/evidence/4g-006/backoffice.png
+          git add package-lock.json docs/evidence/4g-006/website.png docs/evidence/4g-006/backoffice.png
           if git diff --cached --quiet; then
             echo "Rendered evidence is unchanged."
           else
-            git commit -m "chore: capture 4g-006 rendered UI evidence [skip ci]"
+            git commit -m "chore: lock dependencies and capture 4g-006 UI evidence [skip ci]"
             git push origin HEAD:feature/agent-memory-bank
           fi
