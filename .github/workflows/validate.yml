@@ -5,27 +5,97 @@ on:
     branches:
       - feature/agent-memory-bank
       - main
+    paths-ignore:
+      - "docs/evidence/4g-006/**"
   pull_request:
     branches:
       - main
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   frontend:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+
       - name: Typecheck
         run: npm run typecheck
+
       - name: Production build
         run: npm run build
+
+      - name: Runtime smoke and browser render
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run dev:website > /tmp/nexova-website.log 2>&1 &
+          WEBSITE_PID=$!
+          npm run dev:backoffice > /tmp/nexova-backoffice.log 2>&1 &
+          BACKOFFICE_PID=$!
+          trap 'kill "$WEBSITE_PID" "$BACKOFFICE_PID" 2>/dev/null || true' EXIT
+
+          for port in 3000 3001; do
+            ready=0
+            for attempt in $(seq 1 30); do
+              if curl --fail --silent --show-error "http://127.0.0.1:$port/" > "/tmp/$port.html"; then
+                ready=1
+                break
+              fi
+              sleep 1
+            done
+            if [ "$ready" -ne 1 ]; then
+              echo "Server on port $port did not become ready."
+              cat "/tmp/nexova-$([ "$port" = "3000" ] && echo website || echo backoffice).log" || true
+              exit 1
+            fi
+          done
+
+          CHROME_BIN="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          if [ -z "$CHROME_BIN" ]; then
+            echo "Chrome/Chromium not found on runner."
+            exit 1
+          fi
+
+          mkdir -p docs/evidence/4g-006
+
+          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=3000 --dump-dom http://127.0.0.1:3000/             > /tmp/website-dom.html
+          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=3000 --dump-dom http://127.0.0.1:3001/             > /tmp/backoffice-dom.html
+
+          grep -q "La disciplina crea" /tmp/website-dom.html
+          grep -q "Selección ejecutiva" /tmp/website-dom.html
+          grep -q "Valencia. Miami." /tmp/website-dom.html
+          grep -q "Contexto operativo" /tmp/backoffice-dom.html
+          grep -q "48 h" /tmp/backoffice-dom.html
+          grep -q "SLA 24 h" /tmp/backoffice-dom.html
+          grep -q "40%" /tmp/backoffice-dom.html
+          grep -q "30–80" /tmp/backoffice-dom.html
+
+          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=3000 --window-size=1440,6000             --screenshot=docs/evidence/4g-006/website.png             http://127.0.0.1:3000/
+          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=3000 --window-size=1440,1800             --screenshot=docs/evidence/4g-006/backoffice.png             http://127.0.0.1:3001/
+
+      - name: Commit rendered evidence
+        if: github.event_name == 'push' && github.ref_name == 'feature/agent-memory-bank'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/evidence/4g-006/website.png docs/evidence/4g-006/backoffice.png
+          if git diff --cached --quiet; then
+            echo "Rendered evidence is unchanged."
+          else
+            git commit -m "chore: capture 4g-006 rendered UI evidence [skip ci]"
+            git push origin HEAD:feature/agent-memory-bank
+          fi
