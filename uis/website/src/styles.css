@@ -4,6 +4,11 @@ body { overflow-x: hidden; }
 .header-inner { min-height:76px; display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:2rem; }
 .wordmark { font: 400 1.28rem/1 var(--nx-display); letter-spacing:.36em; text-decoration:none; }
 .site-header nav { display:flex; justify-content:center; gap:2rem; }
+.header-actions { display:flex; align-items:center; gap:.6rem; }
+.menu-toggle { display:none; width:44px; height:44px; border:1px solid var(--nx-line); background:transparent; color:var(--nx-bone); padding:0; place-items:center; }
+.menu-toggle span { grid-area:1/1; width:18px; height:1px; background:currentColor; transition:transform 180ms ease; }
+.menu-toggle span:first-child { transform:translateY(-4px); } .menu-toggle span:last-child { transform:translateY(4px); }
+.menu-toggle[aria-expanded="true"] span:first-child { transform:rotate(45deg); } .menu-toggle[aria-expanded="true"] span:last-child { transform:rotate(-45deg); }
 .site-header nav a,.text-link { color:var(--nx-bone); text-decoration:none; font-size:.84rem; }
 .site-header nav a { color:#b8b1a8; }
 .site-header nav a:hover,.text-link:hover { color:var(--nx-crimson); }
@@ -57,7 +62,9 @@ footer { padding:4rem 0; }
 .footer-inner p { max-width:34rem; color:var(--nx-muted); line-height:1.7; }
 .footer-meta { display:grid; gap:.55rem; text-align:right; color:var(--nx-muted); font: .65rem/1.4 var(--nx-mono); text-transform:uppercase; letter-spacing:.1em; }
 @media (max-width: 900px) {
- .site-header nav { display:none; } .header-inner { grid-template-columns:1fr auto; } .header-cta { justify-self:end; }
+ .site-header nav { display:none; position:absolute; top:76px; left:0; right:0; padding:1.1rem 1rem 1.4rem; background:rgba(8,8,8,.98); border-bottom:1px solid var(--nx-line); flex-direction:column; gap:0; }
+ .site-header nav.is-open { display:flex; } .site-header nav a { padding:.9rem .3rem; border-bottom:1px solid rgba(184,152,94,.12); }
+ .header-inner { grid-template-columns:1fr auto; } .header-cta { justify-self:end; } .menu-toggle { display:grid; }
  .hero-grid { grid-template-columns:1fr; gap:2rem; padding-bottom:7rem; } .hero-side { display:none; }
  .hero h1 { font-size:clamp(4rem,16vw,7rem); } .hero-art { background-position:58% center; }
  .fact-grid { grid-template-columns:repeat(2,1fr); } .fact:nth-child(odd) { border-left:1px solid var(--nx-line); }
