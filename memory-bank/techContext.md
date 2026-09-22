@@ -30,6 +30,9 @@ Coding-agent configuration is deliberately separate under `.agents/`.
 - No RAG/vector DB, event bus, persistent agent runtime, knowledge graph or advanced observability stack without an activation trigger.
 - Root workspace decision: npm workspaces with two independent React + TypeScript + Vite applications. Runtime validation remains pending until dependencies are installed/executed in a compatible Node environment.
 - Shared visual/code abstractions are extracted only after actual reuse between website/backoffice is observed.
+- The visual lock is **Oni Nocturne Oxblood**. A shared `@nexova/design-system` package is now justified because both required UIs reuse the same palette, typography, focus/button primitives and visual assets.
+- Runtime art is represented by lightweight SVG abstractions so the monorepo does not depend on large generated moodboard binaries.
+- Website and backoffice deliberately share identity foundations but not page layout/density: public is cinematic/editorial; internal is denser and operational.
 
 ## Quality baseline
 Applicable changes should be validated across:

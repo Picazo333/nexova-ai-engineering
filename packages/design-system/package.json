@@ -1,0 +1,7 @@
+{
+  "name": "@nexova/design-system",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {"./theme.css": "./theme.css"}
+}

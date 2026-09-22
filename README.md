@@ -56,8 +56,9 @@ You are building **one company** across many milestones and projects. Each top-l
 > - `CONTEXT.md` contains the selected Nexova company briefing.
 > - Root `AGENTS.md`, `memory-bank/`, `.agents/`, `PROJECT_STATE.md`, and `noema.project.yaml` provide the current agent/development governance layer.
 > - `.agents/` is for coding-agent instructions; the existing `agents/` and `skills/` folders remain product/runtime namespaces for Nexova.
-> - No runnable UI/backend is claimed until the current milestone implements and validates it.
-> - Shared package metadata exists in `packages/shared/package.json` (`@repo/shared-types`); workspace tooling is added only when the current milestone justifies it.
+> - The current milestone now contains complete source implementations for the public website and independent internal backoffice; dependency install/build/runtime evidence is still pending.
+> - The root npm workspace includes `uis/website`, `uis/backoffice`, `packages/shared`, and the evidence-backed shared `packages/design-system`.
+> - No backend is introduced by this milestone because the rubric does not require one and no current persistence/API need justifies it.
 
 ---
 

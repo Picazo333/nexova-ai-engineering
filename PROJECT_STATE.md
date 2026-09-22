@@ -10,7 +10,7 @@
 Complete the 4Geeks AI-driven Engineering milestone while establishing the smallest durable engineering substrate that makes future Nexova milestones safer, easier to resume, and cheaper to extend.
 
 ## Current phase
-**WORKSPACE READY / VISUAL LOCK PENDING**
+**UI IMPLEMENTED / RUNTIME VALIDATION PENDING**
 
 Implemented in this phase:
 - progressive agent-context entrypoint;
@@ -21,17 +21,23 @@ Implemented in this phase:
 - source-authority model;
 - repository documentation reconciliation.
 
-Implemented as unstyled technical shells:
+Implemented:
 - root npm workspace;
-- `/uis/website` React + TypeScript + Vite app shell;
-- `/uis/backoffice` React + TypeScript + Vite app shell.
+- locked **Oni Nocturne Oxblood** visual direction;
+- shared token/primitives package at `packages/design-system`;
+- complete public-facing Nexova website source implementation;
+- independent internal backoffice source implementation with source-labelled company baselines;
+- lightweight SVG art assets derived from the approved visual language.
 
-Not yet implemented:
-- approved Nexova visual direction;
-- complete website content/UI;
-- complete backoffice operational UI;
-- extracted shared design-system package;
-- backend/application services.
+Not yet verified:
+- dependency installation / lockfile;
+- real TypeScript check against installed React/Vite packages;
+- production builds and dev-server runtime;
+- responsive/browser/accessibility screenshots and visual regression;
+- final PR evidence.
+
+Not implemented by design:
+- backend/application services, because no current requirement justifies them.
 
 ## Locked project-level decisions
 - Company: **Nexova Solutions**.
@@ -46,7 +52,8 @@ Not yet implemented:
 The historical source set contains a conflict over the Sales department leader (Megan Clarke vs Marcos Ibáñez). Treat the contested identity as unresolved until a governing source settles it. Do not publish either as an uncontested fact in product surfaces.
 
 ## Next gates
-1. Produce independent visual directions and obtain one visual lock.
-2. Implement the website + backoffice from the locked direction.
-3. Install dependencies and validate typecheck/build/runtime in a compatible Node environment.
-4. Run rubric/evidence loop, then bounded excellence review.
+1. Install dependencies and capture a lockfile in an environment with registry access.
+2. Run real typecheck/build and both dev-server runtime checks.
+3. Execute responsive, keyboard, accessibility and visual QA against the golden lock.
+4. Run the rubric/evidence loop to academic baseline PASS.
+5. Run the bounded excellence review, refresh affected evidence, show the final audit, and prepare the required PR.
