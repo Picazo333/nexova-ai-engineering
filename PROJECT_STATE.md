@@ -10,7 +10,7 @@
 Complete the 4Geeks AI-driven Engineering milestone while establishing the smallest durable engineering substrate that makes future Nexova milestones safer, easier to resume, and cheaper to extend.
 
 ## Current phase
-**UI IMPLEMENTED / RUNTIME VALIDATION PENDING**
+**ACADEMIC BASELINE VALIDATED / PR PREPARATION**
 
 Implemented in this phase:
 - progressive agent-context entrypoint;
@@ -29,12 +29,18 @@ Implemented:
 - independent internal backoffice source implementation with source-labelled company baselines;
 - lightweight SVG art assets derived from the approved visual language.
 
-Not yet verified:
-- dependency installation / lockfile;
-- real TypeScript check against installed React/Vite packages;
-- production builds and dev-server runtime;
-- responsive/browser/accessibility screenshots and visual regression;
-- final PR evidence.
+Validated by GitHub Actions run `35679157613`:
+- dependency installation and committed `package-lock.json`;
+- real TypeScript check against installed dependencies;
+- production builds for both UI workspaces;
+- both dev servers reached healthy runtime;
+- headless-browser DOM assertions for required Nexova website/backoffice content;
+- rendered website/backoffice screenshots captured and committed under `docs/evidence/4g-006/`.
+
+Still pending before campus submission:
+- final PR creation and PR-body evidence contract;
+- PR-triggered validation on the final head;
+- final Control Tower rubric reconciliation / visible audit.
 
 Not implemented by design:
 - backend/application services, because no current requirement justifies them.
@@ -52,8 +58,7 @@ Not implemented by design:
 The historical source set contains a conflict over the Sales department leader (Megan Clarke vs Marcos Ibáñez). Treat the contested identity as unresolved until a governing source settles it. Do not publish either as an uncontested fact in product surfaces.
 
 ## Next gates
-1. Install dependencies and capture a lockfile in an environment with registry access.
-2. Run real typecheck/build and both dev-server runtime checks.
-3. Execute responsive, keyboard, accessibility and visual QA against the golden lock.
-4. Run the rubric/evidence loop to academic baseline PASS.
-5. Run the bounded excellence review, refresh affected evidence, show the final audit, and prepare the required PR.
+1. Reconcile current runtime evidence into Control Tower and close R12–R16/R19 where supported.
+2. Run the bounded Excellence Review against the validated academic baseline.
+3. Create the required PR `feature/agent-memory-bank -> main` with both rendered screenshots and direct `AGENTS.md` link.
+4. Confirm PR-triggered validation and perform the final visible audit before campus submission.
