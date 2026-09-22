@@ -10,7 +10,7 @@
 Complete the 4Geeks AI-driven Engineering milestone while establishing the smallest durable engineering substrate that makes future Nexova milestones safer, easier to resume, and cheaper to extend.
 
 ## Current phase
-**FOUNDATION / PRE-UI**
+**WORKSPACE READY / VISUAL LOCK PENDING**
 
 Implemented in this phase:
 - progressive agent-context entrypoint;
@@ -21,11 +21,16 @@ Implemented in this phase:
 - source-authority model;
 - repository documentation reconciliation.
 
+Implemented as unstyled technical shells:
+- root npm workspace;
+- `/uis/website` React + TypeScript + Vite app shell;
+- `/uis/backoffice` React + TypeScript + Vite app shell.
+
 Not yet implemented:
-- `/uis/website`;
-- `/uis/backoffice`;
-- root workspace runner;
-- UI design system;
+- approved Nexova visual direction;
+- complete website content/UI;
+- complete backoffice operational UI;
+- extracted shared design-system package;
 - backend/application services.
 
 ## Locked project-level decisions
@@ -41,8 +46,7 @@ Not yet implemented:
 The historical source set contains a conflict over the Sales department leader (Megan Clarke vs Marcos Ibáñez). Treat the contested identity as unresolved until a governing source settles it. Do not publish either as an uncontested fact in product surfaces.
 
 ## Next gates
-1. Verify this foundation against the assignment rubric.
-2. Establish minimal workspace/tooling for the two required UIs.
-3. Produce independent visual directions and obtain one visual lock.
-4. Implement website + backoffice.
-5. Run rubric/evidence loop, then bounded excellence review.
+1. Produce independent visual directions and obtain one visual lock.
+2. Implement the website + backoffice from the locked direction.
+3. Install dependencies and validate typecheck/build/runtime in a compatible Node environment.
+4. Run rubric/evidence loop, then bounded excellence review.

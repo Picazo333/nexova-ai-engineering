@@ -13,20 +13,24 @@
 - Noema/Control Tower/Nexova authority boundaries reviewed.
 - Agent/context foundation is being established in this commit.
 
-### In progress
+### Completed in the current branch
 - minimal durable repo governance;
 - required Memory Bank;
 - coding-agent rule + recurring verification Skill;
-- source authority classification.
+- source authority classification;
+- root npm workspace scaffold;
+- React + TypeScript + Vite app shells for `uis/website` and `uis/backoffice`.
+
+### Validation status
+The workspace files are structurally committed but dependency installation/build/runtime are still `UNVERIFIED` because no executable Codespaces/local runner is attached to this chat and the account-level GitHub Actions issue currently prevents reliable runner execution.
 
 ### Next
-1. verify foundation files remotely;
-2. decide/configure the minimal root workspace and frontend stack for website + backoffice;
-3. produce independent visual directions and obtain one visual lock;
-4. implement both required UIs;
-5. run full rubric/evidence loop;
-6. run bounded excellence review after baseline academic PASS;
-7. open the required PR to `main`.
+1. obtain the visual-direction lock;
+2. implement the complete corporate website and independent backoffice;
+3. install dependencies and capture lockfile/build/typecheck/runtime evidence in an execution environment;
+4. run full rubric/evidence loop;
+5. run bounded excellence review after baseline academic PASS;
+6. open the required PR to `main`.
 
 ## Deferred
 Backend, DB, RAG, persistent agents, multi-agent orchestration, advanced observability and productization remain deferred until a real milestone/failure mode activates them.

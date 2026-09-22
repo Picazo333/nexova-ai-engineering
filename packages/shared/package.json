@@ -2,13 +2,14 @@
   "name": "@repo/shared-types",
   "version": "0.0.1",
   "private": true,
-  "description": "Shared types for AI Engineering transversal projects",
-  "main": "index.ts",
-  "types": "index.ts",
+  "description": "Shared types for the cumulative Nexova AI Engineering monorepo",
+  "main": "types/index.ts",
+  "types": "types/index.ts",
   "scripts": {},
   "keywords": [
     "types",
-    "shared"
+    "shared",
+    "nexova"
   ],
   "author": "",
   "license": "MIT"

@@ -28,7 +28,7 @@ Coding-agent configuration is deliberately separate under `.agents/`.
 - Progressive context loading; `AGENTS.md` routes, it does not duplicate all context.
 - No backend is created until a real current requirement justifies it.
 - No RAG/vector DB, event bus, persistent agent runtime, knowledge graph or advanced observability stack without an activation trigger.
-- A root JavaScript workspace is a candidate because the current milestone requires two UIs; exact stack remains pending the workspace/frontend gate.
+- Root workspace decision: npm workspaces with two independent React + TypeScript + Vite applications. Runtime validation remains pending until dependencies are installed/executed in a compatible Node environment.
 - Shared visual/code abstractions are extracted only after actual reuse between website/backoffice is observed.
 
 ## Quality baseline
