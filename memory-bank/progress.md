@@ -21,9 +21,6 @@
 - root npm workspace scaffold;
 - React + TypeScript + Vite app shells for `uis/website` and `uis/backoffice`.
 
-### Validation status
-The workspace files are structurally committed but dependency installation/build/runtime are still `UNVERIFIED` because no executable Codespaces/local runner is attached to this chat and the account-level GitHub Actions issue currently prevents reliable runner execution.
-
 ### Visual lock
 The selected identity is **Oni Nocturne Oxblood**. The 30-board exploration is closed. Boards 26–30 are distilled into `docs/design/VISUAL_LOCK.md`; earlier boards remain supporting design references.
 
