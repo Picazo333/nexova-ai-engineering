@@ -2,7 +2,7 @@
 
 ## Current state
 **Milestone:** 4g-006 — AI-driven Engineering  
-**Phase:** UI implementation complete; runtime validation pending  
+**Phase:** academic baseline validated; final PR/audit pending  
 **Branch:** `feature/agent-memory-bank`
 
 ### Completed
@@ -35,17 +35,19 @@ The selected identity is **Oni Nocturne Oxblood**. The 30-board exploration is c
 - no backend was introduced.
 
 ### Validation status
-A local static syntax pass was performed with TypeScript module stubs and all three CSS files parsed without stylesheet syntax errors. This is **not** equivalent to the required real dependency/typecheck/build/runtime validation.
-The current container cannot resolve the npm registry, so `npm install`, lockfile generation and runtime checks remain `UNVERIFIED`.
+GitHub Actions run `35679157613` completed successfully on the feature branch. It executed dependency installation, real typecheck, production build, runtime smoke for both apps, headless-browser DOM assertions, rendered screenshots, artifact upload and evidence/lockfile commit.
+
+Committed evidence:
+- `package-lock.json`;
+- `docs/evidence/4g-006/website.png`;
+- `docs/evidence/4g-006/backoffice.png`.
 
 ### Next
-1. run dependency install in Codespaces/local environment with registry access and commit the lockfile;
-2. run real typecheck + production build;
-3. run both dev servers and capture runtime/browser evidence;
-4. complete responsive, keyboard, accessibility and visual QA;
-5. run the full rubric/evidence loop;
-6. run the bounded excellence review after academic baseline PASS;
-7. open the required PR to `main`.
+1. reconcile the successful runtime evidence into Control Tower;
+2. perform the bounded Excellence Review without destabilizing the validated baseline;
+3. create the required PR to `main` with website/backoffice screenshots and direct `AGENTS.md` link;
+4. confirm PR validation;
+5. show the final audit and exact campus submission URL.
 
 ## Deferred
 Backend, DB, RAG, persistent agents, multi-agent orchestration, advanced observability and productization remain deferred until a real milestone/failure mode activates them.
