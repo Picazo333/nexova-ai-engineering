@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { facts, sectors, services } from "./content";
 
 function ServiceCard({index,title,text,meta}:{index:string;title:string;text:string;meta:string}) {
@@ -6,11 +7,14 @@ function ServiceCard({index,title,text,meta}:{index:string;title:string;text:str
     <h3 className="nx-display">{title}</h3><p>{text}</p><div className="service-card__meta">{meta}</div>
   </article>;
 }
-function Header(){return <header className="site-header"><div className="nx-container header-inner">
-  <a className="wordmark" href="#top" aria-label="Nexova, inicio">NEXOVA</a>
-  <nav aria-label="Navegación principal"><a href="#servicios">Servicios</a><a href="#enfoque">Enfoque</a><a href="#presencia">Presencia</a><a href="#contacto">Contacto</a></nav>
-  <a className="nx-button nx-button--quiet header-cta" href="#contacto">Hablar con Nexova <span aria-hidden="true">→</span></a>
-</div></header>}
+function Header(){
+  const [open,setOpen]=useState(false);
+  return <header className="site-header"><div className="nx-container header-inner">
+    <a className="wordmark" href="#top" aria-label="Nexova, inicio">NEXOVA</a>
+    <nav id="mobile-navigation" className={open ? "is-open" : ""} aria-label="Navegación principal"><a onClick={()=>setOpen(false)} href="#servicios">Servicios</a><a onClick={()=>setOpen(false)} href="#enfoque">Enfoque</a><a onClick={()=>setOpen(false)} href="#presencia">Presencia</a><a onClick={()=>setOpen(false)} href="#contacto">Contacto</a></nav>
+    <div className="header-actions"><a className="nx-button nx-button--quiet header-cta" href="#contacto">Hablar con Nexova <span aria-hidden="true">→</span></a><button className="menu-toggle" type="button" aria-expanded={open} aria-controls="mobile-navigation" aria-label={open?"Cerrar navegación":"Abrir navegación"} onClick={()=>setOpen(v=>!v)}><span/><span/></button></div>
+  </div></header>
+}
 function App(){return <div id="top" className="site-shell">
   <Header/>
   <main>
