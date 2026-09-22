@@ -10,6 +10,7 @@
     "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
+    "@nexova/design-system": "*",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },

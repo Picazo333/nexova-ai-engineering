@@ -6,11 +6,10 @@
   "workspaces": [
     "uis/website",
     "uis/backoffice",
-    "packages/shared"
+    "packages/shared",
+    "packages/design-system"
   ],
-  "engines": {
-    "node": ">=20.19.0"
-  },
+  "engines": {"node": ">=20.19.0"},
   "scripts": {
     "dev:website": "npm run dev --workspace @nexova/website",
     "dev:backoffice": "npm run dev --workspace @nexova/backoffice",
