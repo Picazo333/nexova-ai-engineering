@@ -12,8 +12,16 @@ npm run dev:backoffice
 
 Expected local port: `3001`.
 
-## Current status
-Technical React + TypeScript + Vite shell only. The final operational information architecture and company-relevant on-screen output are intentionally pending the approved visual direction.
+## Current implementation
+- React + TypeScript + Vite.
+- independent operational layout rather than a copy of the public website;
+- Oni Nocturne Oxblood translated to a lower-ornament, higher-density UI;
+- source-labelled company baselines visible on screen;
+- operational table, domain view, status language and responsive layout;
+- shared foundations from `@nexova/design-system`.
 
-## Quality
-Before delivery the app must pass root typecheck/build plus runtime, responsive, accessibility and visual QA.
+## Data provenance
+The current metrics are scenario baselines from `CONTEXT.md`, explicitly labelled as **not live telemetry**.
+
+## Validation
+Source implementation is complete. Dependency install, real typecheck/build, browser runtime, accessibility and screenshot evidence remain required before rubric PASS.
