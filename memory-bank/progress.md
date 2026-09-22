@@ -24,6 +24,9 @@
 ### Validation status
 The workspace files are structurally committed but dependency installation/build/runtime are still `UNVERIFIED` because no executable Codespaces/local runner is attached to this chat and the account-level GitHub Actions issue currently prevents reliable runner execution.
 
+### Human gate — visual direction
+Three independent visual routes are documented in `docs/design/VISUAL_ROUTES.md`. Implementation must not propagate a final visual system until one route is selected or a new route is requested.
+
 ### Next
 1. obtain the visual-direction lock;
 2. implement the complete corporate website and independent backoffice;
