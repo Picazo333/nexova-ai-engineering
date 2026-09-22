@@ -1,9 +1,9 @@
 # Nexova Project State
 
 **Status:** ACTIVE  
-**Updated:** 2026-09-21  
+**Updated:** 2026-09-22  
 **Current milestone:** 4g-006 — AI-driven Engineering  
-**Working branch:** `feature/agent-memory-bank`  
+**Working branch:** `design/oni-nocturne-premium-pass`  
 **Pre-milestone baseline:** `3837eb3b943655d8cfb3131e43258cada0fd8871`
 
 ## Current objective
@@ -37,10 +37,17 @@ Validated by GitHub Actions run `35679157613`:
 - headless-browser DOM assertions for required Nexova website/backoffice content;
 - rendered website/backoffice screenshots captured and committed under `docs/evidence/4g-006/`.
 
-Still pending before campus submission:
-- final PR creation and PR-body evidence contract;
-- PR-triggered validation on the final head;
-- final Control Tower rubric reconciliation / visible audit.
+Current academic state:
+- required PR #1 exists and targets `main` from `feature/agent-memory-bank`;
+- Control Tower records 22/22 blocking criteria PASS on the academic baseline;
+- Campus submission has not occurred.
+
+Approved premium-extension documentation:
+- `docs/design/premium-pass/PREMIUM_WEBSITE_EXECUTION_PLAN.md`;
+- `docs/design/premium-pass/INDEPENDENT_WORKFLOW_COMPARISON.md`;
+- `docs/design/premium-pass/ACTIVITY_METAPLAN.md`.
+
+The competing workflow being developed in another conversation must remain independent until both approaches have been completed and the user explicitly requests comparison/reconciliation.
 
 Not implemented by design:
 - backend/application services, because no current requirement justifies them.
@@ -58,7 +65,12 @@ Not implemented by design:
 The historical source set contains a conflict over the Sales department leader (Megan Clarke vs Marcos Ibáñez). Treat the contested identity as unresolved until a governing source settles it. Do not publish either as an uncontested fact in product surfaces.
 
 ## Next gates
-1. Reconcile current runtime evidence into Control Tower and close R12–R16/R19 where supported.
-2. Run the bounded Excellence Review against the validated academic baseline.
-3. Create the required PR `feature/agent-memory-bank -> main` with both rendered screenshots and direct `AGENTS.md` link.
-4. Confirm PR-triggered validation and perform the final visible audit before campus submission.
+1. User activates Figma Professional and v0 Plus.
+2. Begin Phase 1 of the approved premium website plan: context compression + visual gap audit.
+3. Execute the website premium workflow through H1/H2/H3 gates.
+4. Translate the locked website language into the backoffice.
+5. Consolidate only evidence-backed shared design-system primitives.
+6. Re-run integrated QA and refresh affected rubric evidence to 22/22 PASS on the final implementation.
+7. Update the existing PR #1 with fresh screenshots/evidence; do not create a replacement academic PR.
+8. Show the final visible audit, then wait for user Campus submission confirmation.
+9. Run didactic packaging and post-delivery harvest only after submission.
