@@ -179,9 +179,51 @@ notes:
 ## Current state
 
 ```yaml
-A1_HERO_ONI: pending_generation
-A2_CRIMSON_FIBROUS_MATERIAL: blocked_by_A1_selection
+A1_HERO_ONI: approved
+A2_CRIMSON_FIBROUS_MATERIAL: approved
 A3_SUMI: blocked_by_composition_test
 A4_LANDSCAPE: blocked_by_page_composition
 TIER_B: deferred
 ```
+
+
+## Approved production direction — 2026-09-22
+
+### A1 — Abstract abyssal hero
+**Status:** APPROVED
+
+The approved hero direction is an abstract composition where the demon/oni is only partially legible and largely dissolved into a black abyssal field. Recognizable anatomy is subordinate to material flow, negative space and editorial composition.
+
+Approved characteristics:
+- demon visibility approximately 20–30%;
+- no complete face;
+- no full eye pair;
+- no full mouth;
+- horns only as partial fragments;
+- black void dominant;
+- wet crimson cotton/fibrous material integrated into the composition;
+- skin-like materiality remains subtle;
+- ochre/gold is restrained;
+- aggression low;
+- mystery/elegance high.
+
+### A2 — Crimson fibrous material
+**Status:** APPROVED
+
+The cotton/fiber material soaked with crimson liquid is approved as a recurring organic counter-material. It may be used as:
+- transition layer;
+- foreground framing;
+- mask/reveal material;
+- section divider;
+- motion source.
+
+It must not read as gore.
+
+### Next gate
+Build the Composition Proof for:
+- Navigation
+- Hero
+- Hero → Manifesto transition
+- First capability section
+
+This Composition Proof is the artifact for H1 approval. Figma production begins only after H1.
