@@ -131,7 +131,7 @@ body {
 
 .eyebrow {
   margin: 0;
-  color: var(--nx-crimson);
+  color: var(--nx-crimson-text);
   font: 600 0.64rem/1.4 var(--nx-mono);
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -291,7 +291,7 @@ body {
 .manifesto__copy > p:last-child {
   margin: 1.3rem 0 0;
   max-width: 44rem;
-  color: rgba(235, 226, 214, 0.58);
+  color: var(--nx-muted);
   line-height: 1.7;
 }
 
@@ -339,7 +339,7 @@ body {
 
 .capability__index {
   margin: 0.45rem 0 0;
-  color: var(--nx-crimson);
+  color: var(--nx-crimson-text);
   font: 600 0.65rem/1 var(--nx-mono);
 }
 
@@ -352,7 +352,7 @@ body {
 
 .capability p:last-child {
   margin: 0.7rem 0 0;
-  color: rgba(235, 226, 214, 0.5);
+  color: var(--nx-muted);
   line-height: 1.65;
 }
 
@@ -387,7 +387,7 @@ body {
 .evidence-fact span {
   display: block;
   margin-top: 0.9rem;
-  color: rgba(235, 226, 214, 0.45);
+  color: var(--nx-muted);
   font: 600 0.58rem/1.3 var(--nx-mono);
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -472,7 +472,7 @@ body {
 .presence__locations span {
   display: block;
   margin-top: 0.55rem;
-  color: rgba(235, 226, 214, 0.48);
+  color: var(--nx-muted);
   font: 600 0.58rem/1.5 var(--nx-mono);
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -545,7 +545,7 @@ body {
 
 .site-footer p {
   margin: 0.9rem 0 0;
-  color: rgba(235, 226, 214, 0.42);
+  color: var(--nx-muted);
   font: 500 0.58rem/1.55 var(--nx-mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
