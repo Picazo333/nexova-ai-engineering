@@ -131,7 +131,7 @@ body {
 }
 
 .hero-title {
-  max-width: 6.9ch;
+  max-width: 8.2ch;
   margin: 1.7rem 0 0;
   color: var(--nx-bone);
   font-size: clamp(4rem, 6.3vw, 7.25rem);
@@ -627,7 +627,7 @@ body {
   }
 
   .hero-title {
-    max-width: 6.9ch;
+    max-width: 8.4ch;
     margin-top: 1rem;
     font-size: clamp(3.35rem, 14vw, 4.4rem);
     line-height: 0.82;
@@ -837,11 +837,9 @@ body {
   min-width: 0;
 }
 
-.display,
 .capability-item h3,
-.presence-locations strong,
-.presence-sectors .display {
-  overflow-wrap: anywhere;
+.presence-locations strong {
+  overflow-wrap: break-word;
 }
 
 img,
