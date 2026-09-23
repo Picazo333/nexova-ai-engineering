@@ -379,20 +379,46 @@ body {
   background: #0f0d0d;
 }
 
-.philosophy-material img {
-  width: 100%;
-  height: 100%;
+.philosophy-shape {
+  position: absolute;
   display: block;
-  object-fit: cover;
-  object-position: 48% center;
-  filter: saturate(0.78) contrast(1.02);
+  border-radius: 50%;
+}
+
+.philosophy-shape--skin {
+  width: 64%;
+  aspect-ratio: 1;
+  left: -18%;
+  bottom: -17%;
+  background: var(--nx-skin);
+  opacity: 0.78;
+}
+
+.philosophy-shape--crimson {
+  width: 70%;
+  aspect-ratio: 1;
+  right: -12%;
+  top: -28%;
+  background: var(--nx-oxblood);
+  opacity: 0.88;
+}
+
+.philosophy-shape--ochre {
+  width: 57%;
+  aspect-ratio: 1;
+  right: -3%;
+  bottom: -25%;
+  background: #4b3517;
+  opacity: 0.92;
 }
 
 .philosophy-material::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(10, 10, 10, 0.08), transparent 56%);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.025), transparent 42%),
+    linear-gradient(0deg, rgba(10,10,10,0.08), transparent 58%);
   pointer-events: none;
 }
 
