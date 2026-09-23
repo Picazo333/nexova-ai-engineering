@@ -70,6 +70,23 @@ for (const width of widths) {
         navToggle instanceof HTMLElement &&
         getComputedStyle(navToggle).display !== "none",
       imageResources: resources,
+      overflowOffenders: Array.from(document.querySelectorAll("body *"))
+        .filter((element) => {
+          const rect = element.getBoundingClientRect();
+          return rect.right > window.innerWidth + 1 || rect.left < -1;
+        })
+        .slice(0, 20)
+        .map((element) => {
+          const rect = element.getBoundingClientRect();
+          return {
+            tag: element.tagName,
+            className: element.getAttribute("class") ?? "",
+            text: (element.textContent ?? "").trim().slice(0, 90),
+            left: Math.round(rect.left),
+            right: Math.round(rect.right),
+            width: Math.round(rect.width),
+          };
+        }),
     };
   });
 
@@ -137,6 +154,7 @@ for (const width of widths) {
         impact: violation.impact,
         description: violation.description,
         nodes: violation.nodes.length,
+        targets: violation.nodes.slice(0, 12).map((node) => node.target),
       }));
     });
 
