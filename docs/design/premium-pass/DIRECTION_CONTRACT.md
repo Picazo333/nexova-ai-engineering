@@ -1,9 +1,22 @@
 # Nexova Premium Website — Direction Contract
 
-**Status:** ACTIVE / PRE-FIGMA  
+**Status:** ACTIVE / PRE-FIGMA — UPDATED AFTER IDENTITY BASE APPROVAL  
 **Authority:** Below product truth and Oni Nocturne Oxblood; above implementation tools.  
 **Surface:** Public corporate website  
 **Mode:** PERSUADE
+
+## 0. Approved identity override
+
+The canonical production direction is now governed by `IDENTITY_BASE_LOCK.md`.
+
+Where this document conflicts with that lock, the lock wins.
+
+Key additions:
+- demon becomes more abstract, partially dissolved and fused with an abyssal dark field;
+- skin-like materiality is substrate only;
+- crimson-soaked wet cotton becomes an approved material motif;
+- brutalism becomes more explicit in composition/grid/typographic structure;
+- cinematic fantasy, poster-like staging and cliché Japanese iconography are explicitly rejected.
 
 ## 1. Design thesis
 
@@ -15,11 +28,12 @@ The visual system should communicate:
 
 > **human judgment under pressure, disciplined systems, and controlled transformation.**
 
-Oni Nocturne is the symbolic/art-direction layer for that idea:
-- Oni = force, discipline, pressure, controlled danger;
-- darkness = restraint, seriousness, unexposed depth;
+The evolved Oni Nocturne lineage is the symbolic/art-direction layer for that idea:
+- Demon/Oni = force, discipline and controlled danger, expressed through fragmented or partially dissolved form rather than a literal fantasy character;
+- darkness = abyssal field, restraint, seriousness and unexposed depth;
 - oxblood = signal/action, not ambient decoration;
-- Japanese/irezumi influence = compositional discipline, image mass, line, negative space and materiality rather than novelty iconography.
+- Japanese influence = compositional discipline, ink, image mass, line, negative space and materiality rather than novelty iconography;
+- wet cotton + crimson absorption = soft/fibrous counter-material to brutalist structure, used without gore.
 
 ## 2. Design dials
 
