@@ -105,3 +105,13 @@ The historical source set contains a conflict over the Sales department leader (
 - Maximum one initial generation plus one material revision per challenge.
 - No automatic merge.
 - Current status: `V0_READY_TO_RUN`.
+
+
+## Cost-efficient production update — 2026-09-23
+- v0 challenger branch reviewed: `v0/premium-challenger` @ `f6149a1093e700bd12f85762c184f0aef5c07747`.
+- v0 phase: CLOSED. No further v0 calls are authorized for this activity unless a genuinely unresolved visual issue survives Codex implementation.
+- Do not merge the v0 branch wholesale.
+- Review: `docs/design/premium-pass/V0_CHALLENGER_REVIEW.md`.
+- Production handoff: `docs/design/premium-pass/CODEX_PRODUCTION_HANDOFF.md`.
+- Next execution owner: Codex.
+- Next gate: H3 production QA.
