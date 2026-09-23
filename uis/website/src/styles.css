@@ -15,7 +15,7 @@ body {
 
 .eyebrow {
   margin: 0;
-  color: var(--nx-crimson);
+  color: var(--nx-crimson-text);
   font: 600 0.64rem/1.35 var(--nx-mono);
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -309,7 +309,7 @@ body {
 .capability-index {
   align-self: start;
   margin: 0.45rem 0 0;
-  color: var(--nx-crimson);
+  color: var(--nx-crimson-text);
   font: 600 0.62rem/1 var(--nx-mono);
 }
 
@@ -553,7 +553,7 @@ body {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 800px) {
   .header-shell {
     width: calc(100% - 2rem);
     grid-template-columns: 1fr auto;
@@ -821,5 +821,38 @@ body {
   .text-action,
   .site-nav a {
     transition: none;
+  }
+}
+
+
+/* Runtime-safety constraints: prevent authored editorial grids from widening the viewport. */
+.hero > *,
+.manifesto > *,
+.capabilities > *,
+.evidence > *,
+.philosophy > *,
+.presence > *,
+.closing > *,
+.site-footer > * {
+  min-width: 0;
+}
+
+.display,
+.capability-item h3,
+.presence-locations strong,
+.presence-sectors .display {
+  overflow-wrap: anywhere;
+}
+
+img,
+picture {
+  max-width: 100%;
+}
+
+@media (max-width: 800px) {
+  .presence-sectors .display {
+    display: block;
+    margin: 0.25rem 0;
+    font-size: 1.45rem;
   }
 }
