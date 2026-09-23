@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { facts, sectors, services } from "./content";
 import heroDesktop from "../../../packages/design-system/assets/a1-hero-golden-desktop.png";
 import heroMobile from "../../../packages/design-system/assets/a1-hero-golden-mobile.png";
-import crimsonFibrous from "../../../packages/design-system/assets/a2-crimson-fibrous.png";
+import fibrousDesktop from "../../../packages/design-system/assets/a2-fibrous-golden-desktop.png";
+import fibrousMobile from "../../../packages/design-system/assets/a2-fibrous-golden-mobile.png";
 
 
 function useHeroManifestoMotion() {
@@ -160,14 +161,17 @@ function Manifesto() {
   return (
     <section className="manifesto" id="enfoque" aria-labelledby="manifesto-title">
       <figure className="manifesto__material" aria-hidden="true">
-        <img
-          src={crimsonFibrous}
-          alt=""
-          width={1024}
-          height={1024}
-          loading="lazy"
-          decoding="async"
-        />
+        <picture>
+          <source media="(max-width: 720px)" srcSet={fibrousMobile} />
+          <img
+            src={fibrousDesktop}
+            alt=""
+            width={650}
+            height={620}
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
       </figure>
       <div className="manifesto__copy">
         <p className="eyebrow">01 / Convicción operativa</p>
@@ -239,14 +243,17 @@ function Philosophy() {
   return (
     <section className="philosophy" aria-labelledby="philosophy-title">
       <figure className="philosophy__material" aria-hidden="true">
-        <img
-          src={crimsonFibrous}
-          alt=""
-          width={1024}
-          height={1024}
-          loading="lazy"
-          decoding="async"
-        />
+        <picture>
+          <source media="(max-width: 720px)" srcSet={fibrousMobile} />
+          <img
+            src={fibrousDesktop}
+            alt=""
+            width={650}
+            height={620}
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
       </figure>
 
       <div className="philosophy__copy">
@@ -313,14 +320,17 @@ function Closing() {
       </div>
 
       <figure className="closing__material" aria-hidden="true">
-        <img
-          src={crimsonFibrous}
-          alt=""
-          width={1024}
-          height={1024}
-          loading="lazy"
-          decoding="async"
-        />
+        <picture>
+          <source media="(max-width: 720px)" srcSet={fibrousMobile} />
+          <img
+            src={fibrousDesktop}
+            alt=""
+            width={650}
+            height={620}
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
       </figure>
     </section>
   );
