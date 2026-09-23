@@ -1,0 +1,67 @@
+name: Premium Asset Derivatives
+
+on:
+  push:
+    branches:
+      - implementation/nexova-premium-production
+    paths:
+      - ".github/workflows/premium-assets.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify codecs
+        shell: bash
+        run: |
+          set -euo pipefail
+          ffmpeg -version | head -1
+
+      - name: Generate responsive AVIF and WebP derivatives
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="packages/design-system/assets/runtime"
+          mkdir -p "$OUT"
+
+          render_set() {
+            local src="$1"
+            local prefix="$2"
+            shift 2
+            local width
+            width="$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$src")"
+            for target in "$@"; do
+              if [ "$target" -le "$width" ]; then
+                ffmpeg -hide_banner -loglevel error -y -i "$src"                   -vf "scale=${target}:-2:flags=lanczos"                   -frames:v 1 -c:v libaom-av1 -still-picture 1 -crf 34 -cpu-used 6 -pix_fmt yuv420p                   "$OUT/${prefix}-${target}.avif"
+                ffmpeg -hide_banner -loglevel error -y -i "$src"                   -vf "scale=${target}:-2:flags=lanczos"                   -frames:v 1 -c:v libwebp -quality 78 -compression_level 5                   "$OUT/${prefix}-${target}.webp"
+              fi
+            done
+          }
+
+          render_set "packages/design-system/assets/a1-hero-desktop.png" "a1-hero-desktop" 960 1440 1920
+          render_set "packages/design-system/assets/a1-hero-mobile.png" "a1-hero-mobile" 480 768
+          render_set "packages/design-system/assets/a2-crimson-fibrous.png" "a2-crimson-fibrous" 640 960 1440
+
+          echo "Generated derivatives:"
+          find "$OUT" -maxdepth 1 -type f -printf "%f %s bytes\n" | sort
+
+      - name: Commit derivatives
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add packages/design-system/assets/runtime
+          if git diff --cached --quiet; then
+            echo "No derivative changes."
+          else
+            git commit -m "assets: add responsive runtime derivatives [skip ci]"
+            git push origin HEAD:implementation/nexova-premium-production
+          fi
