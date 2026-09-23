@@ -1,0 +1,85 @@
+name: Premium Runtime QA
+
+on:
+  push:
+    branches:
+      - implementation/nexova-premium-production
+    paths:
+      - "uis/website/**"
+      - "packages/design-system/**"
+      - "package.json"
+      - "package-lock.json"
+      - "vercel.json"
+      - ".github/workflows/premium-runtime-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  runtime-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Production build
+        run: npm run build
+
+      - name: Start website
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run dev:website > /tmp/nexova-premium.log 2>&1 &
+          echo $! > /tmp/nexova-premium.pid
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:3000/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/nexova-premium.log
+          exit 1
+
+      - name: Locate Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHROME_BIN="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          if [ -z "$CHROME_BIN" ]; then
+            echo "Chrome/Chromium not found."
+            exit 1
+          fi
+          echo "CHROME_BIN=$CHROME_BIN" >> "$GITHUB_ENV"
+
+      - name: Run premium browser QA
+        run: node uis/website/scripts/premium-qa.mjs
+
+      - name: Upload H3 candidate evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: premium-runtime-evidence
+          path: docs/evidence/website-premium/
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Stop website
+        if: always()
+        shell: bash
+        run: |
+          if [ -f /tmp/nexova-premium.pid ]; then
+            kill "$(cat /tmp/nexova-premium.pid)" 2>/dev/null || true
+          fi
