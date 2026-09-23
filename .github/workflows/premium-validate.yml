@@ -84,6 +84,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: website-premium-preview
-          path: docs/evidence/website-premium/*.png
+          path: |
+            docs/evidence/website-premium/*.png
+            docs/evidence/website-premium/lighthouse.json
           if-no-files-found: error
           retention-days: 7
