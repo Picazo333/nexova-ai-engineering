@@ -314,8 +314,8 @@ function Closing() {
           Una base operativa más disciplinada para talento, servicio y
           desarrollo.
         </p>
-        <a className="button button--primary" href="mailto:hello@nexova.example">
-          Iniciar conversación <span aria-hidden="true">→</span>
+        <a className="button button--primary" href="#servicios">
+          Explorar servicios <span aria-hidden="true">→</span>
         </a>
       </div>
 
