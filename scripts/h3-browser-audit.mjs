@@ -158,8 +158,20 @@ try {
 
   await setViewport(390, 844);
   await navigate();
-  report.mobileNavigation = await evaluate("(() => { const button=document.querySelector('.menu-toggle'); const nav=document.querySelector('#primary-navigation'); if(!(button instanceof HTMLButtonElement)||!(nav instanceof HTMLElement)) return {ok:false,reason:'controls missing'}; button.click(); const opened=button.getAttribute('aria-expanded')==='true'&&nav.classList.contains('is-open')&&getComputedStyle(nav).display!=='none'; button.click(); const closed=button.getAttribute('aria-expanded')==='false'&&!nav.classList.contains('is-open'); return {ok:opened&&closed,opened,closed}; })()");
-  if (!report.mobileNavigation?.ok) fail("Mobile navigation failed: " + JSON.stringify(report.mobileNavigation));
+  const controlsPresent = await evaluate("(() => { const button=document.querySelector('.menu-toggle'); const nav=document.querySelector('#primary-navigation'); return button instanceof HTMLButtonElement && nav instanceof HTMLElement; })()");
+  if (!controlsPresent) {
+    report.mobileNavigation = { ok: false, reason: "controls missing" };
+    fail("Mobile navigation failed: controls missing");
+  } else {
+    await evaluate("document.querySelector('.menu-toggle').click()");
+    await sleep(120);
+    const opened = await evaluate("(() => { const button=document.querySelector('.menu-toggle'); const nav=document.querySelector('#primary-navigation'); return button.getAttribute('aria-expanded')==='true' && nav.classList.contains('is-open') && getComputedStyle(nav).display!=='none'; })()");
+    await evaluate("document.querySelector('.menu-toggle').click()");
+    await sleep(120);
+    const closed = await evaluate("(() => { const button=document.querySelector('.menu-toggle'); const nav=document.querySelector('#primary-navigation'); return button.getAttribute('aria-expanded')==='false' && !nav.classList.contains('is-open'); })()");
+    report.mobileNavigation = { ok: Boolean(opened && closed), opened: Boolean(opened), closed: Boolean(closed) };
+    if (!report.mobileNavigation.ok) fail("Mobile navigation failed: " + JSON.stringify(report.mobileNavigation));
+  }
 
   await navigate();
   await evaluate("document.activeElement instanceof HTMLElement && document.activeElement.blur()");
