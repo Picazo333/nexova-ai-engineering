@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { facts, sectors, services } from "./content";
-import heroDesktop from "../../../packages/design-system/assets/a1-hero-desktop.png";
-import heroMobile from "../../../packages/design-system/assets/a1-hero-mobile.png";
+import heroDesktop from "../../../packages/design-system/assets/a1-hero-golden-desktop.png";
+import heroMobile from "../../../packages/design-system/assets/a1-hero-golden-mobile.png";
 import crimsonFibrous from "../../../packages/design-system/assets/a2-crimson-fibrous.png";
 
 function Header() {
