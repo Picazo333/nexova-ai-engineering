@@ -227,3 +227,23 @@ Build the Composition Proof for:
 - First capability section
 
 This Composition Proof is the artifact for H1 approval. Figma production begins only after H1.
+
+
+## H1 Composition Proof — APPROVED
+
+**Date:** 2026-09-22  
+**Status:** APPROVED
+
+The user approved the composition proof covering:
+- Navigation
+- Hero
+- Hero → Manifesto transition
+- First capability section
+
+This approval authorizes transition into the Figma production phase.
+
+Canonical Figma file:
+https://www.figma.com/design/fbDnWF59yCqfEEq5Sf8wFf
+
+Next state:
+`FIGMA_PRODUCTION_ACTIVE = true`
