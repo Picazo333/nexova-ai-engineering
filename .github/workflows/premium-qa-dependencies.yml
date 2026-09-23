@@ -1,0 +1,43 @@
+name: Premium QA Dependencies
+
+on:
+  push:
+    branches:
+      - implementation/nexova-premium-production
+    paths:
+      - ".github/workflows/premium-qa-dependencies.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install bounded QA dependencies
+        run: npm install --save-dev --save-exact playwright-core axe-core --workspace @nexova/website --no-audit --no-fund
+
+      - name: Commit package metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json uis/website/package.json
+          if git diff --cached --quiet; then
+            echo "Dependency metadata unchanged."
+          else
+            git commit -m "build: add bounded browser QA dependencies"
+            git pull --rebase origin implementation/nexova-premium-production
+            git push origin HEAD:implementation/nexova-premium-production
+          fi
