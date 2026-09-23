@@ -10,9 +10,9 @@ permissions:
   contents: read
 
 jobs:
-  baseline:
+  premium:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     steps:
       - name: Checkout
@@ -32,20 +32,14 @@ jobs:
       - name: Production build
         run: npm run build
 
-      - name: Runtime smoke and visual capture
+      - name: Start runtime
         shell: bash
         run: |
           set -euo pipefail
-
           npm run dev:website > /tmp/nexova-website.log 2>&1 &
-          WEBSITE_PID=$!
+          echo $! > /tmp/nexova-website.pid
           npm run dev:backoffice > /tmp/nexova-backoffice.log 2>&1 &
-          BACKOFFICE_PID=$!
-
-          cleanup() {
-            kill "$WEBSITE_PID" "$BACKOFFICE_PID" 2>/dev/null || true
-          }
-          trap cleanup EXIT
+          echo $! > /tmp/nexova-backoffice.pid
 
           for port in 3000 3001; do
             ready=0
@@ -56,18 +50,17 @@ jobs:
               fi
               sleep 1
             done
-
             if [ "$ready" -ne 1 ]; then
               echo "Server on port $port did not become ready."
-              if [ "$port" = "3000" ]; then
-                cat /tmp/nexova-website.log || true
-              else
-                cat /tmp/nexova-backoffice.log || true
-              fi
+              cat "/tmp/nexova-$([ "$port" = "3000" ] && echo website || echo backoffice).log" || true
               exit 1
             fi
           done
 
+      - name: Capture responsive evidence
+        shell: bash
+        run: |
+          set -euo pipefail
           CHROME_BIN="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
           if [ -z "$CHROME_BIN" ]; then
             echo "Chrome/Chromium not found on runner."
@@ -76,16 +69,34 @@ jobs:
 
           mkdir -p docs/evidence/website-premium
 
-          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=2500 --window-size=1440,5200             --screenshot=docs/evidence/website-premium/desktop-1440.png             http://127.0.0.1:3000/
+          for width in 1440 1024 768 430 390; do
+            "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars               --virtual-time-budget=2500 --window-size="$width",5200               --screenshot="docs/evidence/website-premium/runtime-$width.png"               http://127.0.0.1:3000/
+          done
 
-          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=2500 --window-size=390,5200             --screenshot=docs/evidence/website-premium/mobile-390.png             http://127.0.0.1:3000/
+          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --blink-settings=scriptEnabled=false             --virtual-time-budget=1500 --window-size=390,5200             --screenshot=docs/evidence/website-premium/no-js-390.png             http://127.0.0.1:3000/
 
-      - name: Upload premium visual evidence
+          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --force-prefers-reduced-motion             --virtual-time-budget=2500 --window-size=390,5200             --screenshot=docs/evidence/website-premium/reduced-motion-390.png             http://127.0.0.1:3000/
+
+      - name: Lighthouse performance and accessibility
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHROME_BIN="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          npx --yes lighthouse@12 http://127.0.0.1:3000/             --chrome-path="$CHROME_BIN"             --chrome-flags="--headless --no-sandbox --disable-gpu"             --only-categories=performance,accessibility             --output=json             --output-path=docs/evidence/website-premium/lighthouse.json             --quiet
+
+      - name: Upload premium evidence
         uses: actions/upload-artifact@v4
         with:
-          name: website-premium-preview
+          name: website-premium-h3
           path: |
             docs/evidence/website-premium/*.png
             docs/evidence/website-premium/lighthouse.json
           if-no-files-found: error
           retention-days: 7
+
+      - name: Stop runtime
+        if: always()
+        shell: bash
+        run: |
+          kill "$(cat /tmp/nexova-website.pid 2>/dev/null)" 2>/dev/null || true
+          kill "$(cat /tmp/nexova-backoffice.pid 2>/dev/null)" 2>/dev/null || true
