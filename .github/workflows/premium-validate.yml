@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  checks: read
 
 jobs:
   premium:
@@ -108,6 +109,92 @@ jobs:
           CHROME_BIN="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
           npx --yes lighthouse@12 http://127.0.0.1:4173/ --chrome-path="$CHROME_BIN" --chrome-flags="--headless --no-sandbox --disable-gpu" --only-categories=performance,accessibility --output=json --output-path=docs/evidence/website-premium/lighthouse.json --quiet
 
+      - name: Verify deployed Vercel preview
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_API: ${{ github.api_url }}
+          GH_REPO: ${{ github.repository }}
+          GH_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          mkdir -p docs/evidence/website-premium
+          PREVIEW_URL=""
+
+          for attempt in $(seq 1 60); do
+            CHECKS_JSON="$(curl --fail --silent --show-error \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "$GH_API/repos/$GH_REPO/commits/$GH_SHA/check-runs")"
+
+            FEEDBACK_URL="$(printf '%s' "$CHECKS_JSON" \
+              | jq -r '.check_runs[] | select(.name == "Vercel Preview Comments") | .output.summary // empty' \
+              | grep -oE 'https://vercel\.live/open-feedback/[^?)]+' \
+              | head -n 1 || true)"
+
+            if [ -n "$FEEDBACK_URL" ]; then
+              PREVIEW_URL="$(printf '%s' "$FEEDBACK_URL" | sed 's#https://vercel.live/open-feedback/#https://#')"
+              if curl --fail --location --silent --show-error --max-time 20 "$PREVIEW_URL/" > /tmp/nexova-vercel-index.html; then
+                break
+              fi
+            fi
+
+            PREVIEW_URL=""
+            sleep 5
+          done
+
+          if [ -z "$PREVIEW_URL" ]; then
+            echo "Could not resolve a reachable Vercel preview for $GH_SHA"
+            exit 1
+          fi
+
+          printf '%s\n' "$PREVIEW_URL" | tee docs/evidence/website-premium/vercel-preview-url.txt
+
+          CHROME_BIN="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME_BIN"
+
+          "$CHROME_BIN" \
+            --headless \
+            --no-sandbox \
+            --disable-gpu \
+            --hide-scrollbars \
+            --virtual-time-budget=4000 \
+            --window-size=1440,5200 \
+            --dump-dom \
+            "$PREVIEW_URL/" > docs/evidence/website-premium/vercel-deployed-dom.html
+
+          grep -q "Criterio humano" docs/evidence/website-premium/vercel-deployed-dom.html
+          grep -q "Selección ejecutiva" docs/evidence/website-premium/vercel-deployed-dom.html
+          grep -q "Valencia" docs/evidence/website-premium/vercel-deployed-dom.html
+
+          "$CHROME_BIN" \
+            --headless \
+            --no-sandbox \
+            --disable-gpu \
+            --hide-scrollbars \
+            --virtual-time-budget=4000 \
+            --window-size=1440,5200 \
+            --screenshot=docs/evidence/website-premium/vercel-runtime-1440.png \
+            "$PREVIEW_URL/"
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          url = Path("docs/evidence/website-premium/vercel-preview-url.txt").read_text().strip()
+          Path("docs/evidence/website-premium/vercel-deployment-check.json").write_text(
+              json.dumps({
+                  "reachable": True,
+                  "rendered_dom": True,
+                  "content_assertions": [
+                      "Criterio humano",
+                      "Selección ejecutiva",
+                      "Valencia"
+                  ],
+                  "preview_url": url
+              }, indent=2) + "\n"
+          )
+          PY
+
       - name: Upload premium evidence
         uses: actions/upload-artifact@v4
         with:
@@ -117,6 +204,9 @@ jobs:
             docs/evidence/website-premium/lighthouse.json
             docs/evidence/website-premium/browser-audit.json
             docs/evidence/website-premium/axe.json
+            docs/evidence/website-premium/vercel-preview-url.txt
+            docs/evidence/website-premium/vercel-deployment-check.json
+            docs/evidence/website-premium/vercel-deployed-dom.html
           if-no-files-found: error
           retention-days: 7
 
