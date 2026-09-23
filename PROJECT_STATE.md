@@ -84,5 +84,14 @@ The historical source set contains a conflict over the Sales department leader (
 - Mobile 390 Golden candidate is complete.
 - A1 abyssal hero and A2 crimson fibrous material are represented in the canonical design.
 - Hero → Manifesto motion storyboard is complete.
-- Figma Golden is H2-ready but NOT H2-approved.
-- v0 challenger remains blocked until explicit H2 approval.
+- Figma Golden H2 is explicitly approved and locked.
+- v0 challenger is now authorized.
+
+
+## H2 approval recorded — 2026-09-23
+- User explicitly approved H2.
+- `FIGMA_GOLDEN_LOCK = TRUE`.
+- The canonical visual authority remains the Figma file `fbDnWF59yCqfEEq5Sf8wFf`.
+- Desktop 1440, mobile 390, A1/A2 asset placement, and Hero → Manifesto motion concept are locked baseline decisions.
+- v0 Challenger is authorized to begin.
+- v0 output is a challenger/prototype layer, not an authority override.
