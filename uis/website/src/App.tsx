@@ -1,7 +1,48 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import heroDesktop from "../../../packages/design-system/assets/a1-hero-desktop.png";
 import heroMobile from "../../../packages/design-system/assets/a1-hero-mobile.png";
 import crimsonFibrous from "../../../packages/design-system/assets/a2-crimson-fibrous.png";
+
+gsap.registerPlugin(ScrollTrigger);
+
+function useSignatureMotion() {
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const context = gsap.context(() => {
+      const timeline = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: ".hero",
+          start: "top top",
+          end: "bottom+=220 top",
+          scrub: 0.6,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      timeline
+        .to(".hero-art img", { scale: 1.045, xPercent: -2, duration: 0.55 }, 0)
+        .to(".hero-copy", { yPercent: -8, opacity: 0.58, duration: 0.5 }, 0.08)
+        .fromTo(
+          ".manifesto-material img",
+          { scale: 1.08, yPercent: -5 },
+          { scale: 1, yPercent: 0, duration: 0.55 },
+          0.34,
+        )
+        .fromTo(
+          ".manifesto-copy",
+          { y: 54, opacity: 0.28 },
+          { y: 0, opacity: 1, duration: 0.5 },
+          0.4,
+        );
+    });
+
+    return () => context.revert();
+  }, []);
+}
 
 const capabilities = [
   {
@@ -315,6 +356,8 @@ function Footer() {
 }
 
 function App() {
+  useSignatureMotion();
+
   return (
     <div id="top" className="site-shell">
       <Header />
