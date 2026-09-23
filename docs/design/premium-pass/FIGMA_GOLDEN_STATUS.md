@@ -80,23 +80,22 @@ MOTION_STORYBOARD_READY: true
 H2_READY: true
 H2_APPROVED: true
 FIGMA_GOLDEN_LOCK: true
-V0_CHALLENGER_ALLOWED: true
+V0_CHALLENGER_ALLOWED: false
+V0_CHALLENGER_COMPLETE: true
+PRODUCTION_PREFLIGHT_ACTIVE: true
 ```
 
 ## Next state
 
-On explicit H2 approval:
-
 ```
-FIGMA_GOLDEN_LOCK = TRUE
+G0 PRODUCTION PREFLIGHT
 ↓
-V0 CHALLENGER
+CODEX PRODUCTION
 ↓
-V0-A Hero implementation
-V0-B Editorial section
-V0-C Mobile translation
+H3 RUNTIME APPROVAL
 ```
 
+v0 challenger is complete and closed for this activity unless a future unresolved visual issue explicitly passes the Premium Tool Cost Gate.
 
 ## H2 approval
 
@@ -111,3 +110,15 @@ V0_CHALLENGER_ALLOWED: true
 ```
 
 The next gate is the v0 Challenger. v0 may challenge implementation choices, but it may not silently replace the approved identity, information hierarchy, mobile intent, or Hero → Manifesto narrative contract.
+
+
+## Post-v0 execution state — 2026-09-23
+
+The v0 phase is complete. Its output is a challenger/reference implementation only.
+
+- Source branch: `v0/premium-challenger`
+- Source commit: `f6149a1093e700bd12f85762c184f0aef5c07747`
+- Review: `V0_CHALLENGER_REVIEW.md`
+- Integration policy: selective KEEP/ADAPT porting only
+- Wholesale merge: forbidden
+- Current next gate: G0 Production Preflight
