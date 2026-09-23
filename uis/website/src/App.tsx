@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import heroDesktopAvif from "../../../packages/design-system/assets/runtime/a1-hero-desktop-960.avif";
-import heroDesktopWebp from "../../../packages/design-system/assets/runtime/a1-hero-desktop-960.webp";
-import heroMobile480Avif from "../../../packages/design-system/assets/runtime/a1-hero-mobile-480.avif";
-import heroMobile768Avif from "../../../packages/design-system/assets/runtime/a1-hero-mobile-768.avif";
-import heroMobile480Webp from "../../../packages/design-system/assets/runtime/a1-hero-mobile-480.webp";
-import heroMobile768Webp from "../../../packages/design-system/assets/runtime/a1-hero-mobile-768.webp";
+import hero480Avif from "../../../packages/design-system/assets/runtime/a1-hero-480.avif";
+import hero640Avif from "../../../packages/design-system/assets/runtime/a1-hero-640.avif";
+import hero840Avif from "../../../packages/design-system/assets/runtime/a1-hero-840.avif";
+import hero480Webp from "../../../packages/design-system/assets/runtime/a1-hero-480.webp";
+import hero640Webp from "../../../packages/design-system/assets/runtime/a1-hero-640.webp";
+import hero840Webp from "../../../packages/design-system/assets/runtime/a1-hero-840.webp";
 import crimson640Avif from "../../../packages/design-system/assets/runtime/a2-crimson-fibrous-640.avif";
 import crimson960Avif from "../../../packages/design-system/assets/runtime/a2-crimson-fibrous-960.avif";
 import crimson640Webp from "../../../packages/design-system/assets/runtime/a2-crimson-fibrous-640.webp";
@@ -146,24 +146,20 @@ function Hero() {
       <figure className="hero-art" aria-label="Abstract abyssal Nexova artwork">
         <picture>
           <source
-            media="(max-width: 800px)"
             type="image/avif"
-            srcSet={`${heroMobile480Avif} 480w, ${heroMobile768Avif} 768w`}
-            sizes="100vw"
+            srcSet={`${hero480Avif} 480w, ${hero640Avif} 640w, ${hero840Avif} 840w`}
+            sizes="(max-width: 800px) 100vw, 60vw"
           />
           <source
-            media="(max-width: 800px)"
             type="image/webp"
-            srcSet={`${heroMobile480Webp} 480w, ${heroMobile768Webp} 768w`}
-            sizes="100vw"
+            srcSet={`${hero480Webp} 480w, ${hero640Webp} 640w, ${hero840Webp} 840w`}
+            sizes="(max-width: 800px) 100vw, 60vw"
           />
-          <source media="(min-width: 801px)" type="image/avif" srcSet={heroDesktopAvif} />
-          <source media="(min-width: 801px)" type="image/webp" srcSet={heroDesktopWebp} />
           <img
-            src={heroDesktopWebp}
+            src={hero840Webp}
             alt=""
-            width={960}
-            height={960}
+            width={840}
+            height={879}
             fetchPriority="high"
             decoding="async"
           />
