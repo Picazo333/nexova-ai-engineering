@@ -1,8 +1,69 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { facts, sectors, services } from "./content";
 import heroDesktop from "../../../packages/design-system/assets/a1-hero-golden-desktop.png";
 import heroMobile from "../../../packages/design-system/assets/a1-hero-golden-mobile.png";
 import crimsonFibrous from "../../../packages/design-system/assets/a2-crimson-fibrous.png";
+
+
+function useHeroManifestoMotion() {
+  const storyRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const story = storyRef.current;
+    if (!story) return;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reduceMotion.matches) return;
+
+    const heroVisual = story.querySelector<HTMLElement>(".hero__visual");
+    const heroCopy = story.querySelector<HTMLElement>(".hero__copy");
+    const manifestoMaterial = story.querySelector<HTMLElement>(".manifesto__material");
+    const manifestoCopy = story.querySelector<HTMLElement>(".manifesto__copy");
+
+    if (!heroVisual || !heroCopy || !manifestoMaterial || !manifestoCopy) return;
+
+    let raf = 0;
+
+    const render = () => {
+      raf = 0;
+      const rect = story.getBoundingClientRect();
+      const travel = Math.max(1, story.offsetHeight - window.innerHeight);
+      const progress = Math.min(1, Math.max(0, -rect.top / travel));
+
+      const separate = Math.min(1, progress / 0.42);
+      const yieldProgress = Math.min(1, Math.max(0, (progress - 0.22) / 0.48));
+      const reveal = Math.min(1, Math.max(0, (progress - 0.38) / 0.5));
+
+      heroVisual.style.transform = `translate3d(${separate * 1.5}%, ${separate * -1.2}%, 0) scale(${1 + separate * 0.035})`;
+      heroCopy.style.transform = `translate3d(0, ${yieldProgress * -12}px, 0)`;
+      heroCopy.style.opacity = String(1 - yieldProgress * 0.24);
+
+      manifestoMaterial.style.transform = `translate3d(${(1 - reveal) * -2.5}%, 0, 0) scale(${1.045 - reveal * 0.045})`;
+      manifestoCopy.style.transform = `translate3d(0, ${(1 - reveal) * 22}px, 0)`;
+      manifestoCopy.style.opacity = String(0.72 + reveal * 0.28);
+    };
+
+    const requestRender = () => {
+      if (!raf) raf = window.requestAnimationFrame(render);
+    };
+
+    render();
+    window.addEventListener("scroll", requestRender, { passive: true });
+    window.addEventListener("resize", requestRender);
+
+    return () => {
+      window.removeEventListener("scroll", requestRender);
+      window.removeEventListener("resize", requestRender);
+      if (raf) window.cancelAnimationFrame(raf);
+      [heroVisual, heroCopy, manifestoMaterial, manifestoCopy].forEach((node) => {
+        node.style.removeProperty("transform");
+        node.style.removeProperty("opacity");
+      });
+    };
+  }, []);
+
+  return storyRef;
+}
 
 function Header() {
   const [open, setOpen] = useState(false);
@@ -283,12 +344,16 @@ function Footer() {
 }
 
 function App() {
+  const storyRef = useHeroManifestoMotion();
+
   return (
     <div id="top" className="site-shell">
       <Header />
       <main>
-        <Hero />
-        <Manifesto />
+        <div className="hero-manifesto-story" ref={storyRef}>
+          <Hero />
+          <Manifesto />
+        </div>
         <Capabilities />
         <Evidence />
         <Philosophy />
