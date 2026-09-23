@@ -1,7 +1,7 @@
 # Nexova Project State
 
 **Status:** ACTIVE  
-**Updated:** 2026-09-22  
+**Updated:** 2026-09-23  
 **Current milestone:** 4g-006 — AI-driven Engineering  
 **Working branch:** `design/oni-nocturne-premium-pass`  
 **Pre-milestone baseline:** `3837eb3b943655d8cfb3131e43258cada0fd8871`
@@ -10,7 +10,7 @@
 Complete the 4Geeks AI-driven Engineering milestone while establishing the smallest durable engineering substrate that makes future Nexova milestones safer, easier to resume, and cheaper to extend.
 
 ## Current phase
-**ACADEMIC BASELINE VALIDATED / PR PREPARATION**
+**S1 WEBSITE PREMIUM PASS / G0 PRODUCTION PREFLIGHT**
 
 Implemented in this phase:
 - progressive agent-context entrypoint;
@@ -65,15 +65,16 @@ Not implemented by design:
 The historical source set contains a conflict over the Sales department leader (Megan Clarke vs Marcos Ibáñez). Treat the contested identity as unresolved until a governing source settles it. Do not publish either as an uncontested fact in product surfaces.
 
 ## Next gates
-1. User activates Figma Professional and v0 Plus.
-2. Begin Phase 1 of the approved premium website plan: context compression + visual gap audit.
-3. Execute the website premium workflow through H1/H2/H3 gates.
-4. Translate the locked website language into the backoffice.
-5. Consolidate only evidence-backed shared design-system primitives.
-6. Re-run integrated QA and refresh affected rubric evidence to 22/22 PASS on the final implementation.
-7. Update the existing PR #1 with fresh screenshots/evidence; do not create a replacement academic PR.
-8. Show the final visible audit, then wait for user Campus submission confirmation.
-9. Run didactic packaging and post-delivery harvest only after submission.
+1. Complete G0 Production Preflight: state reconciliation, evidence matrix, deployment/config baseline, runtime asset contract, Codex branch baseline.
+2. Execute Codex production implementation against the locked H2 Figma Golden.
+3. Complete H3 runtime QA and user approval.
+4. Declare WEBSITE_PREMIUM_PASS.
+5. Translate the locked website language into the backoffice.
+6. Consolidate only evidence-backed shared design-system primitives.
+7. Re-run integrated QA and refresh all rubric criteria to 22/22 PASS on the final implementation.
+8. Update the existing PR #1 with fresh screenshots/evidence; do not create a replacement academic PR.
+9. Show the final visible audit, then wait for user Campus submission confirmation.
+10. Run didactic packaging and post-delivery harvest only after submission.
 
 
 ## Premium visual execution update — 2026-09-23
