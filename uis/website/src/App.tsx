@@ -146,19 +146,19 @@ function Hero() {
       <figure className="hero-art" aria-label="Abstract abyssal Nexova artwork">
         <picture>
           <source
-            media="(max-width: 767px)"
+            media="(max-width: 800px)"
             type="image/avif"
             srcSet={`${heroMobile480Avif} 480w, ${heroMobile768Avif} 768w`}
             sizes="100vw"
           />
           <source
-            media="(max-width: 767px)"
+            media="(max-width: 800px)"
             type="image/webp"
             srcSet={`${heroMobile480Webp} 480w, ${heroMobile768Webp} 768w`}
             sizes="100vw"
           />
-          <source media="(min-width: 768px)" type="image/avif" srcSet={heroDesktopAvif} />
-          <source media="(min-width: 768px)" type="image/webp" srcSet={heroDesktopWebp} />
+          <source media="(min-width: 801px)" type="image/avif" srcSet={heroDesktopAvif} />
+          <source media="(min-width: 801px)" type="image/webp" srcSet={heroDesktopWebp} />
           <img
             src={heroDesktopWebp}
             alt=""
@@ -184,12 +184,12 @@ function Manifesto() {
           <source
             type="image/avif"
             srcSet={`${crimson640Avif} 640w, ${crimson960Avif} 960w`}
-            sizes="(max-width: 767px) 100vw, 46vw"
+            sizes="(max-width: 800px) 100vw, 46vw"
           />
           <source
             type="image/webp"
             srcSet={`${crimson640Webp} 640w, ${crimson960Webp} 960w`}
-            sizes="(max-width: 767px) 100vw, 46vw"
+            sizes="(max-width: 800px) 100vw, 46vw"
           />
           <img
             src={crimson640Webp}
@@ -278,12 +278,12 @@ function Philosophy() {
           <source
             type="image/avif"
             srcSet={`${crimson640Avif} 640w, ${crimson960Avif} 960w`}
-            sizes="(max-width: 767px) 100vw, 46vw"
+            sizes="(max-width: 800px) 100vw, 46vw"
           />
           <source
             type="image/webp"
             srcSet={`${crimson640Webp} 640w, ${crimson960Webp} 960w`}
-            sizes="(max-width: 767px) 100vw, 46vw"
+            sizes="(max-width: 800px) 100vw, 46vw"
           />
           <img
             src={crimson640Webp}
@@ -372,12 +372,12 @@ function Closing() {
           <source
             type="image/avif"
             srcSet={`${crimson640Avif} 640w, ${crimson960Avif} 960w`}
-            sizes="(max-width: 767px) 100vw, 46vw"
+            sizes="(max-width: 800px) 100vw, 46vw"
           />
           <source
             type="image/webp"
             srcSet={`${crimson640Webp} 640w, ${crimson960Webp} 960w`}
-            sizes="(max-width: 767px) 100vw, 46vw"
+            sizes="(max-width: 800px) 100vw, 46vw"
           />
           <img
             src={crimson640Webp}
