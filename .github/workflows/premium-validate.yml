@@ -32,7 +32,7 @@ jobs:
       - name: Production build
         run: npm run build
 
-      - name: Start runtime
+      - name: Start dev runtime
         shell: bash
         run: |
           set -euo pipefail
@@ -52,7 +52,6 @@ jobs:
             done
             if [ "$ready" -ne 1 ]; then
               echo "Server on port $port did not become ready."
-              cat "/tmp/nexova-$([ "$port" = "3000" ] && echo website || echo backoffice).log" || true
               exit 1
             fi
           done
@@ -62,27 +61,40 @@ jobs:
         run: |
           set -euo pipefail
           CHROME_BIN="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
-          if [ -z "$CHROME_BIN" ]; then
-            echo "Chrome/Chromium not found on runner."
-            exit 1
-          fi
-
+          test -n "$CHROME_BIN"
           mkdir -p docs/evidence/website-premium
 
           for width in 1440 1024 768 430 390; do
-            "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars               --virtual-time-budget=2500 --window-size="$width",5200               --screenshot="docs/evidence/website-premium/runtime-$width.png"               http://127.0.0.1:3000/
+            "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --virtual-time-budget=2500 --window-size="$width",5200 --screenshot="docs/evidence/website-premium/runtime-$width.png" http://127.0.0.1:3000/
           done
 
-          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --blink-settings=scriptEnabled=false             --virtual-time-budget=1500 --window-size=390,5200             --screenshot=docs/evidence/website-premium/no-js-390.png             http://127.0.0.1:3000/
+          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --blink-settings=scriptEnabled=false --virtual-time-budget=1500 --window-size=390,5200 --screenshot=docs/evidence/website-premium/no-js-390.png http://127.0.0.1:3000/
 
-          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --force-prefers-reduced-motion             --virtual-time-budget=2500 --window-size=390,5200             --screenshot=docs/evidence/website-premium/reduced-motion-390.png             http://127.0.0.1:3000/
+          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --force-prefers-reduced-motion --virtual-time-budget=2500 --window-size=390,5200 --screenshot=docs/evidence/website-premium/reduced-motion-390.png http://127.0.0.1:3000/
 
-      - name: Lighthouse performance and accessibility
+      - name: Lighthouse production preview
         shell: bash
         run: |
           set -euo pipefail
+          npm run preview --workspace @nexova/website -- --host 0.0.0.0 --port 4173 > /tmp/nexova-preview.log 2>&1 &
+          PREVIEW_PID=$!
+          trap 'kill "$PREVIEW_PID" 2>/dev/null || true' EXIT
+
+          ready=0
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent --show-error "http://127.0.0.1:4173/" > /dev/null; then
+              ready=1
+              break
+            fi
+            sleep 1
+          done
+          if [ "$ready" -ne 1 ]; then
+            cat /tmp/nexova-preview.log || true
+            exit 1
+          fi
+
           CHROME_BIN="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
-          npx --yes lighthouse@12 http://127.0.0.1:3000/             --chrome-path="$CHROME_BIN"             --chrome-flags="--headless --no-sandbox --disable-gpu"             --only-categories=performance,accessibility             --output=json             --output-path=docs/evidence/website-premium/lighthouse.json             --quiet
+          npx --yes lighthouse@12 http://127.0.0.1:4173/ --chrome-path="$CHROME_BIN" --chrome-flags="--headless --no-sandbox --disable-gpu" --only-categories=performance,accessibility --output=json --output-path=docs/evidence/website-premium/lighthouse.json --quiet
 
       - name: Upload premium evidence
         uses: actions/upload-artifact@v4
@@ -94,7 +106,7 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-      - name: Stop runtime
+      - name: Stop dev runtime
         if: always()
         shell: bash
         run: |
