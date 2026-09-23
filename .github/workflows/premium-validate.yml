@@ -163,9 +163,22 @@ jobs:
             --dump-dom \
             "$PREVIEW_URL/" > docs/evidence/website-premium/vercel-deployed-dom.html
 
+          echo "Raw response title:"
+          grep -oE '<title>[^<]+' /tmp/nexova-vercel-index.html | head -n 1 || true
+          echo "Rendered DOM title:"
+          grep -oE '<title>[^<]+' docs/evidence/website-premium/vercel-deployed-dom.html | head -n 1 || true
+          echo "Rendered root markers:"
+          grep -oE 'id="root"|class="site-shell"|class="hero"' docs/evidence/website-premium/vercel-deployed-dom.html | sort | uniq -c || true
+
+          if grep -q "Authentication Required" docs/evidence/website-premium/vercel-deployed-dom.html; then
+            echo "VERCEL_DEPLOYMENT_PROTECTION_DETECTED"
+            exit 42
+          fi
+
           grep -q "<title>Nexova Solutions" docs/evidence/website-premium/vercel-deployed-dom.html
           grep -q 'class="site-shell"' docs/evidence/website-premium/vercel-deployed-dom.html
           grep -q 'class="hero"' docs/evidence/website-premium/vercel-deployed-dom.html
+
           if grep -q "Internal Server Error" docs/evidence/website-premium/vercel-deployed-dom.html; then
             echo "Deployed preview rendered an internal server error."
             exit 1
