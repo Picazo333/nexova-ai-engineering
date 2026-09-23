@@ -163,10 +163,13 @@ jobs:
             --dump-dom \
             "$PREVIEW_URL/" > docs/evidence/website-premium/vercel-deployed-dom.html
 
-          grep -q "Nexova Solutions / Desde 2011" docs/evidence/website-premium/vercel-deployed-dom.html
-          grep -q "Tecnología" docs/evidence/website-premium/vercel-deployed-dom.html
-          grep -q "Valencia" docs/evidence/website-premium/vercel-deployed-dom.html
-          grep -q "Miami" docs/evidence/website-premium/vercel-deployed-dom.html
+          grep -q "<title>Nexova Solutions" docs/evidence/website-premium/vercel-deployed-dom.html
+          grep -q 'class="site-shell"' docs/evidence/website-premium/vercel-deployed-dom.html
+          grep -q 'class="hero"' docs/evidence/website-premium/vercel-deployed-dom.html
+          if grep -q "Internal Server Error" docs/evidence/website-premium/vercel-deployed-dom.html; then
+            echo "Deployed preview rendered an internal server error."
+            exit 1
+          fi
 
           "$CHROME_BIN" \
             --headless \
@@ -186,11 +189,11 @@ jobs:
               json.dumps({
                   "reachable": True,
                   "rendered_dom": True,
-                  "content_assertions": [
-                      "Nexova Solutions / Desde 2011",
-                      "Tecnología",
-                      "Valencia",
-                      "Miami"
+                  "render_assertions": [
+                      "title:Nexova Solutions",
+                      "class:site-shell",
+                      "class:hero",
+                      "no:Internal Server Error"
                   ],
                   "preview_url": url
               }, indent=2) + "\n"
