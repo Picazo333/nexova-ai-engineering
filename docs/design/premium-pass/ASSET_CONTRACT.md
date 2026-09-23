@@ -1,6 +1,6 @@
 # Nexova Premium Website — Asset Contract
 
-**Status:** READY FOR PRODUCTION  
+**Status:** READY FOR PRODUCTION — REFRESHED AFTER IDENTITY BASE APPROVAL  
 **Authority:** Direction Contract + Oni Nocturne Visual Lock  
 **Purpose:** Generate only assets that have a defined compositional job.
 
@@ -14,22 +14,23 @@
 6. Keep masters high-resolution; optimize only selected winners.
 7. If CSS/SVG can create the material more cleanly, do not rasterize it.
 
-## A1 — Hero Oni
+## A1 — Abyssal Demon / Oni Hero
 
 **Priority:** CRITICAL  
 **Role:** primary brand anchor / dominant visual mass.
 
 ### Visual intent
-- traditional Japanese/irezumi-informed Oni;
-- severe, controlled, intelligent;
-- dark material depth;
-- bone/ivory highlights;
-- oxblood/crimson used selectively;
-- black/sumi field;
-- peony may appear only as subordinate foreground framing;
-- not fantasy concept art;
-- not anime;
-- not tattoo-shop poster.
+- traditional-Japanese-informed demon/oni, treated graphically rather than cinematically;
+- abstract, fragmented and partially dissolved into an abyssal dark field;
+- severe, controlled and intelligent;
+- dark material depth with bone/ivory fragments and selective oxblood/crimson;
+- skin-like organic substrate may appear as material texture only;
+- crimson-soaked wet cotton may appear as a fibrous material/transition layer;
+- no full fantasy-character reading;
+- no anime;
+- no tattoo-shop poster;
+- no movie-poster lighting;
+- no gore.
 
 ### Composition
 Desktop master:
@@ -57,16 +58,18 @@ Mobile:
 3 independent candidates.
 1 repair maximum after winner selection.
 
-## A2 — Peony Mass
+## A2 — Crimson Fibrous / Organic Counter-Material
 
 **Priority:** HIGH  
-**Role:** foreground framing / depth / transition support.
+**Role:** foreground framing / depth / transition support; wet cotton saturated by crimson liquid is the primary approved material direction.
 
 ### Visual intent
-- traditional print/tattoo lineage without becoming clip-art;
-- deep oxblood / muted bone / black;
-- large shapes, readable silhouette;
-- edge-friendly for clipping and overflow.
+- fibrous cotton-like softness with visible absorption behavior;
+- crimson/oxblood liquid soaking into warm organic fibers;
+- tactile but refined;
+- large compositional masses, not macro-gore;
+- edge-friendly for clipping, masking and motion;
+- can coexist with restrained botanical/ink fragments only if needed.
 
 ### Composition
 - transparent or clean dark background preferred;
@@ -74,10 +77,12 @@ Mobile:
 - should work as left/right foreground framing.
 
 ### Reject
-- repeated AI petals;
-- perfect decorative wallpaper;
+- gore or blood-horror reading;
+- medical imagery;
+- glossy wet-flesh appearance;
 - neon red;
-- bouquet/still-life presentation.
+- decorative wallpaper;
+- random floral filler.
 
 ### Candidate budget
 3.
@@ -175,7 +180,7 @@ notes:
 
 ```yaml
 A1_HERO_ONI: pending_generation
-A2_PEONY: blocked_by_A1_selection
+A2_CRIMSON_FIBROUS_MATERIAL: blocked_by_A1_selection
 A3_SUMI: blocked_by_composition_test
 A4_LANDSCAPE: blocked_by_page_composition
 TIER_B: deferred
