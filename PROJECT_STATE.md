@@ -95,3 +95,13 @@ The historical source set contains a conflict over the Sales department leader (
 - Desktop 1440, mobile 390, A1/A2 asset placement, and Hero → Manifesto motion concept are locked baseline decisions.
 - v0 Challenger is authorized to begin.
 - v0 output is a challenger/prototype layer, not an authority override.
+
+
+## v0 Challenger preparation — 2026-09-23
+- v0 Challenger package prepared after H2 approval.
+- Execution brief: `docs/design/premium-pass/V0_CHALLENGER_BRIEF.md`.
+- Evaluation gate: `docs/design/premium-pass/V0_CHALLENGER_EVAL.md`.
+- Three bounded challenges are defined: V0-A Hero, V0-B Operating Philosophy editorial section, V0-C Mobile translation.
+- Maximum one initial generation plus one material revision per challenge.
+- No automatic merge.
+- Current status: `V0_READY_TO_RUN`.
