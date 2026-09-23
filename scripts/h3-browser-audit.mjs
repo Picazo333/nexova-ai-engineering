@@ -1,5 +1,5 @@
 import { spawn } from "node:child_process";
-import { mkdir, rm, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
@@ -97,6 +97,7 @@ const report = {
   mobileNavigation: null,
   noJs: null,
   reducedMotion: null,
+  axe: null,
 };
 
 let cdp;
@@ -155,6 +156,21 @@ try {
     report.viewports[String(width)] = overflow;
     if (!overflow?.ok) fail("Horizontal overflow at " + width + "px: " + JSON.stringify(overflow));
   }
+
+  await setViewport(1440, 900);
+  await navigate();
+  const axeSource = await readFile(path.resolve("node_modules/axe-core/axe.min.js"), "utf8");
+  await evaluate(axeSource);
+  const axeResult = await evaluate("(async () => { const result = await axe.run(document, { resultTypes: ['violations'] }); return { testEngine: result.testEngine, testEnvironment: result.testEnvironment, violations: result.violations }; })()");
+  const blockingAxe = (axeResult?.violations ?? []).filter((violation) => violation.impact === "critical" || violation.impact === "serious");
+  report.axe = {
+    ok: blockingAxe.length === 0,
+    critical: blockingAxe.filter((violation) => violation.impact === "critical").length,
+    serious: blockingAxe.filter((violation) => violation.impact === "serious").length,
+    totalViolations: (axeResult?.violations ?? []).length,
+  };
+  await writeFile(path.join(evidenceDir, "axe.json"), JSON.stringify(axeResult, null, 2) + "\n");
+  if (blockingAxe.length > 0) fail("Axe serious/critical violations: " + JSON.stringify(blockingAxe.map((violation) => ({ id: violation.id, impact: violation.impact, nodes: violation.nodes?.length ?? 0 }))));
 
   await setViewport(390, 844);
   await navigate();

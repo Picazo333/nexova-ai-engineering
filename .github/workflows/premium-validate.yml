@@ -69,6 +69,10 @@ jobs:
           done
 
 
+      - name: Install ephemeral accessibility auditor
+        shell: bash
+        run: npm install --no-save --package-lock=false axe-core@4.10.3
+
       - name: Browser interaction and resilience audit
         shell: bash
         run: |
@@ -112,6 +116,7 @@ jobs:
             docs/evidence/website-premium/*.png
             docs/evidence/website-premium/lighthouse.json
             docs/evidence/website-premium/browser-audit.json
+            docs/evidence/website-premium/axe.json
           if-no-files-found: error
           retention-days: 7
 
