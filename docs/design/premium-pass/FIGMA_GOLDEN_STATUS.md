@@ -1,6 +1,6 @@
 # Nexova Premium Website — Figma Golden Status
 
-**Status:** H2_READY  
+**Status:** H2_APPROVED / FIGMA_GOLDEN_LOCK  
 **Date:** 2026-09-23  
 **Canonical Figma file:** https://www.figma.com/design/fbDnWF59yCqfEEq5Sf8wFf  
 **File key:** `fbDnWF59yCqfEEq5Sf8wFf`
@@ -78,8 +78,9 @@ DESKTOP_GOLDEN_READY: true
 MOBILE_GOLDEN_READY: true
 MOTION_STORYBOARD_READY: true
 H2_READY: true
-H2_APPROVED: false
-V0_CHALLENGER_ALLOWED: false
+H2_APPROVED: true
+FIGMA_GOLDEN_LOCK: true
+V0_CHALLENGER_ALLOWED: true
 ```
 
 ## Next state
@@ -95,3 +96,18 @@ V0-A Hero implementation
 V0-B Editorial section
 V0-C Mobile translation
 ```
+
+
+## H2 approval
+
+**Approved by user:** 2026-09-23
+
+The Golden candidate is now locked as the canonical visual baseline for the premium website.
+
+```yaml
+FIGMA_GOLDEN_LOCK: true
+H2_APPROVED: true
+V0_CHALLENGER_ALLOWED: true
+```
+
+The next gate is the v0 Challenger. v0 may challenge implementation choices, but it may not silently replace the approved identity, information hierarchy, mobile intent, or Hero → Manifesto narrative contract.
