@@ -36,6 +36,7 @@ jobs:
         run: |
           set -euo pipefail
           OUT="packages/design-system/assets/runtime"
+          rm -rf "$OUT"
           mkdir -p "$OUT"
 
           render_set() {
@@ -52,9 +53,8 @@ jobs:
             done
           }
 
-          render_set "packages/design-system/assets/a1-hero-desktop.png" "a1-hero-desktop" 960 1440 1920
-          render_set "packages/design-system/assets/a1-hero-mobile.png" "a1-hero-mobile" 480 768
-          render_set "packages/design-system/assets/a2-crimson-fibrous.png" "a2-crimson-fibrous" 640 960 1440
+          render_set "packages/design-system/assets/a1-hero-desktop.png" "a1-hero" 480 640 840
+          render_set "packages/design-system/assets/a2-crimson-fibrous.png" "a2-crimson-fibrous" 640 960
 
           echo "Generated derivatives:"
           find "$OUT" -maxdepth 1 -type f -printf "%f %s bytes\n" | sort
