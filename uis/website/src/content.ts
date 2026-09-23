@@ -6,7 +6,7 @@ export const services = [
 export const facts = [
   { value: "2011", label: "Fundación" },
   { value: "120", label: "Personas" },
-  { value: "2", label: "Países" },
-  { value: "3", label: "Líneas de negocio" },
+  { value: "Valencia", label: "Sede" },
+  { value: "Miami", label: "Expansión" },
 ];
 export const sectors = ["Tecnología", "Retail", "Servicios financieros"];
