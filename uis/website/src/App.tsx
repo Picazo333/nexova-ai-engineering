@@ -270,26 +270,9 @@ function Philosophy() {
   return (
     <section className="philosophy" aria-labelledby="philosophy-title">
       <figure className="philosophy-material" aria-hidden="true">
-        <picture>
-          <source
-            type="image/avif"
-            srcSet={`${crimson640Avif} 640w, ${crimson960Avif} 960w`}
-            sizes="(max-width: 800px) 100vw, 46vw"
-          />
-          <source
-            type="image/webp"
-            srcSet={`${crimson640Webp} 640w, ${crimson960Webp} 960w`}
-            sizes="(max-width: 800px) 100vw, 46vw"
-          />
-          <img
-            src={crimson640Webp}
-            alt=""
-            width={960}
-            height={640}
-            loading="lazy"
-            decoding="async"
-          />
-        </picture>
+        <span className="philosophy-shape philosophy-shape--skin" />
+        <span className="philosophy-shape philosophy-shape--crimson" />
+        <span className="philosophy-shape philosophy-shape--ochre" />
       </figure>
 
       <div className="philosophy-copy">
