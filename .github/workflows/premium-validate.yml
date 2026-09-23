@@ -68,9 +68,17 @@ jobs:
             "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --virtual-time-budget=2500 --window-size="$width",5200 --screenshot="docs/evidence/website-premium/runtime-$width.png" http://127.0.0.1:3000/
           done
 
-          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --blink-settings=scriptEnabled=false --virtual-time-budget=1500 --window-size=390,5200 --screenshot=docs/evidence/website-premium/no-js-390.png http://127.0.0.1:3000/
 
-          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars --force-prefers-reduced-motion --virtual-time-budget=2500 --window-size=390,5200 --screenshot=docs/evidence/website-premium/reduced-motion-390.png http://127.0.0.1:3000/
+      - name: Browser interaction and resilience audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHROME_BIN="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME_BIN"
+          CHROME_BIN="$CHROME_BIN" BASE_URL="http://127.0.0.1:3000/" node scripts/h3-browser-audit.mjs
+          test -s docs/evidence/website-premium/browser-audit.json
+          test -s docs/evidence/website-premium/no-js-390.png
+          test -s docs/evidence/website-premium/reduced-motion-390.png
 
       - name: Lighthouse production preview
         shell: bash
@@ -103,6 +111,7 @@ jobs:
           path: |
             docs/evidence/website-premium/*.png
             docs/evidence/website-premium/lighthouse.json
+            docs/evidence/website-premium/browser-audit.json
           if-no-files-found: error
           retention-days: 7
 

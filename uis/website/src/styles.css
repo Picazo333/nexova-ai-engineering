@@ -256,7 +256,7 @@ body {
 .manifesto {
   min-height: 220px;
   display: grid;
-  grid-template-columns: 38% 62%;
+  grid-template-columns: minmax(0, 38fr) minmax(0, 62fr);
   border-bottom: 1px solid var(--nx-line);
   background: #0c0b0b;
 }
@@ -299,7 +299,7 @@ body {
   min-height: 650px;
   padding: 5rem 4.5rem;
   display: grid;
-  grid-template-columns: 34% 66%;
+  grid-template-columns: minmax(0, 34fr) minmax(0, 66fr);
   gap: 4rem;
   border-bottom: 1px solid var(--nx-line);
 }
@@ -360,7 +360,7 @@ body {
   min-height: 520px;
   padding: 5rem 4.5rem;
   display: grid;
-  grid-template-columns: 30% 70%;
+  grid-template-columns: minmax(0, 30fr) minmax(0, 70fr);
   gap: 3rem;
   align-items: center;
   border-bottom: 1px solid var(--nx-line);
@@ -397,7 +397,7 @@ body {
   min-height: 720px;
   padding: 5rem 4.5rem;
   display: grid;
-  grid-template-columns: 43% 57%;
+  grid-template-columns: minmax(0, 560px) minmax(0, 1fr);
   gap: 6rem;
   align-items: center;
   background: var(--nx-bone);
@@ -407,19 +407,44 @@ body {
 
 .philosophy__material {
   margin: 0;
+  position: relative;
   height: 100%;
   max-height: 560px;
   overflow: hidden;
-  background: #1a1211;
+  background: #0a0a0a;
 }
 
-.philosophy__material img {
+.philosophy__orb {
+  position: absolute;
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  filter: saturate(0.9) contrast(1.02);
+  border-radius: 50%;
+}
+
+.philosophy__orb--bone {
+  left: -12.5%;
+  top: 16.0714%;
+  width: 76.7857%;
+  height: 92.8571%;
+  background: var(--nx-skin);
+  opacity: 0.72;
+}
+
+.philosophy__orb--crimson {
+  left: 28.5714%;
+  top: -16.0714%;
+  width: 73.2143%;
+  height: 117.8571%;
+  background: var(--nx-crimson);
+  opacity: 0.56;
+}
+
+.philosophy__orb--ochre {
+  left: 46.4286%;
+  top: 28.5714%;
+  width: 64.2857%;
+  height: 92.8571%;
+  background: var(--nx-ochre);
+  opacity: 0.3;
 }
 
 .philosophy .eyebrow {
@@ -444,7 +469,7 @@ body {
   min-height: 520px;
   padding: 5rem 4.5rem;
   display: grid;
-  grid-template-columns: 40% 28% 32%;
+  grid-template-columns: minmax(0, 40fr) minmax(0, 28fr) minmax(0, 32fr);
   gap: 3rem;
   align-items: start;
   border-bottom: 1px solid var(--nx-line);
@@ -589,11 +614,12 @@ body {
   }
 
   .philosophy {
+    grid-template-columns: minmax(0, 43fr) minmax(0, 57fr);
     gap: 3rem;
   }
 
   .presence {
-    grid-template-columns: 38% 29% 33%;
+    grid-template-columns: minmax(0, 38fr) minmax(0, 29fr) minmax(0, 33fr);
     gap: 2rem;
   }
 }
@@ -744,7 +770,32 @@ body {
 
   .philosophy__material {
     height: auto;
-    aspect-ratio: 4 / 3;
+    max-height: none;
+    aspect-ratio: 5 / 4;
+  }
+
+  .philosophy__orb--bone {
+    left: -22.8571%;
+    top: 10.7143%;
+    width: 74.2857%;
+    height: 117.8571%;
+    opacity: 0.64;
+  }
+
+  .philosophy__orb--crimson {
+    left: 25.7143%;
+    top: -21.4286%;
+    width: 71.4286%;
+    height: 132.1429%;
+    opacity: 0.52;
+  }
+
+  .philosophy__orb--ochre {
+    left: 65.7143%;
+    top: 14.2857%;
+    width: 51.4286%;
+    height: 100%;
+    opacity: 0.28;
   }
 
   .philosophy__copy h2 {

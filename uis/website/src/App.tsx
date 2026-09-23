@@ -240,17 +240,9 @@ function Philosophy() {
   return (
     <section className="philosophy" aria-labelledby="philosophy-title">
       <figure className="philosophy__material" aria-hidden="true">
-        <picture>
-          <source media="(max-width: 720px)" srcSet={fibrousMobile} />
-          <img
-            src={fibrousDesktop}
-            alt=""
-            width={650}
-            height={620}
-            loading="lazy"
-            decoding="async"
-          />
-        </picture>
+        <span className="philosophy__orb philosophy__orb--bone" />
+        <span className="philosophy__orb philosophy__orb--crimson" />
+        <span className="philosophy__orb philosophy__orb--ochre" />
       </figure>
 
       <div className="philosophy__copy">
