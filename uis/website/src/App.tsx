@@ -32,7 +32,7 @@ function useSignatureMotion() {
 
       timeline
         .to(".hero-art img", { scale: 1.045, xPercent: -2, duration: 0.55 }, 0)
-        .to(".hero-copy", { yPercent: -8, opacity: 0.58, duration: 0.5 }, 0.08)
+        .to(".hero-copy", { yPercent: -8, duration: 0.5 }, 0.08)
         .fromTo(
           ".manifesto-material img",
           { scale: 1.08, yPercent: -5 },
@@ -41,8 +41,8 @@ function useSignatureMotion() {
         )
         .fromTo(
           ".manifesto-copy",
-          { y: 54, opacity: 0.28 },
-          { y: 0, opacity: 1, duration: 0.5 },
+          { y: 54 },
+          { y: 0, duration: 0.5 },
           0.4,
         );
     });
