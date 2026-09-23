@@ -82,24 +82,28 @@ H2_APPROVED: true
 FIGMA_GOLDEN_LOCK: true
 V0_CHALLENGER_ALLOWED: false
 V0_CHALLENGER_COMPLETE: true
-PRODUCTION_PREFLIGHT_ACTIVE: true
+PRODUCTION_PREFLIGHT_COMPLETE: true
+CODEX_PRODUCTION_COMPLETE: true
+H3_INTERNAL_GATES_PASS: true
+H3_EXTERNAL_PREVIEW_BLOCKED: true
 ```
 
 ## Next state
 
 ```
-G0 PRODUCTION PREFLIGHT
+VERCEL PREVIEW REPAIR
 ↓
-CODEX PRODUCTION
+DEPLOYED RUNTIME VERIFICATION
 ↓
-H3 RUNTIME APPROVAL
+H3 HUMAN RUNTIME APPROVAL
 ```
 
 v0 challenger is complete and closed for this activity unless a future unresolved visual issue explicitly passes the Premium Tool Cost Gate.
 
-## H2 approval
+## Historical H2 approval snapshot
 
-**Approved by user:** 2026-09-23
+**Approved by user:** 2026-09-23  
+**Historical note:** the block below records the authorization state at H2 time. It is not the current execution cursor. Current state is defined above.
 
 The Golden candidate is now locked as the canonical visual baseline for the premium website.
 
@@ -121,4 +125,5 @@ The v0 phase is complete. Its output is a challenger/reference implementation on
 - Review: `V0_CHALLENGER_REVIEW.md`
 - Integration policy: selective KEEP/ADAPT porting only
 - Wholesale merge: forbidden
-- Current next gate: G0 Production Preflight
+- G0 and Codex production are now complete.
+- Current next gate: Vercel preview repair → deployed-runtime verification → H3 human approval.

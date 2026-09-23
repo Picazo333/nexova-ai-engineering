@@ -65,17 +65,17 @@ Not implemented by design:
 The historical source set contains a conflict over the Sales department leader (Megan Clarke vs Marcos Ibáñez). Treat the contested identity as unresolved until a governing source settles it. Do not publish either as an uncontested fact in product surfaces.
 
 ## Next gates
-1. Complete G0 Production Preflight: state reconciliation, evidence matrix, deployment/config baseline, runtime asset contract, Codex branch baseline.
-2. Execute Codex production implementation against the locked H2 Figma Golden.
-3. Complete H3 runtime QA and user approval.
+1. Reauthorize/correct Vercel team/project linkage and obtain a reachable preview for the exact production candidate.
+2. Verify deployed runtime against the H3 Evidence Matrix.
+3. Present H3 runtime evidence to the user and obtain explicit approval.
 4. Declare WEBSITE_PREMIUM_PASS.
-5. Translate the locked website language into the backoffice.
-6. Consolidate only evidence-backed shared design-system primitives.
-7. Re-run integrated QA and refresh all rubric criteria to 22/22 PASS on the final implementation.
-8. Update the existing PR #1 with fresh screenshots/evidence; do not create a replacement academic PR.
-9. Show the final visible audit, then wait for user Campus submission confirmation.
-10. Run didactic packaging and post-delivery harvest only after submission.
-
+5. Execute S2 Backoffice Premium Pass.
+6. Consolidate evidence-backed shared design-system primitives in S3.
+7. Run monorepo-wide Integrated QA in S4.
+8. Refresh the authoritative Control Tower R01–R22 rubric to final 22/22 in S5.
+9. Update existing PR #1 with final website/backoffice evidence; do not create a replacement academic PR.
+10. Show the final visible audit, then wait for user Campus submission confirmation.
+11. Run didactic packaging and post-delivery harvest only after submission.
 
 ## Premium visual execution update — 2026-09-23
 - H1 is approved.

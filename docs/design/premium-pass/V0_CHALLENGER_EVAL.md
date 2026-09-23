@@ -1,7 +1,11 @@
 # Nexova Premium Website — v0 Challenger Evaluation
 
-**Status:** ACTIVE  
-**Gate:** Post-H2 / pre-Codex
+**Status:** CLOSED / ARCHIVED  
+**Gate:** Completed Post-H2 challenger evaluation
+
+## Current-state note
+
+This document is the archived evaluation contract used during the v0 challenger phase. The phase is CLOSED. Current execution state is governed by `PROJECT_STATE.md` and `LOCKED_EXECUTION_PLAN.md`.
 
 ## Evaluation rule
 
