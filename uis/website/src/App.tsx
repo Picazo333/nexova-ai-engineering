@@ -1,55 +1,335 @@
 import { useState } from "react";
-import { facts, sectors, services } from "./content";
+import heroDesktop from "../../../packages/design-system/assets/a1-hero-desktop.png";
+import heroMobile from "../../../packages/design-system/assets/a1-hero-mobile.png";
+import crimsonFibrous from "../../../packages/design-system/assets/a2-crimson-fibrous.png";
 
-function ServiceCard({index,title,text,meta}:{index:string;title:string;text:string;meta:string}) {
-  return <article className="service-card nx-panel">
-    <div className="service-card__top"><span className="nx-overline">{index}</span><span aria-hidden="true" className="service-card__mark">知</span></div>
-    <h3 className="nx-display">{title}</h3><p>{text}</p><div className="service-card__meta">{meta}</div>
-  </article>;
+const capabilities = [
+  {
+    index: "01",
+    title: "Executive recruitment",
+    body: "Headhunting for mid-management and executive roles.",
+  },
+  {
+    index: "02",
+    title: "Outsourced customer support",
+    body: "Dedicated support teams built around client operations.",
+  },
+  {
+    index: "03",
+    title: "Leadership & soft-skills training",
+    body: "Corporate development focused on leadership and human capability.",
+  },
+];
+
+const evidence = [
+  ["2011", "Founded"],
+  ["120", "Employees"],
+  ["Valencia", "Headquarters"],
+  ["Miami", "Expansion office"],
+];
+
+function Header() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <header className="site-header">
+      <div className="header-shell">
+        <a className="wordmark" href="#top" aria-label="Nexova home">
+          NEXOVA
+        </a>
+
+        <nav
+          id="site-navigation"
+          className={open ? "site-nav is-open" : "site-nav"}
+          aria-label="Primary navigation"
+        >
+          <a href="#about" onClick={() => setOpen(false)}>About</a>
+          <a href="#services" onClick={() => setOpen(false)}>Services</a>
+          <a href="#presence" onClick={() => setOpen(false)}>Presence</a>
+        </nav>
+
+        <div className="header-actions">
+          <a className="header-cta" href="#contact">
+            Start a conversation <span aria-hidden="true">→</span>
+          </a>
+          <button
+            className="menu-toggle"
+            type="button"
+            aria-controls="site-navigation"
+            aria-expanded={open}
+            aria-label={open ? "Close navigation" : "Open navigation"}
+            onClick={() => setOpen((value) => !value)}
+          >
+            <span />
+            <span />
+          </button>
+        </div>
+      </div>
+    </header>
+  );
 }
-function Header(){
-  const [open,setOpen]=useState(false);
-  return <header className="site-header"><div className="nx-container header-inner">
-    <a className="wordmark" href="#top" aria-label="Nexova, inicio">NEXOVA</a>
-    <nav id="mobile-navigation" className={open ? "is-open" : ""} aria-label="Navegación principal"><a onClick={()=>setOpen(false)} href="#servicios">Servicios</a><a onClick={()=>setOpen(false)} href="#enfoque">Enfoque</a><a onClick={()=>setOpen(false)} href="#presencia">Presencia</a><a onClick={()=>setOpen(false)} href="#contacto">Contacto</a></nav>
-    <div className="header-actions"><a className="nx-button nx-button--quiet header-cta" href="#contacto">Hablar con Nexova <span aria-hidden="true">→</span></a><button className="menu-toggle" type="button" aria-expanded={open} aria-controls="mobile-navigation" aria-label={open?"Cerrar navegación":"Abrir navegación"} onClick={()=>setOpen(v=>!v)}><span/><span/></button></div>
-  </div></header>
-}
-function App(){return <div id="top" className="site-shell">
-  <Header/>
-  <main>
-    <section className="hero" aria-labelledby="hero-title"><div className="hero-art" aria-hidden="true"/><div className="hero-vignette" aria-hidden="true"/>
-      <div className="nx-container hero-grid"><div className="hero-copy">
-        <div className="hero-kicker"><span className="nx-overline">Personas × inteligencia × una forma más alta de operar</span><span className="nx-seal" aria-hidden="true">無</span></div>
-        <h1 id="hero-title" className="nx-display">La disciplina crea <em>posibilidades.</em></h1>
-        <p>Nexova ayuda a empresas a encontrar, desarrollar y acompañar talento con la experiencia de una firma construida durante más de una década.</p>
-        <div className="hero-actions"><a className="nx-button nx-button--primary" href="#servicios">Explorar Nexova <span aria-hidden="true">→</span></a><a className="text-link" href="#enfoque">Nuestro enfoque <span aria-hidden="true">↘</span></a></div>
-      </div><div className="hero-side"><span className="hero-side__jp" aria-hidden="true">闇 が 意 志 を 鍛 え る</span><p>Tradición, criterio y sistemas para un futuro más claro.</p></div></div>
-      <div className="hero-index nx-container" aria-hidden="true"><span>01</span><span className="hero-index__line"/><span>UN ORDEN MÁS ALTO</span></div>
+
+function Hero() {
+  return (
+    <section className="hero" aria-labelledby="hero-title">
+      <div className="hero-copy">
+        <p className="eyebrow">Nexova Solutions / Since 2011</p>
+        <h1 id="hero-title" className="display hero-title">
+          Human judgment.
+          <br />
+          Structured for
+          <br />
+          what&apos;s next.
+        </h1>
+        <p className="hero-lede">
+          Recruitment, outsourced customer support and corporate training —
+          connected by disciplined operations and a more intelligent foundation.
+        </p>
+        <div className="hero-actions">
+          <a className="button-outline" href="#services">
+            Explore Nexova <span aria-hidden="true">→</span>
+          </a>
+          <a className="text-action" href="#about">
+            Our approach <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+
+      <figure className="hero-art" aria-label="Abstract abyssal Nexova artwork">
+        <picture>
+          <source media="(max-width: 767px)" srcSet={heroMobile} />
+          <img
+            src={heroDesktop}
+            alt=""
+            width={1536}
+            height={1536}
+            fetchPriority="high"
+            decoding="async"
+          />
+        </picture>
+        <figcaption className="hero-art-note" aria-hidden="true">
+          Technology in service of human intent.
+        </figcaption>
+      </figure>
     </section>
+  );
+}
 
-    <section className="fact-band" aria-label="Nexova en cifras"><div className="nx-container fact-grid">{facts.map(f=><div className="fact" key={f.label}><strong className="nx-display">{f.value}</strong><span>{f.label}</span></div>)}</div></section>
+function Manifesto() {
+  return (
+    <section className="manifesto" id="about" aria-labelledby="manifesto-title">
+      <figure className="manifesto-material" aria-hidden="true">
+        <img
+          src={crimsonFibrous}
+          alt=""
+          width={1536}
+          height={1024}
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
 
-    <section className="section section--services" id="servicios"><div className="nx-container">
-      <div className="section-heading"><div><span className="nx-overline">03 líneas de negocio</span><h2 className="nx-display">La experiencia humana sigue siendo el núcleo.</h2></div><p>Selección, formación y soporte diseñados para equipos profesionales con necesidades concretas y expectativas altas.</p></div>
-      <div className="services-grid">{services.map(s=><ServiceCard key={s.index} {...s}/>)}</div>
-    </div></section>
+      <div className="manifesto-copy">
+        <p className="eyebrow">01 / Operating belief</p>
+        <h2 id="manifesto-title" className="display manifesto-title">
+          Experience is human. Infrastructure should help it move.
+        </h2>
+        <p>
+          Nexova has spent more than a decade working where judgment matters.
+          The next step is connecting the systems around that judgment — not
+          replacing it.
+        </p>
+      </div>
+    </section>
+  );
+}
 
-    <section className="section section--belief" id="enfoque"><div className="nx-container belief-grid">
-      <div className="belief-art" role="img" aria-label="Paisaje japonés oscuro con torii bajo una luna roja"/>
-      <div className="belief-copy"><span className="nx-overline">Una firma construida para evolucionar</span><h2 className="nx-display">Lo que importa no es automatizar más. Es operar <em>mejor.</em></h2>
-      <p>Nexova nació como una consultora de dos personas y hoy reúne a 120 profesionales en dos países. La siguiente etapa consiste en mantener el criterio humano mientras la infraestructura gana claridad, velocidad y escala.</p>
-      <blockquote>“La tecnología debe ampliar la intención humana, no reemplazarla.”</blockquote>
-      <a className="text-link" href="#contacto">Construir el siguiente capítulo <span aria-hidden="true">→</span></a></div>
-    </div></section>
+function Capabilities() {
+  return (
+    <section className="capabilities section-dark" id="services" aria-labelledby="capabilities-title">
+      <div className="capability-intro">
+        <p className="eyebrow">02 / What Nexova does</p>
+        <h2 id="capabilities-title" className="display section-title">
+          Three disciplines.
+          <br />
+          One operating
+          <br />
+          standard.
+        </h2>
+      </div>
 
-    <section className="section presence" id="presencia"><div className="nx-container presence-grid">
-      <div><span className="nx-overline">Presencia y sectores</span><h2 className="nx-display">Valencia. Miami. Un mismo estándar.</h2><p>Trabajamos con medianas empresas que han decidido externalizar parte o la totalidad de su gestión de talento.</p></div>
-      <div className="presence-list"><div><span>01</span><strong>Valencia, España</strong></div><div><span>02</span><strong>Miami, Florida</strong></div>{sectors.map((s,i)=><div key={s}><span>0{i+3}</span><strong>{s}</strong></div>)}</div>
-    </div></section>
+      <div className="capability-list">
+        {capabilities.map((item) => (
+          <article className="capability-item" key={item.index}>
+            <p className="capability-index">{item.index}</p>
+            <div>
+              <h3 className="display">{item.title}</h3>
+              <p>{item.body}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
 
-    <section className="section final-cta" id="contacto"><div className="nx-container final-cta__inner"><div><span className="nx-overline">La siguiente conversación</span><h2 className="nx-display">Un futuro más significativo empieza con una decisión bien tomada.</h2></div><a className="nx-button nx-button--primary" href="#servicios">Explorar servicios <span aria-hidden="true">→</span></a></div></section>
-  </main>
-  <footer><div className="nx-container footer-inner"><div><span className="wordmark">NEXOVA</span><p>Talento, formación y soporte para organizaciones que quieren operar a un estándar más alto.</p></div><div className="footer-meta"><span>Documento de escenario · 4Geeks Academy</span><span>Oni Nocturne Oxblood · Visual system v1</span></div></div></footer>
-</div>}
+function Evidence() {
+  return (
+    <section className="evidence section-dark" aria-labelledby="evidence-title">
+      <div className="evidence-heading">
+        <p className="eyebrow">03 / Established operations</p>
+        <h2 id="evidence-title" className="display section-title">
+          Experience,
+          <br />
+          made visible.
+        </h2>
+      </div>
+
+      <div className="evidence-grid" aria-label="Nexova company facts">
+        {evidence.map(([value, label]) => (
+          <div className="evidence-item" key={label}>
+            <strong className="display">{value}</strong>
+            <span>{label}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Philosophy() {
+  return (
+    <section className="philosophy" aria-labelledby="philosophy-title">
+      <figure className="philosophy-material" aria-hidden="true">
+        <img
+          src={crimsonFibrous}
+          alt=""
+          width={1536}
+          height={1024}
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+
+      <div className="philosophy-copy">
+        <p className="eyebrow">04 / Operating philosophy</p>
+        <h2 id="philosophy-title" className="display section-title">
+          Human expertise
+          <br />
+          should not disappear
+          <br />
+          inside systems.
+        </h2>
+        <p>
+          Nexova&apos;s transformation is about connecting the infrastructure
+          around judgment — making experience easier to access, coordinate and
+          act on.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function Presence() {
+  return (
+    <section className="presence section-dark" id="presence" aria-labelledby="presence-title">
+      <div className="presence-heading">
+        <p className="eyebrow">05 / Presence</p>
+        <h2 id="presence-title" className="display section-title">
+          Local judgment.
+          <br />
+          Cross-border reach.
+        </h2>
+      </div>
+
+      <div className="presence-locations">
+        <div>
+          <strong className="display">Valencia</strong>
+          <span>Headquarters / Spain</span>
+        </div>
+        <div>
+          <strong className="display">Miami</strong>
+          <span>Expansion office / Florida</span>
+        </div>
+      </div>
+
+      <div className="presence-sectors">
+        <p className="eyebrow">Frequent client sectors</p>
+        <p className="display">Technology</p>
+        <p className="display">Retail</p>
+        <p className="display">Financial services</p>
+      </div>
+    </section>
+  );
+}
+
+function Closing() {
+  return (
+    <section className="closing" id="contact" aria-labelledby="closing-title">
+      <div className="closing-copy">
+        <p className="eyebrow">06 / Nexova</p>
+        <h2 id="closing-title" className="display closing-title">
+          Experience,
+          <br />
+          connected.
+        </h2>
+        <p>
+          A more disciplined operating foundation for talent, service and
+          development.
+        </p>
+        <a className="button-outline" href="mailto:hello@nexova.example">
+          Start a conversation <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <figure className="closing-material" aria-hidden="true">
+        <img
+          src={crimsonFibrous}
+          alt=""
+          width={1536}
+          height={1024}
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="site-footer">
+      <div>
+        <span className="wordmark">NEXOVA</span>
+        <p>Recruitment / Customer Support / Corporate Training</p>
+      </div>
+      <nav aria-label="Footer navigation">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#presence">Presence</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <p className="footer-meta">Valencia / Miami · Since 2011</p>
+    </footer>
+  );
+}
+
+function App() {
+  return (
+    <div id="top" className="site-shell">
+      <Header />
+      <main>
+        <Hero />
+        <Manifesto />
+        <Capabilities />
+        <Evidence />
+        <Philosophy />
+        <Presence />
+        <Closing />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
 export { App };
