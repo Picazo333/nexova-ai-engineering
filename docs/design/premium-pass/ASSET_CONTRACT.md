@@ -1,0 +1,182 @@
+# Nexova Premium Website — Asset Contract
+
+**Status:** READY FOR PRODUCTION  
+**Authority:** Direction Contract + Oni Nocturne Visual Lock  
+**Purpose:** Generate only assets that have a defined compositional job.
+
+## General rules
+
+1. Assets are production inputs, not standalone poster art.
+2. No generated text, pseudo-kanji, logos or UI inside raster artwork.
+3. Every primary asset needs a usable safe zone for interface/copy.
+4. Desktop and mobile crop viability must be tested before approval.
+5. One dominant motif per composition.
+6. Keep masters high-resolution; optimize only selected winners.
+7. If CSS/SVG can create the material more cleanly, do not rasterize it.
+
+## A1 — Hero Oni
+
+**Priority:** CRITICAL  
+**Role:** primary brand anchor / dominant visual mass.
+
+### Visual intent
+- traditional Japanese/irezumi-informed Oni;
+- severe, controlled, intelligent;
+- dark material depth;
+- bone/ivory highlights;
+- oxblood/crimson used selectively;
+- black/sumi field;
+- peony may appear only as subordinate foreground framing;
+- not fantasy concept art;
+- not anime;
+- not tattoo-shop poster.
+
+### Composition
+Desktop master:
+- landscape or flexible 4:3-ish master;
+- face/head/upper-body focal mass biased toward right or center-right;
+- left or left-center safe negative space for headline;
+- meaningful dark edges for responsive crop.
+
+Mobile:
+- crop must preserve face/eyes/mask character;
+- must permit headline overlay or separation;
+- no essential information in far edges.
+
+### Reject
+- centered poster;
+- full symmetrical mask filling frame;
+- oversaturated red;
+- glowing eyes;
+- horns treated as gaming/fantasy;
+- random Japanese lettering;
+- melting ornamental anatomy;
+- excessively busy background.
+
+### Candidate budget
+3 independent candidates.
+1 repair maximum after winner selection.
+
+## A2 — Peony Mass
+
+**Priority:** HIGH  
+**Role:** foreground framing / depth / transition support.
+
+### Visual intent
+- traditional print/tattoo lineage without becoming clip-art;
+- deep oxblood / muted bone / black;
+- large shapes, readable silhouette;
+- edge-friendly for clipping and overflow.
+
+### Composition
+- transparent or clean dark background preferred;
+- can be cropped aggressively;
+- should work as left/right foreground framing.
+
+### Reject
+- repeated AI petals;
+- perfect decorative wallpaper;
+- neon red;
+- bouquet/still-life presentation.
+
+### Candidate budget
+3.
+
+## A3 — Sumi Atmosphere
+
+**Priority:** HIGH  
+**Role:** atmospheric depth and transition separation.
+
+### Visual intent
+- ink/smoke behavior;
+- directional;
+- transparent/black-friendly;
+- broad shapes rather than noisy fog.
+
+### Requirements
+- must support compositing;
+- should not contain focal objects;
+- must not reduce text contrast when used within specified opacity.
+
+### Implementation note
+If a CSS/SVG/noise solution performs better, generated raster may be rejected entirely.
+
+## A4 — Signature Background / Landscape
+
+**Priority:** HIGH  
+**Role:** secondary atmosphere for philosophy/closing; not repeated background wallpaper.
+
+### Visual intent
+- nocturnal Japanese landscape / architectural suggestion;
+- deep black field;
+- restrained moon/torii if composition requires;
+- large quiet zones;
+- cinematic but minimal.
+
+### Reject
+- scenic wallpaper;
+- tourist/Japan cliché;
+- obvious red sun centered behind torii;
+- fantasy matte painting.
+
+## B1 — Blood Moon
+
+Conditional.
+Prefer CSS/vector/photographic treatment if sufficient.
+
+## B2 — Secondary Oni Detail
+
+Conditional.
+Close crop/detail only if a later section genuinely needs a second art anchor.
+
+## B3 — Ritual Ornament
+
+Conditional.
+Prefer vector/line construction.
+
+## C — Code-native materials
+
+Default to CSS/SVG:
+- grain;
+- lacquer sheen;
+- paper noise;
+- fine rules;
+- frame lines;
+- subtle gold/metal highlights.
+
+## Asset approval schema
+
+```yaml
+id:
+role:
+candidate:
+status: APPROVE | REPAIR | REJECT
+identity_match:
+composition_usefulness:
+safe_zone:
+desktop_crop:
+mobile_crop:
+artifact_cleanliness:
+visual_uniqueness:
+performance_risk:
+notes:
+```
+
+## Production sequence
+
+1. Generate A1 Hero Oni candidates.
+2. Select/repair A1.
+3. Generate A2 Peony against selected A1 visual grammar.
+4. Generate/test A3 only if code-native atmosphere is insufficient.
+5. Generate A4 after full-page composition establishes its required shape.
+6. Do not generate Tier B until a Figma composition calls for it.
+
+## Current state
+
+```yaml
+A1_HERO_ONI: pending_generation
+A2_PEONY: blocked_by_A1_selection
+A3_SUMI: blocked_by_composition_test
+A4_LANDSCAPE: blocked_by_page_composition
+TIER_B: deferred
+```
