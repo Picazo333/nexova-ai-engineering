@@ -10,7 +10,7 @@
 Complete the 4Geeks AI-driven Engineering milestone while establishing the smallest durable engineering substrate that makes future Nexova milestones safer, easier to resume, and cheaper to extend.
 
 ## Current phase
-**S1 WEBSITE PREMIUM PASS / H3 EXTERNAL PREVIEW BLOCKER**
+**S1 WEBSITE PREMIUM PASS / H3 REOPENED — VISUAL ASSET QUALITY REPAIR**
 
 Implemented in this phase:
 - progressive agent-context entrypoint;
@@ -134,3 +134,23 @@ The historical source set contains a conflict over the Sales department leader (
 - Independent H3 red-team findings were repaired in one bounded production batch.
 - Full Control Tower R01–R22 refresh remains correctly deferred to S5 after Backoffice Premium + Integrated QA.
 - H3 remains blocked only by Vercel: the GitHub integration is still deploying the production branch through historical project `nexova-premium-v0-challenger`, and the active Vercel connector lacks authorization for team scope `mbpicazo33-1986`.
+
+
+## H3 visual regression reopened — 2026-09-23
+
+User review of the deployed preview exposed a material visual defect in the hero.
+
+Root cause:
+- runtime imported Figma-exported `*-golden-*.png` raster proxies;
+- those proxies are visibly pixelated;
+- repository master assets are materially higher quality;
+- this violates the existing Figma/asset contract: embedded Figma images are layout/crop references, while production must originate from the high-quality masters.
+
+Failure classification: **conditioning/reference + asset-delivery contract violation**, not Vercel compression and not layout failure.
+
+Repair scope:
+1. replace A1 desktop/mobile runtime imports with the repository A1 masters;
+2. replace pixelated A2 Golden proxies with the A2 master;
+3. preserve approved H2 container geometry/crop logic;
+4. rerun deterministic QA, Lighthouse and deployed preview review;
+5. do not close H3 until human visual approval.

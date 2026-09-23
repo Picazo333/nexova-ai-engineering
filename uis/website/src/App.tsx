@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { facts, sectors, services } from "./content";
-import heroDesktop from "../../../packages/design-system/assets/a1-hero-golden-desktop.png";
-import heroMobile from "../../../packages/design-system/assets/a1-hero-golden-mobile.png";
-import fibrousDesktop from "../../../packages/design-system/assets/a2-fibrous-golden-desktop.png";
-import fibrousMobile from "../../../packages/design-system/assets/a2-fibrous-golden-mobile.png";
+import heroDesktop from "../../../packages/design-system/assets/a1-hero-desktop.png";
+import heroMobile from "../../../packages/design-system/assets/a1-hero-mobile.png";
+import fibrousDesktop from "../../../packages/design-system/assets/a2-crimson-fibrous.png";
+import fibrousMobile from "../../../packages/design-system/assets/a2-crimson-fibrous.png";
 
 
 function useHeroManifestoMotion() {

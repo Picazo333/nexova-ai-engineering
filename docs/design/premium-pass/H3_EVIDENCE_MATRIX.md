@@ -1,6 +1,6 @@
 # H3 Evidence Matrix — Nexova Premium Website
 
-**Status:** BLOCKED_EXTERNAL — INTERNAL H3 GATES PASS  
+**Status:** REOPENED — VISUAL ASSET QUALITY FAIL  
 **Gate:** H3 Runtime Approval  
 **Candidate implementation commit:** `f10cd71572ea3b5883b9bf746f48d4cb04afbc36`  
 **GitHub Actions run:** `35929968292` — **SUCCESS**  
@@ -96,3 +96,13 @@ A full 22/22 rerun is intentionally **not** performed at website-only H3 because
 - the approved metaplan places the rubric refresh at S5, after S2 Backoffice Premium and S4 Integrated QA.
 
 The website-impacting technical criteria are nevertheless revalidated here; the final academic score remains an S5 gate.
+
+
+## Reopened finding — H3-RT-008
+
+**Severity:** P1 material visual defect  
+**Detected by:** human deployed-preview review, 2026-09-23  
+**Symptom:** hero artwork is visibly blocky/pixelated at desktop runtime.  
+**Root cause:** production imports `a1-hero-golden-desktop.png` / `a1-hero-golden-mobile.png`, which are Figma raster proxies rather than production masters. The same failure mode exists in A2 Golden derivatives.  
+**Contract violation:** `FIGMA_GOLDEN_STATUS.md` states that embedded Figma references are crop/layout proxies and the original high-resolution masters remain the production image sources.  
+**Disposition:** H3 reopened. Replace runtime sources with masters, preserve approved geometry, rerun QA and require new human visual approval.

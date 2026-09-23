@@ -2,7 +2,7 @@
 
 **Status:** EXECUTION LOCK / AUDIT RECONCILED  
 **Date:** 2026-09-23  
-**Current cursor:** S1 Website Premium Pass → H3 external preview blocker  
+**Current cursor:** S1 Website Premium Pass → H3 reopened visual asset repair  
 **Change policy:** No phase/tool is added unless a current gate cannot be satisfied with the approved toolchain.  
 **Independent audit:** `docs/design/premium-pass/reviews/INDEPENDENT_PROCESS_AUDIT_2026-09-23.md`
 
