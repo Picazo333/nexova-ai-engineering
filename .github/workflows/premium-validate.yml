@@ -32,7 +32,7 @@ jobs:
       - name: Production build
         run: npm run build
 
-      - name: Runtime smoke
+      - name: Runtime smoke and visual capture
         shell: bash
         run: |
           set -euo pipefail
@@ -67,3 +67,23 @@ jobs:
               exit 1
             fi
           done
+
+          CHROME_BIN="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          if [ -z "$CHROME_BIN" ]; then
+            echo "Chrome/Chromium not found on runner."
+            exit 1
+          fi
+
+          mkdir -p docs/evidence/website-premium
+
+          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=2500 --window-size=1440,5200             --screenshot=docs/evidence/website-premium/desktop-1440.png             http://127.0.0.1:3000/
+
+          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=2500 --window-size=390,5200             --screenshot=docs/evidence/website-premium/mobile-390.png             http://127.0.0.1:3000/
+
+      - name: Upload premium visual evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-premium-preview
+          path: docs/evidence/website-premium/*.png
+          if-no-files-found: error
+          retention-days: 7
