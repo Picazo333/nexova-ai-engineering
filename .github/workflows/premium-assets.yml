@@ -6,6 +6,9 @@ on:
       - implementation/nexova-premium-production
     paths:
       - ".github/workflows/premium-assets.yml"
+      - "packages/design-system/assets/a1-hero-desktop.png"
+      - "packages/design-system/assets/a1-hero-mobile.png"
+      - "packages/design-system/assets/a2-crimson-fibrous.png"
 
 permissions:
   contents: write
