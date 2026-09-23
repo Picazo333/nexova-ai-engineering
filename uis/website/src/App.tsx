@@ -362,8 +362,8 @@ function Closing() {
           A more disciplined operating foundation for talent, service and
           development.
         </p>
-        <a className="button-outline" href="mailto:hello@nexova.example">
-          Start a conversation <span aria-hidden="true">→</span>
+        <a className="button-outline" href="#services">
+          Explore services <span aria-hidden="true">→</span>
         </a>
       </div>
 
