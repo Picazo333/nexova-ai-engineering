@@ -1,6 +1,6 @@
 # Nexova Premium Website — Direction Contract
 
-**Status:** ACTIVE / PRE-FIGMA — UPDATED AFTER IDENTITY BASE APPROVAL  
+**Status:** LOCKED / H2-APPROVED PRODUCTION AUTHORITY  
 **Authority:** Below product truth and Oni Nocturne Oxblood; above implementation tools.  
 **Surface:** Public corporate website  
 **Mode:** PERSUADE
@@ -459,9 +459,14 @@ H1 is approved only if:
 ```yaml
 REFERENCE_INTELLIGENCE_PASS: true
 DIRECTION_CONTRACT_READY: true
-FIGMA_GOLDEN_LOCK: false
-H1_APPROVED: false
+H1_APPROVED: true
+H2_APPROVED: true
+FIGMA_GOLDEN_LOCK: true
+V0_CHALLENGER_COMPLETE: true
+PRODUCTION_IMPLEMENTATION_ACTIVE: false
 ```
 
 Next:
-`ASSET_CONTRACT.md` + Tier A production asset generation.
+`G0 Production Preflight → Codex Production → H3`.
+
+Historical pre-Figma instructions above remain useful as design rationale; the current state block governs execution.
