@@ -140,7 +140,7 @@ try {
     runtimeErrors.push({ source: "Runtime.exceptionThrown", text: params.exceptionDetails?.text ?? "Uncaught runtime exception" });
   });
   cdp.on("Log.entryAdded", (params) => {
-    if (params.entry?.level === "error") runtimeErrors.push({ source: "Log.entryAdded", text: params.entry.text });
+    if (params.entry?.level === "error") runtimeErrors.push({ source: "Log.entryAdded", text: params.entry.text, url: params.entry.url ?? null });
   });
 
   await cdp.send("Page.enable");
@@ -202,8 +202,7 @@ try {
   if (!reduced) fail("Reduced-motion media emulation did not activate.");
   await cdp.send("Emulation.setEmulatedMedia", { media: "screen", features: [] });
 
-  const uncaught = runtimeErrors.filter((entry) => entry.source === "Runtime.exceptionThrown");
-  if (uncaught.length > 0) fail("Uncaught runtime errors: " + JSON.stringify(uncaught));
+  if (runtimeErrors.length > 0) fail("Console/runtime errors: " + JSON.stringify(runtimeErrors));
 
   report.pass = failures.length === 0;
   report.failures = failures;
