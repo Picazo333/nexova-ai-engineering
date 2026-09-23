@@ -74,3 +74,15 @@ The historical source set contains a conflict over the Sales department leader (
 7. Update the existing PR #1 with fresh screenshots/evidence; do not create a replacement academic PR.
 8. Show the final visible audit, then wait for user Campus submission confirmation.
 9. Run didactic packaging and post-delivery harvest only after submission.
+
+
+## Premium visual execution update — 2026-09-23
+- H1 is approved.
+- Figma Professional production is active.
+- Canonical Figma file: https://www.figma.com/design/fbDnWF59yCqfEEq5Sf8wFf
+- Desktop 1440 Golden candidate is complete.
+- Mobile 390 Golden candidate is complete.
+- A1 abyssal hero and A2 crimson fibrous material are represented in the canonical design.
+- Hero → Manifesto motion storyboard is complete.
+- Figma Golden is H2-ready but NOT H2-approved.
+- v0 challenger remains blocked until explicit H2 approval.
