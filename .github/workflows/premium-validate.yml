@@ -163,9 +163,10 @@ jobs:
             --dump-dom \
             "$PREVIEW_URL/" > docs/evidence/website-premium/vercel-deployed-dom.html
 
-          grep -q "Criterio humano" docs/evidence/website-premium/vercel-deployed-dom.html
-          grep -q "Selección ejecutiva" docs/evidence/website-premium/vercel-deployed-dom.html
+          grep -q "Nexova Solutions / Desde 2011" docs/evidence/website-premium/vercel-deployed-dom.html
+          grep -q "Tecnología" docs/evidence/website-premium/vercel-deployed-dom.html
           grep -q "Valencia" docs/evidence/website-premium/vercel-deployed-dom.html
+          grep -q "Miami" docs/evidence/website-premium/vercel-deployed-dom.html
 
           "$CHROME_BIN" \
             --headless \
@@ -186,9 +187,10 @@ jobs:
                   "reachable": True,
                   "rendered_dom": True,
                   "content_assertions": [
-                      "Criterio humano",
-                      "Selección ejecutiva",
-                      "Valencia"
+                      "Nexova Solutions / Desde 2011",
+                      "Tecnología",
+                      "Valencia",
+                      "Miami"
                   ],
                   "preview_url": url
               }, indent=2) + "\n"
