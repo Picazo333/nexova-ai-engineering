@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import heroDesktop from "../../../packages/design-system/assets/a1-hero-desktop.png";
-import heroMobile from "../../../packages/design-system/assets/a1-hero-mobile.png";
-import crimsonFibrous from "../../../packages/design-system/assets/a2-crimson-fibrous.png";
+import heroDesktopAvif from "../../../packages/design-system/assets/runtime/a1-hero-desktop-960.avif";
+import heroDesktopWebp from "../../../packages/design-system/assets/runtime/a1-hero-desktop-960.webp";
+import heroMobile480Avif from "../../../packages/design-system/assets/runtime/a1-hero-mobile-480.avif";
+import heroMobile768Avif from "../../../packages/design-system/assets/runtime/a1-hero-mobile-768.avif";
+import heroMobile480Webp from "../../../packages/design-system/assets/runtime/a1-hero-mobile-480.webp";
+import heroMobile768Webp from "../../../packages/design-system/assets/runtime/a1-hero-mobile-768.webp";
+import crimson640Avif from "../../../packages/design-system/assets/runtime/a2-crimson-fibrous-640.avif";
+import crimson960Avif from "../../../packages/design-system/assets/runtime/a2-crimson-fibrous-960.avif";
+import crimson640Webp from "../../../packages/design-system/assets/runtime/a2-crimson-fibrous-640.webp";
+import crimson960Webp from "../../../packages/design-system/assets/runtime/a2-crimson-fibrous-960.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -138,12 +145,25 @@ function Hero() {
 
       <figure className="hero-art" aria-label="Abstract abyssal Nexova artwork">
         <picture>
-          <source media="(max-width: 767px)" srcSet={heroMobile} />
+          <source
+            media="(max-width: 767px)"
+            type="image/avif"
+            srcSet={`${heroMobile480Avif} 480w, ${heroMobile768Avif} 768w`}
+            sizes="100vw"
+          />
+          <source
+            media="(max-width: 767px)"
+            type="image/webp"
+            srcSet={`${heroMobile480Webp} 480w, ${heroMobile768Webp} 768w`}
+            sizes="100vw"
+          />
+          <source media="(min-width: 768px)" type="image/avif" srcSet={heroDesktopAvif} />
+          <source media="(min-width: 768px)" type="image/webp" srcSet={heroDesktopWebp} />
           <img
-            src={heroDesktop}
+            src={heroDesktopWebp}
             alt=""
-            width={1536}
-            height={1536}
+            width={960}
+            height={960}
             fetchPriority="high"
             decoding="async"
           />
@@ -160,14 +180,26 @@ function Manifesto() {
   return (
     <section className="manifesto" id="about" aria-labelledby="manifesto-title">
       <figure className="manifesto-material" aria-hidden="true">
-        <img
-          src={crimsonFibrous}
-          alt=""
-          width={1536}
-          height={1024}
-          loading="lazy"
-          decoding="async"
-        />
+        <picture>
+          <source
+            type="image/avif"
+            srcSet={`${crimson640Avif} 640w, ${crimson960Avif} 960w`}
+            sizes="(max-width: 767px) 100vw, 46vw"
+          />
+          <source
+            type="image/webp"
+            srcSet={`${crimson640Webp} 640w, ${crimson960Webp} 960w`}
+            sizes="(max-width: 767px) 100vw, 46vw"
+          />
+          <img
+            src={crimson640Webp}
+            alt=""
+            width={960}
+            height={640}
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
       </figure>
 
       <div className="manifesto-copy">
@@ -242,14 +274,26 @@ function Philosophy() {
   return (
     <section className="philosophy" aria-labelledby="philosophy-title">
       <figure className="philosophy-material" aria-hidden="true">
-        <img
-          src={crimsonFibrous}
-          alt=""
-          width={1536}
-          height={1024}
-          loading="lazy"
-          decoding="async"
-        />
+        <picture>
+          <source
+            type="image/avif"
+            srcSet={`${crimson640Avif} 640w, ${crimson960Avif} 960w`}
+            sizes="(max-width: 767px) 100vw, 46vw"
+          />
+          <source
+            type="image/webp"
+            srcSet={`${crimson640Webp} 640w, ${crimson960Webp} 960w`}
+            sizes="(max-width: 767px) 100vw, 46vw"
+          />
+          <img
+            src={crimson640Webp}
+            alt=""
+            width={960}
+            height={640}
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
       </figure>
 
       <div className="philosophy-copy">
@@ -324,14 +368,26 @@ function Closing() {
       </div>
 
       <figure className="closing-material" aria-hidden="true">
-        <img
-          src={crimsonFibrous}
-          alt=""
-          width={1536}
-          height={1024}
-          loading="lazy"
-          decoding="async"
-        />
+        <picture>
+          <source
+            type="image/avif"
+            srcSet={`${crimson640Avif} 640w, ${crimson960Avif} 960w`}
+            sizes="(max-width: 767px) 100vw, 46vw"
+          />
+          <source
+            type="image/webp"
+            srcSet={`${crimson640Webp} 640w, ${crimson960Webp} 960w`}
+            sizes="(max-width: 767px) 100vw, 46vw"
+          />
+          <img
+            src={crimson640Webp}
+            alt=""
+            width={960}
+            height={640}
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
       </figure>
     </section>
   );
