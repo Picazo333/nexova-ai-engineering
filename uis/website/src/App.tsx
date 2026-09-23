@@ -37,11 +37,9 @@ function useHeroManifestoMotion() {
 
       heroVisual.style.transform = `translate3d(${separate * 1.5}%, ${separate * -1.2}%, 0) scale(${1 + separate * 0.035})`;
       heroCopy.style.transform = `translate3d(0, ${yieldProgress * -12}px, 0)`;
-      heroCopy.style.opacity = String(1 - yieldProgress * 0.24);
 
       manifestoMaterial.style.transform = `translate3d(${(1 - reveal) * -2.5}%, 0, 0) scale(${1.045 - reveal * 0.045})`;
       manifestoCopy.style.transform = `translate3d(0, ${(1 - reveal) * 22}px, 0)`;
-      manifestoCopy.style.opacity = String(0.72 + reveal * 0.28);
     };
 
     const requestRender = () => {
@@ -58,7 +56,6 @@ function useHeroManifestoMotion() {
       if (raf) window.cancelAnimationFrame(raf);
       [heroVisual, heroCopy, manifestoMaterial, manifestoCopy].forEach((node) => {
         node.style.removeProperty("transform");
-        node.style.removeProperty("opacity");
       });
     };
   }, []);
