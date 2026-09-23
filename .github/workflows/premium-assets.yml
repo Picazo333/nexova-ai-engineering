@@ -69,7 +69,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No derivative changes."
           else
-            git commit -m "assets: add responsive runtime derivatives [skip ci]"
+            git commit -m "assets: refresh responsive runtime derivatives"
             git pull --rebase origin implementation/nexova-premium-production
             git push origin HEAD:implementation/nexova-premium-production
           fi
