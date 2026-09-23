@@ -3,14 +3,14 @@
 **Status:** ACTIVE  
 **Updated:** 2026-09-23  
 **Current milestone:** 4g-006 — AI-driven Engineering  
-**Working branch:** `design/oni-nocturne-premium-pass`  
+**Working branch:** `codex/premium-production`  
 **Pre-milestone baseline:** `3837eb3b943655d8cfb3131e43258cada0fd8871`
 
 ## Current objective
 Complete the 4Geeks AI-driven Engineering milestone while establishing the smallest durable engineering substrate that makes future Nexova milestones safer, easier to resume, and cheaper to extend.
 
 ## Current phase
-**S1 WEBSITE PREMIUM PASS / G0 PRODUCTION PREFLIGHT**
+**S1 WEBSITE PREMIUM PASS / H3 EXTERNAL PREVIEW BLOCKER**
 
 Implemented in this phase:
 - progressive agent-context entrypoint;
@@ -116,3 +116,21 @@ The historical source set contains a conflict over the Sales department leader (
 - Production handoff: `docs/design/premium-pass/CODEX_PRODUCTION_HANDOFF.md`.
 - Next execution owner: Codex.
 - Next gate: H3 production QA.
+
+
+## H3 runtime QA update — 2026-09-23
+
+- Exact candidate: `f10cd71572ea3b5883b9bf746f48d4cb04afbc36`.
+- GitHub Actions Premium Validate run `35929968292`: **PASS**.
+- Responsive evidence captured at 1440 / 1024 / 768 / 430 / 390.
+- Horizontal overflow: **0** at all required widths.
+- Console/runtime errors: **0**.
+- Keyboard + visible focus: **PASS**.
+- Mobile navigation: **PASS**.
+- No-JS readable fallback: **PASS**.
+- Reduced motion: **PASS**.
+- axe-core 4.10.3: **0 critical / 0 serious / 0 total violations**.
+- Lighthouse: performance **0.96**, accessibility **1.00**, LCP **2.5 s**, CLS **0.061**, TBT **0 ms**.
+- Independent H3 red-team findings were repaired in one bounded production batch.
+- Full Control Tower R01–R22 refresh remains correctly deferred to S5 after Backoffice Premium + Integrated QA.
+- H3 remains blocked only by Vercel: the GitHub integration is still deploying the production branch through historical project `nexova-premium-v0-challenger`, and the active Vercel connector lacks authorization for team scope `mbpicazo33-1986`.
