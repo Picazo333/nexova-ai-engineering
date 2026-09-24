@@ -242,6 +242,7 @@ jobs:
           PY
 
       - name: Upload premium evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: website-premium-h3

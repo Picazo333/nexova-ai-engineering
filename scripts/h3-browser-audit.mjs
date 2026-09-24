@@ -99,6 +99,7 @@ const report = {
   reducedMotion: null,
   axe: null,
   visualContracts: null,
+  signatureScroll: null,
 };
 
 let cdp;
@@ -175,6 +176,14 @@ try {
 
   report.visualContracts = await evaluate("(() => { const fonts = { instrumentSerif: document.fonts.check('42px \\\"Instrument Serif\\\"'), inter: document.fonts.check('16px Inter'), ibmPlexMono: document.fonts.check('11px \\\"IBM Plex Mono\\\"') }; const motion = { gsap: Boolean(window.gsap), scrollTrigger: Boolean(window.ScrollTrigger) }; const staticA2Blocks = document.querySelectorAll('.manifesto__material img, .closing__material img').length; return { ok: Object.values(fonts).every(Boolean) && motion.gsap && motion.scrollTrigger && staticA2Blocks === 0, fonts, motion, staticA2Blocks }; })()");
   if (!report.visualContracts?.ok) fail("Visual contract audit failed: " + JSON.stringify(report.visualContracts));
+
+  await evaluate("window.scrollTo(0, 0)");
+  await sleep(180);
+  await cdp.send("Input.dispatchMouseEvent", { type: "mouseWheel", x: 720, y: 700, deltaY: 420, deltaX: 0 });
+  await sleep(500);
+  report.signatureScroll = await evaluate("(() => { const triggers = window.ScrollTrigger?.getAll?.() ?? []; const fiber = document.querySelector('.hero__fibers'); const hero = document.querySelector('.hero'); const fiberTransform = fiber ? getComputedStyle(fiber).transform : 'none'; return { ok: triggers.length === 1 && Boolean(document.querySelector('.pin-spacer')) && fiberTransform !== 'none' && Boolean(hero), triggerCount: triggers.length, pinSpacer: Boolean(document.querySelector('.pin-spacer')), fiberTransform }; })()");
+  if (!report.signatureScroll?.ok) fail("Signature scroll contract failed: " + JSON.stringify(report.signatureScroll));
+
 
   await setViewport(390, 844);
   await navigate();
