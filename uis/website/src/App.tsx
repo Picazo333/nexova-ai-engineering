@@ -34,7 +34,7 @@ function useHeroManifestoMotion() {
       const mm = gsap.matchMedia();
 
       mm.add("(min-width: 769px) and (prefers-reduced-motion: no-preference)", () => {
-        gsap.set(manifestoCopy, { opacity: 0.34, y: 24 });
+        gsap.set(manifestoCopy, { opacity: 1, y: 24 });
 
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -51,10 +51,10 @@ function useHeroManifestoMotion() {
 
         tl
           .to(heroArt, { scale: 1.09, xPercent: 3.2, yPercent: -1.3, duration: 1 }, 0)
-          .to(heroFibers, { xPercent: 11, yPercent: -8, scale: 1.16, opacity: 0.58, duration: 1 }, 0)
-          .to(heroCopy, { yPercent: -8, opacity: 0.42, duration: 0.82 }, 0.34)
+          .to(heroFibers, { xPercent: 11, yPercent: -8, scale: 1.16, opacity: 0.68, duration: 1 }, 0)
+          .to(heroCopy, { yPercent: -8, opacity: 0.76, duration: 0.82 }, 0.34)
           .to(manifesto, { y: () => -Math.min(250, manifesto.offsetHeight * 0.86), duration: 1 }, 0.42)
-          .to(manifestoCopy, { opacity: 1, y: 0, duration: 0.74 }, 0.56);
+          .to(manifestoCopy, { y: 0, duration: 0.74 }, 0.56);
 
         return () => {
           tl.scrollTrigger?.kill();

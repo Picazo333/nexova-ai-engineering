@@ -184,6 +184,25 @@ try {
   report.signatureScroll = await evaluate("(() => { const triggers = window.ScrollTrigger?.getAll?.() ?? []; const fiber = document.querySelector('.hero__fibers'); const hero = document.querySelector('.hero'); const fiberTransform = fiber ? getComputedStyle(fiber).transform : 'none'; return { ok: triggers.length === 1 && Boolean(document.querySelector('.pin-spacer')) && fiberTransform !== 'none' && Boolean(hero), triggerCount: triggers.length, pinSpacer: Boolean(document.querySelector('.pin-spacer')), fiberTransform }; })()");
   if (!report.signatureScroll?.ok) fail("Signature scroll contract failed: " + JSON.stringify(report.signatureScroll));
 
+  const motionRange = await evaluate("(() => { const trigger = window.ScrollTrigger?.getAll?.()[0]; return trigger ? { start: trigger.start, end: trigger.end } : null; })()");
+  if (motionRange) {
+    const phases = [
+      ["rest", 0],
+      ["separate", 0.33],
+      ["yield", 0.66],
+      ["release", 1],
+    ];
+    for (const [name, progress] of phases) {
+      const y = motionRange.start + (motionRange.end - motionRange.start) * progress;
+      await evaluate("window.scrollTo(0, " + JSON.stringify(y) + ")");
+      await sleep(320);
+      const shot = await cdp.send("Page.captureScreenshot", { format: "png", fromSurface: true });
+      await writeFile(path.join(evidenceDir, "motion-" + name + ".png"), Buffer.from(shot.data, "base64"));
+    }
+    await evaluate("window.scrollTo(0, 0)");
+    await sleep(120);
+  }
+
 
   await setViewport(390, 844);
   await navigate();
