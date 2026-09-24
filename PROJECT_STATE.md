@@ -10,7 +10,7 @@
 Complete the 4Geeks AI-driven Engineering milestone while establishing the smallest durable engineering substrate that makes future Nexova milestones safer, easier to resume, and cheaper to extend.
 
 ## Current phase
-**S1 WEBSITE PREMIUM PASS / H3 REOPENED — VISUAL ASSET QUALITY REPAIR**
+**S1 WEBSITE PREMIUM PASS / VISUAL INTENT RECOVERY ACTIVE**
 
 Implemented in this phase:
 - progressive agent-context entrypoint;
@@ -154,3 +154,19 @@ Repair scope:
 3. preserve approved H2 container geometry/crop logic;
 4. rerun deterministic QA, Lighthouse and deployed preview review;
 5. do not close H3 until human visual approval.
+
+
+## Visual Intent Recovery lock — 2026-09-23
+
+Authoritative recovery order: `docs/design/premium-pass/VISUAL_INTENT_RECOVERY_WORK_ORDER.md`.
+
+Current classification:
+- technical baseline: PASS;
+- visual runtime: NOT APPROVED;
+- H3: OPEN;
+- A1 source integrity: BLOCKED — approved abstract high-resolution master not present in repo and Figma proxy is only 172×180;
+- A2 role integrity: REPAIR;
+- H2 typography recovery: READY;
+- Hero→Manifesto GSAP recovery: READY.
+
+No new art direction is authorized.

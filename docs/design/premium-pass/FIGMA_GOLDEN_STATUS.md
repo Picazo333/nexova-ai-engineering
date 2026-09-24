@@ -84,16 +84,20 @@ V0_CHALLENGER_ALLOWED: false
 V0_CHALLENGER_COMPLETE: true
 PRODUCTION_PREFLIGHT_COMPLETE: true
 CODEX_PRODUCTION_COMPLETE: true
-H3_INTERNAL_GATES_PASS: true
-H3_EXTERNAL_PREVIEW_BLOCKED: true
+H3_INTERNAL_GATES_PASS: false
+H3_EXTERNAL_PREVIEW_BLOCKED: false
 ```
 
 ## Next state
 
 ```
-VERCEL PREVIEW REPAIR
+VISUAL INTENT RECOVERY
 ↓
-DEPLOYED RUNTIME VERIFICATION
+A1 SOURCE INTEGRITY
+↓
+TYPOGRAPHY + ASSET ROLE + GSAP STORY
+↓
+RUNTIME QA
 ↓
 H3 HUMAN RUNTIME APPROVAL
 ```
@@ -127,3 +131,13 @@ The v0 phase is complete. Its output is a challenger/reference implementation on
 - Wholesale merge: forbidden
 - G0 and Codex production are now complete.
 - Current next gate: Vercel preview repair → deployed-runtime verification → H3 human approval.
+
+
+## H3 reopening note — 2026-09-23
+
+The H2 Golden remains composition authority. H3 human review exposed that production failed to translate several accompanying production contracts:
+- embedded A1/A2 Figma images are low-resolution proxies, not runtime sources;
+- exact H2 fonts must render in browser;
+- the Motion Spec requires the single GSAP/ScrollTrigger Hero→Manifesto sequence.
+
+This does not unlock a new visual route. It activates the bounded Visual Intent Recovery Work Order.

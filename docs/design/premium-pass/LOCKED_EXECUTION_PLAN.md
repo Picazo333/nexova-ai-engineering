@@ -2,7 +2,7 @@
 
 **Status:** EXECUTION LOCK / AUDIT RECONCILED  
 **Date:** 2026-09-23  
-**Current cursor:** S1 Website Premium Pass → H3 reopened visual asset repair  
+**Current cursor:** S1 Website Premium Pass → Visual Intent Recovery Work Order  
 **Change policy:** No phase/tool is added unless a current gate cannot be satisfied with the approved toolchain.  
 **Independent audit:** `docs/design/premium-pass/reviews/INDEPENDENT_PROCESS_AUDIT_2026-09-23.md`
 
@@ -167,3 +167,13 @@ Any new variable-cost tool requires:
 - cheaper alternatives ruled out;
 - explicit bounded budget;
 - stop condition.
+
+
+## Visual Intent Recovery incorporation — 2026-09-23
+
+H3 human review supplied new material evidence: the deployed runtime does not yet carry the approved visual intent.
+
+Execution is now governed by:
+`docs/design/premium-pass/VISUAL_INTENT_RECOVERY_WORK_ORDER.md`
+
+This is a bounded recovery of the existing lock, not a redesign.
