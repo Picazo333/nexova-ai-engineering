@@ -2,10 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { facts, sectors, services } from "./content";
-import heroDesktop from "../../../packages/design-system/assets/a1-hero-desktop.png";
-import heroMobile from "../../../packages/design-system/assets/a1-hero-mobile.png";
-import fibrousDesktop from "../../../packages/design-system/assets/a2-crimson-fibrous.png";
-import fibrousMobile from "../../../packages/design-system/assets/a2-crimson-fibrous.png";
 
 function useHeroManifestoMotion() {
   const storyRef = useRef<HTMLDivElement>(null);
@@ -121,13 +117,56 @@ function Hero() {
 
       <figure className="hero__visual" aria-hidden="true">
         <picture className="hero__art">
-          <source media="(max-width: 720px)" srcSet={heroMobile} />
-          <img src={heroDesktop} alt="" width={1024} height={1024} fetchPriority="high" decoding="async" />
+          <source
+            media="(max-width: 720px)"
+            type="image/avif"
+            srcSet="/runtime/a1-hero-mobile-480.avif 480w, /runtime/a1-hero-mobile-768.avif 768w"
+            sizes="100vw"
+          />
+          <source
+            media="(max-width: 720px)"
+            type="image/webp"
+            srcSet="/runtime/a1-hero-mobile-480.webp 480w, /runtime/a1-hero-mobile-768.webp 768w"
+            sizes="100vw"
+          />
+          <source
+            type="image/avif"
+            srcSet="/runtime/a1-hero-desktop-640.avif 640w, /runtime/a1-hero-desktop-960.avif 960w"
+            sizes="60vw"
+          />
+          <source
+            type="image/webp"
+            srcSet="/runtime/a1-hero-desktop-640.webp 640w, /runtime/a1-hero-desktop-960.webp 960w"
+            sizes="60vw"
+          />
+          <img
+            src="/runtime/a1-hero-desktop-960.webp"
+            alt=""
+            width={960}
+            height={960}
+            fetchPriority="high"
+            decoding="async"
+          />
         </picture>
 
         <picture className="hero__fibers">
-          <source media="(max-width: 720px)" srcSet={fibrousMobile} />
-          <img src={fibrousDesktop} alt="" width={1024} height={1024} decoding="async" />
+          <source
+            type="image/avif"
+            srcSet="/runtime/a2-crimson-fibrous-640.avif 640w, /runtime/a2-crimson-fibrous-960.avif 960w"
+            sizes="45vw"
+          />
+          <source
+            type="image/webp"
+            srcSet="/runtime/a2-crimson-fibrous-640.webp 640w, /runtime/a2-crimson-fibrous-960.webp 960w"
+            sizes="45vw"
+          />
+          <img
+            src="/runtime/a2-crimson-fibrous-960.webp"
+            alt=""
+            width={960}
+            height={960}
+            decoding="async"
+          />
         </picture>
 
         <figcaption>
