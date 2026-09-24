@@ -185,3 +185,31 @@ Executed against `VISUAL_INTENT_RECOVERY_WORK_ORDER.md`:
 - QA now checks font availability, GSAP/ScrollTrigger presence, A2 role integrity, and minimum A1 source dimensions.
 
 Human H3 remains OPEN. The recovered A1 composition is a bounded runtime reconstruction candidate pending deployed visual review.
+
+
+## VIR validated candidate — 2026-09-24
+
+Visual implementation candidate: `f4f7a083ef0907e69eca3a9f53ac8c220a94327d`.
+
+Internal validation:
+- Premium Validate run `35940642876`: PASS;
+- Vercel deployment: SUCCESS;
+- exact H2 fonts: PASS;
+- A2 role integrity: PASS;
+- one GSAP/ScrollTrigger Hero→Manifesto signature sequence: PASS;
+- REST / SEPARATE / YIELD / RELEASE evidence captured;
+- responsive 1440 / 1024 / 768 / 430 / 390: PASS;
+- horizontal overflow: 0;
+- console/runtime errors: 0;
+- axe: 0 critical / 0 serious / 0 total;
+- reduced motion: PASS;
+- Lighthouse: performance 0.94, accessibility 1.00, LCP 2.7 s, CLS 0.002, TBT 0 ms;
+- runtime image transfer reduced to ~46 KB in Lighthouse through deterministic AVIF/WebP derivatives;
+- total measured transfer ~254 KB.
+
+Current state:
+- technical/runtime recovery: PASS;
+- human visual approval: OPEN;
+- A1 canonical-master provenance: not recovered; current hero is a bounded masked/cropped reconstruction using the high-resolution source available in the repo, constrained by the approved A1 contract.
+
+Do not advance to S2 until human H3 visual review accepts the runtime or identifies a new material visual failure.
