@@ -98,6 +98,7 @@ const report = {
   noJs: null,
   reducedMotion: null,
   axe: null,
+  visualContracts: null,
 };
 
 let cdp;
@@ -171,6 +172,9 @@ try {
   };
   await writeFile(path.join(evidenceDir, "axe.json"), JSON.stringify(axeResult, null, 2) + "\n");
   if (blockingAxe.length > 0) fail("Axe serious/critical violations: " + JSON.stringify(blockingAxe.map((violation) => ({ id: violation.id, impact: violation.impact, nodes: violation.nodes?.length ?? 0 }))));
+
+  report.visualContracts = await evaluate("(() => { const fonts = { instrumentSerif: document.fonts.check('42px \\\"Instrument Serif\\\"'), inter: document.fonts.check('16px Inter'), ibmPlexMono: document.fonts.check('11px \\\"IBM Plex Mono\\\"') }; const motion = { gsap: Boolean(window.gsap), scrollTrigger: Boolean(window.ScrollTrigger) }; const staticA2Blocks = document.querySelectorAll('.manifesto__material img, .closing__material img').length; return { ok: Object.values(fonts).every(Boolean) && motion.gsap && motion.scrollTrigger && staticA2Blocks === 0, fonts, motion, staticA2Blocks }; })()");
+  if (!report.visualContracts?.ok) fail("Visual contract audit failed: " + JSON.stringify(report.visualContracts));
 
   await setViewport(390, 844);
   await navigate();

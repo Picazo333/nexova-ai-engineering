@@ -170,3 +170,18 @@ Current classification:
 - Hero→Manifesto GSAP recovery: READY.
 
 No new art direction is authorized.
+
+
+## VIR implementation pass — 2026-09-23
+
+Executed against `VISUAL_INTENT_RECOVERY_WORK_ORDER.md`:
+- exact H2 typography families wired: Instrument Serif / Inter / IBM Plex Mono;
+- Figma `*-golden-*.png` proxies prohibited as runtime imports;
+- current high-resolution A1 master is used only as a masked/cropped reconstruction substrate, not treated as the canonical abstract master;
+- A2 moved from repeated static section imagery into Hero→Manifesto foreground/transition material;
+- closing no longer repeats A2 as an ordinary image block;
+- one GSAP + ScrollTrigger Hero→Manifesto sequence added using REST → SEPARATE → YIELD → RELEASE logic;
+- reduced motion preserves readable native flow with no pin/scrub;
+- QA now checks font availability, GSAP/ScrollTrigger presence, A2 role integrity, and minimum A1 source dimensions.
+
+Human H3 remains OPEN. The recovered A1 composition is a bounded runtime reconstruction candidate pending deployed visual review.
