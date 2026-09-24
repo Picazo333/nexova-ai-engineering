@@ -61,7 +61,7 @@ website_visual:
     historical_challenger: CLOSED
     new_bounded_runtime_design_pass: AUTHORIZED_AFTER_R1_HUMAN_GATE
     max_runs: 2
-  next_gate: R0_A1_CANONICAL_RECOVERY
+  next_gate: R0_A1_REVALIDATION_OR_BOUNDED_RECONSTRUCTION
 
 visual_canon:
   moodboard_identity_decision: RECOVERED_AS_DECISION
@@ -69,7 +69,11 @@ visual_canon:
   b0_h1_composition_decision: RECOVERED_AS_HISTORY
   b0_h1_raw_artifact: UNRECOVERED
   a1_contract: RECOVERED
-  a1_canonical_master: UNRECOVERED
+  a1_desktop_master_candidate: "packages/design-system/assets/a1-hero-desktop.png"
+  a1_desktop_status: REQUIRES_REVALIDATION
+  a1_mobile_master_candidate: "packages/design-system/assets/a1-hero-mobile.png"
+  a1_mobile_status: FAILS_CURRENT_CONTRACT_LITERALNESS
+  a1_canonical_master: REOPENED
   figma_a1_proxy_px: "172x180"
   a2_contract: RECOVERED
   a2_canonical_role: RECOVERED

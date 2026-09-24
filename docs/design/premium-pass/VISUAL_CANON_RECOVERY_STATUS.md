@@ -1,6 +1,6 @@
 # Visual Canon Recovery Status
 
-**Status:** R0 ACTIVE — PARTIAL RECOVERY / A1 CANONICAL BLOCKER  
+**Status:** R0 ACTIVE — PARTIAL RECOVERY / A1 REVALIDATION  
 **Date:** 2026-09-24  
 **Authority:** `VISUAL_RECOVERY_PLAN_V2.md`
 
@@ -72,13 +72,20 @@ The approval decision is known, but the original raw moodboard image was not loc
 
 Its historical approval and role are known, but no canonical raw visual artifact was located.
 
-### A1 canonical high-resolution master
-**UNRECOVERED.**
+### A1 high-resolution candidates
+**EXIST, BUT CANONICALITY IS REOPENED.**
 
-Evidence:
-- Figma A1 imageHash resolves to only **172×180 px**;
-- the repo's current high-resolution A1 source is shared with the historical v0 branch;
-- after human H3 rejection, that source cannot be promoted to canonical merely because it is high-resolution.
+Repository candidates:
+- desktop: `packages/design-system/assets/a1-hero-desktop.png`;
+- mobile: `packages/design-system/assets/a1-hero-mobile.png`.
+
+Historical evidence shows these files were previously treated as production masters during the v0/Codex pass. Current human H3 rejection reopens their canonical status.
+
+Contract revalidation:
+- desktop candidate: partially consistent — dark abyss, fragmented/incomplete facial reading, right-weighted mass; keep as a **candidate**, not automatic canon;
+- mobile candidate: **fails the current A1 contract** because it presents a centered, complete, highly legible Oni mask rather than an independently art-directed 20–30% abstract/dissolved reading.
+
+Figma A1 imageHash remains only **172×180 px**, so it cannot resolve the provenance question.
 
 ### A2 embedded Figma source
 Figma imageHash resolves to only **92×72 px**.  
@@ -99,9 +106,12 @@ This does **not** reopen:
 ## R0 remaining gate
 
 Before R1:
-1. recover the original A1 master if it can still be found; otherwise create one bounded reconstruction candidate;
-2. human accepts/corrects A1;
-3. store the accepted A1 as canonical;
-4. preserve any newly recovered moodboard/B0 raw artifacts in-repo if found.
+1. preserve the desktop A1 as a reusable candidate;
+2. do not reuse the current literal mobile A1 as canonical;
+3. attempt recovery of the original approved master/crop if any new source appears;
+4. otherwise create exactly one bounded reconstruction candidate, reusing the desktop candidate where possible and producing an independently art-directed mobile state;
+5. human accepts/corrects the A1 set;
+6. store the accepted set as canonical;
+7. preserve any newly recovered moodboard/B0 raw artifacts in-repo if found.
 
 After A1 canonicalization, proceed immediately to the five R1 frames.

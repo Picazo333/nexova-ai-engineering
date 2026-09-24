@@ -65,14 +65,17 @@ Recovered:
 
 Unrecovered:
 - raw approved moodboard;
-- raw B0/H1 composition proof;
-- canonical high-resolution A1 master.
+- raw B0/H1 composition proof.
 
-Figma proxies:
-- A1: 172×180;
-- A2: 92×72.
+A1 revalidation:
+- desktop high-resolution candidate exists and is partially contract-consistent, but canonical status is reopened;
+- current mobile high-resolution candidate is too literal/complete and fails the active A1 contract;
+- Figma A1 proxy is only 172×180 and cannot serve as production authority.
 
-The current repo high-resolution A1 is not canonical merely because it has more pixels.
+A2:
+- high-resolution source exists;
+- its semantic role remains material/transition, not repeated content;
+- Figma proxy is only 92×72.
 
 ## Tool roles
 
@@ -91,11 +94,12 @@ No Spline, no SuperDesign, no new identity exploration.
 ## Current next action
 
 Finish R0:
-1. recover A1 master if possible;
-2. otherwise create exactly one bounded A1 reconstruction candidate from the locked contract;
-3. human review;
-4. canonicalize accepted A1;
-5. move immediately to R1 five frames.
+1. reuse the current desktop A1 only as a candidate/reference;
+2. reject the current literal mobile A1 as canonical;
+3. recover a better approved source if available; otherwise create exactly one bounded A1 reconstruction set against the locked contract;
+4. human review;
+5. canonicalize accepted desktop/mobile A1;
+6. move immediately to R1 five frames.
 
 Do not resume incremental patching of the existing runtime.
 
