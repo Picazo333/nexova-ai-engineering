@@ -65,17 +65,17 @@ Not implemented by design:
 The historical source set contains a conflict over the Sales department leader (Megan Clarke vs Marcos Ibáñez). Treat the contested identity as unresolved until a governing source settles it. Do not publish either as an uncontested fact in product surfaces.
 
 ## Next gates
-1. Reauthorize/correct Vercel team/project linkage and obtain a reachable preview for the exact production candidate.
-2. Verify deployed runtime against the H3 Evidence Matrix.
-3. Present H3 runtime evidence to the user and obtain explicit approval.
-4. Declare WEBSITE_PREMIUM_PASS.
-5. Execute S2 Backoffice Premium Pass.
-6. Consolidate evidence-backed shared design-system primitives in S3.
-7. Run monorepo-wide Integrated QA in S4.
-8. Refresh the authoritative Control Tower R01–R22 rubric to final 22/22 in S5.
-9. Update existing PR #1 with final website/backoffice evidence; do not create a replacement academic PR.
-10. Show the final visible audit, then wait for user Campus submission confirmation.
-11. Run didactic packaging and post-delivery harvest only after submission.
+1. Complete R0 Visual Canon Recovery, with canonical A1 as the first material gate.
+2. Produce five R1 high-fidelity composition frames and obtain H1.5 human visual approval.
+3. Run one bounded v0 runtime-design prototype; allow at most one material repair; obtain H1.6 approval.
+4. Canonicalize the validated direction as Figma Golden V2 and obtain H2 V2 approval.
+5. Codex implements the approved Golden with near-zero art-direction discretion.
+6. Run Visual + Technical Red Team and one bounded P0–P2 repair batch.
+7. Present deployed runtime for H3. Only explicit human approval declares WEBSITE_PREMIUM_PASS.
+8. Execute S2 Backoffice Premium Pass.
+9. Execute S3 Foundation and S4 Integrated QA.
+10. Refresh authoritative R01–R22 to final 22/22 in S5.
+11. Update existing PR #1; show final audit; user performs Campus submission; then didactic/harvest.
 
 ## Premium visual execution update — 2026-09-23
 - H1 is approved.
@@ -213,3 +213,24 @@ Current state:
 - A1 canonical-master provenance: not recovered; current hero is a bounded masked/cropped reconstruction using the high-resolution source available in the repo, constrained by the approved A1 contract.
 
 Do not advance to S2 until human H3 visual review accepts the runtime or identifies a new material visual failure.
+
+
+## Human visual rejection and H2 V2 reset — 2026-09-24
+
+The VIR candidate `f4f7a083ef0907e69eca3a9f53ac8c220a94327d` is retained as a **technical baseline** but was explicitly rejected at human H3 for visual quality.
+
+Observed outcome:
+- scrollytelling existed but its execution was not sufficient;
+- aesthetic impact remained materially below the approved identity ambition;
+- the runtime did not convincingly translate Figma/B0/brand intent;
+- professional brand consistency and authored composition were insufficient.
+
+Adjudication:
+- H3 = REJECTED;
+- H2 V1 approval = historical only; current visual authority reopened;
+- Identity Base Lock / Direction Contract / Product Truth / architecture remain locked;
+- current plan = `VISUAL_RECOVERY_PLAN_V2.md`;
+- current gate = R0 A1 canonical recovery;
+- current runtime must not be incrementally patched as visual authority.
+
+Conversation state has been split into two explicit handoffs under `docs/handoffs/`.

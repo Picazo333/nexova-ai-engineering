@@ -1,143 +1,85 @@
 # Nexova Premium Website — Figma Golden Status
 
-**Status:** H2_APPROVED / FIGMA_GOLDEN_LOCK  
-**Date:** 2026-09-23  
+**Status:** H2 V1 HISTORICAL APPROVAL / CURRENT VISUAL AUTHORITY REOPENED  
+**Date:** 2026-09-24  
 **Canonical Figma file:** https://www.figma.com/design/fbDnWF59yCqfEEq5Sf8wFf  
 **File key:** `fbDnWF59yCqfEEq5Sf8wFf`
 
-## Authority
+## Current adjudication
 
-After H2 approval, this Figma file becomes the canonical visual source of truth for the premium website implementation.
+The 2026-09-23 H2 approval remains valid as a **historical approval snapshot**, but H2 V1 is no longer sufficient as current production visual authority.
 
-Until H2 is explicitly approved, its current state is a review candidate.
+New material evidence from deployed H3 review showed:
+- technically green runtime was visually far below the intended brand impact;
+- static Golden composition left too much art-direction ambiguity;
+- embedded A1/A2 images are only layout proxies;
+- runtime mechanics alone did not recover the intended identity.
 
-## Completed
+Therefore the visual track is reopened at:
+`VISUAL_RECOVERY_PLAN_V2.md`.
 
-### Foundations
-- Primitive + semantic color variables
-- Spacing/radius variables
-- Motion timing/easing variables
-- Typography styles
-- Foundations reference page
+This does **not** reopen the Identity Base Lock, Direction Contract, Product Truth or technical architecture.
 
-### Desktop Golden — 1440
-Complete page structure:
-1. Hero
-2. Hero → Manifesto transition
-3. Capability field
-4. Evidence
-5. Operating philosophy
-6. Presence
-7. Closing
-8. Footer
+## H2 V1 recovered facts
 
-The current company facts and service copy are source-backed from `CONTEXT.md` / `PRODUCT_TRUTH.md`.
+### Typography
+- Instrument Serif / Regular
+- Inter / Regular + Medium
+- IBM Plex Mono / Regular
 
-### Mobile Golden — 390
-The full site has an independently art-directed mobile composition:
-- reduced ornamental density;
-- mobile-specific hero crop;
-- mobile-specific type scale;
-- reduced motion assumptions;
-- full content hierarchy preserved.
+### Layout history
+- complete 1440 desktop composition
+- complete 390 mobile composition
 
-### Approved production material
-- A1 abstract abyssal hero is embedded as the Figma crop/layout reference.
-- A2 crimson-soaked fibrous material is embedded for transition/closing material fields.
-- The original high-resolution masters remain the production image sources; embedded Figma references are layout/crop proxies and must not be exported as final production assets.
-
-### Motion
-The Motion Spec contains a four-frame storyboard:
+### Motion history
 - REST
 - SEPARATE
 - YIELD
 - RELEASE
+- one GSAP + ScrollTrigger Hero→Manifesto sequence
+- native scroll
+- reduced-motion without pin/scrub
 
-Contract:
-- one GSAP + ScrollTrigger signature sequence for Hero → Manifesto;
-- native scroll remains authoritative;
-- reduced-motion path removes pin/scrub and resolves to the final readable state.
+### Embedded-image limitation
+Figma source inspection:
+- A1 imageHash original size: **172×180**
+- A2 imageHash original size: **92×72**
 
-## H2 review contract
-
-H2 may be approved only if the user accepts:
-
-1. full desktop information hierarchy;
-2. mobile translation;
-3. visual system and type direction;
-4. placement/use of A1/A2 material assets;
-5. Hero → Manifesto motion concept;
-6. overall balance between brutalist structure, organic materiality, and corporate clarity.
+These are proxies, not production masters.
 
 ## Current state
 
 ```yaml
-H1_APPROVED: true
-FIGMA_FOUNDATIONS_PASS: true
-DESKTOP_GOLDEN_READY: true
-MOBILE_GOLDEN_READY: true
-MOTION_STORYBOARD_READY: true
-H2_READY: true
-H2_APPROVED: true
-FIGMA_GOLDEN_LOCK: true
-V0_CHALLENGER_ALLOWED: false
-V0_CHALLENGER_COMPLETE: true
-PRODUCTION_PREFLIGHT_COMPLETE: true
-CODEX_PRODUCTION_COMPLETE: true
-H3_INTERNAL_GATES_PASS: false
-H3_EXTERNAL_PREVIEW_BLOCKED: false
+H1_HISTORICAL_APPROVAL: true
+H2_V1_HISTORICAL_APPROVAL: true
+H2_V1_CURRENT_VISUAL_AUTHORITY: false
+FIGMA_GOLDEN_LOCK: false
+VISUAL_RECOVERY_V2_ACTIVE: true
+R0_VISUAL_CANON_RECOVERY: active
+A1_CANONICAL_MASTER: unrecovered
+A2_ROLE_CONTRACT: recovered
+TYPOGRAPHY_CONTRACT: recovered
+MOTION_CONTRACT: recovered
+V0_NEW_PASS_ALLOWED_BEFORE_H1_5: false
+H3_APPROVED: false
 ```
 
 ## Next state
 
-```
-VISUAL INTENT RECOVERY
+```text
+R0 A1 CANONICAL RECOVERY
 ↓
-A1 SOURCE INTEGRITY
+R1 FIVE HIGH-FIDELITY FRAMES
 ↓
-TYPOGRAPHY + ASSET ROLE + GSAP STORY
+H1.5 HUMAN VISUAL GATE
 ↓
-RUNTIME QA
+R2 v0 RUNTIME DESIGN PROTOTYPE
 ↓
-H3 HUMAN RUNTIME APPROVAL
-```
-
-v0 challenger is complete and closed for this activity unless a future unresolved visual issue explicitly passes the Premium Tool Cost Gate.
-
-## Historical H2 approval snapshot
-
-**Approved by user:** 2026-09-23  
-**Historical note:** the block below records the authorization state at H2 time. It is not the current execution cursor. Current state is defined above.
-
-The Golden candidate is now locked as the canonical visual baseline for the premium website.
-
-```yaml
-FIGMA_GOLDEN_LOCK: true
-H2_APPROVED: true
-V0_CHALLENGER_ALLOWED: true
+R3 FIGMA GOLDEN V2
+↓
+H2 V2 HUMAN GOLDEN GATE
 ```
 
-The next gate is the v0 Challenger. v0 may challenge implementation choices, but it may not silently replace the approved identity, information hierarchy, mobile intent, or Hero → Manifesto narrative contract.
+## Historical snapshot
 
-
-## Post-v0 execution state — 2026-09-23
-
-The v0 phase is complete. Its output is a challenger/reference implementation only.
-
-- Source branch: `v0/premium-challenger`
-- Source commit: `f6149a1093e700bd12f85762c184f0aef5c07747`
-- Review: `V0_CHALLENGER_REVIEW.md`
-- Integration policy: selective KEEP/ADAPT porting only
-- Wholesale merge: forbidden
-- G0 and Codex production are now complete.
-- Current next gate: Vercel preview repair → deployed-runtime verification → H3 human approval.
-
-
-## H3 reopening note — 2026-09-23
-
-The H2 Golden remains composition authority. H3 human review exposed that production failed to translate several accompanying production contracts:
-- embedded A1/A2 Figma images are low-resolution proxies, not runtime sources;
-- exact H2 fonts must render in browser;
-- the Motion Spec requires the single GSAP/ScrollTrigger Hero→Manifesto sequence.
-
-This does not unlock a new visual route. It activates the bounded Visual Intent Recovery Work Order.
+On 2026-09-23 the user explicitly approved H2 V1 and authorized the original v0 challenger. That decision is preserved as history and must not be erased. It was later superseded for current visual authority by material runtime evidence and explicit human rejection.

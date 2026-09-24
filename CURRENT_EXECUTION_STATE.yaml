@@ -1,0 +1,97 @@
+schema_version: 1
+project: Nexova AI Engineering
+repository: Picazo333/nexova-ai-engineering
+updated_at: "2026-09-24T14:07:00-06:00"
+
+authority:
+  current_state_file: CURRENT_EXECUTION_STATE.yaml
+  current_project_state: PROJECT_STATE.md
+  general_plan: docs/design/premium-pass/ACTIVITY_METAPLAN.md
+  visual_plan: docs/design/premium-pass/VISUAL_RECOVERY_PLAN_V2.md
+  visual_r0_status: docs/design/premium-pass/VISUAL_CANON_RECOVERY_STATUS.md
+  general_handoff: docs/handoffs/NEXOVA_GENERAL_CONVERSATION_HANDOFF_2026-09-24.md
+  visual_handoff: docs/handoffs/NEXOVA_VISUAL_CONVERSATION_HANDOFF_2026-09-24.md
+  rule: "Verify live repository HEAD before mutation. Historical chat is not operational authority."
+
+repository_state:
+  authoritative_working_branch: codex/premium-production
+  checkpoint_created_from_head: "54db0b35442c3eb2ffdf22d649de187ab6c12609"
+  academic_branch: feature/agent-memory-bank
+  academic_pr: 1
+  academic_pr_url: https://github.com/Picazo333/nexova-ai-engineering/pull/1
+  main_branch: main
+  campus_submitted: false
+
+macro:
+  current_stage: S1_WEBSITE_PREMIUM_PASS
+  stages:
+    S0_ACADEMIC_BASELINE_PASS: PASS
+    S1_WEBSITE_PREMIUM_PASS: ACTIVE
+    S2_BACKOFFICE_PREMIUM_PASS: NOT_STARTED
+    S3_NEXOVA_FOUNDATION_PASS: NOT_STARTED
+    S4_INTEGRATED_QA_PASS: NOT_STARTED
+    S5_RUBRIC_REFRESH_PASS: NOT_STARTED
+    S6_FINAL_PR_READY: NOT_STARTED
+    S7_USER_APPROVED: NOT_STARTED
+    S8_SUBMITTED: NOT_STARTED
+    S9_DIDACTIC_PASS: NOT_STARTED
+    S10_HARVEST_COMPLETE: NOT_STARTED
+
+academic:
+  baseline_rubric: "22/22 blocking PASS on academic baseline"
+  final_rubric_refresh: "DEFERRED to S5 after website + backoffice + integrated QA"
+  pr_policy: "Update existing PR #1; do not create a replacement academic PR."
+
+website_visual:
+  current_phase: R0_VISUAL_CANON_RECOVERY
+  current_status: VISUAL_REOPENED
+  technical_baseline: PASS
+  human_h3_candidate_review: REJECTED
+  rejected_candidate: f4f7a083ef0907e69eca3a9f53ac8c220a94327d
+  rejection_reason: "Runtime gained scrollytelling but remained aesthetically far below the approved identity/impact; visual authorship and brand consistency were not recovered."
+  identity_lock: LOCKED
+  direction_contract: LOCKED
+  product_truth: LOCKED
+  architecture: LOCKED
+  h2_v1:
+    historical_user_approval: true
+    current_visual_authority: REOPENED
+    reason: "Material H3 evidence proved H2 v1 was insufficiently resolved as a production Golden."
+  v0:
+    historical_challenger: CLOSED
+    new_bounded_runtime_design_pass: AUTHORIZED_AFTER_R1_HUMAN_GATE
+    max_runs: 2
+  next_gate: R0_A1_CANONICAL_RECOVERY
+
+visual_canon:
+  moodboard_identity_decision: RECOVERED_AS_DECISION
+  moodboard_raw_artifact: UNRECOVERED
+  b0_h1_composition_decision: RECOVERED_AS_HISTORY
+  b0_h1_raw_artifact: UNRECOVERED
+  a1_contract: RECOVERED
+  a1_canonical_master: UNRECOVERED
+  figma_a1_proxy_px: "172x180"
+  a2_contract: RECOVERED
+  a2_canonical_role: RECOVERED
+  figma_a2_proxy_px: "92x72"
+  typography:
+    status: RECOVERED
+    display: "Instrument Serif / Regular"
+    body_ui: "Inter / Regular + Medium"
+    utility: "IBM Plex Mono / Regular"
+  motion:
+    status: RECOVERED
+    engine: "GSAP + ScrollTrigger"
+    sequence: ["REST", "SEPARATE", "YIELD", "RELEASE"]
+    scope: "One bounded Hero→Manifesto narrative; native scroll authoritative; reduced motion has no pin/scrub."
+
+noema_transition:
+  pending: true
+  rule: "New Noema may consume/coordinate this checkpoint but must not silently replace Nexova domain state, locks, or visual authority."
+  resume_requirement: "Read CURRENT_EXECUTION_STATE.yaml first, then the workstream-specific handoff."
+
+stop_conditions:
+  - "Do not resume patching the current runtime as visual authority."
+  - "Do not reopen identity, product truth, or architecture without new material evidence."
+  - "Do not call v0 before R1 five-frame composition passes human review."
+  - "Do not advance to S2 before WEBSITE_PREMIUM_PASS."

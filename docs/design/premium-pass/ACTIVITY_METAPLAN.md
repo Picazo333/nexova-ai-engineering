@@ -38,7 +38,12 @@ No academic evidence is invalidated until premium changes are reintegrated into 
 
 ## S1 — Website Premium Pass
 
-Execute the approved `PREMIUM_WEBSITE_EXECUTION_PLAN.md`.
+Current visual execution is delegated to:
+`VISUAL_RECOVERY_PLAN_V2.md`.
+
+The earlier premium plan and H2 V1 remain historical inputs, but the current visual state was reopened after explicit human H3 rejection.
+
+S1 closes only after the V2 sequence reaches human-approved H3.
 
 Output:
 `WEBSITE_PREMIUM_PASS`.
