@@ -1,6 +1,6 @@
 # H3 Evidence Matrix — Nexova Premium Website
 
-**Status:** REOPENED — VISUAL ASSET QUALITY FAIL  
+**Status:** VIR INTERNAL PASS — HUMAN H3 VISUAL REVIEW REQUIRED
 **Gate:** H3 Runtime Approval  
 **Candidate implementation commit:** `f10cd71572ea3b5883b9bf746f48d4cb04afbc36`  
 **GitHub Actions run:** `35929968292` — **SUCCESS**  
@@ -106,3 +106,30 @@ The website-impacting technical criteria are nevertheless revalidated here; the 
 **Root cause:** production imports `a1-hero-golden-desktop.png` / `a1-hero-golden-mobile.png`, which are Figma raster proxies rather than production masters. The same failure mode exists in A2 Golden derivatives.  
 **Contract violation:** `FIGMA_GOLDEN_STATUS.md` states that embedded Figma references are crop/layout proxies and the original high-resolution masters remain the production image sources.  
 **Disposition:** H3 reopened. Replace runtime sources with masters, preserve approved geometry, rerun QA and require new human visual approval.
+
+
+## Visual Intent Recovery candidate — 2026-09-24
+
+**Implementation SHA:** `f4f7a083ef0907e69eca3a9f53ac8c220a94327d`  
+**Premium Validate:** `35940642876` — PASS  
+**Artifact:** `10784424566 / website-premium-h3`  
+**Vercel:** deployment SUCCESS
+
+| Recovery gate | Evidence | Status |
+|---|---|---|
+| Exact H2 typography | Instrument Serif / Inter / IBM Plex Mono loaded locally and browser-asserted | PASS |
+| Figma proxy exclusion | `*-golden-*.png` prohibited as runtime imports | PASS |
+| A2 role integrity | transition/foreground material; no repeated static section-image role | PASS |
+| Signature scrollytelling | exactly one GSAP + ScrollTrigger Hero→Manifesto sequence | PASS |
+| REST → SEPARATE → YIELD → RELEASE | four deterministic phase captures | PASS |
+| Reduced motion | no pin/scrub readable path | PASS |
+| Responsive | 1440 / 1024 / 768 / 430 / 390 | PASS |
+| Overflow | browser assertions | PASS |
+| Runtime errors | zero console/runtime errors | PASS |
+| Accessibility | axe 0 serious/critical; Lighthouse accessibility 1.00 | PASS |
+| Performance | Lighthouse performance 0.94; LCP 2.7 s; CLS 0.002; TBT 0 ms | PASS |
+| Runtime asset delivery | AVIF/WebP derivatives generated from masters at build time; Lighthouse image transfer ~46 KB | PASS |
+| A1 canonical provenance | approved abstract master not recoverable from Figma/repo; bounded reconstruction used | OPEN / HUMAN VISUAL JUDGMENT |
+| Human H3 | deployed visual review | OPEN |
+
+H3 remains OPEN until the user reviews the deployed runtime. A technical PASS cannot substitute for the visual-intent gate.
