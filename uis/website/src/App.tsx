@@ -1,25 +1,18 @@
 import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { facts, sectors, services } from "./content";
 import heroDesktop from "../../../packages/design-system/assets/a1-hero-desktop.png";
 import heroMobile from "../../../packages/design-system/assets/a1-hero-mobile.png";
 import fibrousDesktop from "../../../packages/design-system/assets/a2-crimson-fibrous.png";
 import fibrousMobile from "../../../packages/design-system/assets/a2-crimson-fibrous.png";
 
-declare global {
-  interface Window {
-    gsap?: any;
-    ScrollTrigger?: any;
-  }
-}
-
 function useHeroManifestoMotion() {
   const storyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const story = storyRef.current;
-    const gsap = window.gsap;
-    const ScrollTrigger = window.ScrollTrigger;
-    if (!story || !gsap || !ScrollTrigger) return;
+    if (!story) return;
 
     const hero = story.querySelector<HTMLElement>(".hero");
     const heroArt = story.querySelector<HTMLElement>(".hero__art");
@@ -30,6 +23,7 @@ function useHeroManifestoMotion() {
     if (!hero || !heroArt || !heroFibers || !heroCopy || !manifesto || !manifestoCopy) return;
 
     gsap.registerPlugin(ScrollTrigger);
+    document.documentElement.dataset.gsap = "active";
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 

@@ -36,8 +36,8 @@ jobs:
             exit 1
           fi
           grep -q 'hero__fibers' uis/website/src/App.tsx
-          grep -q 'cdn.jsdelivr.net/npm/gsap@3.15.0' uis/website/index.html
-          grep -q 'IBM+Plex+Mono' uis/website/index.html
+          grep -q '"gsap": "3.15.0"' uis/website/package.json
+          grep -q '"@fontsource/ibm-plex-mono": "5.3.0"' uis/website/package.json
           python - <<'PY'
           from pathlib import Path
           import struct
@@ -254,6 +254,7 @@ jobs:
             docs/evidence/website-premium/vercel-preview-url.txt
             docs/evidence/website-premium/vercel-deployment-check.json
             docs/evidence/website-premium/vercel-deployed-dom.html
+            package-lock.json
           if-no-files-found: error
           retention-days: 7
 
