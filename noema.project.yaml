@@ -13,7 +13,7 @@ traits:
   - agentic
   - reusable
   - human-gated
-  - data-sensitive
+  - sensitive
   - visual
 
 authority:
@@ -110,7 +110,6 @@ quality_claims:
   - context-efficiency
   - provenance
   - recoverability
-  - rubric-traceability
 
 relations:
   - type: conforms-to
@@ -124,6 +123,8 @@ exceptions: []
 
 extensions:
   x-company: nexova
+  x-domain-quality-claims:
+    - rubric-traceability
   x-cumulative-fourgeeks-monorepo: true
   x-coding-agent-namespace: .agents
   x-product-agent-namespace: agents

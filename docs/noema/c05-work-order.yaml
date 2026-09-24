@@ -1,0 +1,34 @@
+work_order_id: nexova-noema-rc0-bridge
+project_id: nexova-ai-engineering
+objective: Bridge the real 4g-006 delivery branch to Noema RC0 without changing product or academic authority.
+scope:
+  allowed:
+    - noema.project.yaml
+    - docs/noema/
+  excluded:
+    - uis/
+    - packages/
+    - memory-bank/
+    - CONTEXT.md
+context_mode: audit
+inputs:
+  - scheme: repo
+    locator: PROJECT_STATE.md
+  - scheme: repo
+    locator: docs/evidence/4g-006/DELIVERY_CHECK.md
+allowed_writes:
+  - noema.project.yaml
+  - docs/noema/
+forbidden_effects:
+  - product-code-change
+  - academic-approval-issuance
+  - source-conflict-resolution
+  - backend-creation
+expected_artifacts:
+  - RC0 manifest conformance
+  - branch-specific handoff
+quality_claims:
+  - contract-conformance
+  - provenance
+human_gates:
+  - control-tower-rubric-review

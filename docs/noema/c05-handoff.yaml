@@ -1,0 +1,26 @@
+handoff_id: nexova-noema-rc0-bridge-handoff
+work_order_ref: repo://docs/noema/c05-work-order.yaml
+status: partial
+summary: RC0 metadata is aligned with the real 4g-006 delivery branch; the delivery PR and academic gates remain independently owned.
+changes:
+  - Replaced an unsupported generic trait with the RC0 sensitive trait.
+  - Kept rubric-traceability as a Nexova domain claim in extensions rather than a Noema core claim.
+artifacts:
+  - scheme: repo
+    locator: noema.project.yaml
+evidence:
+  - scheme: repo
+    locator: PROJECT_STATE.md
+  - scheme: repo
+    locator: docs/evidence/4g-006/DELIVERY_CHECK.md
+decisions:
+  - The 4g-006 delivery and rubric remain Nexova and Control Tower owned.
+  - This branch targets feature/agent-memory-bank at 138ff88496b80ff220141df4a39f3cffb6b62b4a.
+remaining:
+  - Resolve the delivery PR and pin the resulting effective HEAD.
+  - Recheck conformance and the academic gate on that HEAD.
+next_action: Review this metadata on the delivery branch; do not infer academic approval from RC0 conformance.
+intentionally_unchanged:
+  - website and backoffice code
+  - Memory Bank and company facts
+  - architecture and deployment
