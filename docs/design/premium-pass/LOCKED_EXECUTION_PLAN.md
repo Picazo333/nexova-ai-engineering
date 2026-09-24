@@ -177,3 +177,13 @@ Execution is now governed by:
 `docs/design/premium-pass/VISUAL_INTENT_RECOVERY_WORK_ORDER.md`
 
 This is a bounded recovery of the existing lock, not a redesign.
+
+
+## VIR internal candidate validated — 2026-09-24
+
+Candidate `f4f7a083ef0907e69eca3a9f53ac8c220a94327d` passes all deterministic recovery gates and Vercel deployment.
+
+The remaining gate is deliberately human:
+- judge whether the bounded A1 reconstruction and runtime motion recover the approved visual impact;
+- if accepted, close H3 and proceed to S2;
+- if rejected, repair only the identified material visual failure. No new visual route is unlocked.
