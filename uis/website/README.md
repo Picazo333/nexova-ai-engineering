@@ -1,24 +1,13 @@
-# Nexova Website
+# Nexova Website — Approved v0 Delivery Visual
 
-Public-facing Nexova corporate website for the AI-driven Engineering milestone.
+This workspace contains the user-approved v0 visual implementation for the 4g-006 delivery.
 
-## Development
-From the repository root:
+## Run
 
-```bash
-npm install
-npm run dev:website
-```
+From repository root:
+- `npm run dev:website`
+- `npm run typecheck`
+- `npm run build`
 
-Expected local port: `3000`.
-
-## Current implementation
-- React + TypeScript + Vite.
-- Oni Nocturne Oxblood visual lock.
-- complete corporate homepage with reusable service-card/data structures;
-- responsive layouts for desktop/tablet/mobile;
-- source-supported company facts only;
-- shared design tokens/primitives from `@nexova/design-system`.
-
-## Validation
-Source implementation is complete. Dependency install, real typecheck/build, browser runtime, accessibility and screenshot evidence remain required before rubric PASS.
+Visual authority is governed by `docs/evidence/4g-006/WEBSITE_DELIVERY_VISUAL_LOCK.md`.
+Do not redesign or substitute assets after the lock.

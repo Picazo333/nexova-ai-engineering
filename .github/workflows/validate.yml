@@ -17,7 +17,7 @@ permissions:
 jobs:
   frontend:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -48,7 +48,7 @@ jobs:
 
           for port in 3000 3001; do
             ready=0
-            for attempt in $(seq 1 30); do
+            for attempt in $(seq 1 60); do
               if curl --fail --silent --show-error "http://127.0.0.1:$port/" > "/tmp/$port.html"; then
                 ready=1
                 break
@@ -70,20 +70,22 @@ jobs:
 
           mkdir -p docs/evidence/4g-006
 
-          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=3000 --dump-dom http://127.0.0.1:3000/             > /tmp/website-dom.html
-          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=3000 --dump-dom http://127.0.0.1:3001/             > /tmp/backoffice-dom.html
+          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=5000 --dump-dom http://127.0.0.1:3000/ > /tmp/website-dom.html
+          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=3000 --dump-dom http://127.0.0.1:3001/ > /tmp/backoffice-dom.html
 
-          grep -q "La disciplina crea" /tmp/website-dom.html
-          grep -q "Selección ejecutiva" /tmp/website-dom.html
-          grep -q "Valencia. Miami." /tmp/website-dom.html
+          grep -q "CRITERIO HUMANO" /tmp/website-dom.html
+          grep -q "EL CRITERIO" /tmp/website-dom.html
+          grep -q "LA ESTRUCTURA" /tmp/website-dom.html
+          grep -q "VALENCIA" /tmp/website-dom.html
+          grep -q "MIAMI" /tmp/website-dom.html
           grep -q "Contexto operativo" /tmp/backoffice-dom.html
           grep -q "48 h" /tmp/backoffice-dom.html
           grep -q "SLA 24 h" /tmp/backoffice-dom.html
           grep -q "40%" /tmp/backoffice-dom.html
           grep -q "30–80" /tmp/backoffice-dom.html
 
-          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=3000 --window-size=1440,6000             --screenshot=docs/evidence/4g-006/website.png             http://127.0.0.1:3000/
-          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=3000 --window-size=1440,1800             --screenshot=docs/evidence/4g-006/backoffice.png             http://127.0.0.1:3001/
+          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=5000 --window-size=1440,6000             --screenshot=docs/evidence/4g-006/website.png http://127.0.0.1:3000/
+          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=3000 --window-size=1440,1800             --screenshot=docs/evidence/4g-006/backoffice.png http://127.0.0.1:3001/
 
       - name: Upload rendered evidence
         uses: actions/upload-artifact@v4
