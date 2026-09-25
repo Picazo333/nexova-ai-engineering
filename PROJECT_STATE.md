@@ -234,3 +234,24 @@ Adjudication:
 - current runtime must not be incrementally patched as visual authority.
 
 Conversation state has been split into two explicit handoffs under `docs/handoffs/`.
+
+
+## Delivery Visual Lock — v0 sandbox adopted — 2026-09-24
+
+The user explicitly approved the external v0 sandbox result and selected it as the website version to lock for the 4Geeks activity delivery.
+
+Canonical source:
+- v0 chat: https://v0.app/mbpicazo33-1986/chat/nexova-visual-sandbox-n0o4weQLsCq
+- exact exported ZIP SHA-256: `211874809bebc6dcb71eaeaf804b4a86b92a443f37d9b7dfb672319d44a4b329`
+- persistent Library artifact: `/NEXOVA/locks/NEXOVA_V0_DELIVERY_VISUAL_LOCK_2026-09-24.zip`
+
+The prior Visual Recovery V2 path is no longer the active route to discover a visual direction. The sandbox supplied the approved direction and is now adopted into the official delivery path.
+
+Current rule:
+- the approved ZIP is visual authority;
+- integration into `/uis/website` is a port, not a redesign;
+- visual no-regression is mandatory;
+- Codex/engineering may only change what is necessary for monorepo compatibility, rubric correctness, accessibility, responsive defects, performance or deployment.
+
+Current next gate:
+`PORT_APPROVED_SOURCE_TO_UIS_WEBSITE_AND_VERIFY_NO_REGRESSION`.

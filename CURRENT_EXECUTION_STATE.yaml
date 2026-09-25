@@ -99,3 +99,43 @@ stop_conditions:
   - "Do not reopen identity, product truth, or architecture without new material evidence."
   - "Do not call v0 before R1 five-frame composition passes human review."
   - "Do not advance to S2 before WEBSITE_PREMIUM_PASS."
+
+
+delivery_visual_lock:
+  status: LOCKED
+  adopted_from_parallel_sandbox: true
+  human_approved: true
+  approved_at: "2026-09-24"
+  source_chat: "https://v0.app/mbpicazo33-1986/chat/nexova-visual-sandbox-n0o4weQLsCq"
+  source_zip_sha256: "211874809bebc6dcb71eaeaf804b4a86b92a443f37d9b7dfb672319d44a4b329"
+  source_zip_library_path: "/NEXOVA/locks/NEXOVA_V0_DELIVERY_VISUAL_LOCK_2026-09-24.zip"
+  source_zip_library_file_id: "libfile_563038655944819182ceebf97366b1cb"
+  source_stack:
+    framework: "Next.js 16.3.3"
+    react: "19"
+    tailwind: "4.3.3"
+    gsap: "3.15.0"
+  canonical_assets:
+    A1: "A1_HERO_ABYSSAL_PRESENCE.png"
+    A2: "A2_FIBROUS_CRIMSON_MATERIAL.png"
+    A3: "A3_EDITORIAL_MID_PAGE.png"
+    A4: "A4_EVIDENCE_PRECISION.png"
+    A5: "A5_FINAL_DECLARATION.png"
+  visual_authority: "V0_APPROVED_SOURCE_ZIP"
+  integration_status: PENDING_MONOREPO_PORT
+  no_regression: true
+  allowed_changes:
+    - "build/dependency compatibility"
+    - "monorepo path integration"
+    - "accessibility defects"
+    - "responsive defects"
+    - "performance defects"
+    - "rubric-required factual/content corrections"
+  forbidden_changes:
+    - "redesign"
+    - "asset substitution"
+    - "typography reinterpretation"
+    - "composition changes"
+    - "motion redesign"
+    - "section-role reinterpretation"
+  next_gate: "PORT_APPROVED_SOURCE_TO_UIS_WEBSITE_AND_VERIFY_NO_REGRESSION"
