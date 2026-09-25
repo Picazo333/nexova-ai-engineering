@@ -5,6 +5,8 @@ scope:
   allowed:
     - noema.project.yaml
     - docs/noema/
+    - AGENTS.md
+    - .github/workflows/noema.yml
   excluded:
     - uis/
     - packages/
@@ -19,6 +21,8 @@ inputs:
 allowed_writes:
   - noema.project.yaml
   - docs/noema/
+  - AGENTS.md
+  - .github/workflows/noema.yml
 forbidden_effects:
   - product-code-change
   - academic-approval-issuance

@@ -3,6 +3,7 @@ work_order_ref: repo://docs/noema/c05-work-order.yaml
 status: partial
 summary: RC0 metadata is aligned with the real 4g-006 delivery branch; the delivery PR and academic gates remain independently owned.
 changes:
+  - Linked the RC0 bridge from the agent entrypoint and added pinned lint-and-audit CI.
   - Replaced an unsupported generic trait with the RC0 sensitive trait.
   - Kept rubric-traceability as a Nexova domain claim in extensions rather than a Noema core claim.
 artifacts:
