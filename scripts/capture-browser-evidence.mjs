@@ -85,6 +85,15 @@ try {
     await sleep(180)
   }
   await send('Runtime.evaluate', { expression: 'window.scrollTo(0, 0)' })
+  await send('Runtime.evaluate', {
+    expression: `
+      document.querySelectorAll('[style*="transition-delay"]').forEach((el) => {
+        el.style.opacity = '1'
+        el.style.transform = 'translateY(0px)'
+        el.style.transition = 'none'
+      })
+    `,
+  })
   await sleep(850)
 
   const metrics = await send('Page.getLayoutMetrics')
