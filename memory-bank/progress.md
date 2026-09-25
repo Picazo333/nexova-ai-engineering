@@ -2,49 +2,65 @@
 
 ## Current state
 **Milestone:** 4g-006 — AI-driven Engineering  
-**Phase:** academic baseline validated; final PR/audit pending  
+**Phase:** final delivery validation / PR #1  
 **Branch:** `feature/agent-memory-bank`
 
-### Completed
-- Nexova company selection and root `CONTEXT.md` already existed before this milestone.
-- Existing repository/template structure inspected.
-- Required branch created from the pre-milestone baseline.
-- 4Geeks rubric extracted into Control Tower.
-- Noema/Control Tower/Nexova authority boundaries reviewed.
-- Agent/context foundation is being established in this commit.
+## Completed foundation
+- Nexova company context and cumulative monorepo preserved.
+- Required Memory Bank, AGENTS.md, coding-agent rule and verification Skill implemented.
+- Noema RC0 consumer/conformance bridge integrated while Nexova remains domain authority.
+- Root npm workspace preserved.
+- Independent website and backoffice apps remain under `/uis`.
 
-### Completed in the current branch
-- minimal durable repo governance;
-- required Memory Bank;
-- coding-agent rule + recurring verification Skill;
-- source authority classification;
-- root npm workspace scaffold;
-- React + TypeScript + Vite app shells for `uis/website` and `uis/backoffice`.
+## Human-approved website delivery
+The earlier visual candidates were superseded for this activity by the user-approved v0 visual sandbox.
 
-### Visual lock
-The selected identity is **Oni Nocturne Oxblood**. The 30-board exploration is closed. Boards 26–30 are distilled into `docs/design/VISUAL_LOCK.md`; earlier boards remain supporting design references.
+Locked source:
+- `docs/evidence/4g-006/WEBSITE_DELIVERY_VISUAL_LOCK.md`
+- source ZIP SHA-256: `211874809bebc6dcb71eaeaf804b4a86b92a443f37d9b7dfb672319d44a4b329`
 
-### UI implementation
-- complete public website source implemented under `uis/website`;
-- independent operations backoffice source implemented under `uis/backoffice`;
-- shared design-system tokens/primitives extracted after real reuse appeared;
-- backoffice explicitly labels its metrics as source baselines rather than live telemetry;
-- no backend was introduced.
+Current website:
+- Next.js 16;
+- React 19;
+- Tailwind 4;
+- GSAP + ScrollTrigger;
+- five canonical approved visual assets under `uis/website/public/nexova/`.
 
-### Validation status
-GitHub Actions run `35679157613` completed successfully on the feature branch. It executed dependency installation, real typecheck, production build, runtime smoke for both apps, headless-browser DOM assertions, rendered screenshots, artifact upload and evidence/lockfile commit.
+Visual mutation is forbidden by default after human approval.
 
-Committed evidence:
-- `package-lock.json`;
-- `docs/evidence/4g-006/website.png`;
-- `docs/evidence/4g-006/backoffice.png`.
+## Validation status
+Implementation commit `514ab22f20a315e5759e23097bfaa38aa97cef2a` passed:
 
-### Next
-1. reconcile the successful runtime evidence into Control Tower;
-2. perform the bounded Excellence Review without destabilizing the validated baseline;
-3. create the required PR to `main` with website/backoffice screenshots and direct `AGENTS.md` link;
-4. confirm PR validation;
-5. show the final audit and exact campus submission URL.
+- push workflow `36085463496`;
+- PR workflow `36085466018`;
+- Noema conformance `36085466652`.
+
+Checks include:
+- npm dependency installation;
+- real TypeScript typecheck;
+- production builds;
+- website runtime;
+- backoffice runtime;
+- DOM assertions;
+- full browser-rendered screenshots;
+- evidence upload.
+
+Current evidence:
+- `docs/evidence/4g-006/website.png`
+- `docs/evidence/4g-006/backoffice.png`
+- `docs/evidence/4g-006/WEBSITE_DELIVERY_VISUAL_LOCK.md`
+- `docs/evidence/4g-006/V0_APPROVED_SOURCE_MANIFEST.json`
+
+## Delivery
+- branch: `feature/agent-memory-bank`;
+- target: `main`;
+- required PR: https://github.com/Picazo333/nexova-ai-engineering/pull/1
+- Campus submission artifact: the exact PR #1 URL.
+
+## Remaining
+1. validate this final reconciled state;
+2. run final visible audit;
+3. user submits PR #1 URL to 4Geeks Campus.
 
 ## Deferred
-Backend, DB, RAG, persistent agents, multi-agent orchestration, advanced observability and productization remain deferred until a real milestone/failure mode activates them.
+Backend, DB, RAG, persistent agents, multi-agent orchestration and other engineering extensions remain deferred unless a later milestone activates them. Public Vercel production publishing is independent of the academic delivery lock and must not trigger a visual redesign.
