@@ -1,0 +1,130 @@
+noema:
+  protocol: "0.1.0-rc.0"
+  contracts:
+    project_manifest: 1
+
+project:
+  id: nexova-ai-engineering
+  name: Nexova AI Engineering
+  type: delivery-system
+  status: active
+
+traits:
+  - agentic
+  - reusable
+  - human-gated
+  - sensitive
+  - visual
+
+authority:
+  owns:
+    - nexova-domain-context
+    - nexova-product-runtime
+    - nexova-project-state
+    - nexova-architecture-decisions
+    - nexova-local-quality-evidence
+    - nexova-local-reuse-decisions
+  does_not_own:
+    - fourgeeks-assignment-governance
+    - noema-protocol
+    - noema-conformance
+    - skill-foundry-taxonomy
+    - skill-foundry-ontology
+    - skill-registry
+    - secrets
+
+sources_of_truth:
+  company_context:
+    scheme: repo
+    locator: CONTEXT.md
+  project_state:
+    scheme: repo
+    locator: PROJECT_STATE.md
+  project_principles:
+    scheme: repo
+    locator: docs/00-meta/PROJECT_PRINCIPLES.md
+  source_authority:
+    scheme: repo
+    locator: docs/00-meta/SOURCE_OF_TRUTH.md
+  domain_sources:
+    scheme: repo
+    locator: docs/domain/SOURCE_MANIFEST.yaml
+  engineering_strategy:
+    scheme: repo
+    locator: docs/ENGINEERING-STRATEGY.md
+  decisions:
+    scheme: repo
+    locator: docs/architecture/adr/
+
+context:
+  entrypoint: AGENTS.md
+  default_mode: build
+  modes:
+    patch:
+      required:
+        - repo://memory-bank/progress.md
+      optional:
+        - repo://memory-bank/techContext.md
+    build:
+      required:
+        - repo://memory-bank/projectbrief.md
+        - repo://memory-bank/techContext.md
+        - repo://memory-bank/progress.md
+      optional:
+        - repo://CONTEXT.md
+        - repo://docs/00-meta/PROJECT_PRINCIPLES.md
+    audit:
+      required:
+        - repo://PROJECT_STATE.md
+        - repo://memory-bank/techContext.md
+        - repo://.agents/skills/change-verification/SKILL.md
+      optional:
+        - repo://docs/00-meta/SOURCE_OF_TRUTH.md
+        - repo://docs/domain/SOURCE_MANIFEST.yaml
+    research:
+      required:
+        - repo://docs/00-meta/SOURCE_OF_TRUTH.md
+        - repo://docs/domain/SOURCE_MANIFEST.yaml
+      optional:
+        - repo://CONTEXT.md
+        - repo://docs/ENGINEERING-STRATEGY.md
+        - repo://docs/decision-analysis.md
+    architect:
+      required:
+        - repo://PROJECT_STATE.md
+        - repo://docs/00-meta/PROJECT_PRINCIPLES.md
+        - repo://docs/00-meta/SOURCE_OF_TRUTH.md
+        - repo://memory-bank/techContext.md
+      optional:
+        - repo://docs/ENGINEERING-STRATEGY.md
+        - repo://docs/architecture/adr/
+    recover:
+      required:
+        - repo://PROJECT_STATE.md
+        - repo://memory-bank/progress.md
+      optional:
+        - repo://docs/domain/SOURCE_MANIFEST.yaml
+
+quality_claims:
+  - contract-conformance
+  - context-efficiency
+  - provenance
+  - recoverability
+
+relations:
+  - type: conforms-to
+    target: project:noema
+  - type: academically-governed-by
+    target: project:4geeks-control-tower
+  - type: publishes-capability-candidates-to
+    target: project:skill-foundry
+
+exceptions: []
+
+extensions:
+  x-company: nexova
+  x-domain-quality-claims:
+    - rubric-traceability
+  x-cumulative-fourgeeks-monorepo: true
+  x-coding-agent-namespace: .agents
+  x-product-agent-namespace: agents
