@@ -84,8 +84,8 @@ jobs:
           grep -q "40%" /tmp/backoffice-dom.html
           grep -q "30–80" /tmp/backoffice-dom.html
 
-          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=5000 --window-size=1440,6000             --screenshot=docs/evidence/4g-006/website.png http://127.0.0.1:3000/
-          "$CHROME_BIN" --headless --no-sandbox --disable-gpu --hide-scrollbars             --virtual-time-budget=3000 --window-size=1440,1800             --screenshot=docs/evidence/4g-006/backoffice.png http://127.0.0.1:3001/
+          node scripts/capture-browser-evidence.mjs "$CHROME_BIN"             http://127.0.0.1:3000/ docs/evidence/4g-006/website.png 1440 900
+          node scripts/capture-browser-evidence.mjs "$CHROME_BIN"             http://127.0.0.1:3001/ docs/evidence/4g-006/backoffice.png 1440 900
 
       - name: Upload rendered evidence
         uses: actions/upload-artifact@v4
