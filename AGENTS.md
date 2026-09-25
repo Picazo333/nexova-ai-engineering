@@ -11,6 +11,7 @@ At the start of every coding session:
 5. Load only the additional required context for that mode plus the files directly affected by the task.
 
 `AGENTS.md` is an entry map. Exact project context routing lives in `noema.project.yaml`.
+For the current 4g-006 RC0 bridge, read `docs/noema/c05-work-order.yaml` and `docs/noema/c05-handoff.yaml`; the academic review stays with Nexova and Control Tower.
 
 ## Namespace boundary
 - `.agents/` = instructions/rules/skills for coding agents working **on this repository**.
