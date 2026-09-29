@@ -2,10 +2,18 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nexova Solutions | Selección, soporte y formación</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Consultora de recursos humanos en Valencia y Miami | Nexova</title>
   <meta name="description" content="Consultora de recursos humanos desde 2011. Selección de mandos medios y directivos, equipos de soporte al cliente y formación en liderazgo. Valencia y Miami.">
   <meta name="theme-color" content="#0E2A4A">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Nexova Solutions">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Consultora de recursos humanos en Valencia y Miami | Nexova">
+  <meta property="og:description" content="Consultora de recursos humanos desde 2011. Selección de mandos medios y directivos, equipos de soporte al cliente y formación en liderazgo. Valencia y Miami.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Consultora de recursos humanos en Valencia y Miami | Nexova">
+  <meta name="twitter:description" content="Consultora de recursos humanos desde 2011. Selección de mandos medios y directivos, equipos de soporte al cliente y formación en liderazgo. Valencia y Miami.">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/newsreader-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" type="image/avif" media="(max-width: 1023px)" imagesrcset="assets/img/hero-p1-m-480.avif 480w, assets/img/hero-p1-m-800.avif 800w" imagesizes="100vw" fetchpriority="high">
@@ -41,6 +49,12 @@
     [data-mode="scrolly"] > [data-stage] { position: sticky; top: 0; height: 100svh; overflow: hidden; }
   </style>
   <!-- TOKENS:END -->
+  <style>
+    /* SEO-08 · CTA fijo en móvil: la barra solo existe en index.html. Las zonas seguras laterales protegen el
+       contenido con viewport-fit=cover; el pie reserva el alto de la barra para que nunca tape el final. */
+    body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+    @media (max-width: 767px) { body:has(#cta-movil) > footer { padding-bottom: calc(4.75rem + env(safe-area-inset-bottom)); } }
+  </style>
   <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -79,6 +93,16 @@
       "addressRegion": "FL",
       "addressCountry": "US"
      }
+    }
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "España"
+    },
+    {
+     "@type": "Country",
+     "name": "Estados Unidos"
     }
    ],
    "knowsAbout": [
@@ -289,7 +313,26 @@
         </div>
       </div>
     </section>
-    <section id="datos" aria-labelledby="datos-title" class="bg-marfil py-16 lg:py-24">
+    <section id="resumen" aria-labelledby="resumen-title" class="bg-marfil pt-14 lg:pt-20">
+      <div class="mx-auto max-w-[1280px] px-5 md:px-8 lg:px-12">
+        <h2 id="resumen-title" class="text-[13px] font-semibold uppercase tracking-[0.08em] text-terracota-700 mb-6">En resumen</h2>
+        <dl class="grid border-t-2 border-tinta md:grid-cols-3 md:gap-10">
+          <div class="flex flex-col gap-2 border-b border-arena py-5 md:border-b-0 md:py-6">
+            <dt class="font-display text-xl font-medium leading-[1.2] text-tinta">Qué hacemos</dt>
+            <dd class="text-carbon">Consultora de recursos humanos desde 2011: selección de mandos medios y directivos, soporte al cliente externalizado y formación corporativa.</dd>
+          </div>
+          <div class="flex flex-col gap-2 border-b border-arena py-5 md:border-b-0 md:py-6">
+            <dt class="font-display text-xl font-medium leading-[1.2] text-tinta">Para quién</dt>
+            <dd class="text-carbon">Para medianas empresas de tecnología, retail y servicios financieros, desde Valencia y Miami.</dd>
+          </div>
+          <div class="flex flex-col gap-2 py-5 md:py-6">
+            <dt class="font-display text-xl font-medium leading-[1.2] text-tinta">Cómo contratar</dt>
+            <dd class="text-carbon">Puedes contratar un servicio o combinarlos. Nos cuentas qué necesitas en la <a href="application.html" class="font-semibold text-terracota-700 underline decoration-1 underline-offset-4 hover:decoration-2 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta">solicitud de servicio</a> y preparamos el enfoque contigo.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+    <section id="datos" aria-labelledby="datos-title" class="bg-marfil pt-12 lg:pt-16 pb-16 lg:pb-24">
       <div class="mx-auto max-w-[1280px] px-5 md:px-8 lg:px-12">
         <h2 id="datos-title" class="text-[13px] font-semibold uppercase tracking-[0.08em] text-terracota-700 mb-6">Nexova en cifras</h2>
         <dl class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-tinta border border-tinta">
@@ -356,6 +399,46 @@
               <p class="mt-auto pt-2"><a href="application.html?tipo=formacion" class="inline-flex items-center justify-center min-h-12 px-6 border-2 border-tinta text-tinta font-semibold hover:bg-marfil-claro focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta">Solicitar formación</a></p>
             </div>
           </article>
+        </div>
+        <div class="mt-16 lg:mt-20">
+          <p id="comparativa-hint" class="md:hidden mb-3 text-sm text-mineral">Desliza la tabla en horizontal para ver todas las columnas.</p>
+          <div role="region" aria-labelledby="comparativa-caption" aria-describedby="comparativa-hint" tabindex="0" class="overflow-x-auto border border-tinta bg-marfil-claro focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta">
+            <table class="w-full min-w-[46rem] border-collapse text-left text-[15px] text-carbon">
+              <caption id="comparativa-caption" class="caption-top bg-marfil-claro px-6 py-5 text-left font-display text-2xl font-medium leading-[1.15] text-tinta border-b border-tinta"><span class="block max-md:sticky max-md:left-6 max-w-[calc(100vw-5.5rem)] md:max-w-none">Comparativa de los tres servicios</span></caption>
+              <thead class="bg-tinta text-marfil">
+                <tr>
+                  <th scope="col" class="max-md:sticky max-md:left-0 bg-tinta px-6 max-md:px-4 py-4 text-[13px] font-semibold uppercase tracking-[0.08em] w-[22%]">Servicio</th>
+                  <th scope="col" class="px-6 py-4 text-[13px] font-semibold uppercase tracking-[0.08em]">Qué incluye</th>
+                  <th scope="col" class="px-6 py-4 text-[13px] font-semibold uppercase tracking-[0.08em]">Para quién</th>
+                  <th scope="col" class="px-6 py-4 text-[13px] font-semibold uppercase tracking-[0.08em]">Formato</th>
+                  <th scope="col" class="px-6 py-4 text-[13px] font-semibold uppercase tracking-[0.08em]">Equipo</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-arena">
+                <tr>
+                  <th scope="row" class="max-md:sticky max-md:left-0 max-md:border-r max-md:border-arena bg-marfil-claro px-6 max-md:px-4 py-5 align-top font-display text-lg font-medium leading-[1.2] text-tinta">Selección de mandos medios y directivos</th>
+                  <td class="px-6 py-5 align-top">Headhunting de mandos medios y directivos, con criba de CVs y entrevistas.</td>
+                  <td class="px-6 py-5 align-top">Dirección de Recursos Humanos</td>
+                  <td class="px-6 py-5 align-top">Proceso en tu nombre, del briefing inicial a la contratación final.</td>
+                  <td class="px-6 py-5 align-top">40 consultores de selección</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="max-md:sticky max-md:left-0 max-md:border-r max-md:border-arena bg-marfil-claro px-6 max-md:px-4 py-5 align-top font-display text-lg font-medium leading-[1.2] text-tinta">Soporte al cliente externalizado</th>
+                  <td class="px-6 py-5 align-top">Un equipo de atención dedicado que atiende las incidencias de tus clientes.</td>
+                  <td class="px-6 py-5 align-top">Operaciones o Atención al Cliente</td>
+                  <td class="px-6 py-5 align-top">Atención por teléfono, email y chat, en tu nombre.</td>
+                  <td class="px-6 py-5 align-top">30 agentes de soporte</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="max-md:sticky max-md:left-0 max-md:border-r max-md:border-arena bg-marfil-claro px-6 max-md:px-4 py-5 align-top font-display text-lg font-medium leading-[1.2] text-tinta">Formación corporativa</th>
+                  <td class="px-6 py-5 align-top">Programas de liderazgo, comunicación y gestión de equipos.</td>
+                  <td class="px-6 py-5 align-top">Formación y Desarrollo</td>
+                  <td class="px-6 py-5 align-top">Curso, taller o webinar.</td>
+                  <td class="px-6 py-5 align-top">12 personas</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
@@ -603,6 +686,42 @@
     </div>
   </footer>
   <!-- FOOTER:END -->
+  <nav id="cta-movil" aria-label="Acceso rápido a la solicitud" hidden data-show="false" class="md:hidden! fixed inset-x-0 bottom-0 z-40 bg-marfil border-t border-tinta px-[max(1.25rem,env(safe-area-inset-left))] pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] invisible translate-y-full transition-[translate,visibility] duration-150 ease-snap motion-reduce:transition-none data-[show=true]:visible data-[show=true]:translate-y-0">
+    <a href="application.html" class="flex w-full items-center justify-center min-h-12 px-6 bg-tinta text-marfil font-semibold hover:bg-tinta-profunda focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta">Solicitar servicio</a>
+  </nav>
+  <script>
+  /* SEO-08 · CTA fijo en móvil (≤ 767 px). Sin JS la barra queda oculta (atributo hidden) y la página conserva sus CTA en línea.
+     Se muestra mientras no haya otra CTA de conversión visible; en el hero anclado (scrolly) no aparece, porque el
+     escenario ya lleva su propia CTA en los beats 1 y 4. */
+  (function () {
+    var bar = document.getElementById('cta-movil');
+    if (!bar || !('IntersectionObserver' in window)) return;
+    var hero = document.querySelector('[data-hero]');
+    var ctas = Array.prototype.filter.call(document.querySelectorAll('a[href^="application.html"]'), function (a) { return !bar.contains(a); });
+    var seen = new Set();
+    var heroIn = false;
+    function update() {
+      var pinned = heroIn && hero && hero.dataset.mode === 'scrolly';
+      var show = !pinned && seen.size === 0;
+      if (!show && bar.contains(document.activeElement)) show = true; // no ocultar la barra con el foco dentro
+      bar.dataset.show = show ? 'true' : 'false';
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.target === hero) heroIn = e.isIntersecting;
+        else if (e.isIntersecting) seen.add(e.target); else seen.delete(e.target);
+      });
+      update();
+    }, { rootMargin: '0px 0px -8% 0px' });
+    ctas.forEach(function (a) { io.observe(a); });
+    if (hero) {
+      io.observe(hero);
+      new MutationObserver(update).observe(hero, { attributes: true, attributeFilter: ['data-mode'] });
+    }
+    bar.addEventListener('focusout', function () { setTimeout(update, 0); });
+    bar.hidden = false;
+  })();
+  </script>
   <script src="assets/js/experience.js" defer></script>
 </body>
 </html>
