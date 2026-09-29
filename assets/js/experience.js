@@ -16,7 +16,9 @@
     i.onload = () => (i.decode ? i.decode().catch(() => {}) : Promise.resolve()).then(() => res(i));
     i.onerror = () => res(null); i.src = src;
   });
-  const loadSeq = (dir, n) => Promise.all(Array.from({ length: n }, (_, k) => loadImg(`assets/seq/${dir}/${pad(k + 1)}.webp`)));
+  // S7: fotogramas como ImageBitmap (decodificados y listos para pintar; nada se decodifica en draw).
+  const toBitmap = (i) => (i && window.createImageBitmap ? createImageBitmap(i).catch(() => i) : Promise.resolve(i));
+  const loadSeq = (dir, n) => Promise.all(Array.from({ length: n }, (_, k) => loadImg(`assets/seq/${dir}/${pad(k + 1)}.webp`).then(toBitmap)));
 
   // Espera intención: carga después de 'load' y del primer gesto de scroll/teclado.
   let armed = false; const waiting = [];
@@ -50,7 +52,7 @@
       return { s, sx, sy, vw, vh };
     }
     still(img, v, ctx = this.ctx) {
-      const kx = img.naturalWidth / W, ky = img.naturalHeight / H;
+      const kx = (img.naturalWidth || img.width) / W, ky = (img.naturalHeight || img.height) / H;
       ctx.drawImage(img, v.sx * kx, v.sy * ky, v.vw * kx, v.vh * ky, 0, 0, this.cw, this.ch);
     }
     layer(img, r, v, alpha = 1) { // fotograma de secuencia que cubre la región r del fotograma
@@ -82,14 +84,16 @@
     const stills = [null, null, null, null];
     const FACE = [0.55, 0, 0.45, 1], FULL = [0, 0, 1, 1];
     const G = [ // gesto por persona: carpeta, nº de fotogramas, región, tramo dentro del scroll
-      { dir: 'g1', n: 32, r: FACE, a: 0.015, b: 0.13 },
-      { dir: 'g2', n: 39, r: FULL, a: 0.245, b: 0.395 },
-      { dir: 'g3', n: 36, r: FACE, a: 0.515, b: 0.665 },
-      { dir: 'g4', n: 29, r: FACE, a: 0.79, b: 0.93 },
+      { dir: 'g1', n: 20, r: FACE, a: 0.006, b: 0.114 },
+      { dir: 'g2', n: 24, r: FULL, a: 0.282, b: 0.403 },
+      { dir: 'g3', n: 22, r: FACE, a: 0.572, b: 0.688 },
+      { dir: 'g4', n: 20, r: FACE, a: 0.858, b: 0.96 },
     ];
-    const P = [[0, 0.14], [0.23, 0.41], [0.5, 0.68], [0.77, 1]];      // persona fija
-    const F = [[0.14, 0.23], [0.41, 0.5], [0.68, 0.77]];               // volteos
-    const ACTIVE = [0.185, 0.455, 0.725];                                // cambio de texto a mitad del volteo
+    // Scroll Score v2 (WPW-1 C05, ritmo equilibrado): escena 410vh; volteos ≥ 400 px (≤ 25 % por notch),
+    // dwell ≥ 35vh, gestos ≤ 8 fotogramas/100 px en 1440×900 y 390×844.
+    const P = [[0, 0.12], [0.275, 0.41], [0.565, 0.695], [0.85, 1]];   // persona fija
+    const F = [[0.12, 0.275], [0.41, 0.565], [0.695, 0.85]];           // volteos
+    const ACTIVE = F.map(([a, b]) => (a + b) / 2);                       // cambio de texto a mitad del volteo
     let ready = false, last = -1;
 
     const v = () => (lg.matches ? st.view(FULL, 0.85, 0.37) : st.view(FACE, 0.8, 0.37));
@@ -99,34 +103,42 @@
       const cols = lg.matches ? 12 : 6, rows = Math.max(4, Math.round(cols * ch / cw));
       const A = st.buffered(ka, a, view), B = st.buffered(kb, b, view);
       const tw = cw / cols, th = ch / rows, D = cols + rows - 2, k = 0.055, j3 = 3 * st.dpr;
-      ctx.fillStyle = '#F3E9DB'; ctx.fillRect(0, 0, cw, ch);
+      // Base de una sola llamada (la imagen dominante) y solo se redibujan las teselas que difieren de ella:
+      // menos drawImage por frame y juntas en un único trazo (S6).
+      const base = fp < 0.5 ? A : B;
+      ctx.drawImage(base, 0, 0);
+      ctx.fillStyle = '#F3E9DB'; ctx.strokeStyle = '#F3E9DB'; ctx.lineWidth = j3;
+      const joints = new Path2D();
       for (let i = 0; i < cols; i++) for (let j = 0; j < rows; j++) {
         const d = (cols - 1 - i) + j; // ola diagonal: arriba-derecha → abajo-izquierda
         const lp = clamp(fp * (1 + D * k) - d * k);
+        const src = lp < 0.5 ? A : B;
+        const settled = lp <= 0 || lp >= 1;
+        if (settled && src === base) continue;
         const x = Math.round(i * tw), y = Math.round(j * th), w = Math.round((i + 1) * tw) - x, h = Math.round((j + 1) * th) - y;
-        const sx = Math.abs(Math.cos(lp * Math.PI)), src = lp < 0.5 ? A : B;
-        if (lp <= 0 || lp >= 1) { ctx.drawImage(src, x, y, w, h, x, y, w, h); continue; }
-        const dw = Math.max(1, w * sx);
-        ctx.drawImage(src, x, y, w, h, x + (w - dw) / 2, y, dw, h);
-        ctx.fillStyle = `rgba(255,253,249,${0.18 * (1 - sx)})`; ctx.fillRect(x + (w - dw) / 2, y, dw, h); // brillo de esmalte
-        ctx.strokeStyle = '#F3E9DB'; ctx.lineWidth = j3; ctx.strokeRect(x + (w - dw) / 2, y, dw, h);       // junta marfil
+        if (settled) { ctx.drawImage(src, x, y, w, h, x, y, w, h); continue; }
+        const sx = Math.abs(Math.cos(lp * Math.PI)), dw = Math.max(1, w * sx), dx = x + (w - dw) / 2;
+        ctx.fillRect(x, y, w, h);                                   // fondo marfil tras la tesela que gira
+        ctx.drawImage(src, x, y, w, h, dx, y, dw, h);
+        ctx.globalAlpha = 0.18 * (1 - sx); ctx.fillStyle = '#FFFDF9'; ctx.fillRect(dx, y, dw, h); // brillo de esmalte
+        ctx.globalAlpha = 1; ctx.fillStyle = '#F3E9DB';
+        joints.rect(dx, y, dw, h);                                  // junta marfil
+      }
+      ctx.stroke(joints);
+    }
+
+    async function preload() { // S7: todas las secuencias, en orden de aparición, tras los stills
+      for (const g of G.slice(1)) {
+        const fr = await loadSeq(g.dir, g.n);
+        if (fr.every(Boolean)) { g.frames = fr; draw(vis, true); }
       }
     }
 
-    function want(p) { // pide cada secuencia al acercarse a su tramo
-      if (!ready) return;
-      G.forEach((g) => {
-        if (g.req || p < g.a - 0.2) return;
-        g.req = true;
-        loadSeq(g.dir, g.n).then((fr) => { if (fr.every(Boolean)) { g.frames = fr; draw(true); } });
-      });
-    }
-
-    function draw(force) {
-      const p = progress();
+    let vis = 0;
+    function draw(p, force) {
+      vis = p;
       root.dataset.active = p < ACTIVE[0] ? 'p1' : p < ACTIVE[1] ? 'p2' : p < ACTIVE[2] ? 'p3' : 'p4';
       if (!ready) return;
-      want(p);
       if (!force && p === last) return; last = p;
       const view = v();
       for (let f = 0; f < 3; f++) {
@@ -143,17 +155,27 @@
       }
     }
 
-    st.onResize = () => draw(true);
+    st.onResize = () => draw(vis, true);
     whenArmed(async () => {
+      const first = loadSeq(G[0].dir, G[0].n); // el primer gesto empieza al inicio de la escena: en paralelo con los stills
       const imgs = await Promise.all([1, 2, 3, 4].map((n) => loadImg(`assets/img/hero-p${n}-1440.webp`)));
+      first.then((fr) => { if (fr.every(Boolean)) { G[0].frames = fr; draw(vis, true); } });
       if (imgs.some((x) => !x)) { // sin stills: vuelve al fallback apilado
         delete root.dataset.mode; delete root.dataset.active; return;
       }
       imgs.forEach((x, n) => { stills[n] = x; });
-      ready = true; canvas.hidden = false; draw(true);
+      ready = true; canvas.hidden = false; draw(vis, true);
+      preload();
     });
-    draw(true);
-    return () => draw(false);
+    draw(progress(), true);
+    return {
+      id: 'hero', selector: '[data-hero]', canvas: '[data-hero] [data-canvas]', beats: 4, progress, draw,
+      segments: [
+        ...P.map(([a, b], i) => ({ name: `P${i + 1}`, type: 'dwell', a, b, frames: 0 })),
+        ...F.map(([a, b], i) => ({ name: `F${i + 1}`, type: 'transition', a, b, frames: 0 })),
+        ...G.map((g) => ({ name: g.dir, type: 'sequence', a: g.a, b: g.b, frames: g.n, get ready() { return !!g.frames; } })),
+      ],
+    };
   }
 
   /* ---------- OFICINA PANAL: estrategia B ---------- */
@@ -196,41 +218,80 @@
       else st.still(fallback, view);
     }
 
-    function draw(force) {
+    let vis = 0;
+    function draw(p, force) {
+      vis = p;
       if (!ready) return;
-      const p = progress();
       if (!force && p === last) return; last = p;
-      const step = p < 0.25 ? 1 : p < 0.5 ? 2 : p < 0.75 ? 3 : 4;
+      const step = p < 0.2 ? 1 : p < 0.5 ? 2 : p < 0.75 ? 3 : 4;
       root.dataset.step = String(step);
       const view = st.view(R, 0.5, 0.5);
       if (step === 1) { frame(Q.o1, 0, S.o1, view); hexes(0, 1, view); }
       else if (step === 2) {
-        const u = seg(p, 0.25, 0.5);
+        const u = seg(p, 0.2, 0.5);
         frame(Q.o1, u, u < 0.5 ? S.o1 : S.o2, view);
-        hexes(clamp(u / 0.8), u < 0.8 ? 1 : 1 - (u - 0.8) / 0.2, view);
+        hexes(clamp(u / 0.85), u < 0.85 ? 1 : 1 - (u - 0.85) / 0.15, view);
       } else if (step === 3) frame(Q.o2, seg(p, 0.5, 0.75) * 0.5, S.o2, view);
       else { const u = seg(p, 0.75, 1); frame(Q.o2, 0.5 + u * 0.5, u < 0.9 ? S.o2 : S.o3, view); }
     }
 
-    st.onResize = () => draw(true);
+    st.onResize = () => draw(vis, true);
     let started = false;
     const start = () => whenArmed(async () => {
       if (started) return; started = true;
       const [a, b, c] = await Promise.all(['o1', 'o2', 'o3'].map((k) => loadImg(`assets/img/office-${k}-1280.webp`)));
       if (!a || !b || !c) { delete root.dataset.mode; delete root.dataset.step; return; }
-      Object.assign(S, { o1: a, o2: b, o3: c }); ready = true; canvas.hidden = false; draw(true);
-      for (const k of ['o1', 'o2']) { const fr = await loadSeq(Q[k].dir, Q[k].n); if (fr.every(Boolean)) { Q[k].frames = fr; draw(true); } }
+      Object.assign(S, { o1: a, o2: b, o3: c }); ready = true; canvas.hidden = false; draw(vis, true);
+      for (const k of ['o1', 'o2']) { const fr = await loadSeq(Q[k].dir, Q[k].n); if (fr.every(Boolean)) { Q[k].frames = fr; draw(vis, true); } }
     });
     new IntersectionObserver((es, io) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); start(); } }, { rootMargin: '100% 0px' }).observe(root);
-    return () => draw(false);
+    return {
+      id: 'office', selector: '[data-office]', canvas: '[data-office] [data-canvas]', beats: 4, progress, draw,
+      segments: [
+        { name: 'paso1', type: 'dwell', a: 0, b: 0.2, frames: 0 },
+        { name: 'encaje', type: 'transition', a: 0.2, b: 0.455, frames: 0 },
+        { name: 'o1', type: 'sequence', a: 0.2, b: 0.5, frames: Q.o1.n, get ready() { return !!Q.o1.frames; } },
+        { name: 'paso3', type: 'dwell', a: 0.5, b: 0.75, frames: 0 },
+        { name: 'paso4', type: 'dwell', a: 0.75, b: 1, frames: 0 },
+        { name: 'o2', type: 'sequence', a: 0.5, b: 1, frames: Q.o2.n, get ready() { return !!Q.o2.frames; } },
+      ],
+    };
   }
 
-  const renders = [];
+  /* ---------- Bucle de render suavizado (WPW-1 C05 S2) ----------
+     El progreso visual sigue al del scroll con amortiguación exponencial (τ = 100 ms): un notch de rueda
+     se reparte en varios fotogramas en vez de saltar. Saltos grandes (ancla/teclado) van directos. */
+  const TAU = 100, EPS = 0.0005, JUMP = 0.25;
+  const S = [];
   scenes.forEach((el) => {
-    if (el.hasAttribute('data-hero')) renders.push(hero(el));
-    else if (el.hasAttribute('data-office')) renders.push(office(el));
+    const sc = el.hasAttribute('data-hero') ? hero(el) : el.hasAttribute('data-office') ? office(el) : null;
+    if (sc) { sc.visual = sc.progress(); sc.target = sc.visual; S.push(sc); }
   });
-  let raf = 0;
-  const tick = () => { raf = 0; renders.forEach((r) => r()); };
-  addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(tick); }, { passive: true });
+  let raf = 0, prev = 0;
+  const tick = (now) => {
+    raf = 0;
+    const dt = prev ? Math.min(22, now - prev) : 16.7; prev = now; // dt acotado: un frame largo no provoca un salto (M2)
+    let busy = false;
+    for (const sc of S) {
+      const t = sc.progress(); sc.target = t;
+      const d = t - sc.visual;
+      if (Math.abs(d) > JUMP || Math.abs(d) < EPS) sc.visual = t;
+      else { sc.visual += d * (1 - Math.exp(-dt / TAU)); busy = true; }
+      sc.draw(sc.visual, false);
+    }
+    if (busy) raf = requestAnimationFrame(tick); else prev = 0;
+  };
+  const kick = () => { if (!raf) raf = requestAnimationFrame(tick); };
+  addEventListener('scroll', kick, { passive: true });
+  addEventListener('resize', kick, { passive: true });
+
+  if (/[?&]debug=scroll\b/.test(location.search)) { // hook de medición (C05 §4.2), publicado al iniciar
+    window.__scrollFeel = {
+      version: 1, tau: TAU,
+      scenes: S.map((sc) => ({
+        id: sc.id, selector: sc.selector, canvas: sc.canvas, beats: sc.beats, segments: sc.segments,
+        get target() { return sc.progress(); }, get visual() { return sc.visual; },
+      })),
+    };
+  }
 })();
