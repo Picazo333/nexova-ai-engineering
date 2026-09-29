@@ -35,8 +35,8 @@
     @font-face { font-family: "Inter"; src: url("assets/fonts/inter-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
     @font-face { font-family: "Inter"; src: url("assets/fonts/inter-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
     @font-face { font-family: "Inter"; src: url("assets/fonts/inter-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
-    @keyframes snap-in { from { transform: translateY(8px); } to { transform: translateY(0); } }
-    [data-mode="scrolly"] { height: var(--pin-h, 370vh); }
+    [data-hero][data-mode="scrolly"] { height: 370vh; }
+    [data-office][data-mode="scrolly"] { height: 300vh; }
     [data-mode="scrolly"] > [data-stage] { position: sticky; top: 0; height: 100svh; overflow: hidden; }
   </style>
   <!-- TOKENS:END -->
@@ -266,7 +266,7 @@
         </fieldset>
 
         <div class="flex flex-wrap gap-4 border-t border-tinta pt-8">
-          <button type="submit" class="inline-flex items-center justify-center min-h-12 px-7 bg-tinta text-marfil font-semibold hover:bg-tinta-profunda transition-transform duration-150 ease-snap hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta cursor-pointer">Enviar solicitud</button>
+          <button type="submit" class="inline-flex items-center justify-center min-h-12 px-7 bg-tinta text-marfil font-semibold hover:bg-tinta-profunda transition-transform duration-150 ease-snap hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta cursor-pointer">Enviar solicitud</button>
           <button type="reset" class="inline-flex items-center justify-center min-h-12 px-7 border-2 border-tinta text-tinta font-semibold hover:bg-marfil-claro focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta cursor-pointer">Borrar formulario</button>
         </div>
       </form>
@@ -280,7 +280,7 @@
       <aside class="lg:col-span-4 lg:col-start-9 flex flex-col gap-10 lg:sticky lg:top-8 self-start" aria-labelledby="aside-title">
         <div class="bg-marfil-claro border-t-4 border-tinta p-7 flex flex-col gap-4">
           <h2 class="font-display text-2xl font-medium text-tinta leading-[1.15]">Qué pasa después</h2>
-          <ol class="flex flex-col gap-3"><li class="flex gap-3"><span aria-hidden="true" class="font-display text-terracota text-xl leading-none w-5">1</span><span>Revisamos tu solicitud.</span></li><li class="flex gap-3"><span aria-hidden="true" class="font-display text-terracota text-xl leading-none w-5">2</span><span>Te contactamos para hablar del alcance.</span></li><li class="flex gap-3"><span aria-hidden="true" class="font-display text-terracota text-xl leading-none w-5">3</span><span>Preparamos el enfoque contigo.</span></li></ol>
+          <ol class="flex flex-col gap-3"><li class="flex gap-3"><span aria-hidden="true" class="font-display text-terracota-700 text-xl leading-none w-5">1</span><span>Revisamos tu solicitud.</span></li><li class="flex gap-3"><span aria-hidden="true" class="font-display text-terracota-700 text-xl leading-none w-5">2</span><span>Te contactamos para hablar del alcance.</span></li><li class="flex gap-3"><span aria-hidden="true" class="font-display text-terracota-700 text-xl leading-none w-5">3</span><span>Preparamos el enfoque contigo.</span></li></ol>
         </div>
         <div class="flex flex-col gap-4">
           <h2 id="aside-title" class="font-display text-2xl font-medium text-tinta leading-[1.15]">Sobre Nexova</h2>

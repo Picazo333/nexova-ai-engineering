@@ -113,11 +113,21 @@
       }
     }
 
-    function draw(force) {
+    function want(p) { // pide cada secuencia al acercarse a su tramo
       if (!ready) return;
+      G.forEach((g) => {
+        if (g.req || p < g.a - 0.2) return;
+        g.req = true;
+        loadSeq(g.dir, g.n).then((fr) => { if (fr.every(Boolean)) { g.frames = fr; draw(true); } });
+      });
+    }
+
+    function draw(force) {
       const p = progress();
-      if (!force && p === last) return; last = p;
       root.dataset.active = p < ACTIVE[0] ? 'p1' : p < ACTIVE[1] ? 'p2' : p < ACTIVE[2] ? 'p3' : 'p4';
+      if (!ready) return;
+      want(p);
+      if (!force && p === last) return; last = p;
       const view = v();
       for (let f = 0; f < 3; f++) {
         if (p > F[f][0] && p < F[f][1]) return flip(seg(p, F[f][0], F[f][1]), stills[f], stills[f + 1], f, f + 1, view);
@@ -136,14 +146,13 @@
     st.onResize = () => draw(true);
     whenArmed(async () => {
       const imgs = await Promise.all([1, 2, 3, 4].map((n) => loadImg(`assets/img/hero-p${n}-1440.webp`)));
-      if (imgs.some((x) => !x)) return; // sin stills: se queda el fallback
+      if (imgs.some((x) => !x)) { // sin stills: vuelve al fallback apilado
+        delete root.dataset.mode; delete root.dataset.active; return;
+      }
       imgs.forEach((x, n) => { stills[n] = x; });
       ready = true; canvas.hidden = false; draw(true);
-      for (const g of G) { // secuencias, una a una, por orden de aparición
-        const fr = await loadSeq(g.dir, g.n);
-        if (fr.every(Boolean)) { g.frames = fr; draw(true); }
-      }
     });
+    draw(true);
     return () => draw(false);
   }
 
@@ -208,7 +217,7 @@
     const start = () => whenArmed(async () => {
       if (started) return; started = true;
       const [a, b, c] = await Promise.all(['o1', 'o2', 'o3'].map((k) => loadImg(`assets/img/office-${k}-1280.webp`)));
-      if (!a || !b || !c) return;
+      if (!a || !b || !c) { delete root.dataset.mode; delete root.dataset.step; return; }
       Object.assign(S, { o1: a, o2: b, o3: c }); ready = true; canvas.hidden = false; draw(true);
       for (const k of ['o1', 'o2']) { const fr = await loadSeq(Q[k].dir, Q[k].n); if (fr.every(Boolean)) { Q[k].frames = fr; draw(true); } }
     });

@@ -334,3 +334,5 @@ npx --yes serve -l 3000
 ```
 
 Open `http://localhost:3000`. In Codespaces, set port 3000 visibility to **Public** before running PageSpeed Insights on the forwarded URL.
+
+`serve.json` sets `"cleanUrls": false` so `application.html?tipo=…` deep links keep their query string under `serve` (without it, serve 301-redirects to `/application` and drops `?tipo`).

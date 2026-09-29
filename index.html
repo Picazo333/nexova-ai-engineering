@@ -36,8 +36,8 @@
     @font-face { font-family: "Inter"; src: url("assets/fonts/inter-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
     @font-face { font-family: "Inter"; src: url("assets/fonts/inter-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
     @font-face { font-family: "Inter"; src: url("assets/fonts/inter-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
-    @keyframes snap-in { from { transform: translateY(8px); } to { transform: translateY(0); } }
-    [data-mode="scrolly"] { height: var(--pin-h, 370vh); }
+    [data-hero][data-mode="scrolly"] { height: 370vh; }
+    [data-office][data-mode="scrolly"] { height: 300vh; }
     [data-mode="scrolly"] > [data-stage] { position: sticky; top: 0; height: 100svh; overflow: hidden; }
   </style>
   <!-- TOKENS:END -->
@@ -215,7 +215,7 @@
         <ul class="flex items-center gap-7 text-[15px] text-tinta"><li><a class="block py-3 lg:py-1 border-b-2 border-transparent hover:border-terracota-700 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta" href="#servicios">Servicios</a></li><li><a class="block py-3 lg:py-1 border-b-2 border-transparent hover:border-terracota-700 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta" href="#como-trabajamos">Cómo trabajamos</a></li><li><a class="block py-3 lg:py-1 border-b-2 border-transparent hover:border-terracota-700 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta" href="#sectores">Sectores</a></li><li><a class="block py-3 lg:py-1 border-b-2 border-transparent hover:border-terracota-700 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta" href="#presencia">Presencia</a></li><li><a class="block py-3 lg:py-1 border-b-2 border-transparent hover:border-terracota-700 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta" href="#preguntas">Preguntas</a></li></ul>
       </nav>
       <div class="flex items-center gap-3">
-        <a href="application.html" class="max-sm:hidden inline-flex items-center justify-center min-h-12 px-5 bg-tinta text-marfil font-semibold hover:bg-tinta-profunda transition-transform duration-150 ease-snap hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta">Solicitar servicio</a>
+        <a href="application.html" class="max-sm:hidden inline-flex items-center justify-center min-h-12 px-5 bg-tinta text-marfil font-semibold hover:bg-tinta-profunda transition-transform duration-150 ease-snap hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta">Solicitar servicio</a>
         <details class="lg:hidden group/menu">
           <summary class="list-none [&::-webkit-details-marker]:hidden cursor-pointer inline-flex items-center justify-center size-12 border-2 border-tinta text-tinta focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta">
             <span class="sr-only group-open/menu:hidden">Abrir menú</span><span class="sr-only hidden group-open/menu:inline">Cerrar menú</span>
@@ -232,24 +232,24 @@
   </header>
   <!-- HEADER:END -->
   <main id="main">
-    <section id="inicio" aria-labelledby="hero-title" data-hero class="group/hero relative bg-marfil" style="--pin-h: 370vh">
+    <section id="inicio" aria-labelledby="hero-title" data-hero class="group/hero relative bg-marfil">
       <script>(function(e){if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!(navigator.connection&&navigator.connection.saveData))e.dataset.mode='scrolly'})(document.currentScript.parentElement)</script>
       <div data-stage class="relative flex flex-col lg:block">
-        <div data-media class="relative w-full aspect-[4/5] sm:aspect-[16/10] lg:aspect-auto lg:h-[calc(100svh-5rem)] lg:min-h-[600px] overflow-hidden bg-arena group-data-[mode=scrolly]/hero:aspect-auto group-data-[mode=scrolly]/hero:flex-1 group-data-[mode=scrolly]/hero:min-h-[30svh] group-data-[mode=scrolly]/hero:max-h-[40svh] lg:group-data-[mode=scrolly]/hero:max-h-none lg:group-data-[mode=scrolly]/hero:absolute lg:group-data-[mode=scrolly]/hero:inset-0 lg:group-data-[mode=scrolly]/hero:h-auto lg:group-data-[mode=scrolly]/hero:min-h-0">
+        <div data-media class="relative w-full aspect-[4/5] max-lg:max-h-[36svh] sm:aspect-[16/10] lg:aspect-auto lg:h-[calc(100svh-5rem)] lg:min-h-[600px] overflow-hidden bg-arena group-data-[mode=scrolly]/hero:aspect-auto group-data-[mode=scrolly]/hero:flex-1 group-data-[mode=scrolly]/hero:min-h-[30svh] group-data-[mode=scrolly]/hero:max-h-[38svh] lg:group-data-[mode=scrolly]/hero:max-h-none lg:group-data-[mode=scrolly]/hero:absolute lg:group-data-[mode=scrolly]/hero:inset-0 lg:group-data-[mode=scrolly]/hero:h-auto lg:group-data-[mode=scrolly]/hero:min-h-0">
           <picture><source media="(min-width: 1024px)" type="image/avif" srcset="assets/img/hero-p1-1024.avif 1024w, assets/img/hero-p1-1440.avif 1440w, assets/img/hero-p1-1920.avif 1920w" sizes="100vw"><source media="(min-width: 1024px)" type="image/webp" srcset="assets/img/hero-p1-1024.webp 1024w, assets/img/hero-p1-1440.webp 1440w, assets/img/hero-p1-1920.webp 1920w" sizes="100vw"><source type="image/avif" srcset="assets/img/hero-p1-m-480.avif 480w, assets/img/hero-p1-m-800.avif 800w" sizes="100vw"><source type="image/webp" srcset="assets/img/hero-p1-m-480.webp 480w, assets/img/hero-p1-m-800.webp 800w" sizes="100vw"><img src="assets/img/hero-p1-m-800.webp" alt="Medio rostro de una consultora de mirada serena ante un muro de cal con azulejos de Manises." width="800" height="1000" fetchpriority="high" decoding="async" class="block w-full h-full object-cover object-[50%_37%] lg:object-[85%_37%]"></picture>
           <canvas data-canvas aria-hidden="true" hidden class="absolute inset-0 w-full h-full"></canvas>
-          <div aria-hidden="true" class="hidden lg:block absolute inset-y-0 left-0 w-[64%] bg-gradient-to-r from-marfil/95 via-marfil/80 to-marfil/0 pointer-events-none transition-opacity duration-300 group-data-[active=p2]/hero:opacity-0 group-data-[active=p3]/hero:opacity-0 group-data-[active=p4]/hero:opacity-0"></div>
+          <div aria-hidden="true" class="hidden lg:block absolute inset-y-0 left-0 w-[64%] bg-gradient-to-r from-marfil/95 via-marfil/80 to-marfil/0 pointer-events-none transition-opacity duration-300 motion-reduce:transition-none group-data-[active=p2]/hero:opacity-0 group-data-[active=p3]/hero:opacity-0 group-data-[active=p4]/hero:opacity-0"></div>
         </div>
         <div data-copy-area class="relative mx-auto max-w-[1280px] px-5 md:px-8 lg:px-12 w-full lg:static lg:max-w-none lg:px-0 lg:group-data-[mode=scrolly]/hero:absolute lg:group-data-[mode=scrolly]/hero:inset-0">
-          <div data-copy="p1" class="py-8 group-data-[mode=scrolly]/hero:py-4 lg:py-0 lg:absolute lg:inset-x-0 lg:top-0 lg:h-[calc(100svh-5rem)] lg:min-h-[600px] lg:group-data-[mode=scrolly]/hero:h-full lg:flex lg:items-center group-data-[active=p2]/hero:invisible group-data-[active=p3]/hero:invisible group-data-[active=p4]/hero:invisible">
+          <div data-copy="p1" class="py-5 group-data-[mode=scrolly]/hero:py-4 lg:py-0 lg:absolute lg:inset-x-0 lg:top-0 lg:h-[calc(100svh-5rem)] lg:min-h-[600px] lg:group-data-[mode=scrolly]/hero:h-full lg:flex lg:items-center group-data-[active=p2]/hero:invisible group-data-[active=p3]/hero:invisible group-data-[active=p4]/hero:invisible">
             <div class="lg:mx-auto lg:max-w-[1280px] lg:px-12 w-full">
-              <div class="flex flex-col gap-5 group-data-[mode=scrolly]/hero:gap-3 lg:group-data-[mode=scrolly]/hero:gap-5 lg:max-w-[46%]">
+              <div class="flex flex-col gap-3 lg:gap-5 lg:max-w-[46%]">
                 <p class="text-[13px] font-semibold uppercase tracking-[0.08em] text-terracota-700">Consultora de recursos humanos y selección de talento · Desde 2011</p>
                 <h1 id="hero-title" class="font-display font-medium text-[2.25rem] sm:text-5xl lg:text-[4rem] xl:text-[4.5rem] leading-[1.15] text-tinta text-balance">Detrás de cada empresa hay personas distintas.</h1>
-                <p class="text-lg leading-relaxed text-carbon max-w-[38rem] group-data-[mode=scrolly]/hero:text-base lg:group-data-[mode=scrolly]/hero:text-lg">Nexova Solutions encuentra a cada una y las organiza para que funcionen juntas. Seleccionamos mandos medios y directivos, ponemos equipos de soporte al cliente a tu servicio y formamos en liderazgo.</p>
+                <p class="text-base lg:text-lg leading-relaxed text-carbon max-w-[38rem]">Nexova Solutions encuentra a cada una y las organiza para que funcionen juntas. Seleccionamos mandos medios y directivos, ponemos equipos de soporte al cliente a tu servicio y formamos en liderazgo.</p>
                 <p class="text-sm text-mineral">Para medianas empresas de tecnología, retail y servicios financieros. Valencia y Miami.</p>
                 <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
-                  <a href="application.html" class="inline-flex items-center justify-center min-h-12 px-6 bg-tinta text-marfil font-semibold hover:bg-tinta-profunda transition-transform duration-150 ease-snap hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta">Solicitar servicio</a>
+                  <a href="application.html" class="inline-flex items-center justify-center min-h-12 px-6 bg-tinta text-marfil font-semibold hover:bg-tinta-profunda transition-transform duration-150 ease-snap hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta">Solicitar servicio</a>
                   <a href="#servicios" class="inline-flex items-center min-h-12 text-terracota-700 font-semibold underline decoration-1 underline-offset-4 hover:decoration-2 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta">Ver servicios</a>
                 </div>
               </div>
@@ -257,7 +257,7 @@
           </div>
           <div class="grid gap-10 pb-16 lg:mx-auto lg:max-w-[1280px] lg:px-12 lg:pt-16 lg:pb-20 lg:grid-cols-3 group-data-[mode=scrolly]/hero:contents">
             
-          <div data-copy="p2" class="flex flex-col gap-4 group-data-[mode=scrolly]/hero:absolute group-data-[mode=scrolly]/hero:inset-x-0 group-data-[mode=scrolly]/hero:top-0 group-data-[mode=scrolly]/hero:invisible lg:group-data-[mode=scrolly]/hero:right-auto lg:group-data-[mode=scrolly]/hero:left-[max(3rem,calc((100%-1280px)/2+3rem))] lg:group-data-[mode=scrolly]/hero:top-10 lg:group-data-[mode=scrolly]/hero:w-[min(28rem,34vw)] lg:group-data-[mode=scrolly]/hero:bg-marfil lg:group-data-[mode=scrolly]/hero:p-7 lg:group-data-[mode=scrolly]/hero:border-l-4 lg:group-data-[mode=scrolly]/hero:border-terracota group-data-[active=p2]/hero:visible!">
+          <div data-copy="p2" class="flex flex-col gap-4 group-data-[mode=scrolly]/hero:absolute group-data-[mode=scrolly]/hero:inset-x-0 group-data-[mode=scrolly]/hero:top-0 group-data-[mode=scrolly]/hero:invisible group-data-[mode=scrolly]/hero:px-5 md:group-data-[mode=scrolly]/hero:px-8 lg:group-data-[mode=scrolly]/hero:right-auto lg:group-data-[mode=scrolly]/hero:left-[max(3rem,calc((100%-1280px)/2+3rem))] lg:group-data-[mode=scrolly]/hero:top-10 lg:group-data-[mode=scrolly]/hero:w-[min(28rem,34vw)] lg:group-data-[mode=scrolly]/hero:bg-marfil lg:group-data-[mode=scrolly]/hero:p-7 lg:group-data-[mode=scrolly]/hero:border-l-4 lg:group-data-[mode=scrolly]/hero:border-terracota group-data-[active=p2]/hero:visible!">
             <picture class="block group-data-[mode=scrolly]/hero:hidden"><source media="(min-width: 1024px)" type="image/avif" srcset="assets/img/hero-p2-1440.avif 1440w" sizes="(min-width: 1024px) 33vw, 100vw"><source media="(min-width: 1024px)" type="image/webp" srcset="assets/img/hero-p2-1440.webp 1440w" sizes="(min-width: 1024px) 33vw, 100vw"><source type="image/avif" srcset="assets/img/hero-p2-m-480.avif 480w, assets/img/hero-p2-m-800.avif 800w" sizes="100vw"><source type="image/webp" srcset="assets/img/hero-p2-m-480.webp 480w, assets/img/hero-p2-m-800.webp 800w" sizes="100vw"><img src="assets/img/hero-p2-m-800.webp" alt="Medio rostro de un directivo que saluda con la mano, con su oficina al fondo." width="800" height="1000" loading="lazy" decoding="async" class="block w-full aspect-[4/5] object-cover object-[50%_37%] lg:aspect-video lg:object-[85%_37%]"></picture>
             <div class="flex flex-col gap-2">
               <p class="text-[13px] font-semibold uppercase tracking-[0.08em] text-terracota-700">Selección</p>
@@ -265,7 +265,7 @@
             </div>
           </div>
             
-          <div data-copy="p3" class="flex flex-col gap-4 group-data-[mode=scrolly]/hero:absolute group-data-[mode=scrolly]/hero:inset-x-0 group-data-[mode=scrolly]/hero:top-0 group-data-[mode=scrolly]/hero:invisible lg:group-data-[mode=scrolly]/hero:right-auto lg:group-data-[mode=scrolly]/hero:left-[max(3rem,calc((100%-1280px)/2+3rem))] lg:group-data-[mode=scrolly]/hero:top-10 lg:group-data-[mode=scrolly]/hero:w-[min(28rem,34vw)] lg:group-data-[mode=scrolly]/hero:bg-marfil lg:group-data-[mode=scrolly]/hero:p-7 lg:group-data-[mode=scrolly]/hero:border-l-4 lg:group-data-[mode=scrolly]/hero:border-terracota group-data-[active=p3]/hero:visible!">
+          <div data-copy="p3" class="flex flex-col gap-4 group-data-[mode=scrolly]/hero:absolute group-data-[mode=scrolly]/hero:inset-x-0 group-data-[mode=scrolly]/hero:top-0 group-data-[mode=scrolly]/hero:invisible group-data-[mode=scrolly]/hero:px-5 md:group-data-[mode=scrolly]/hero:px-8 lg:group-data-[mode=scrolly]/hero:right-auto lg:group-data-[mode=scrolly]/hero:left-[max(3rem,calc((100%-1280px)/2+3rem))] lg:group-data-[mode=scrolly]/hero:top-10 lg:group-data-[mode=scrolly]/hero:w-[min(28rem,34vw)] lg:group-data-[mode=scrolly]/hero:bg-marfil lg:group-data-[mode=scrolly]/hero:p-7 lg:group-data-[mode=scrolly]/hero:border-l-4 lg:group-data-[mode=scrolly]/hero:border-terracota group-data-[active=p3]/hero:visible!">
             <picture class="block group-data-[mode=scrolly]/hero:hidden"><source media="(min-width: 1024px)" type="image/avif" srcset="assets/img/hero-p3-1440.avif 1440w" sizes="(min-width: 1024px) 33vw, 100vw"><source media="(min-width: 1024px)" type="image/webp" srcset="assets/img/hero-p3-1440.webp 1440w" sizes="(min-width: 1024px) 33vw, 100vw"><source type="image/avif" srcset="assets/img/hero-p3-m-480.avif 480w, assets/img/hero-p3-m-800.avif 800w" sizes="100vw"><source type="image/webp" srcset="assets/img/hero-p3-m-480.webp 480w, assets/img/hero-p3-m-800.webp 800w" sizes="100vw"><img src="assets/img/hero-p3-m-800.webp" alt="Medio rostro de una joven rubia que saca la lengua en broma, sobre un fondo cubista." width="800" height="1000" loading="lazy" decoding="async" class="block w-full aspect-[4/5] object-cover object-[50%_37%] lg:aspect-video lg:object-[85%_37%]"></picture>
             <div class="flex flex-col gap-2">
               <p class="text-[13px] font-semibold uppercase tracking-[0.08em] text-terracota-700">Formación</p>
@@ -273,13 +273,13 @@
             </div>
           </div>
             
-          <div data-copy="p4" class="flex flex-col gap-4 group-data-[mode=scrolly]/hero:absolute group-data-[mode=scrolly]/hero:inset-x-0 group-data-[mode=scrolly]/hero:top-0 group-data-[mode=scrolly]/hero:invisible lg:group-data-[mode=scrolly]/hero:right-auto lg:group-data-[mode=scrolly]/hero:left-[max(3rem,calc((100%-1280px)/2+3rem))] lg:group-data-[mode=scrolly]/hero:top-10 lg:group-data-[mode=scrolly]/hero:w-[min(28rem,34vw)] lg:group-data-[mode=scrolly]/hero:bg-marfil lg:group-data-[mode=scrolly]/hero:p-7 lg:group-data-[mode=scrolly]/hero:border-l-4 lg:group-data-[mode=scrolly]/hero:border-terracota group-data-[active=p4]/hero:visible!">
+          <div data-copy="p4" class="flex flex-col gap-4 group-data-[mode=scrolly]/hero:absolute group-data-[mode=scrolly]/hero:inset-x-0 group-data-[mode=scrolly]/hero:top-0 group-data-[mode=scrolly]/hero:invisible group-data-[mode=scrolly]/hero:px-5 md:group-data-[mode=scrolly]/hero:px-8 lg:group-data-[mode=scrolly]/hero:right-auto lg:group-data-[mode=scrolly]/hero:left-[max(3rem,calc((100%-1280px)/2+3rem))] lg:group-data-[mode=scrolly]/hero:top-10 lg:group-data-[mode=scrolly]/hero:w-[min(28rem,34vw)] lg:group-data-[mode=scrolly]/hero:bg-marfil lg:group-data-[mode=scrolly]/hero:p-7 lg:group-data-[mode=scrolly]/hero:border-l-4 lg:group-data-[mode=scrolly]/hero:border-terracota group-data-[active=p4]/hero:visible!">
             <picture class="block group-data-[mode=scrolly]/hero:hidden"><source media="(min-width: 1024px)" type="image/avif" srcset="assets/img/hero-p4-1440.avif 1440w" sizes="(min-width: 1024px) 33vw, 100vw"><source media="(min-width: 1024px)" type="image/webp" srcset="assets/img/hero-p4-1440.webp 1440w" sizes="(min-width: 1024px) 33vw, 100vw"><source type="image/avif" srcset="assets/img/hero-p4-m-480.avif 480w, assets/img/hero-p4-m-800.avif 800w" sizes="100vw"><source type="image/webp" srcset="assets/img/hero-p4-m-480.webp 480w, assets/img/hero-p4-m-800.webp 800w" sizes="100vw"><img src="assets/img/hero-p4-m-800.webp" alt="Medio rostro de un hombre negro que guiña un ojo, con un naranjo de fondo." width="800" height="1000" loading="lazy" decoding="async" class="block w-full aspect-[4/5] object-cover object-[50%_37%] lg:aspect-video lg:object-[85%_37%]"></picture>
             <div class="flex flex-col gap-2">
               <p class="text-[13px] font-semibold uppercase tracking-[0.08em] text-terracota-700">Soporte</p>
               <p class="font-display text-2xl lg:text-[1.75rem] leading-[1.2] text-tinta">Un equipo dedicado atiende a tus clientes por teléfono, email y chat, en tu nombre.</p>
               <p class="text-carbon">Una línea o las tres, con un mismo interlocutor.</p>
-              <p><a href="application.html" class="inline-flex items-center justify-center min-h-12 px-6 bg-tinta text-marfil font-semibold hover:bg-tinta-profunda transition-transform duration-150 ease-snap hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta mt-2">Solicitar servicio</a></p>
+              <p><a href="application.html" class="inline-flex items-center justify-center min-h-12 px-6 bg-tinta text-marfil font-semibold hover:bg-tinta-profunda transition-transform duration-150 ease-snap hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta mt-2">Solicitar servicio</a></p>
             </div>
           </div>
           </div>
@@ -417,7 +417,7 @@
           <p class="text-lg text-carbon lg:col-span-6 lg:col-start-7 self-end">Cuatro pasos para pasar de piezas sueltas a un equipo que funciona.</p>
         </div>
       </div>
-      <div data-office class="group/office relative" style="--pin-h: 300vh">
+      <div data-office class="group/office relative">
         <script>(function(e){if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!(navigator.connection&&navigator.connection.saveData))e.dataset.mode='scrolly'})(document.currentScript.parentElement)</script>
         <div data-stage class="mx-auto max-w-[1280px] px-5 md:px-8 lg:px-12 pb-20 lg:pb-28 grid gap-8 lg:grid-cols-12 lg:items-center group-data-[mode=scrolly]/office:pb-0 group-data-[mode=scrolly]/office:content-center">
           <div class="lg:col-span-8 lg:order-2">
@@ -431,22 +431,22 @@
           </div>
           <div class="lg:col-span-4 lg:order-1 flex flex-col gap-6">
             <ol class="flex flex-col gap-6 group-data-[mode=scrolly]/office:max-lg:gap-3">
-            <li data-step="1" class="relative flex flex-col gap-2 border-l-4 border-arena pl-5 py-1 group-data-[step=1]/office:border-terracota transition-colors duration-150">
+            <li data-step="1" class="relative flex flex-col gap-2 border-l-4 border-arena pl-5 py-1 group-data-[step=1]/office:border-terracota transition-colors duration-150 motion-reduce:transition-none">
               <span class="text-[13px] font-semibold uppercase tracking-[0.08em] text-terracota-700">Paso 1</span>
               <h3 class="font-display font-medium text-2xl leading-[1.15] text-tinta">Diagnóstico</h3>
               <p class="text-carbon group-data-[mode=scrolly]/office:max-lg:hidden group-data-[mode=scrolly]/office:max-lg:group-data-[step=1]/office:block">Nos cuentas qué necesitas en la solicitud y revisamos contigo el alcance en un briefing inicial.</p>
             </li>
-            <li data-step="2" class="relative flex flex-col gap-2 border-l-4 border-arena pl-5 py-1 group-data-[step=2]/office:border-terracota transition-colors duration-150">
+            <li data-step="2" class="relative flex flex-col gap-2 border-l-4 border-arena pl-5 py-1 group-data-[step=2]/office:border-terracota transition-colors duration-150 motion-reduce:transition-none">
               <span class="text-[13px] font-semibold uppercase tracking-[0.08em] text-terracota-700">Paso 2</span>
               <h3 class="font-display font-medium text-2xl leading-[1.15] text-tinta">Búsqueda</h3>
               <p class="text-carbon group-data-[mode=scrolly]/office:max-lg:hidden group-data-[mode=scrolly]/office:max-lg:group-data-[step=2]/office:block">Buscamos perfiles, preparamos el equipo de soporte o diseñamos la formación. En selección, con criba de CVs y entrevistas.</p>
             </li>
-            <li data-step="3" class="relative flex flex-col gap-2 border-l-4 border-arena pl-5 py-1 group-data-[step=3]/office:border-terracota transition-colors duration-150">
+            <li data-step="3" class="relative flex flex-col gap-2 border-l-4 border-arena pl-5 py-1 group-data-[step=3]/office:border-terracota transition-colors duration-150 motion-reduce:transition-none">
               <span class="text-[13px] font-semibold uppercase tracking-[0.08em] text-terracota-700">Paso 3</span>
               <h3 class="font-display font-medium text-2xl leading-[1.15] text-tinta">Incorporación</h3>
               <p class="text-carbon group-data-[mode=scrolly]/office:max-lg:hidden group-data-[mode=scrolly]/office:max-lg:group-data-[step=3]/office:block">Cada persona ocupa su módulo: llegamos a la contratación final, el equipo de soporte empieza a atender o arranca la formación.</p>
             </li>
-            <li data-step="4" class="relative flex flex-col gap-2 border-l-4 border-arena pl-5 py-1 group-data-[step=4]/office:border-terracota transition-colors duration-150">
+            <li data-step="4" class="relative flex flex-col gap-2 border-l-4 border-arena pl-5 py-1 group-data-[step=4]/office:border-terracota transition-colors duration-150 motion-reduce:transition-none">
               <span class="text-[13px] font-semibold uppercase tracking-[0.08em] text-terracota-700">Paso 4</span>
               <h3 class="font-display font-medium text-2xl leading-[1.15] text-tinta">Acompañamiento</h3>
               <p class="text-carbon group-data-[mode=scrolly]/office:max-lg:hidden group-data-[mode=scrolly]/office:max-lg:group-data-[step=4]/office:block">Acompañamos el talento que hemos encontrado y formado, con un mismo interlocutor para las tres líneas.</p>
@@ -506,42 +506,42 @@
           <details class="group/faq border-b border-tinta">
             <summary class="list-none [&::-webkit-details-marker]:hidden cursor-pointer flex items-center justify-between gap-6 py-5 font-display text-xl lg:text-2xl text-tinta focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta">
               <span>¿Con qué tipo de empresas trabajáis?</span>
-              <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" class="shrink-0 transition-transform duration-150 group-open/faq:rotate-45"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.75"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" class="shrink-0 transition-transform duration-150 motion-reduce:transition-none group-open/faq:rotate-45"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.75"/></svg>
             </summary>
             <p class="pb-6 text-carbon max-w-3xl">Con medianas empresas, sobre todo de tecnología, retail y servicios financieros.</p>
           </details>
           <details class="group/faq border-b border-tinta">
             <summary class="list-none [&::-webkit-details-marker]:hidden cursor-pointer flex items-center justify-between gap-6 py-5 font-display text-xl lg:text-2xl text-tinta focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta">
               <span>¿Qué perfiles cubrís en selección?</span>
-              <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" class="shrink-0 transition-transform duration-150 group-open/faq:rotate-45"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.75"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" class="shrink-0 transition-transform duration-150 motion-reduce:transition-none group-open/faq:rotate-45"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.75"/></svg>
             </summary>
             <p class="pb-6 text-carbon max-w-3xl">Mandos medios y puestos de dirección. Un equipo de 40 consultores lleva el proceso en tu nombre, desde el briefing inicial hasta la contratación final.</p>
           </details>
           <details class="group/faq border-b border-tinta">
             <summary class="list-none [&::-webkit-details-marker]:hidden cursor-pointer flex items-center justify-between gap-6 py-5 font-display text-xl lg:text-2xl text-tinta focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta">
               <span>¿Puedo contratar solo uno de los servicios?</span>
-              <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" class="shrink-0 transition-transform duration-150 group-open/faq:rotate-45"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.75"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" class="shrink-0 transition-transform duration-150 motion-reduce:transition-none group-open/faq:rotate-45"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.75"/></svg>
             </summary>
             <p class="pb-6 text-carbon max-w-3xl">Sí. Puedes contratar selección, soporte o formación por separado, o combinarlos. Hay empresas que externalizan una parte de la gestión del talento y otras, toda.</p>
           </details>
           <details class="group/faq border-b border-tinta">
             <summary class="list-none [&::-webkit-details-marker]:hidden cursor-pointer flex items-center justify-between gap-6 py-5 font-display text-xl lg:text-2xl text-tinta focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta">
               <span>¿Por qué canales atiende el equipo de soporte?</span>
-              <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" class="shrink-0 transition-transform duration-150 group-open/faq:rotate-45"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.75"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" class="shrink-0 transition-transform duration-150 motion-reduce:transition-none group-open/faq:rotate-45"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.75"/></svg>
             </summary>
             <p class="pb-6 text-carbon max-w-3xl">Por teléfono, email y chat, en nombre de tu empresa.</p>
           </details>
           <details class="group/faq border-b border-tinta">
             <summary class="list-none [&::-webkit-details-marker]:hidden cursor-pointer flex items-center justify-between gap-6 py-5 font-display text-xl lg:text-2xl text-tinta focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta">
               <span>¿Qué formatos de formación ofrecéis?</span>
-              <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" class="shrink-0 transition-transform duration-150 group-open/faq:rotate-45"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.75"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" class="shrink-0 transition-transform duration-150 motion-reduce:transition-none group-open/faq:rotate-45"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.75"/></svg>
             </summary>
             <p class="pb-6 text-carbon max-w-3xl">Cursos, talleres y webinars sobre liderazgo, comunicación y gestión de equipos.</p>
           </details>
           <details class="group/faq border-b border-tinta">
             <summary class="list-none [&::-webkit-details-marker]:hidden cursor-pointer flex items-center justify-between gap-6 py-5 font-display text-xl lg:text-2xl text-tinta focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-tinta">
               <span>¿Dónde está Nexova?</span>
-              <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" class="shrink-0 transition-transform duration-150 group-open/faq:rotate-45"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.75"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" class="shrink-0 transition-transform duration-150 motion-reduce:transition-none group-open/faq:rotate-45"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.75"/></svg>
             </summary>
             <p class="pb-6 text-carbon max-w-3xl">Nuestra sede está en Valencia (España) y tenemos una oficina de expansión en Miami (Florida). Operamos en dos países.</p>
           </details>
@@ -555,7 +555,7 @@
       <div class="mx-auto max-w-[1280px] px-5 md:px-8 lg:px-12 relative flex flex-col gap-6 max-w-3xl">
         <h2 id="contacto-title" class="font-display font-medium text-[2rem] md:text-[2.5rem] lg:text-5xl leading-[1.15] text-balance">¿Por qué parte del talento empezamos?</h2>
         <p class="text-lg text-marfil/90">Selección, soporte o formación: cuéntanos qué necesita tu empresa y preparamos el enfoque contigo.</p>
-        <p><a href="application.html" class="inline-flex items-center justify-center min-h-12 px-6 bg-marfil text-tinta font-semibold hover:bg-marfil-claro transition-transform duration-150 ease-snap hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-marfil">Solicitar servicio</a></p>
+        <p><a href="application.html" class="inline-flex items-center justify-center min-h-12 px-6 bg-marfil text-tinta font-semibold hover:bg-marfil-claro transition-transform duration-150 ease-snap hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-marfil">Solicitar servicio</a></p>
       </div>
     </section>
   </main>
