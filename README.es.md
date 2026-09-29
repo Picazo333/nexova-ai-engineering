@@ -49,13 +49,15 @@ Estás construyendo **una sola empresa** a lo largo de muchos hitos y proyectos.
 
 ---
 
-## Estado actual de la plantilla
+## Estado actual del proyecto
 
-> 💡 Actualmente el repositorio ofrece solo una **estructura base de carpetas y documentación**. Todavía no incluye aplicaciones ejecutables ni scripts globales en la raíz.
+> 💡 Este repositorio es ahora el **monorepo acumulativo de Nexova Solutions** usado a lo largo de los hitos de 4Geeks.
 >
-> - `CONTEXT.md` es un placeholder y debe sustituirse por el contexto de la empresa asignada.
-> - No existe todavía un `AGENTS.md` en la raíz.
-> - Existe metadata del paquete compartido en `packages/shared/package.json` (`@repo/shared-types`), pero aún no hay runner de workspace en raíz.
+> - `CONTEXT.md` contiene el briefing seleccionado de Nexova.
+> - `AGENTS.md`, `memory-bank/`, `.agents/`, `PROJECT_STATE.md` y `noema.project.yaml` forman la capa actual de gobernanza de desarrollo y agentes.
+> - `.agents/` contiene instrucciones para agentes de coding; `agents/` y `skills/` siguen reservados para agentes/capacidades del producto Nexova.
+> - No se declara ninguna UI/backend ejecutable hasta que el hito actual los implemente y valide.
+> - Existe metadata en `packages/shared/package.json` (`@repo/shared-types`); el workspace global se añade solo cuando el hito actual lo justifique.
 
 ---
 

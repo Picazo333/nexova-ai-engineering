@@ -1,0 +1,49 @@
+version: 1
+updated: 2026-09-21
+sources:
+  - id: NX-SRC-001
+    path: CONTEXT.md
+    role: PRIMARY_SOURCE
+    scope: company_briefing
+    status: active
+    notes: Canonical company briefing currently used by the monorepo.
+  - id: NX-SRC-002
+    path: company-choice.md
+    role: HISTORICAL_RECORD
+    scope: company_selection_decision
+    status: active
+    notes: Preserves why Nexova was selected; not a product roadmap.
+  - id: NX-SRC-003
+    path: docs/decision-analysis.md
+    role: HISTORICAL_RECORD
+    scope: comparative_selection_analysis
+    status: active
+    notes: Contains candidate future systems and engineering-extension ideas; these remain non-binding.
+  - id: NX-SRC-004
+    path: docs/ENGINEERING-STRATEGY.md
+    role: HISTORICAL_RECORD
+    scope: early_engineering_strategy
+    status: active
+    notes: Useful design/reuse hypotheses; current architecture decisions require revalidation and ADRs.
+external_historical_sources:
+  - id: NX-HIST-001
+    locator: library:Nexova-AI-Engineering-Lab-Project-Constitution-Master-Context
+    role: HISTORICAL_RECORD
+    scope: historical_project_constitution
+    status: external
+    notes: Source of several stable project principles; detailed product architecture remains non-binding.
+  - id: NX-HIST-002
+    locator: archived-nexova-blueprints-and-selection-deck
+    role: DERIVED_VIEW
+    scope: didactic_strategy_material
+    status: external
+    notes: Explanatory material only; never silently becomes current architecture.
+conflicts:
+  - id: NX-CONFLICT-001
+    claim: sales_department_leader
+    role: QUARANTINED_CONFLICT
+    status: OPEN
+    alternatives:
+      - Megan Clarke
+      - Marcos Ibáñez
+    rule: Do not publish either identity as an uncontested fact until a governing primary source resolves the contradiction.

@@ -1,16 +1,7 @@
-# Contexto de tu empresa
+# Contexto de Nexova Solutions
 
-**Sustituye este archivo** por el CONTEXT de la empresa que te hayan asignado:
+Este archivo es una **vista derivada de orientación**. La fuente canónica del briefing de empresa para todo el monorepo es [`CONTEXT.md`](./CONTEXT.md).
 
-- **Brasaland** — `CONTEXT-brasaland-briefing.md` (cadena de restaurantes de comida a la parrilla, Colombia + Florida)
-- **TrackFlow** — `CONTEXT-trackflow-briefing.md` (última milla y almacén, México + España)
-- **Nexova** — `CONTEXT-nexova-briefing.md` (consultoría de RR. HH. y adquisición de talento, Chile + Argentina)
-- **HealthCore** — `CONTEXT-healthcore-briefing.md` (red de clínicas ambulatorias, EE.UU. + Reino Unido)
+No se mantiene una segunda copia traducida del briefing porque duplicar hechos de negocio produciría drift. Si una actividad requiere una traducción o una vista especializada, debe derivarse de `CONTEXT.md` y conservar su procedencia.
 
-Tu instructor o los materiales del hito te indicarán el archivo CONTEXT correcto. Copia aquí su contenido para que todo el trabajo del proyecto y la asistencia de IA usen los mismos datos de dominio, nombres de campos y restricciones.
-
----
-
-_Hasta que añadas tu contexto, mantén este placeholder para que la estructura del repositorio quede clara._
-
-_These instructions are also available in [English](./CONTEXT.md)._
+**Autoridad:** `CONTEXT.md` gobierna los hechos de empresa usados por aplicaciones, agentes, prompts y documentación del proyecto.

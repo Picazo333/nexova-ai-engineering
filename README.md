@@ -49,13 +49,16 @@ You are building **one company** across many milestones and projects. Each top-l
 
 ---
 
-## Current status of the template
+## Current project status
 
-> 💡 This repository currently provides a **base folder structure and documentation skeleton** only. It does not include runnable apps or global scripts yet.
+> 💡 This repository is now the **cumulative Nexova Solutions monorepo** used across 4Geeks milestones.
 >
-> - `CONTEXT.md` is a placeholder and must be replaced with your assigned company context.
-> - There is no root `AGENTS.md` yet.
-> - Shared package metadata exists in `packages/shared/package.json` (`@repo/shared-types`), but no workspace runner is configured at root.
+> - `CONTEXT.md` contains the selected Nexova company briefing.
+> - Root `AGENTS.md`, `memory-bank/`, `.agents/`, `PROJECT_STATE.md`, and `noema.project.yaml` provide the current agent/development governance layer.
+> - `.agents/` is for coding-agent instructions; the existing `agents/` and `skills/` folders remain product/runtime namespaces for Nexova.
+> - The current milestone now contains complete source implementations for the public website and independent internal backoffice; dependency install/build/runtime evidence is still pending.
+> - The root npm workspace includes `uis/website`, `uis/backoffice`, `packages/shared`, and the evidence-backed shared `packages/design-system`.
+> - No backend is introduced by this milestone because the rubric does not require one and no current persistence/API need justifies it.
 
 ---
 

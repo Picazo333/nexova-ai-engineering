@@ -1,0 +1,20 @@
+{
+  "name": "nexova-ai-engineering",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "uis/website",
+    "uis/backoffice",
+    "packages/shared",
+    "packages/design-system"
+  ],
+  "engines": {"node": ">=20.19.0"},
+  "scripts": {
+    "dev:website": "npm run dev --workspace @nexova/website",
+    "dev:backoffice": "npm run dev --workspace @nexova/backoffice",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "check": "npm run typecheck && npm run build"
+  }
+}

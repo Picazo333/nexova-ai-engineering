@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "status": "HUMAN_APPROVED_VISUAL_LOCK",
+  "source": {
+    "provider": "v0",
+    "chat_url": "https://v0.app/mbpicazo33-1986/chat/nexova-visual-sandbox-n0o4weQLsCq",
+    "zip_name": "nexova-visual-sandbox.zip",
+    "zip_sha256": "211874809bebc6dcb71eaeaf804b4a86b92a443f37d9b7dfb672319d44a4b329"
+  },
+  "assets": {
+    "A1_HERO_ABYSSAL_PRESENCE.png": "4086bc8aafbeee019060199f0e1c8f2866834099d42789eea26bcd29c2b037d0",
+    "A2_FIBROUS_CRIMSON_MATERIAL.png": "bee7f9f7e61969a85dc718d2118b0bfed8d3d93515fa4444fdd562f02d9a12d8",
+    "A3_EDITORIAL_MID_PAGE.png": "0b31cbbcff2e9ce7fbc74e7a36087e092fe44d3ce60c90a806fcd4f96025907b",
+    "A4_EVIDENCE_PRECISION.png": "c51f3300a725341b2d2685b66ec518f607630f69fe97377b642b4f291b540ee1",
+    "A5_FINAL_DECLARATION.png": "8d88035d4de2c69a349c4c2be39fa76d5735eddd082265849a3a8e8c2448822c"
+  },
+  "visual_mutation_policy": {
+    "default": "FORBIDDEN",
+    "allowed": [
+      "factual_correction",
+      "rubric_fix",
+      "accessibility_fix",
+      "responsive_bug_fix",
+      "performance_fix",
+      "build_runtime_deployment_fix"
+    ]
+  }
+}
