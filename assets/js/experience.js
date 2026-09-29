@@ -101,7 +101,10 @@
     return true;
   }
 
-  /* ---------- HERO: media cara + volteo cerámico + gestos ---------- */
+  /* ---------- HERO: media cara + volteo cerámico + video real por persona (C9) ----------
+     El scroll elige la persona; cada una tiene su <video> (24 fps reales) que se reproduce una vez, a su
+     velocidad, al llegar. Entre personas, el volteo cerámico en canvas (duración fija) parte del fotograma
+     exacto en el que estaba el video y llega al primer fotograma del siguiente (= su still). */
   function hero(root) {
     const box = root.querySelector('[data-media]'), canvas = root.querySelector('[data-canvas]');
     const lg = matchMedia('(min-width: 1024px)');
@@ -109,27 +112,54 @@
     const progress = scroller(root);
     const stills = [null, null, null, null];
     const FACE = [0.55, 0, 0.45, 1], FULL = [0, 0, 1, 1];
-    // Gestos a velocidad nativa de los clips (fps de extracción): G1 8 · G2 7 · G3 8 · G4 9.
-    const G = [
-      { dir: 'g1', n: 32, fps: 8, r: FACE },
-      { dir: 'g2', n: 39, fps: 7, r: FULL },
-      { dir: 'g3', n: 36, fps: 8, r: FACE },
-      { dir: 'g4', n: 29, fps: 9, r: FACE },
-    ];
-    const CUTS = [0.1975, 0.4875, 0.7725];   // umbrales de persona (mitad de los antiguos volteos)
+    const CUTS = [0.1975, 0.4875, 0.7725];   // umbrales de persona
     const FLIP_MS = 1150;                    // volteo cerámico a duración fija
-    const sc = { id: 'hero', x: 0, target: 0, state: 0, gesture: null, played: -1 };
+    const sc = { id: 'hero', x: 0, target: 0, state: 0, arrived: -1, snap: null, shown: -1 };
     let ready = false;
 
     const v = () => (lg.matches ? st.view(FULL, 0.85, 0.37) : st.view(FACE, 0.8, 0.37));
+    const region = () => (lg.matches ? FULL : FACE);
+    const probe = document.createElement('video');
+    const EXT = probe.canPlayType('video/webm; codecs="vp9"') ? 'webm' : 'mp4'; // VP9 (más ligero) o H.264 (Safari)
+    const srcFor = (n) => `assets/video/g${n + 1}-${lg.matches ? '720' : 'm'}.${EXT}`;
 
-    function flip(fp, a, b, ka, kb, view) {
+    // Cuatro <video> apilados sobre el canvas (bajo el degradado del copy); sin src hasta la intención.
+    const V = [0, 1, 2, 3].map((n) => {
+      const el = document.createElement('video');
+      el.muted = true; el.defaultMuted = true; el.playsInline = true; el.preload = 'none';
+      el.setAttribute('muted', ''); el.setAttribute('playsinline', ''); el.setAttribute('aria-hidden', 'true');
+      el.disablePictureInPicture = true; el.tabIndex = -1;
+      Object.assign(el.style, { position: 'absolute', left: '0', top: '0', maxWidth: 'none', opacity: '0', pointerEvents: 'none' });
+      return { el, n, src: '' };
+    });
+    for (let k = 3; k >= 0; k--) canvas.insertAdjacentElement('afterend', V[k].el);
+
+    function place() { // mismo encuadre que el canvas: la región del fotograma que cubre el video, en px CSS
+      const view = v(), r = region(), k = view.s / st.dpr;
+      for (const x of V) Object.assign(x.el.style, {
+        left: `${(r[0] * W - view.sx) * k}px`, top: `${(r[1] * H - view.sy) * k}px`,
+        width: `${r[2] * W * k}px`, height: `${r[3] * H * k}px`,
+      });
+    }
+    function ensure(n) { // asigna el archivo (desktop 1280×720 o móvil 4:5) la primera vez que hace falta
+      const x = V[n]; if (!x || x.src === srcFor(n)) return x;
+      x.src = srcFor(n); x.el.src = x.src; x.el.preload = 'auto'; x.el.load(); return x;
+    }
+    function show(n) { sc.shown = n; V.forEach((x, k) => { x.el.style.opacity = k === n ? '1' : '0'; }); }
+    function snapshot(n) { // fotograma actual del video → búfer del tamaño del canvas
+      const el = V[n].el; if (el.readyState < 2 || !el.videoWidth) return null;
+      const view = v(), r = region(), b = document.createElement('canvas');
+      b.width = st.cw; b.height = st.ch;
+      const kx = el.videoWidth / (r[2] * W), ky = el.videoHeight / (r[3] * H);
+      b.getContext('2d').drawImage(el, (view.sx - r[0] * W) * kx, (view.sy - r[1] * H) * ky, view.vw * kx, view.vh * ky, 0, 0, st.cw, st.ch);
+      return { i: n, buf: b };
+    }
+    const bufFor = (k, view) => (sc.snap && sc.snap.i === k ? sc.snap.buf : st.buffered(k, stills[k], view));
+
+    function flip(fp, A, B) {
       const ctx = st.ctx, cw = st.cw, ch = st.ch;
       const cols = lg.matches ? 12 : 6, rows = Math.max(4, Math.round(cols * ch / cw));
-      const A = st.buffered(ka, a, view), B = st.buffered(kb, b, view);
       const tw = cw / cols, th = ch / rows, D = cols + rows - 2, k = 0.055, j3 = 3 * st.dpr;
-      // Base de una sola llamada (la imagen dominante) y solo se redibujan las teselas que difieren de ella:
-      // menos drawImage por frame y juntas en un único trazo (S6).
       const base = fp < 0.5 ? A : B;
       ctx.drawImage(base, 0, 0);
       ctx.fillStyle = '#F3E9DB'; ctx.strokeStyle = '#F3E9DB'; ctx.lineWidth = j3;
@@ -143,73 +173,61 @@
         const x = Math.round(i * tw), y = Math.round(j * th), w = Math.round((i + 1) * tw) - x, h = Math.round((j + 1) * th) - y;
         if (settled) { ctx.drawImage(src, x, y, w, h, x, y, w, h); continue; }
         const sx = Math.abs(Math.cos(lp * Math.PI)), dw = Math.max(1, w * sx), dx = x + (w - dw) / 2;
-        ctx.fillRect(x, y, w, h);                                   // fondo marfil tras la tesela que gira
+        ctx.fillRect(x, y, w, h);
         ctx.drawImage(src, x, y, w, h, dx, y, dw, h);
         ctx.globalAlpha = 0.18 * (1 - sx); ctx.fillStyle = '#FFFDF9'; ctx.fillRect(dx, y, dw, h); // brillo de esmalte
         ctx.globalAlpha = 1; ctx.fillStyle = '#F3E9DB';
-        joints.rect(dx, y, dw, h);                                  // junta marfil
+        joints.rect(dx, y, dw, h);
       }
       ctx.stroke(joints);
     }
 
-
-    const CUT_MS = 200;                              // salida rápida si el usuario sigue scrolleando
-    function drawGesture(g, t, view, fade = 1) { // t en ms desde el inicio; mezcla entre fotogramas vecinos
-      const dur = (g.n / g.fps) * 1000, u = clamp(t / dur);
-      const body = 0.86;                              // últimos 14 %: fundido de cierre hacia el still
-      if (u < body) {
-        const pos = (u / body) * (g.n - 1), k = Math.floor(pos), a = pos - k;
-        st.layer(g.frames[k], g.r, view, fade);
-        if (a > 0.02 && k + 1 < g.n) st.layer(g.frames[k + 1], g.r, view, a * fade);
-      } else st.layer(g.frames[g.n - 1], g.r, view, fade * (1 - (u - body) / (1 - body)));
-      return u >= 1 || fade <= 0;
+    function render() {
+      const i = Math.floor(sc.x + 1e-6), f = sc.x - i;
+      root.dataset.active = 'p' + (Math.min(3, f < 0.5 ? i : i + 1) + 1); // el texto cambia a mitad del volteo
+      if (!ready) return;
+      const view = v();
+      if (f > 1e-4) flip(easeIO(f), bufFor(i, view), bufFor(i + 1, view));
+      else st.ctx.drawImage(bufFor(i, view), 0, 0);
     }
 
-    function render(now) {
-      const i = Math.floor(sc.x + 1e-6), f = sc.x - i;
-      const shown = f < 0.5 ? i : i + 1;
-      root.dataset.active = 'p' + (Math.min(3, shown) + 1);  // el texto cambia a mitad del volteo
-      if (!ready) return false;
-      const view = v();
-      if (f > 1e-4) { flip(easeIO(f), stills[i], stills[i + 1], i, i + 1, view); return true; }
-      st.still(stills[i], view);
-      const g = G[i];
-      if (sc.gesture && sc.gesture.i === i && g.frames) {
-        const cut = sc.gesture.cut;
-        const done = cut ? drawGesture(g, cut.el, view, 1 - (now - cut.t) / CUT_MS) : drawGesture(g, now - sc.gesture.t0, view);
-        if (done) sc.gesture = null;
-        return !done;
-      }
-      return false;
+    function leave() { // el usuario pide otra persona: congela el fotograma actual y pausa
+      const n = sc.shown;
+      if (n >= 0) { sc.snap = snapshot(n) || sc.snap; V[n].el.pause(); }
+      show(-1); sc.arrived = -1;
+    }
+    function arrive(n) { // llegó: su video, desde el principio y a velocidad real
+      sc.arrived = n; sc.snap = null; render();
+      const x = ensure(n); ensure(n + 1);                     // precarga la siguiente persona
+      const el = x.el;
+      const reveal = () => { if (sc.arrived === n && Math.abs(sc.x - n) < 1e-4) show(n); };
+      try { el.currentTime = 0; } catch (e) { /* aún sin metadatos */ }
+      el.addEventListener('playing', reveal, { once: true });
+      const pr = el.play(); if (pr && pr.catch) pr.catch(() => {});   // si el navegador lo bloquea, queda el still
     }
 
     function tick(now, dt) {
       sc.state = stateOf(progress(), CUTS, sc.state);
-      if (sc.gesture && !sc.gesture.cut && sc.state !== Math.round(sc.x)) { // el usuario siguió: fundido breve del gesto
-        sc.gesture.cut = { t: now, el: now - sc.gesture.t0 };
+      if (sc.state !== sc.target || Math.abs(sc.x - sc.target) > 1e-4) {
+        if (sc.arrived >= 0 && sc.state !== sc.arrived) leave();
+        sc.target = sc.state;
       }
-      let busy = false;
-      if (!sc.gesture) { sc.target = sc.state; busy = follow(sc, dt, () => FLIP_MS); }
-      else busy = true;
-      if (!busy && sc.x === sc.target && sc.played !== sc.x && G[sc.x].frames) { // llegó a una persona: su gesto
-        sc.gesture = { i: sc.x, t0: now }; sc.played = sc.x; busy = true;
-      }
-      if (sc.x !== sc.target) sc.played = -1;
-      return render(now) || busy;
+      const busy = follow(sc, dt, () => FLIP_MS);
+      render();
+      if (!busy && ready && sc.arrived !== sc.x && sc.x === sc.target) arrive(sc.x);
+      return busy;
     }
 
-    st.onResize = () => render(performance.now());
+    st.onResize = () => { place(); render(); };
+    lg.addEventListener('change', () => { V.forEach((x) => { if (x.src) { x.src = ''; x.el.removeAttribute('src'); x.el.load(); } }); show(-1); sc.arrived = -1; sc.snap = null; place(); kick(); });
     whenArmed(async () => {
-      const first = loadSeq(G[0].dir, G[0].n);
       const imgs = await Promise.all([1, 2, 3, 4].map((n) => loadImg(`assets/img/hero-p${n}-1440.webp`)));
       if (imgs.some((x) => !x)) { delete root.dataset.mode; delete root.dataset.active; return; }
       imgs.forEach((x, n) => { stills[n] = x; });
-      ready = true; canvas.hidden = false; render(performance.now());
-      first.then((fr) => { if (fr.every(Boolean)) { G[0].frames = fr; kick(); } });
-      for (const g of G.slice(1)) { const fr = await loadSeq(g.dir, g.n); if (fr.every(Boolean)) { g.frames = fr; kick(); } }
+      ready = true; canvas.hidden = false; place(); render(); kick();
     });
     sc.state = stateOf(progress(), CUTS, null); sc.x = sc.target = sc.state;
-    render(performance.now());
+    render();
     return Object.assign(sc, { tick, selector: '[data-hero]', canvas: '[data-hero] [data-canvas]', beats: 4, progress, cuts: CUTS });
   }
 

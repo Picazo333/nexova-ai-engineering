@@ -80,10 +80,6 @@ Generado el 2026-09-29. Los masters **no** están en el repo: viven en `C:\Users
 | `assets/brand/nexova-symbol-marfil.svg` | — | 0 KB | `f2d5476e153dec8f…` |
 | `assets/brand/nexova-symbol-tinta.svg` | — | 0 KB | `5619eeed557ae04d…` |
 | `assets/favicon.svg` | — | 0 KB | `5619eeed557ae04d…` |
-| `assets/seq/g1/` | 32 | 873 KB | `8503593e97abd538…` (hash de hashes) |
-| `assets/seq/g2/` | 39 | 1123 KB | `32f933a3b4c68e46…` (hash de hashes) |
-| `assets/seq/g3/` | 36 | 728 KB | `366c757fefecb35a…` (hash de hashes) |
-| `assets/seq/g4/` | 29 | 924 KB | `0ae27be8c0d5cc0a…` (hash de hashes) |
 | `assets/seq/o1/` | 24 | 729 KB | `015f22a0adc2915c…` (hash de hashes) |
 | `assets/seq/o2/` | 48 | 1491 KB | `91a477e6fc270964…` (hash de hashes) |
 
@@ -93,3 +89,28 @@ Generado el 2026-09-29. Los masters **no** están en el repo: viven en `C:\Users
 - Hero bajo demanda: secuencias g1–g4 ≈ 3.9 MB + stills P1–P4 1440 ≈ 0.26 MB (objetivo plan §24: ≤3.5 MB; desviación documentada, cada gesto ≤1.2 MB).
 - Oficina bajo demanda: o1 + o2 ≈ 2.3 MB + stills ≈ 0.13 MB (objetivo ≤2 MB; desviación menor documentada).
 - Ninguna secuencia se pide antes del primer scroll; con `prefers-reduced-motion` o Save-Data no se pide ninguna (verificado con Playwright).
+
+## Video del hero (C9)
+
+Cada persona es un `<video>` real (24 fps, sin audio) que se reproduce una vez a velocidad nativa al llegar a su tramo; el volteo cerámico (canvas, 1.15 s) une el fotograma actual con el primero del siguiente. Masters: `_nexova_media_v3/masters_silent/{G1opt_consultora_guino,G2_saluda,G3_lengua,G4_guino}_1080p.mp4` (ya recortados al gesto).
+- Desktop `g{n}-720`: `scale=1280:720` · Móvil `g{n}-m`: `crop=864:1080:1056:0,scale=576:720` (misma región FACE que el canvas).
+- H.264: `-c:v libx264 -preset slow -crf 24 -profile:v high -tune film -movflags +faststart -an` · VP9: `-c:v libvpx-vp9 -crf 34 -b:v 0 -row-mt 1 -deadline good -cpu-used 2 -an`. El navegador elige VP9 si lo soporta; si no, H.264.
+
+| Archivo | Peso | sha256 |
+|---|---|---|
+| `assets/video/g1-720.mp4` | 491 KB | `09304b7dffbf60c2…` |
+| `assets/video/g1-720.webm` | 332 KB | `bdec257408b489b1…` |
+| `assets/video/g1-m.mp4` | 398 KB | `d035e5882beffe2f…` |
+| `assets/video/g1-m.webm` | 302 KB | `5baebf6d4d88c6ee…` |
+| `assets/video/g2-720.mp4` | 984 KB | `0068a4847a5ce6b7…` |
+| `assets/video/g2-720.webm` | 912 KB | `481b3f0844051795…` |
+| `assets/video/g2-m.mp4` | 720 KB | `0afdd0c23f21c09a…` |
+| `assets/video/g2-m.webm` | 727 KB | `25347c99a5d7e4d9…` |
+| `assets/video/g3-720.mp4` | 479 KB | `acf604015117437a…` |
+| `assets/video/g3-720.webm` | 295 KB | `16d7555c336ea580…` |
+| `assets/video/g3-m.mp4` | 377 KB | `6d57fad71e4c5e09…` |
+| `assets/video/g3-m.webm` | 275 KB | `fa439d6ff509f5a9…` |
+| `assets/video/g4-720.mp4` | 526 KB | `db56621a0f57df57…` |
+| `assets/video/g4-720.webm` | 467 KB | `24a50f34928092fb…` |
+| `assets/video/g4-m.mp4` | 456 KB | `39130d4c7abb5c11…` |
+| `assets/video/g4-m.webm` | 439 KB | `27ec6673f53c58d6…` |
