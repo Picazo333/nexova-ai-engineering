@@ -22,7 +22,7 @@ Generado el 2026-09-29. Los masters **no** están en el repo: viven en `C:\Users
   - g2: G2 · cuadro completo → 1152×648, 7 fps, q38 (la mano cruza el lado izquierdo)
   - g3: G3 · crop → 576×720, 8 fps, q38
   - g4: G4 · crop → 576×720, 9 fps, q38
-  - **C7 (scroll fluido):** g1–g4 submuestreados sin recodificar a 20/24/22/20 fotogramas equiespaciados (`round(k·(N−1)/(n−1))`, script `subsample_seq.py`) para cumplir ≤ 8 fotogramas/100 px con la escena de 410vh (WPW-1 C05 S4).
+  - **C8 (tempo propio):** g1–g4 vuelven a sus fotogramas completos (32/39/36/29) porque ahora se reproducen por reloj a su fps nativo, con mezcla entre fotogramas. **C7 (histórico):** g1–g4 submuestreados sin recodificar a 20/24/22/20 fotogramas equiespaciados (`round(k·(N−1)/(n−1))`, script `subsample_seq.py`) para cumplir ≤ 8 fotogramas/100 px con la escena de 410vh (WPW-1 C05 S4).
   - o1: V-O1 0–2.4 s **invertido** → 1280×720, 10 fps, q46 (paredes que se cierran)
   - o2: V-O2 → 1280×720, 6 fps, q40
 - **Fuentes**: Newsreader variable (latin, wght) + Inter 400/500/600 (latin), @fontsource, OFL.
@@ -80,10 +80,10 @@ Generado el 2026-09-29. Los masters **no** están en el repo: viven en `C:\Users
 | `assets/brand/nexova-symbol-marfil.svg` | — | 0 KB | `f2d5476e153dec8f…` |
 | `assets/brand/nexova-symbol-tinta.svg` | — | 0 KB | `5619eeed557ae04d…` |
 | `assets/favicon.svg` | — | 0 KB | `5619eeed557ae04d…` |
-| `assets/seq/g1/` | 20 | 544 KB | `8b9a963d275041e1…` (hash de hashes) |
-| `assets/seq/g2/` | 24 | 690 KB | `b57af6a83ce6b3e4…` (hash de hashes) |
-| `assets/seq/g3/` | 22 | 445 KB | `8d9d98db7f23f7c3…` (hash de hashes) |
-| `assets/seq/g4/` | 20 | 636 KB | `9ecc97352c2f0712…` (hash de hashes) |
+| `assets/seq/g1/` | 32 | 873 KB | `8503593e97abd538…` (hash de hashes) |
+| `assets/seq/g2/` | 39 | 1123 KB | `32f933a3b4c68e46…` (hash de hashes) |
+| `assets/seq/g3/` | 36 | 728 KB | `366c757fefecb35a…` (hash de hashes) |
+| `assets/seq/g4/` | 29 | 924 KB | `0ae27be8c0d5cc0a…` (hash de hashes) |
 | `assets/seq/o1/` | 24 | 729 KB | `015f22a0adc2915c…` (hash de hashes) |
 | `assets/seq/o2/` | 48 | 1491 KB | `91a477e6fc270964…` (hash de hashes) |
 
