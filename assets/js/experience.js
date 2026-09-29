@@ -183,6 +183,7 @@
     }
 
     function render() {
+      if (!root.dataset.mode) { delete root.dataset.active; return; } // fallo de stills: el hero queda en modo estático
       const i = Math.floor(sc.x + 1e-6), f = sc.x - i;
       root.dataset.active = 'p' + (Math.min(3, f < 0.5 ? i : i + 1) + 1); // el texto cambia a mitad del volteo
       if (!ready) return;
