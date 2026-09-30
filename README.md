@@ -306,3 +306,33 @@ This template was built as part of the 4Geeks Academy AI Engineering Career Prog
 You can find other templates and resources like this at the [4Geeks Academy GitHub page](https://github.com/4geeksacademy).
 
 _This template is maintained by 4Geeks Academy for the AI Engineering track. For exclusive use in the programme._
+
+
+## Public website (milestone)
+
+Static site for **Nexova Solutions** (4Geeks milestone "Your Company's Public Website").
+
+| File | Purpose |
+|---|---|
+| `index.html` | Landing page (Spanish): hero "Media cara", key figures, services, why Nexova, benefits, how we work (honeycomb office), sectors, locations, FAQ, CTA |
+| `application.html` | Service request form (companies only) |
+| `validation.js` | Vanilla form validation: blur/input/change/submit/reset, specific Spanish messages, error summary, conditional sub-sections, `?tipo=seleccion|soporte|formacion` deep links, simulated success with no network requests |
+| `assets/js/experience.js` | Progressive scroll layer: ceramic flip between four portraits, gesture frame sequences and the honeycomb office. Skipped with `prefers-reduced-motion`, Save-Data or no JS; the page is complete without it |
+| `assets/` | Derived images (AVIF/WebP), frame sequences, self-hosted fonts (OFL), logo and favicon |
+| `docs/public-website/ASSET_MANIFEST.md` | Master → derivative hashes and exact derivation settings |
+
+**Stack:** HTML + Tailwind CSS v4 (browser runtime `@tailwindcss/browser@4`, tokens in `@theme`) + vanilla JS. No build step, no `package.json`, no animation libraries.
+
+**Allowed custom CSS** (inside the `text/tailwindcss` block only): `@theme` tokens, `@font-face`, one `@keyframes`, and the two pinned-scene rules (`[data-mode="scrolly"]` height and sticky stage).
+
+**Shared blocks:** `TOKENS`, `HEADER` and `FOOTER` are duplicated in both pages between `<!-- …:BEGIN/END -->` markers. They are identical except for in-page link prefixes (`#…` on index, `index.html#…` on application) and the header CTA.
+
+### Run locally or in Codespaces
+
+```bash
+npx --yes serve -l 3000
+```
+
+Open `http://localhost:3000`. In Codespaces, set port 3000 visibility to **Public** before running PageSpeed Insights on the forwarded URL.
+
+`serve.json` sets `"cleanUrls": false` so `application.html?tipo=…` deep links keep their query string under `serve` (without it, serve 301-redirects to `/application` and drops `?tipo`).

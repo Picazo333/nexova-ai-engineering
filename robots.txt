@@ -1,0 +1,23 @@
+# robots.txt · Nexova Solutions (caso académico de 4Geeks Academy; empresa ficticia)
+# Todo el sitio es público: no hay rutas privadas que bloquear.
+
+# Buscadores y bots de búsqueda / respuesta con IA: permitidos de forma explícita.
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: DuckDuckBot
+User-agent: Applebot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+Allow: /
+
+# Resto de agentes
+User-agent: *
+Allow: /
+
+# DEPLOY (DEP-04): añadir aquí la línea con la URL absoluta del sitemap cuando exista el dominio, p. ej.
+# Sitemap: https://<dominio>/sitemap.xml

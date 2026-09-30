@@ -1,0 +1,24 @@
+# Nexova Solutions
+
+> Consultora de recursos humanos y selección de talento desde 2011, con sede en Valencia (España) y una oficina de expansión en Miami (Florida). Ofrece selección de mandos medios y directivos, soporte al cliente externalizado y formación corporativa para medianas empresas de tecnología, retail y servicios financieros.
+
+Sitio de un caso académico de 4Geeks Academy. Nexova Solutions es una empresa ficticia: no hay teléfono, email ni dirección de contacto; la única vía de contacto es la solicitud de servicio.
+
+- Equipo: 120 personas. Opera en dos países (España y Estados Unidos).
+- Se puede contratar un servicio por separado o combinarlos; hay empresas que externalizan una parte de la gestión del talento y otras, toda.
+
+## Páginas
+
+- [Inicio](index.html): qué hace Nexova, los tres servicios con su comparativa, cómo trabaja, sectores, dónde está y preguntas frecuentes.
+- [Solicitud de servicio](application.html): formulario para pedir selección, soporte o formación. Es una demostración: no envía datos a ningún servidor.
+
+## Servicios
+
+- [Selección de mandos medios y directivos](application.html?tipo=seleccion): servicio principal, con 40 consultores de selección. Del briefing inicial a la contratación final, con criba de CVs y entrevistas, en nombre del cliente.
+- [Soporte al cliente externalizado](application.html?tipo=soporte): un equipo de 30 agentes que atiende las incidencias de los clientes por teléfono, email y chat, en nombre de la empresa.
+- [Formación corporativa](application.html?tipo=formacion): programas de liderazgo, comunicación y gestión de equipos en formato curso, taller o webinar, gestionados por un equipo de 12 personas.
+
+## Más información
+
+- [Cómo trabajamos](index.html#como-trabajamos): diagnóstico, búsqueda, incorporación y acompañamiento.
+- [Preguntas frecuentes](index.html#preguntas)
