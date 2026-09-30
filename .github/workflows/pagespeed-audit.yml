@@ -35,8 +35,7 @@ jobs:
           import fs from 'node:fs';
 
           const target = process.env.TARGET_URL;
-          const psi = 'https://pagespeed.web.dev/analysis?url=' +
-            encodeURIComponent(target) + '&form_factor=mobile';
+          const psi = 'https://pagespeed.web.dev/';
 
           const browser = await puppeteer.launch({
             headless: true,
@@ -46,6 +45,17 @@ jobs:
           const page = await browser.newPage();
           await page.setViewport({ width: 1440, height: 1200, deviceScaleFactor: 1 });
           await page.goto(psi, { waitUntil: 'domcontentloaded', timeout: 120000 });
+          const input = await page.waitForSelector('input', { timeout: 30000 });
+          await input.click({ clickCount: 3 });
+          await input.type(target);
+          const clicked = await page.evaluate(() => {
+            const candidates = [...document.querySelectorAll('button')];
+            const btn = candidates.find(b => /analyze/i.test((b.innerText || b.textContent || '').trim()));
+            if (!btn) return false;
+            btn.click();
+            return true;
+          });
+          if (!clicked) throw new Error('Analyze button not found');
 
           let text = '';
           let complete = false;
@@ -64,7 +74,7 @@ jobs:
 
           fs.writeFileSync('pagespeed-body.txt', text);
           await page.screenshot({ path: 'pagespeed-mobile.png', fullPage: true });
-          console.log('PAGESPEED_URL=' + psi);
+          console.log('PAGESPEED_URL=' + page.url());
           console.log('TARGET_URL=' + target);
           console.log('COMPLETE=' + complete);
           console.log('--- PAGESPEED BODY START ---');
