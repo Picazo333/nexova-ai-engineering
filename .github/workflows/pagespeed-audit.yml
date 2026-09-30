@@ -58,7 +58,7 @@ jobs:
       - name: Run PageSpeed web UI — mobile
         shell: bash
         run: |
-          cat > /tmp/pagespeed.mjs <<'NODE'
+          cat > pagespeed.mjs <<'NODE'
           import puppeteer from 'puppeteer-core';
           import fs from 'node:fs';
 
@@ -103,7 +103,7 @@ jobs:
 
           if (!complete) process.exit(2);
           NODE
-          node /tmp/pagespeed.mjs
+          node pagespeed.mjs
 
       - name: Upload PageSpeed evidence
         if: always()
