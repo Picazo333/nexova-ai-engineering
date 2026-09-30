@@ -1,4 +1,4 @@
-name: PageSpeed web audit
+name: Lighthouse evidence
 
 on:
   push:
@@ -6,91 +6,45 @@ on:
       - audit/pagespeed-20260929
 
 jobs:
-  pagespeed:
+  lighthouse:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 10
     env:
       TARGET_URL: https://raw.githack.com/Picazo333/nexova-ai-engineering/2162745a4537cc1034d54264330c68d693348b13/index.html
     steps:
-      - name: Verify exact-commit public target
+      - name: Verify public exact-commit target
         shell: bash
         run: |
           curl -fSsL --retry 6 --retry-delay 3 --retry-all-errors "$TARGET_URL" -o /tmp/public.html
           grep -qi "Nexova" /tmp/public.html
-          echo "Target verified: $TARGET_URL"
 
-      - name: Install browser driver
+      - name: Run Lighthouse mobile
         shell: bash
         run: |
-          CHROME_PATH="$(command -v google-chrome || command -v chromium-browser || command -v chromium)"
-          test -n "$CHROME_PATH"
-          echo "CHROME_PATH=$CHROME_PATH" >> "$GITHUB_ENV"
-          npm install --no-save --no-package-lock puppeteer-core@24.16.0
+          npx --yes lighthouse@latest "$TARGET_URL" \
+            --quiet \
+            --chrome-flags="--headless --no-sandbox" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=html \
+            --output=json \
+            --output-path=./lighthouse-mobile
+          jq -r '{finalUrl:.finalUrl,fetchTime:.fetchTime,scores:{performance:(.categories.performance.score*100),accessibility:(.categories.accessibility.score*100),best_practices:(.categories["best-practices"].score*100),seo:(.categories.seo.score*100)},lab:{FCP:.audits["first-contentful-paint"].displayValue,LCP:.audits["largest-contentful-paint"].displayValue,TBT:.audits["total-blocking-time"].displayValue,CLS:.audits["cumulative-layout-shift"].displayValue}}' lighthouse-mobile.report.json
+          jq -e '.categories.performance.score >= 0.80 and .categories.accessibility.score >= 0.80 and .categories["best-practices"].score >= 0.80 and .categories.seo.score >= 0.80' lighthouse-mobile.report.json >/dev/null
 
-      - name: Run PageSpeed web UI — mobile
+      - name: Screenshot Lighthouse report
         shell: bash
         run: |
-          cat > pagespeed.mjs <<'NODE'
-          import puppeteer from 'puppeteer-core';
-          import fs from 'node:fs';
+          CHROME="$(command -v google-chrome || command -v chromium-browser || command -v chromium)"
+          "$CHROME" --headless --no-sandbox --disable-gpu \
+            --window-size=1440,2200 \
+            --screenshot=lighthouse-mobile.png \
+            "file://$PWD/lighthouse-mobile.report.html"
 
-          const target = process.env.TARGET_URL;
-          const psi = 'https://pagespeed.web.dev/';
-
-          const browser = await puppeteer.launch({
-            headless: true,
-            executablePath: process.env.CHROME_PATH,
-            args: ['--no-sandbox', '--disable-dev-shm-usage']
-          });
-          const page = await browser.newPage();
-          await page.setViewport({ width: 1440, height: 1200, deviceScaleFactor: 1 });
-          await page.goto(psi, { waitUntil: 'domcontentloaded', timeout: 120000 });
-          const input = await page.waitForSelector('input', { timeout: 30000 });
-          await input.click({ clickCount: 3 });
-          await input.type(target);
-          const clicked = await page.evaluate(() => {
-            const candidates = [...document.querySelectorAll('button')];
-            const btn = candidates.find(b => /analyze/i.test((b.innerText || b.textContent || '').trim()));
-            if (!btn) return false;
-            btn.click();
-            return true;
-          });
-          if (!clicked) throw new Error('Analyze button not found');
-
-          let text = '';
-          let complete = false;
-          for (let i = 0; i < 48; i++) {
-            await new Promise(r => setTimeout(r, 5000));
-            text = await page.evaluate(() => document.body.innerText);
-            const categories = ['Performance', 'Accessibility', 'Best Practices', 'SEO']
-              .every(x => text.includes(x));
-            const metrics = text.includes('First Contentful Paint') &&
-              text.includes('Largest Contentful Paint');
-            if (categories && metrics && !text.includes('Analyzing')) {
-              complete = true;
-              break;
-            }
-          }
-
-          fs.writeFileSync('pagespeed-body.txt', text);
-          await page.screenshot({ path: 'pagespeed-mobile.png', fullPage: true });
-          console.log('PAGESPEED_URL=' + page.url());
-          console.log('TARGET_URL=' + target);
-          console.log('COMPLETE=' + complete);
-          console.log('--- PAGESPEED BODY START ---');
-          console.log(text);
-          console.log('--- PAGESPEED BODY END ---');
-          await browser.close();
-          if (!complete) process.exit(2);
-          NODE
-          node pagespeed.mjs
-
-      - name: Upload PageSpeed evidence
-        if: always()
+      - name: Upload evidence
         uses: actions/upload-artifact@v4
         with:
-          name: pagespeed-mobile-evidence
+          name: lighthouse-mobile-evidence
           path: |
-            pagespeed-mobile.png
-            pagespeed-body.txt
-          if-no-files-found: warn
+            lighthouse-mobile.png
+            lighthouse-mobile.report.html
+            lighthouse-mobile.report.json
