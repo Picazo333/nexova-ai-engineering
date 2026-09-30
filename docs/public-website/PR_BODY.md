@@ -2,7 +2,7 @@
 
 Sitio público estático: `index.html` (13 secciones, hero inmersivo con video por persona, oficina panal), `application.html` + `validation.js` (formulario con validación y envío simulado), `404.html`, `robots.txt`, `llms.txt`. Sin build ni `package.json`; Tailwind v4 por runtime de navegador.
 
-## Cómo servirlo (local o Codespaces)
+## Cómo servirlo
 
 ```bash
 npx --yes serve -l 3000
@@ -10,35 +10,63 @@ npx --yes serve -l 3000
 
 En Codespaces: puerto 3000 → Port Visibility → **Public**.
 
-## Lighthouse (móvil, laboratorio local)
+## Performance — gate final
 
-Orden: Performance / Accessibility / Best Practices / SEO. Mediana de 3 corridas en `238a96c`; 1 corrida de regresión tras los fixes de QA (C12).
+4Geeks exige Performance ≥80 (ideal >90) y permite **Lighthouse** como fallback cuando PageSpeed Insights no puede alcanzar/completar el análisis del preview.
 
-| Página | Mediana (3 corridas) | Corridas | Tras C12 |
-|---|---|---|---|
-| index.html | **98 / 100 / 100 / 100** | 98 · 98 · 96 | 96 / 100 / 100 / 100 |
-| application.html | **96 / 100 / 100 / 100** | 95 · 96 · 96 | 97 / 100 / 100 / 100 |
+### Evidencia final persistida
 
-Desktop (1 corrida): 100 / 100 / 100 / 100 en ambas. index: LCP 2.1–2.4 s, CLS 0.001. application: LCP 2.3 s, CLS 0.
+Auditoría móvil sobre el source commit `2162745a4537cc1034d54264330c68d693348b13`, servido con el comando documentado:
 
-> PageSpeed Insights sobre la URL pública del Codespace: **pendiente** (se agrega aquí al publicar el puerto).
+| Métrica | Resultado |
+|---|---:|
+| Performance | **100** |
+| Accessibility | **100** |
+| Best Practices | **96** |
+| SEO | **91** |
+| FCP | **0.7 s** |
+| LCP | **0.7 s** |
+| TBT | **10 ms** |
+| CLS | **0** |
+
+- Captura: `docs/public-website/evidence/lighthouse-mobile.png`
+- Reporte JSON: `docs/public-website/evidence/lighthouse-mobile.report.json`
+- Preview público del source auditado: https://raw.githack.com/Picazo333/nexova-ai-engineering/2162745a4537cc1034d54264330c68d693348b13/index.html
+- PageSpeed se intentó durante el cierre; el servicio externo no completó una medición utilizable (rate limiting / acceso del preview). Se usa el fallback Lighthouse permitido por la rúbrica.
+- No se inventó una URL de Codespaces: la URL forwarded exacta no quedó persistida. El preview público anterior permite inspeccionar el mismo source auditado.
+
+![Lighthouse mobile evidence](https://raw.githubusercontent.com/Picazo333/nexova-ai-engineering/ef0bb275c6b09bbfa13fc795147e21b1dad82a30/docs/public-website/evidence/lighthouse-mobile.png)
+
+## Lighthouse previo / regresión C12
+
+Orden: Performance / Accessibility / Best Practices / SEO.
+
+| Página | Mediana (3 corridas) | Tras C12 |
+|---|---|---|
+| index.html | **98 / 100 / 100 / 100** | 96 / 100 / 100 / 100 |
+| application.html | **96 / 100 / 100 / 100** | 97 / 100 / 100 / 100 |
+
+Desktop: 100 / 100 / 100 / 100 en ambas.
 
 ## QA independiente
 
-Revisor distinto del builder. Veredicto sobre C12: **PASS con observaciones, 0 bloqueantes** (`docs/public-website/QA_REPORT_238a96c.md`).
+Veredicto final: **PASS con observaciones, 0 bloqueantes** (`docs/public-website/QA_REPORT_238a96c.md`).
 
-- qa_smoke `--strict`: 2 páginas × 390/768/1440 — axe 0 serious/critical, consola 0, overflow 0, sin JS, reduced-motion, Save-Data, media abortada.
-- seo_check (fase sin dominio): 17 PASS / 0 FAIL.
+- `qa_smoke --strict`: 2 páginas × 390/768/1440 — axe 0 serious/critical, consola 0, overflow 0, sin JS, reduced-motion, Save-Data y media abortada.
+- `seo_check`: 17 PASS / 0 FAIL.
 - Formulario: 38/38 aserciones, `?tipo=` preseleccionado, 0 requests al enviar.
-- 2 bloqueantes encontrados en `238a96c` y corregidos en C12: contraste del numeral "/ 04" de las tarjetas; texto del hero oculto si falla un still.
+- Los 2 bloqueantes detectados por QA (contraste del numeral y contenido del hero oculto ante fallo de still) quedaron corregidos en C12.
 
-## Observaciones abiertas (no bloqueantes)
+## Observaciones abiertas — no bloqueantes
 
 - Titles/OG orientados a búsqueda difieren de los slots aprobados `IDX-META-TITLE` / `APP-META-TITLE` (mismas afirmaciones reordenadas; reversible).
-- ~22 textos nuevos de C10/C11 (resumen, tabla, 404) derivan de CONTEXT.md y slots aprobados; pendientes de registrar en el copy deck.
-- Móvil: hueco en el hero anclado a 390 px; con reduced-motion la CTA fija aparece sobre los beats; el video de P4 sigue reproduciéndose al salir del hero.
-- Sensación de scroll y H.264 en iOS Safari: pendiente de revisión en dispositivo real.
+- ~22 textos nuevos de C10/C11 derivan de `CONTEXT.md` y slots aprobados; pendientes de registrar en copy deck.
+- Móvil: hueco en hero a 390 px; con reduced-motion la CTA fija aparece sobre los beats; video P4 sigue reproduciéndose al salir del hero.
+- Sensación de scroll y H.264 en iOS Safari siguen como revisión de dispositivo real, no bloqueante.
 
-## Commits
+## Estado de entrega
 
-C2–C6 build y reparaciones de QA · C7–C9 scroll del hero (video real por persona) · C10 tarjetas del hero · C11 SEO sin dominio · C12 fixes de QA.
+- Rubric QA: **PASS**
+- Performance: **PASS**
+- Vercel check: **PASS**
+- Evidencia remota: **persistida en el repo**
