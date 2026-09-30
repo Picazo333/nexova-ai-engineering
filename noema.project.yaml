@@ -1,0 +1,54 @@
+noema:
+  protocol: "0.1.0-rc.0"
+  contracts:
+    project_manifest: 1
+
+project:
+  id: nexova-ai-engineering
+  name: Nexova AI Engineering
+  type: application
+  status: active
+
+traits: []
+
+authority:
+  owns:
+    - academic-deliverable
+  does_not_own:
+    - noema-protocol
+    - fourgeeks-rubric
+
+sources_of_truth:
+  company_context:
+    scheme: repo
+    locator: CONTEXT.md
+  public_website_qa:
+    scheme: repo
+    locator: docs/public-website/QA_REPORT_238a96c.md
+
+context:
+  entrypoint: CLAUDE.md
+  default_mode: build
+  modes:
+    build:
+      required:
+        - repo://CONTEXT.md
+    audit:
+      required:
+        - repo://docs/public-website/QA_REPORT_238a96c.md
+      optional:
+        - repo://docs/public-website/evidence/README.md
+
+quality_claims:
+  - contract-conformance
+
+relations:
+  - type: conforms_to
+    target: project:noema
+
+exceptions: []
+
+extensions:
+  x-fourgeeks:
+    academic_repo: true
+    control_tower: project:4geeks-control-tower
