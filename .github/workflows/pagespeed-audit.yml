@@ -44,7 +44,7 @@ jobs:
       - name: Verify public target
         shell: bash
         run: |
-          curl -fSsL --retry 8 --retry-delay 2 "$PUBLIC_URL/" -o /tmp/public.html
+          curl -fSsL --retry 20 --retry-delay 3 --retry-all-errors "$PUBLIC_URL/" -o /tmp/public.html
           grep -qi "Nexova" /tmp/public.html
 
       - name: Install browser driver
