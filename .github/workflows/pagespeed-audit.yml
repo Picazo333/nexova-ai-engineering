@@ -1,4 +1,4 @@
-name: Public Lighthouse audit
+name: PageSpeed web audit
 
 on:
   push:
@@ -6,22 +6,111 @@ on:
       - audit/pagespeed-20260929
 
 jobs:
-  lighthouse:
+  pagespeed:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Audit deployed site (mobile Lighthouse)
+      - uses: actions/checkout@v4
+
+      - name: Serve exact PR head
         shell: bash
-        env:
-          TARGET_URL: https://nexova-premium-v0-challenger-git-milesto-e3e106-mbpicazo33-1986.vercel.app/
         run: |
-          set -euo pipefail
-          echo "Target: $TARGET_URL"
-          npx --yes lighthouse@latest "$TARGET_URL" \
-            --quiet \
-            --chrome-flags="--headless --no-sandbox" \
-            --only-categories=performance,accessibility,best-practices,seo \
-            --output=json \
-            --output-path=lhr.json
-          jq -r '{finalUrl:.finalUrl,fetchTime:.fetchTime,scores:{performance:(.categories.performance.score*100),accessibility:(.categories.accessibility.score*100),best_practices:(.categories["best-practices"].score*100),seo:(.categories.seo.score*100)},lab:{FCP:.audits["first-contentful-paint"].displayValue,LCP:.audits["largest-contentful-paint"].displayValue,TBT:.audits["total-blocking-time"].displayValue,CLS:.audits["cumulative-layout-shift"].displayValue,SI:.audits["speed-index"].displayValue}}' lhr.json
-          jq -e '.categories.performance.score >= 0.80 and .categories.accessibility.score >= 0.80 and .categories["best-practices"].score >= 0.80 and .categories.seo.score >= 0.80' lhr.json >/dev/null
+          python3 -m http.server 3000 --bind 127.0.0.1 > /tmp/site.log 2>&1 &
+          for i in $(seq 1 20); do
+            curl -fsS http://127.0.0.1:3000/ >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/site.log
+          exit 1
+
+      - name: Open ephemeral public tunnel
+        shell: bash
+        run: |
+          curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /tmp/cloudflared
+          chmod +x /tmp/cloudflared
+          /tmp/cloudflared tunnel --url http://127.0.0.1:3000 --no-autoupdate > /tmp/tunnel.log 2>&1 &
+          for i in $(seq 1 40); do
+            URL=$(grep -Eo 'https://[a-z0-9-]+\.trycloudflare\.com' /tmp/tunnel.log | head -1 || true)
+            if [ -n "$URL" ]; then
+              echo "PUBLIC_URL=$URL" >> "$GITHUB_ENV"
+              echo "Public audit target acquired."
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/tunnel.log
+          exit 1
+
+      - name: Verify public target
+        shell: bash
+        run: |
+          curl -fSsL --retry 8 --retry-delay 2 "$PUBLIC_URL/" -o /tmp/public.html
+          grep -qi "Nexova" /tmp/public.html
+
+      - name: Install browser driver
+        shell: bash
+        run: |
+          CHROME_PATH="$(command -v google-chrome || command -v chromium-browser || command -v chromium)"
+          test -n "$CHROME_PATH"
+          echo "CHROME_PATH=$CHROME_PATH" >> "$GITHUB_ENV"
+          npm install --no-save --no-package-lock puppeteer-core@24.16.0
+
+      - name: Run PageSpeed web UI — mobile
+        shell: bash
+        run: |
+          cat > /tmp/pagespeed.mjs <<'NODE'
+          import puppeteer from 'puppeteer-core';
+          import fs from 'node:fs';
+
+          const target = process.env.PUBLIC_URL + '/';
+          const psi = 'https://pagespeed.web.dev/analysis?url=' +
+            encodeURIComponent(target) + '&form_factor=mobile';
+
+          const browser = await puppeteer.launch({
+            headless: true,
+            executablePath: process.env.CHROME_PATH,
+            args: ['--no-sandbox', '--disable-dev-shm-usage']
+          });
+
+          const page = await browser.newPage();
+          await page.setViewport({ width: 1440, height: 1200, deviceScaleFactor: 1 });
+          await page.goto(psi, { waitUntil: 'domcontentloaded', timeout: 120000 });
+
+          let text = '';
+          let complete = false;
+          for (let i = 0; i < 48; i++) {
+            await new Promise(r => setTimeout(r, 5000));
+            text = await page.evaluate(() => document.body.innerText);
+            const categories = ['Performance', 'Accessibility', 'Best Practices', 'SEO']
+              .every(x => text.includes(x));
+            const metrics = text.includes('First Contentful Paint') &&
+              text.includes('Largest Contentful Paint');
+            if (categories && metrics && !text.includes('Analyzing')) {
+              complete = true;
+              break;
+            }
+          }
+
+          fs.writeFileSync('pagespeed-body.txt', text);
+          await page.screenshot({ path: 'pagespeed-mobile.png', fullPage: true });
+          console.log('PAGESPEED_URL=' + psi);
+          console.log('TARGET_URL=' + target);
+          console.log('COMPLETE=' + complete);
+          console.log('--- PAGESPEED BODY START ---');
+          console.log(text);
+          console.log('--- PAGESPEED BODY END ---');
+          await browser.close();
+
+          if (!complete) process.exit(2);
+          NODE
+          node /tmp/pagespeed.mjs
+
+      - name: Upload PageSpeed evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pagespeed-mobile-evidence
+          path: |
+            pagespeed-mobile.png
+            pagespeed-body.txt
+          if-no-files-found: warn
