@@ -16,7 +16,7 @@ jobs:
           TARGET_URL: https://nexova-premium-v0-challenger-git-milesto-e3e106-mbpicazo33-1986.vercel.app/
         run: |
           set -euo pipefail
-          ENCODED="$(python -c 'import os,urllib.parse; print(urllib.parse.quote(os.environ[\"TARGET_URL\"], safe=\"\"))')"
+          ENCODED="$(python -c "import os,urllib.parse; print(urllib.parse.quote(os.environ['TARGET_URL'], safe=''))")"
           API="https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${ENCODED}&strategy=mobile&category=PERFORMANCE&category=ACCESSIBILITY&category=BEST_PRACTICES&category=SEO"
           echo "Target: $TARGET_URL"
           echo "Calling PageSpeed Insights API..."
