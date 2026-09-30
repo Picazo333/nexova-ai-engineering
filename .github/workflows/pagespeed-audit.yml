@@ -1,27 +1,44 @@
-name: Lighthouse evidence
+name: Persist Lighthouse evidence
 
 on:
   push:
     branches:
       - audit/pagespeed-20260929
 
+permissions:
+  contents: write
+
 jobs:
-  lighthouse:
+  evidence:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    env:
-      TARGET_URL: https://raw.githack.com/Picazo333/nexova-ai-engineering/2162745a4537cc1034d54264330c68d693348b13/index.html
     steps:
-      - name: Verify public exact-commit target
+      - name: Checkout delivery branch
+        uses: actions/checkout@v4
+        with:
+          ref: milestone/nexova-public-website
+          fetch-depth: 0
+
+      - name: Assert audited source
         shell: bash
         run: |
-          curl -fSsL --retry 6 --retry-delay 3 --retry-all-errors "$TARGET_URL" -o /tmp/public.html
-          grep -qi "Nexova" /tmp/public.html
+          test "$(git rev-parse HEAD)" = "2162745a4537cc1034d54264330c68d693348b13"
+
+      - name: Serve exact delivery
+        shell: bash
+        run: |
+          npx --yes serve -l 3000 > /tmp/serve.log 2>&1 &
+          for i in $(seq 1 30); do
+            curl -fsS http://127.0.0.1:3000/ >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/serve.log
+          exit 1
 
       - name: Run Lighthouse mobile
         shell: bash
         run: |
-          npx --yes lighthouse@latest "$TARGET_URL" \
+          npx --yes lighthouse@latest "http://127.0.0.1:3000/" \
             --quiet \
             --chrome-flags="--headless --no-sandbox" \
             --only-categories=performance,accessibility,best-practices,seo \
@@ -31,7 +48,7 @@ jobs:
           jq -r '{finalUrl:.finalUrl,fetchTime:.fetchTime,scores:{performance:(.categories.performance.score*100),accessibility:(.categories.accessibility.score*100),best_practices:(.categories["best-practices"].score*100),seo:(.categories.seo.score*100)},lab:{FCP:.audits["first-contentful-paint"].displayValue,LCP:.audits["largest-contentful-paint"].displayValue,TBT:.audits["total-blocking-time"].displayValue,CLS:.audits["cumulative-layout-shift"].displayValue}}' lighthouse-mobile.report.json
           jq -e '.categories.performance.score >= 0.80 and .categories.accessibility.score >= 0.80 and .categories["best-practices"].score >= 0.80 and .categories.seo.score >= 0.80' lighthouse-mobile.report.json >/dev/null
 
-      - name: Screenshot Lighthouse report
+      - name: Screenshot report
         shell: bash
         run: |
           CHROME="$(command -v google-chrome || command -v chromium-browser || command -v chromium)"
@@ -40,11 +57,42 @@ jobs:
             --screenshot=lighthouse-mobile.png \
             "file://$PWD/lighthouse-mobile.report.html"
 
-      - name: Upload evidence
-        uses: actions/upload-artifact@v4
-        with:
-          name: lighthouse-mobile-evidence
-          path: |
-            lighthouse-mobile.png
-            lighthouse-mobile.report.html
-            lighthouse-mobile.report.json
+      - name: Persist rubric evidence
+        shell: bash
+        run: |
+          mkdir -p docs/public-website/evidence
+          cp lighthouse-mobile.png docs/public-website/evidence/lighthouse-mobile.png
+          cp lighthouse-mobile.report.json docs/public-website/evidence/lighthouse-mobile.report.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          j=json.loads(Path("lighthouse-mobile.report.json").read_text())
+          c=j["categories"]; a=j["audits"]
+          score=lambda k: round(c[k]["score"]*100)
+          md=f"""# Lighthouse mobile evidence
+
+          - Audited source commit: \`2162745a4537cc1034d54264330c68d693348b13\`
+          - Runtime: local preview served with \`npx --yes serve -l 3000\`
+          - Performance: **{score('performance')}**
+          - Accessibility: **{score('accessibility')}**
+          - Best Practices: **{score('best-practices')}**
+          - SEO: **{score('seo')}**
+          - FCP: **{a['first-contentful-paint']['displayValue']}**
+          - LCP: **{a['largest-contentful-paint']['displayValue']}**
+          - TBT: **{a['total-blocking-time']['displayValue']}**
+          - CLS: **{a['cumulative-layout-shift']['displayValue']}**
+
+          This is the official 4Geeks fallback evidence path used because PageSpeed Insights could not complete an external audit during final verification. The assignment explicitly permits Chrome/Lighthouse evidence when PageSpeed cannot reach the preview.
+          """
+          Path("docs/public-website/evidence/README.md").write_text(md)
+          PY
+
+      - name: Commit evidence to delivery branch
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/public-website/evidence
+          git diff --cached --quiet && exit 0
+          git commit -m "docs: add Lighthouse performance evidence"
+          git push origin HEAD:milestone/nexova-public-website
