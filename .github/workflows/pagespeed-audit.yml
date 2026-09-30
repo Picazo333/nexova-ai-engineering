@@ -1,0 +1,46 @@
+name: PageSpeed audit
+
+on:
+  push:
+    branches:
+      - audit/pagespeed-20260929
+
+jobs:
+  pagespeed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Run PageSpeed Insights mobile
+        shell: bash
+        env:
+          TARGET_URL: https://nexova-premium-v0-challenger-git-milesto-e3e106-mbpicazo33-1986.vercel.app/
+        run: |
+          set -euo pipefail
+          ENCODED="$(python - <<'PY'
+import os, urllib.parse
+print(urllib.parse.quote(os.environ['TARGET_URL'], safe=''))
+PY
+)"
+          API="https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${ENCODED}&strategy=mobile&category=PERFORMANCE&category=ACCESSIBILITY&category=BEST_PRACTICES&category=SEO"
+          echo "Target: $TARGET_URL"
+          echo "Calling PageSpeed Insights API..."
+          curl -fSsL --retry 3 --retry-delay 5 "$API" -o psi.json
+          jq -r '
+            {
+              analyzedUrl: .id,
+              fetchTime: .analysisUTCTimestamp,
+              scores: {
+                performance: ((.lighthouseResult.categories.performance.score // 0) * 100),
+                accessibility: ((.lighthouseResult.categories.accessibility.score // 0) * 100),
+                best_practices: ((.lighthouseResult.categories["best-practices"].score // 0) * 100),
+                seo: ((.lighthouseResult.categories.seo.score // 0) * 100)
+              },
+              lab: {
+                FCP: .lighthouseResult.audits["first-contentful-paint"].displayValue,
+                LCP: .lighthouseResult.audits["largest-contentful-paint"].displayValue,
+                TBT: .lighthouseResult.audits["total-blocking-time"].displayValue,
+                CLS: .lighthouseResult.audits["cumulative-layout-shift"].displayValue,
+                SI: .lighthouseResult.audits["speed-index"].displayValue
+              }
+            }' psi.json
+          jq -e '.lighthouseResult.categories.performance.score >= 0.80' psi.json >/dev/null
