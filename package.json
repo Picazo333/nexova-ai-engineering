@@ -1,0 +1,16 @@
+{
+  "name": "nexova-ai-engineering",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Nexova Solutions: utilidades TypeScript de dominio (Hito 2, 4Geeks AI Engineering)",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "demo": "tsx src/demo.ts",
+    "demo:node": "tsc && node dist/demo.js"
+  },
+  "devDependencies": {
+    "tsx": "4.23.15",
+    "typescript": "5.9.3"
+  }
+}
