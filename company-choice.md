@@ -55,3 +55,28 @@ Propongo un **Sales Opportunity Agent** para el equipo de Ventas y Desarrollo de
 - Señal de aprobación humana cuando una regla comercial lo exija.
 
 La arquitectura se diseñaría separando el núcleo reutilizable — agregación de contexto, retrieval, recommendation, policy checks y tool interfaces — de la configuración específica de Nexova. Esto permitiría evaluar posteriormente su viabilidad como un **Opportunity Intelligence Engine** aplicable a otros negocios B2B.
+
+## Mi idea de Agente de IA
+
+Esta sección conecta el agente con el reto de automatización elegido arriba (el **pipeline de selección asistido por IA**). La propuesta de la sección anterior (*My AI Agent Idea*, para Ventas) se mantiene como segunda opción.
+
+Propongo un **Agente de Preselección de Candidatos** para el equipo de Operaciones de Selección de Javier Almeida. Hoy cada uno de sus 40 consultores lee entre 30 y 80 CVs por proceso, el matching depende de la intuición del consultor y los clientes llaman para preguntar en qué estado va su búsqueda.
+
+**Qué haría el agente:**
+- Lee la descripción de una vacante y la convierte en requisitos estructurados: habilidades obligatorias y deseables, años de experiencia, seniority, nivel de inglés, rango salarial y modalidad (remoto o presencial).
+- Busca en la base de candidatos con consultas en lenguaje natural, como el ejemplo del briefing: "encuentra perfiles con experiencia en ventas B2B y nivel C1 de inglés".
+- Puntúa y ordena a los candidatos con un scoring explicable: cada puntaje dice qué requisito se cumplió y cuál no.
+- Propone una terna (3 o 4 candidatos, como pide el SLA de contratación) para que el consultor la revise. El consultor decide; el agente no descarta a nadie por su cuenta.
+- Vigila los plazos del SLA: si a las 4 semanas de una búsqueda ejecutiva no hay ningún candidato calificado presentado, avisa al consultor y prepara el escalamiento a Javier Almeida.
+
+**Qué información necesita:**
+- La vacante del cliente (puesto, requisitos, rango salarial, ubicación).
+- Los perfiles de candidatos del ATS interno: experiencia, habilidades, nivel de inglés, salario esperado, disponibilidad y estado.
+- El historial de cada proceso de selección (etapa actual, fechas, notas del consultor).
+- Las reglas del SLA del proceso de contratación (tiempos por tipo de perfil y tamaño de la terna).
+
+**Qué produciría o desencadenaría:**
+- Un ranking de candidatos con puntaje y la explicación de cada puntaje.
+- Una terna sugerida, lista para que el consultor la apruebe o la ajuste.
+- Borradores de email de seguimiento para candidatos y una actualización de estado para el cliente, que se envían solo cuando el consultor los aprueba.
+- Alertas de SLA y avisos de escalamiento cuando un proceso se retrasa.
