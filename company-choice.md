@@ -58,8 +58,6 @@ La arquitectura se diseñaría separando el núcleo reutilizable — agregación
 
 ## Mi idea de Agente de IA
 
-> BORRADOR — Miguel confirma o ajusta
-
 Esta sección conecta el agente con el reto de automatización elegido arriba (el **pipeline de selección asistido por IA**). La propuesta de la sección anterior (*My AI Agent Idea*, para Ventas) se mantiene como segunda opción.
 
 Propongo un **Agente de Preselección de Candidatos** para el equipo de Operaciones de Selección de Javier Almeida. Hoy cada uno de sus 40 consultores lee entre 30 y 80 CVs por proceso, el matching depende de la intuición del consultor y los clientes llaman para preguntar en qué estado va su búsqueda.
