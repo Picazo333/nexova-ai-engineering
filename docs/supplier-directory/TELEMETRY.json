@@ -4,6 +4,15 @@
   "ended_at": "2026-11-06T09:19:30+00:00",
   "tokens_used": null,
   "tokens_note": "Este entorno no expone un contador de tokens de la sesión.",
+  "tokens_unmeasurable_reason": "La sesión no entrega un contador de tokens de entrada ni de salida. No hay variable de entorno, API local ni campo de uso en la respuesta del modelo. No se inventa una cifra.",
+  "tokens_proxy": {
+    "method": "Tamaño del diff git de feature/supplier-directory contra feature/incidents-analysis (a63b20c..HEAD) y duración entre started_at y el commit 9d0cbbe.",
+    "diff_bytes": 205359,
+    "files_changed": 39,
+    "insertions": 3694,
+    "deletions": 18,
+    "duration_seconds": 1507
+  },
   "eval_repair_iterations": 3,
   "failures": [
     {
