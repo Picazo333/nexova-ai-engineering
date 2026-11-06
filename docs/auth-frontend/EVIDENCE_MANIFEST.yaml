@@ -1,4 +1,4 @@
-commit: PENDING
+commit: c8d72c8513010d17c77a2f3b583037351cd5df7a
 project: ai-eng-user-authentication-flows
 branch: feature/auth-frontend
 base: feature/auth-api
