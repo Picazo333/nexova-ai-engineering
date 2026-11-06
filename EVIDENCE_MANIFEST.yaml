@@ -2,7 +2,8 @@ project: ai-eng-company-monorepo-container
 branch: feature/company-monorepo-container
 base: feature/user-authentication-restore
 base_sha: d69a3b954c6c642729858c7faac1a2e55aa21bd1
-commit_sha: PENDING
+implementation_commit: 4402d3c005f8bcb0151198f183232b12669150fc
+commit_sha: 4402d3c005f8bcb0151198f183232b12669150fc
 status: PENDIENTE_REVISION_ORQUESTADOR
 items:
   - id: compose-ps
