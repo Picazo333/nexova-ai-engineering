@@ -4,6 +4,8 @@ Estado: **PENDIENTE_REVISION_ORQUESTADOR**. No es READY_TO_SUBMIT. No hubo merge
 
 Base del PR: `feature/milestone-backend-development` (`106083a`).
 
+Implementación: `b9c199566576ca2613233ef049eb66397e0846ea`.
+
 ## Resultado
 
 38/38 criterios que cuentan: PASS (R01–R25, S01–S11, E01–E02).

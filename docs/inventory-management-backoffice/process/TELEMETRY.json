@@ -1,7 +1,7 @@
 {
   "project": "022-ai-eng-inventory-management-backoffice",
   "started_at": "2026-11-06T17:13:00Z",
-  "finished_at": "2026-11-06T17:50:10Z",
+  "finished_at": "2026-11-06T17:52:00Z",
   "timezone": "UTC",
   "eval_repair_iterations": 6,
   "repairs": [
@@ -37,6 +37,6 @@
   "tokens_proxy": {
     "method": "diff de la rama más la evidencia de capturas y los JSON de Lighthouse fuera del repo",
     "started_at": "2026-11-06T17:13:00Z",
-    "finished_at": "2026-11-06T17:50:10Z"
+    "finished_at": "2026-11-06T17:52:00Z"
   }
 }
