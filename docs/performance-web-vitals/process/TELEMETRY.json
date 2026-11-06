@@ -1,0 +1,48 @@
+{
+  "project": "023-ai-eng-performance-web-vitals",
+  "started_at": "2026-11-06T17:57:49Z",
+  "finished_at": "2026-11-06T18:27:19Z",
+  "timezone": "UTC",
+  "eval_repair_iterations": 2,
+  "repairs": [
+    "La corrida central de la línea base falló porque Lighthouse no acepta dos --output-path. Se relanzó esa corrida con json y html en un solo path.",
+    "app/icon.svg no evita el GET /favicon.ico. Se añadió un rewrite a /icon.svg y se volvió a construir el backoffice antes de la medición final."
+  ],
+  "not_repaired_on_purpose": [
+    "El CLS 0.022 del portal al abrir / y el 0.027 de activos siguen: son el pie en la redirección de sesión. Reservar el alto del SVG no los movió.",
+    "El SEO 63 no se sube. Es noindex."
+  ],
+  "commands": [
+    "cd uis/portal && npm run build && npm run start",
+    "cd uis/backoffice && npm run build && npm run start",
+    "python3 -m http.server 4173 --bind 127.0.0.1",
+    "lighthouse 13.6.0 --config-path mobile.cjs|desktop.cjs --chrome-flags=--headless=new --no-sandbox, tres corridas",
+    "cd services/api && NEXOVA_TEST_DATABASE_URL=postgresql:///nexova_audit uv run pytest",
+    "uv run python -m pytest tests packages/incident_analysis/tests -m 'not integration'",
+    "cd uis/portal && npx jest --coverage",
+    "cd uis/portal && npx playwright test",
+    "cd uis/backoffice && npx jest --coverage"
+  ],
+  "results": {
+    "api_pytest_postgres": "169 passed",
+    "root_pytest": "64 passed, 1 skipped",
+    "portal_jest": "23 passed (20 de la línea base + 3 de lockup)",
+    "portal_playwright": "14 passed",
+    "backoffice_jest": "17 passed (14 de la línea base + 3 de catalog)"
+  },
+  "lighthouse": {
+    "version": "13.6.0",
+    "site_home_mobile_performance": "94 -> 98",
+    "site_application_mobile_performance": "98 -> 100",
+    "backoffice_best_practices": "96 -> 100",
+    "inp": null
+  },
+  "tokens_used": null,
+  "tokens_unmeasurable_reason": "Este runtime no expone un contador de tokens de la sesión.",
+  "tokens_proxy": {
+    "method": "diff de la rama, capturas de Lighthouse en audit/ y JSON completos fuera del repo",
+    "tracked_diff_stat": "13 files, 40 insertions, 170 deletions, más ficheros nuevos (CSS, audit, docs, hook, tests)",
+    "started_at": "2026-11-06T17:57:49Z",
+    "finished_at": "2026-11-06T18:27:19Z"
+  }
+}
