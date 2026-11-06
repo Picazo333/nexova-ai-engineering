@@ -1,0 +1,545 @@
+{
+  "verified_config": true,
+  "surfaces": {
+    "login": {
+      "mobile": {
+        "config": {
+          "formFactor": "mobile",
+          "throttlingMethod": "simulate",
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "cpuSlowdownMultiplier": 4,
+          "screen": {
+            "mobile": true,
+            "width": 390,
+            "height": 844,
+            "deviceScaleFactor": 2,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "lcp_ms": 1814.9378,
+            "cls": 0,
+            "tbt_ms": 15,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 1813.5477999999998,
+            "cls": 0,
+            "tbt_ms": 14.5,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 1793.1340999999998,
+            "cls": 0,
+            "tbt_ms": 31,
+            "inp_ms": null,
+            "performance": 1
+          }
+        ],
+        "median": {
+          "lcp_ms": 1813.5477999999998,
+          "cls": 0,
+          "tbt_ms": 15,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 1814.9378,
+          "cls": 0,
+          "tbt_ms": 15,
+          "inp_ms": null,
+          "performance": 1
+        },
+        "worst_run": 1
+      },
+      "desktop": {
+        "config": {
+          "formFactor": "desktop",
+          "throttlingMethod": "simulate",
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1,
+          "screen": {
+            "mobile": false,
+            "width": 1350,
+            "height": 940,
+            "deviceScaleFactor": 1,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "lcp_ms": 428.8161,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 437.61310000000003,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 432.11469999999997,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          }
+        ],
+        "median": {
+          "lcp_ms": 432.11469999999997,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 437.61310000000003,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null,
+          "performance": 1
+        },
+        "worst_run": 2
+      }
+    },
+    "register": {
+      "mobile": {
+        "config": {
+          "formFactor": "mobile",
+          "throttlingMethod": "simulate",
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "cpuSlowdownMultiplier": 4,
+          "screen": {
+            "mobile": true,
+            "width": 390,
+            "height": 844,
+            "deviceScaleFactor": 2,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "lcp_ms": 1813.7773,
+            "cls": 0,
+            "tbt_ms": 16.5,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 1809.6161,
+            "cls": 0,
+            "tbt_ms": 15,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 1814.6419,
+            "cls": 0,
+            "tbt_ms": 15.5,
+            "inp_ms": null,
+            "performance": 1
+          }
+        ],
+        "median": {
+          "lcp_ms": 1813.7773,
+          "cls": 0,
+          "tbt_ms": 15.5,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 1814.6419,
+          "cls": 0,
+          "tbt_ms": 15.5,
+          "inp_ms": null,
+          "performance": 1
+        },
+        "worst_run": 3
+      },
+      "desktop": {
+        "config": {
+          "formFactor": "desktop",
+          "throttlingMethod": "simulate",
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1,
+          "screen": {
+            "mobile": false,
+            "width": 1350,
+            "height": 940,
+            "deviceScaleFactor": 1,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "lcp_ms": 426.3767,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 430.3887,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 428.67780000000005,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          }
+        ],
+        "median": {
+          "lcp_ms": 428.67780000000005,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 430.3887,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null,
+          "performance": 1
+        },
+        "worst_run": 2
+      }
+    },
+    "incidencias": {
+      "mobile": {
+        "config": {
+          "formFactor": "mobile",
+          "throttlingMethod": "simulate",
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "cpuSlowdownMultiplier": 4,
+          "screen": {
+            "mobile": true,
+            "width": 390,
+            "height": 844,
+            "deviceScaleFactor": 2,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "lcp_ms": 2037.3484749999998,
+            "cls": 0.01689652074302015,
+            "tbt_ms": 31,
+            "inp_ms": null,
+            "performance": 0.99
+          },
+          {
+            "lcp_ms": 2036.2241,
+            "cls": 0.01689652074302015,
+            "tbt_ms": 30,
+            "inp_ms": null,
+            "performance": 0.99
+          },
+          {
+            "lcp_ms": 2034.7980750000002,
+            "cls": 0.01689652074302015,
+            "tbt_ms": 30,
+            "inp_ms": null,
+            "performance": 0.99
+          }
+        ],
+        "median": {
+          "lcp_ms": 2036.2241,
+          "cls": 0.01689652074302015,
+          "tbt_ms": 30,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 2037.3484749999998,
+          "cls": 0.01689652074302015,
+          "tbt_ms": 31,
+          "inp_ms": null,
+          "performance": 0.99
+        },
+        "worst_run": 1
+      },
+      "desktop": {
+        "config": {
+          "formFactor": "desktop",
+          "throttlingMethod": "simulate",
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1,
+          "screen": {
+            "mobile": false,
+            "width": 1350,
+            "height": 940,
+            "deviceScaleFactor": 1,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "lcp_ms": 510.1246,
+            "cls": 0.005957028970779116,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 507.8944,
+            "cls": 0.005957028970779116,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 509.80879999999996,
+            "cls": 0.005957028970779116,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          }
+        ],
+        "median": {
+          "lcp_ms": 509.80879999999996,
+          "cls": 0.005957028970779116,
+          "tbt_ms": 0,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 510.1246,
+          "cls": 0.005957028970779116,
+          "tbt_ms": 0,
+          "inp_ms": null,
+          "performance": 1
+        },
+        "worst_run": 1
+      }
+    },
+    "perfil": {
+      "mobile": {
+        "config": {
+          "formFactor": "mobile",
+          "throttlingMethod": "simulate",
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "cpuSlowdownMultiplier": 4,
+          "screen": {
+            "mobile": true,
+            "width": 390,
+            "height": 844,
+            "deviceScaleFactor": 2,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "lcp_ms": 2037.7483,
+            "cls": 0.01689652074302015,
+            "tbt_ms": 33,
+            "inp_ms": null,
+            "performance": 0.99
+          },
+          {
+            "lcp_ms": 2036.5442,
+            "cls": 0.01689652074302015,
+            "tbt_ms": 34,
+            "inp_ms": null,
+            "performance": 0.99
+          },
+          {
+            "lcp_ms": 2037.3598000000002,
+            "cls": 0.01689652074302015,
+            "tbt_ms": 34,
+            "inp_ms": null,
+            "performance": 0.99
+          }
+        ],
+        "median": {
+          "lcp_ms": 2037.3598000000002,
+          "cls": 0.01689652074302015,
+          "tbt_ms": 34,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 2037.7483,
+          "cls": 0.01689652074302015,
+          "tbt_ms": 33,
+          "inp_ms": null,
+          "performance": 0.99
+        },
+        "worst_run": 1
+      },
+      "desktop": {
+        "config": {
+          "formFactor": "desktop",
+          "throttlingMethod": "simulate",
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1,
+          "screen": {
+            "mobile": false,
+            "width": 1350,
+            "height": 940,
+            "deviceScaleFactor": 1,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "lcp_ms": 511.64059999999995,
+            "cls": 0.008354223727631878,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 511.21940000000006,
+            "cls": 0.008354223727631878,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 509.9772999999999,
+            "cls": 0.008354223727631878,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          }
+        ],
+        "median": {
+          "lcp_ms": 511.21940000000006,
+          "cls": 0.008354223727631878,
+          "tbt_ms": 0,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 511.64059999999995,
+          "cls": 0.008354223727631878,
+          "tbt_ms": 0,
+          "inp_ms": null,
+          "performance": 1
+        },
+        "worst_run": 1
+      }
+    },
+    "proveedores": {
+      "mobile": {
+        "config": {
+          "formFactor": "mobile",
+          "throttlingMethod": "simulate",
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "cpuSlowdownMultiplier": 4,
+          "screen": {
+            "mobile": true,
+            "width": 390,
+            "height": 844,
+            "deviceScaleFactor": 2,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "lcp_ms": 2185.132,
+            "cls": 0.01689652074302015,
+            "tbt_ms": 36,
+            "inp_ms": null,
+            "performance": 0.99
+          },
+          {
+            "lcp_ms": 2334.4755,
+            "cls": 0.01689652074302015,
+            "tbt_ms": 45,
+            "inp_ms": null,
+            "performance": 0.98
+          },
+          {
+            "lcp_ms": 2187.1506,
+            "cls": 0.01689652074302015,
+            "tbt_ms": 37,
+            "inp_ms": null,
+            "performance": 0.99
+          }
+        ],
+        "median": {
+          "lcp_ms": 2187.1506,
+          "cls": 0.01689652074302015,
+          "tbt_ms": 37,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 2334.4755,
+          "cls": 0.01689652074302015,
+          "tbt_ms": 45,
+          "inp_ms": null,
+          "performance": 0.98
+        },
+        "worst_run": 2
+      },
+      "desktop": {
+        "config": {
+          "formFactor": "desktop",
+          "throttlingMethod": "simulate",
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1,
+          "screen": {
+            "mobile": false,
+            "width": 1350,
+            "height": 940,
+            "deviceScaleFactor": 1,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "lcp_ms": 510.28409999999997,
+            "cls": 0.003104367210124328,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 511.442,
+            "cls": 0.01000828810986028,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 506.29929999999996,
+            "cls": 0.01000828810986028,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          }
+        ],
+        "median": {
+          "lcp_ms": 510.28409999999997,
+          "cls": 0.01000828810986028,
+          "tbt_ms": 0,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 511.442,
+          "cls": 0.01000828810986028,
+          "tbt_ms": 0,
+          "inp_ms": null,
+          "performance": 1
+        },
+        "worst_run": 2
+      }
+    }
+  }
+}

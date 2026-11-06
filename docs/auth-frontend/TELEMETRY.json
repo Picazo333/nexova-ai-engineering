@@ -1,0 +1,55 @@
+{
+  "case": "013",
+  "slug": "ai-eng-user-authentication-flows",
+  "source_of_times": "CLOUD_AGENTS.md wall-clock (America/Mexico_City); not an instrumented timer inside the agent runtime",
+  "started_at": "2026-11-06T09:58:00Z",
+  "finished_at": "2026-11-06T10:43:00Z",
+  "baseline_closed_at": "2026-11-06T10:39:00Z",
+  "duration_seconds": 2700,
+  "duration_note": "Proxy from CLOUD_AGENTS launch 03:58 CST to repair close 04:43 CST. Not a measured process clock.",
+  "eval_repair_iterations": 1,
+  "failures_and_repairs": [
+    {
+      "id": "repair-docs-1",
+      "when": "post-Orquestador 04:41 CST",
+      "failure": "Orquestador pidió documentar JWT en localStorage como limitación (+httpOnly) o citar el enunciado, y nota portal vs backoffice.",
+      "repair": "Head 8505364: README cita enunciado l.34 y l.80 (localStorage exigido); nota portal vs backoffice. Rúbrica local ya tenía 26/26 PASS.",
+      "evidence": "TRACKER.csv notas 013; CLOUD_AGENTS.md «013 reparado 04:43 CST: head 8505364»; quality/FINAL_AUDIT.md"
+    }
+  ],
+  "verification_commands_reported": [
+    "monorepo pytest → 45 passed (FINAL_AUDIT / TRACKER)",
+    "uis/portal Playwright → 9 passed (FINAL_AUDIT / TRACKER)",
+    "Lighthouse 30 corridas; presets verificados; peor LCP 2334 ms, CLS 0.017 (TRACKER)"
+  ],
+  "excellence_extras_already_in_rubric": {
+    "E01": "Aviso «La sesión ha vencido» con retorno a la vista (RUBRIC_JUSTIFICATION.md)",
+    "E02": "9 pruebas Playwright del portal (RUBRIC_JUSTIFICATION.md)",
+    "orquestador_06:04": "E01/E02 OK como extras; solo faltaba TELEMETRY"
+  },
+  "tokens_used": null,
+  "tokens_unmeasurable_reason": "No hay contador de tokens de la sesión Cloud Agent en los artefactos locales ni en CLOUD_AGENTS.md. Inventar una cifra violaría la regla de tokens null.",
+  "tokens_proxy": {
+    "method": "Registro operativo + volumen de evidencia local copiada (no es conteo de tokens)",
+    "pr": "#14",
+    "heads": [
+      "7dc405b (cierre 04:39 CST)",
+      "8505364 (reparación docs 04:43 CST)"
+    ],
+    "local_evidence_bytes": {
+      "lighthouse-summary.json": 13375,
+      "recorrido.webm": 356475,
+      "registro-perfil-portal.mp4": 6114364
+    },
+    "duration_seconds_registry": 2700,
+    "pytest_passed": 45,
+    "playwright_passed": 9
+  },
+  "publication": {
+    "published_at": "2026-11-06T14:40:00Z",
+    "destination": "docs/auth-frontend/TELEMETRY.json",
+    "pr": "https://github.com/Picazo333/nexova-ai-engineering/pull/14",
+    "authorized_by": "Miguel 2026-11-06 08:36 CST"
+  },
+  "status": "READY_TO_SUBMIT"
+}
