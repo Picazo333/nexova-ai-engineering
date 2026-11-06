@@ -2,6 +2,8 @@
 
 Estado: **PENDIENTE_REVISION_ORQUESTADOR**. No es READY_TO_SUBMIT. No hubo merge.
 
+PR: https://github.com/Picazo333/nexova-ai-engineering/pull/22 contra `feature/user-authentication-restore`.
+
 ## Resultado
 
 30/30 criterios que cuentan: PASS.
