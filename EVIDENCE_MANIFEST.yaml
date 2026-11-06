@@ -2,7 +2,8 @@ project: ai-eng-user-authentication-restore
 branch: feature/user-authentication-restore
 base: feature/langgraph-external-tools
 base_sha: 54b86218ad5bb752cb23463b313f5214a3dbf689
-commit_sha: null
+commit_sha: 0c13f665b3a28e142520c75054a7c5881484d49a
+implementation_commit: 0c13f665b3a28e142520c75054a7c5881484d49a
 pull_request: null
 status: PENDIENTE_REVISION_ORQUESTADOR
 items:

@@ -1,7 +1,7 @@
 {
   "project": "ai-eng-user-authentication-restore",
   "started_at": "2026-11-06T15:18:30+00:00",
-  "finished_at": "2026-11-06T15:45:00+00:00",
+  "finished_at": "2026-11-06T15:44:30+00:00",
   "timezone": "UTC",
   "eval_repair_iterations": 4,
   "failures": [
@@ -36,8 +36,10 @@
   "tokens_proxy": {
     "method": "duración de la sesión, bytes de evidencia y líneas del diff git al cerrar",
     "started_at": "2026-11-06T15:18:30+00:00",
-    "finished_at": "2026-11-06T15:45:00+00:00",
-    "duration_minutes": 27,
+    "finished_at": "2026-11-06T15:44:30+00:00",
+    "duration_minutes": 26,
+    "feature_commit_insertions": 2942,
+    "feature_commit_deletions": 358,
     "api_tests": "156 passed",
     "api_baseline": "138 passed",
     "root_tests": "57 passed, 1 skipped",
@@ -47,7 +49,7 @@
   "api_tests": "156 passed",
   "api_baseline": "138 passed",
   "root_tests": "57 passed, 1 skipped",
-  "implementation_commit": null,
+  "implementation_commit": "0c13f665b3a28e142520c75054a7c5881484d49a",
   "pass_implementable": "22/22",
   "rubric_rows": 29,
   "pending": [
