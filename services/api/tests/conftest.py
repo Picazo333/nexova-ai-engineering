@@ -9,6 +9,15 @@ from fastapi.testclient import TestClient
 
 
 @pytest.fixture(autouse=True)
+def _isolated_cache():
+    from app.cache import reset_cache
+
+    reset_cache()
+    yield
+    reset_cache()
+
+
+@pytest.fixture(autouse=True)
 def auth_environment(monkeypatch: pytest.MonkeyPatch, tmp_path: Path):
     monkeypatch.setenv("JWT_SECRET", "test-jwt-secret-local-only")
     monkeypatch.setenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30")

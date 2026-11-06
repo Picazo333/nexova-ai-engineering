@@ -1,0 +1,50 @@
+{
+  "project": "024-ai-eng-application-caching",
+  "started_at": "2026-11-06T18:29:00Z",
+  "finished_at": "2026-11-06T18:55:00Z",
+  "timezone": "UTC",
+  "eval_repair_iterations": 4,
+  "repairs": [
+    "La marca HIT no salía en la respuesta: la ruta síncrona corre en un hilo y un ContextVar asignado ahí no vuelve al middleware. La marca vive en un objeto mutable que el hilo y el middleware comparten.",
+    "El HIT de GET /inventory/orders seguía en unos 114 ms porque FastAPI volvía a serializar 7680 modelos. Se guarda el JSON ya codificado. El HIT baja a 2,06 ms.",
+    "El useMemo del resumen numérico medía 0,086 ms. Se quitó como justificación. El coste real era Intl.DateTimeFormat nuevo por fila (361,19 ms). Se comparte un formateador y se memoiza prepareHistory.",
+    "La captura del estado vacío interceptaba el HTML de la página, no la API. El mock quedó limitado a http://127.0.0.1:8000/inventory/orders."
+  ],
+  "not_repaired_on_purpose": [
+    "La ruta / del portal pasa de 3,65 kB a 4,2 kB en la tabla de next build. El cargador de next/dynamic pesa más que el panel en esa línea. El panel queda en un chunk de 707 B gzip que no está en la página hasta que hay un análisis.",
+    "GET /inventory/products no se cachea. Mediana 5,94 ms con el volumen cargado."
+  ],
+  "commands": [
+    "cd services/api && DATABASE_URL=postgresql:///nexova_audit uv run python scripts/measure_reads.py",
+    "cd services/api && NEXOVA_TEST_DATABASE_URL=postgresql:///nexova_audit uv run pytest",
+    "uv run python -m pytest tests packages/incident_analysis/tests",
+    "cd uis/portal && npx playwright test",
+    "cd uis/portal && npx jest --coverage",
+    "cd uis/backoffice && npx jest --coverage",
+    "cd uis/portal && npm run build",
+    "cd uis/backoffice && npm run build"
+  ],
+  "results": {
+    "api_pytest_postgres": "179 passed",
+    "root_pytest": "64 passed, 1 skipped",
+    "portal_jest": "23 passed",
+    "portal_playwright": "14 passed",
+    "backoffice_jest": "20 passed (17 de la línea base + 3)"
+  },
+  "cache": {
+    "orders_uncached_median_ms": 110.5,
+    "orders_http_miss_ms": 256.82,
+    "orders_http_hit_median_ms": 2.06,
+    "suppliers_uncached_median_ms": 12.89,
+    "suppliers_http_miss_ms": 22.66,
+    "suppliers_http_hit_median_ms": 2.43,
+    "products_not_cached_median_ms": 5.94
+  },
+  "tokens_used": null,
+  "tokens_unmeasurable_reason": "Este runtime no expone un contador de tokens de la sesión.",
+  "tokens_proxy": {
+    "method": "diff de la rama, measurements.json y capturas en docs/caching-optimisation/evidence",
+    "started_at": "2026-11-06T18:29:00Z",
+    "finished_at": "2026-11-06T18:55:00Z"
+  }
+}

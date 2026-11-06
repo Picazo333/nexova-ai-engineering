@@ -1,4 +1,4 @@
-import { ApiError, apiFetch } from "@/lib/http";
+import { ApiError, apiFetch, type CacheMark } from "@/lib/http";
 
 /**
  * Único acceso del backoffice a `/inventory`.
@@ -136,5 +136,14 @@ export function createAssetExit(input: AssetExitInput): Promise<InventoryOrder> 
 }
 
 export function listOrders(office?: string): Promise<InventoryOrder[]> {
-  return apiFetch<unknown>(`/inventory/orders${officeQuery(office)}`).then(asOrders);
+  return listOrdersView(office).then((view) => view.rows);
+}
+
+export function listOrdersView(office?: string): Promise<{ rows: InventoryOrder[]; cache: CacheMark }> {
+  let cache: CacheMark = "";
+  return apiFetch<unknown>(`/inventory/orders${officeQuery(office)}`, {}, {
+    onCache: (mark) => {
+      cache = mark;
+    },
+  }).then((body) => ({ rows: asOrders(body), cache }));
 }

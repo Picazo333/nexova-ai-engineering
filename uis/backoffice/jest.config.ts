@@ -16,6 +16,7 @@ const config: Config = {
     "lib/inventory.ts",
     "lib/labels.ts",
     "lib/catalog.ts",
+    "lib/orders-rollup.ts",
   ],
   coveragePathIgnorePatterns: ["/node_modules/"],
   transform: {

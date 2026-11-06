@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { ExitForm } from "@/components/inventory/ExitForm";
+import { LazyExitForm } from "@/components/inventory/LazyExitForm";
 
 export const metadata: Metadata = {
   title: "Salida de activos · Inventario",
@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ asset?: string }> }) {
   const params = await searchParams;
-  return <ExitForm initialAsset={params.asset ?? ""} />;
+  return <LazyExitForm initialAsset={params.asset ?? ""} />;
 }
