@@ -1,0 +1,18 @@
+2026-11-06 11:31:13 CST
+{
+  "collection": "nexova_knowledge",
+  "chunk_count": 32,
+  "vector_size": 1024,
+  "distance": "cosine",
+  "idempotency": "clear-and-reload with deterministic uuid5 ids",
+  "per_document": {
+    "hiring-process-sla:en": 4,
+    "hiring-process-sla:es": 4,
+    "objection-handling:en": 4,
+    "objection-handling:es": 4,
+    "pricing-model:en": 3,
+    "pricing-model:es": 3,
+    "service-lines:en": 5,
+    "service-lines:es": 5
+  }
+}

@@ -9,6 +9,39 @@ _Estas instrucciones tambien estan disponibles en [espanol](./README.es.md)._
 
 ---
 
+## RAG knowledge base
+
+Sales questions are answered from the official Nexova documents in `docs/company-knowledge-base/`. The pipeline is `setup()` and `embed()` in `data/process/rag.py`, then `retrieve()`, `generate_answer()` and `query()` in `data/pipelines/rag.py`. The existing FastAPI app in `services/api` exposes `POST /knowledge/query`. The page is `uis/knowledge-query/`, served at `/conocimiento`.
+
+The root `pyproject.toml` and `uv.lock` stay because the statement fixes those commands and paths:
+
+- Line 59: install with `uv add` (Qdrant client, an embeddings library, the generation SDK, FastAPI), never `pip install` or `pipenv`.
+- Lines 68–72: chunking in `data/process/rag.py`, retrieval in `data/pipelines/rag.py`, the HTTP endpoint in `services/api/`, the UI in `uis/`, and the unit tests in `tests/pipelines/test_rag.py`.
+- Line 114: `python -m pytest tests/pipelines/test_rag.py`.
+
+That root project is only for `data/` and `tests/`. `services/api` keeps its own `pyproject.toml` and `uv.lock`. FastAPI, uvicorn and the auth libraries live there. The knowledge router is mounted in `services/api/app/main.py`. It does not start a second app.
+
+Qdrant is declared in `docker-compose.yml`. With `QDRANT_URL` empty, the Python client uses its embedded engine and stores data in `data/qdrant/`, which is gitignored and recreated by `setup()`.
+
+```bash
+uv sync --all-groups
+cp .env.example .env
+# Fill EMBEDDING_* and GENERATION_* with two different 4Geeks model IDs when you have them.
+# Without those values the live model calls refuse to run. They do not invent an answer.
+docker compose up -d qdrant   # optional; omit it to use the embedded engine
+uv run python -m data.process.rag
+cd services/api && uv sync
+cd ../..
+export PYTHONPATH=.:packages:services/api
+export JWT_SECRET=local-dev-only
+services/api/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
+uv run python -m pytest tests/pipelines/test_rag.py
+```
+
+The query page is `http://127.0.0.1:8000/conocimiento`. `RAG_EMBED_BACKEND=fastembed` indexes with a local open-source model so retrieval can be exercised. That model is not the 4Geeks embeddings model. `uv run python -m data.eval.recall_at_3` prints `BLOCKED_HITL` for the official criterion unless the remote embeddings settings are present. The design note is [docs/rag/rag-design.md](docs/rag/rag-design.md).
+
+---
+
 ## Purpose
 
 This repository is the **starter template** for transversal projects. You will work on real company scenarios (Brasaland, TrackFlow, Nexova), building deliverables that map to course milestones (Web, Programming, Backend, Telemetry, RAG, Agents, Workflows, Real-time).

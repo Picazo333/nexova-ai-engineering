@@ -1,0 +1,41 @@
+COMMAND: uv run python -m pytest tests -v
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-9.2.0, pluggy-1.7.0 -- /workspace/llm-run/wt-70dd6b4/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/llm-run/wt-70dd6b4
+configfile: pytest.ini (WARNING: ignoring pytest config in pyproject.toml!)
+plugins: anyio-4.16.0
+collecting ... collected 28 items
+
+tests/pipelines/test_rag.py::test_retrieve_excludes_scores_below_min_score_and_can_return_fewer_than_k PASSED [  3%]
+tests/pipelines/test_rag.py::test_literal_term_keeps_a_chunk_the_vector_score_would_drop PASSED [  7%]
+tests/pipelines/test_rag.py::test_off_corpus_words_do_not_promote_a_below_threshold_chunk PASSED [ 10%]
+tests/pipelines/test_rag.py::test_retrieve_stops_at_k_even_when_more_hits_clear_the_threshold PASSED [ 14%]
+tests/pipelines/test_rag.py::test_retrieve_can_return_nothing PASSED     [ 17%]
+tests/pipelines/test_rag.py::test_compound_clauses_split_two_real_clauses_only PASSED [ 21%]
+tests/pipelines/test_rag.py::test_compound_question_retrieves_each_clause_not_only_the_blended_hit PASSED [ 25%]
+tests/pipelines/test_rag.py::test_compound_question_outside_the_corpus_stays_empty PASSED [ 28%]
+tests/pipelines/test_rag.py::test_query_returns_model_output_and_does_not_skip_generation PASSED [ 32%]
+tests/pipelines/test_rag.py::test_empty_retrieve_still_asks_the_model_not_to_invent PASSED [ 35%]
+tests/pipelines/test_rag.py::test_query_without_generation_config_does_not_invent_an_answer PASSED [ 39%]
+tests/pipelines/test_rag.py::test_complete_chat_retries_truncated_gra_and_does_not_return_it PASSED [ 42%]
+tests/pipelines/test_rag.py::test_complete_chat_rejects_finish_reason_length PASSED [ 46%]
+tests/pipelines/test_rag.py::test_complete_chat_does_not_accept_gra_after_the_bounded_retry PASSED [ 50%]
+tests/pipelines/test_rag.py::test_prompt_carries_the_briefing_voice_and_commercial_rules PASSED [ 53%]
+tests/pipelines/test_rag.py::test_complete_chat_requests_a_token_budget_above_the_old_cap PASSED [ 57%]
+tests/process/test_chunking.py::test_each_official_file_yields_at_least_three_chunks_and_keeps_every_line PASSED [ 60%]
+tests/process/test_chunking.py::test_sla_list_stays_with_its_lead_in_and_the_averages_rule_stays_whole PASSED [ 64%]
+tests/process/test_chunking.py::test_an_objection_keeps_its_suggested_response PASSED [ 67%]
+tests/process/test_chunking.py::test_needles_in_test_queries_exist_in_exactly_one_chunk PASSED [ 71%]
+tests/process/test_embed_config.py::test_embed_ignores_fourgeeks_api_token PASSED [ 75%]
+tests/process/test_embed_config.py::test_same_model_id_is_rejected PASSED [ 78%]
+tests/process/test_embed_config.py::test_remote_embed_uses_the_embeddings_model_id PASSED [ 82%]
+tests/process/test_setup.py::test_setup_is_idempotent_and_stores_briefing_payloads PASSED [ 85%]
+tests/test_project_constraints.py::test_env_example_has_two_empty_model_ids PASSED [ 89%]
+tests/test_project_constraints.py::test_python_code_does_not_read_the_forbidden_token_or_frameworks PASSED [ 92%]
+tests/test_project_constraints.py::test_dependencies_are_declared_for_uv PASSED [ 96%]
+tests/test_project_constraints.py::test_compose_file_defines_qdrant PASSED [100%]
+
+============================== 28 passed in 1.03s ==============================
+
+EXIT: 0

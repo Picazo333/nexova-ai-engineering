@@ -1,0 +1,34 @@
+COMMAND: PYTHONPATH=.:packages:services/api JWT_SECRET=<ephemeral> ACCESS_TOKEN_EXPIRE_MINUTES=30 services/api/.venv/bin/uvicorn app.main:app --port 18038
+QUESTION ¿Cuál es la tarifa de Nexova y quién autoriza una rebaja?
+HTTP 502
+{"detail":"The generation model returned an incomplete answer (length). The partial text was not accepted."}
+QUESTION ¿Cuánto cuesta un programa de formación de 8 semanas y qué incluye esa formación?
+HTTP 200
+{"answer":"El programa de formación de 8 semanas tiene un costo desde 6.200 USD para grupos de hasta 15 personas. Incluye diagnóstico inicial, sesiones en vivo y certificado de finalización, y se puede impartir en modalidad presencial, virtual o híbrida. Si tu grupo supera las 15 personas, necesitamos hacer una cotización personalizada, ya que no tenemos una tarifa fija publicada para grupos más grandes.\n\nSources: pricing-model — Formación corporativa\nservice-lines — Formación corporativa en habilidades blandas y liderazgo"}
+QUESTION ¿Cuánto tarda en promedio un perfil ejecutivo y qué debe hacer el consultor si a las 4 semanas no hay un candidato calificado?
+HTTP 200
+{"answer":"Un perfil ejecutivo, es decir C-level o VP, tarda en promedio 8 semanas en entregarse, con una terna de 3 candidatos. Es un plazo promedio, no una garantía, pero es el estándar que manejamos en este tipo de búsquedas.\n\nSi a las 4 semanas de la búsqueda ejecutiva no hay al menos un candidato calificado presentado, el consultor asignado debe escalar el caso a Javier Almeida, Gerente de Operaciones, y notificar proactivamente al cliente con un plan de acción. Es decir, no lo dejamos avanzar en silencio: te informamos y te damos pasos concretos para corregir el rumbo.\n\nSources: hiring-process-sla — Tiempos de entrega comprometidos por tipo de búsqueda\nhiring-process-sla — Si a las 4 semanas de una búsqueda ejecutiva no hay al menos un candidato"}
+QUESTION ¿Quién ganó el mundial de fútbol de 2098?
+HTTP 200
+{"answer":"Lamento informarte que mi base de conocimiento no contiene información sobre el ganador del mundial de fútbol de 2098. No tengo datos al respecto."}
+QUESTION What is the smallest customer support team a client can contract?
+HTTP 200
+{"answer":"The smallest customer support team you can contract with Nexova is **5 agents**. That’s the minimum team size for our customer support outsourcing service. The team works exclusively under your brand, and we handle hiring, training, and management, including quality supervision and monthly SLA reporting.\n\nThe contract itself has a minimum term of 6 months, and the monthly fee per agent ranges from **1,800 to 2,400 USD**, depending on specialization level and support language. Recruitment and turnover costs are already included in that fee.\n\nIf you’re ready to move forward, we can start scoping the team profile and language requirements.\n\nSources: service-lines — Customer support team outsourcing  \nSources: pricing-model — Customer support outsourcing"}
+API LOG
+INFO:     Started server process [483348]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:18038 (Press CTRL+C to quit)
+INFO:     127.0.0.1:38996 - "GET /conocimiento HTTP/1.1" 200 OK
+generation request failed (APITimeoutError) attempt 1
+incomplete generation attempt 2 finish_reason=length chars=0
+knowledge query failed: GenerationCallFailed
+INFO:     127.0.0.1:39002 - "POST /knowledge/query HTTP/1.1" 502 Bad Gateway
+INFO:     127.0.0.1:33132 - "POST /knowledge/query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53458 - "POST /knowledge/query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38890 - "POST /knowledge/query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41898 - "POST /knowledge/query HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [483348]

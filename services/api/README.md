@@ -46,9 +46,11 @@ Pega el valor en `JWT_SECRET` dentro de `services/api/.env`. Ese fichero no se v
 
 ```bash
 cd ../..
-export PYTHONPATH=packages:services/api
+export PYTHONPATH=.:packages:services/api
 services/api/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
+
+El punto inicial del `PYTHONPATH` deja importable `data/`, que es lo que usa `POST /knowledge/query`. La página de esa consulta está en `/conocimiento`. El backoffice de incidencias sigue en `/`. `uv run pytest` añade además `packages/shared` (reglas de incidencias) y la raíz del repo (el paquete `data`). El catálogo HTTP de `app/http_catalog.py` sigue aplicando a auth e incidencias; la consulta comercial arma su propia respuesta y no sustituye esas frases.
 
 El proceso carga `services/api/.env` y no pisa variables que ya estén en el entorno. Abre `http://127.0.0.1:8000`. La guía de Swagger está en `http://127.0.0.1:8000/docs`.
 

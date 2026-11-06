@@ -1,0 +1,29 @@
+{
+  "url": "http://127.0.0.1:8000/conocimiento",
+  "method": "lighthouse simulate, three runs, FASE2 presets",
+  "config_verified": true,
+  "median": {
+    "mobile": {
+      "lcp_ms": 1505.4818,
+      "cls": 0,
+      "tbt_ms": 0
+    },
+    "desktop": {
+      "lcp_ms": 335.25675,
+      "cls": 0,
+      "tbt_ms": 0
+    }
+  },
+  "worst": {
+    "mobile": {
+      "lcp_ms": 1507.6095,
+      "cls": 0,
+      "tbt_ms": 0
+    },
+    "desktop": {
+      "lcp_ms": 335.85040000000004,
+      "cls": 0.01958246496586417,
+      "tbt_ms": 0
+    }
+  }
+}

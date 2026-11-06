@@ -25,3 +25,7 @@ The 012 session form on those pages keeps the JWT in `sessionStorage` for that d
 Next.js app for login, registration, profile, and the protected internal views. It calls the same API with `Authorization: Bearer` and stores the JWT in `localStorage`. See [`portal/README.md`](./portal/README.md).
 
 The public website stays at the repository root. It is not served by the portal and it does not check a token.
+
+## Knowledge query
+
+`uis/knowledge-query/` is the internal page where an SDR types a prospect question. The same FastAPI process serves it at `/conocimiento`. It is not the public website and it does not replace the backoffice home.

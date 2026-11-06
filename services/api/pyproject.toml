@@ -10,6 +10,9 @@ dependencies = [
   "tinydb==4.8.2",
   "python-jose[cryptography]==3.5.0",
   "libpass[bcrypt]==1.9.4",
+  "qdrant-client==1.20.0",
+  "openai==3.46.0",
+  "fastembed==0.9.1",
 ]
 
 [project.scripts]
@@ -39,7 +42,7 @@ dev = [
 ]
 
 [tool.pytest.ini_options]
-pythonpath = [".", "../../packages", "../../packages/shared"]
+pythonpath = [".", "../../packages", "../../packages/shared", "../.."]
 testpaths = ["tests", "../../packages/incident_analysis/tests"]
 
 [tool.coverage.run]

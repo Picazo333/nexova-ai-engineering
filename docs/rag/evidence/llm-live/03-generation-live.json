@@ -1,0 +1,29 @@
+{
+  "hora": "2026-11-06 11:38:56 CST",
+  "modelo_generacion": "online/openrouter/deepseek/deepseek-v4-flash",
+  "modelo_embeddings": "online/openrouter/perplexity/pplx-embed-v1-0.6b",
+  "base_url": "https://llm.4geeks.ai/v1",
+  "resultados": [
+    {
+      "caso": "R22 pregunta del corpus",
+      "pregunta": "What does executive and mid-management headhunting include?",
+      "chunks_sobre_umbral": 4,
+      "fuentes": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "respuesta": "Executive and mid-management headhunting covers the search and selection of managerial and director-level profiles. The process includes direct search, competency-based evaluation, and reference verification. On average, delivery takes 6 to 8 weeks from the initial briefing to the final shortlist.\n\nSources: service-lines — Executive and mid-management headhunting",
+      "latencia_s": 9.78
+    },
+    {
+      "caso": "R20 fuera del corpus",
+      "pregunta": "¿Cuál es la capital de Mongolia y cuántos habitantes tiene?",
+      "chunks_sobre_umbral": 0,
+      "fuentes": [],
+      "respuesta": "Lo siento, pero en este momento mi base de conocimiento no contiene información sobre la capital de Mongolia ni su población. Estoy aquí para ayudarle con temas relacionados con nuestros servicios de búsqueda ejecutiva en Nexova. Si tiene alguna pregunta sobre cómo podemos ayudar a su empresa a encontrar el talento ideal, estaré encantado de resolverla.",
+      "latencia_s": 5.84
+    }
+  ]
+}

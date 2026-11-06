@@ -1,0 +1,101 @@
+project: ai-eng-milestone-rag-knowledge-base
+branch: feature/rag-knowledge-base
+base: feature/error-handling-audit@97e7bb36
+pull_request: https://github.com/Picazo333/nexova-ai-engineering/pull/16
+evidence_head_note: "CURRENT de Recall@3 (27/27) y de las consultas HTTP es la re-corrida de 70dd6b4 en docs/rag/evidence/llm-live-rerun-70dd6b4/. La carpeta llm-live/ queda histórica: el setup de embeddings y los casos que no se repitieron siguen siendo válidos."
+items:
+  - id: EV-live-setup
+    type: runtime_output
+    supports: [R11]
+    freshness: CURRENT
+    captured_at: "2026-11-06T17:31:13Z"
+    source: setup() contra embeddings 4Geeks online/openrouter/perplexity/pplx-embed-v1-0.6b
+    location: docs/rag/evidence/llm-live/01-setup-embed.txt
+    verifier: "32 chunks, vector_size 1024, colección nexova_knowledge. Sin key en el archivo."
+  - id: EV-live-recall
+    type: runtime_output
+    supports: [R35]
+    freshness: HISTORICAL
+    captured_at: "2026-11-06T17:34:12Z"
+    source: python -m data.eval.recall_at_3 con embedder remote
+    location: docs/rag/evidence/llm-live/02-recall-at-3.txt
+    report: docs/rag/evidence/llm-live/02-recall-report.json
+    verifier: "24/24 del set anterior. Sigue válido para esas 24. El cierre de las 27 es EV-live-recall-27."
+  - id: EV-live-generation
+    type: runtime_output
+    supports: [R20, R22]
+    freshness: HISTORICAL
+    captured_at: "2026-11-06T17:38:56Z"
+    source: generate_answer live, modelo online/openrouter/deepseek/deepseek-v4-flash
+    location: docs/rag/evidence/llm-live/03-generation-live.json
+    verifier: "R22 cita Sources service-lines. R20 con 0 chunks dice que no tiene la información y no inventa Mongolia."
+  - id: EV-live-pytest-rag
+    type: test_output
+    supports: [R33]
+    freshness: HISTORICAL
+    captured_at: "2026-11-06T17:31:00Z"
+    source: python -m pytest tests/pipelines/test_rag.py
+    location: docs/rag/evidence/llm-live/04-pytest-rag.txt
+    verifier: "7 passed en eafe56e. Histórico. El conteo de 70dd6b4 es 28 en la raíz y 123 en la API."
+  - id: EV-live-http
+    type: http_transcript
+    supports: [R22]
+    freshness: HISTORICAL
+    captured_at: "2026-11-06T17:42:56Z"
+    source: POST /knowledge/query
+    location: docs/rag/evidence/llm-live/05-api-knowledge-query.txt
+    verifier: "Reintentos HTTP 200 con respuesta completa y Sources. El primer cuerpo {answer: Gra} es el defecto, no el PASS."
+  - id: EV-live-recall-27
+    type: runtime_output
+    supports: [R35, R35b]
+    freshness: CURRENT
+    captured_at: "2026-11-06T18:23:00Z"
+    source: "uv run python -m data.eval.recall_at_3 sobre 70dd6b4, embedder remote"
+    location: docs/rag/evidence/llm-live-rerun-70dd6b4/03-recall-at-3-live.txt
+    report: docs/rag/evidence/llm-live-rerun-70dd6b4/recall-report.json
+    sha256:
+      "03-recall-at-3-live.txt": "6ad5e427ba3b4b061f3b081a8d60c158cbb3617dcce5ce88f7a6dda051691208"
+      "recall-report.json": "fc7c7ac0ec9f8a72df9c51d36e417af1e9aa6f2e1039d0c4c647fe20610710cc"
+    verifier: "27/27, todas por encima de min_score 0.4. PASS de R35b."
+  - id: EV-live-query-70dd6b4
+    type: http_transcript
+    supports: [R37, R20, R22]
+    freshness: CURRENT
+    captured_at: "2026-11-06T18:23:00Z"
+    source: "POST /knowledge/query sobre 70dd6b4, cinco preguntas, HTTP 200 al primer intento"
+    location: docs/rag/evidence/llm-live-rerun-70dd6b4/04-knowledge-query-live.txt
+    sha256: "1e8fd975075810e9ec8d7a2d5993ae8cd4f5faa5d8478a585b72ddc6536146a3"
+    verifier: "Tarifa+rebaja cita 22% y Marcos Ibáñez con pricing-model. Formación, ejecutivo y equipo mínimo correctos. Mundial 2098 abstención y 0 chunks."
+  - id: EV-live-suites-70dd6b4
+    type: test_output
+    supports: [R33]
+    freshness: CURRENT
+    captured_at: "2026-11-06T18:23:00Z"
+    location_root: docs/rag/evidence/llm-live-rerun-70dd6b4/01-root-tests.txt
+    location_api: docs/rag/evidence/llm-live-rerun-70dd6b4/02-api-suite.txt
+    sha256:
+      "01-root-tests.txt": "6c87219b3117ba64a9087888478d42ed572c2e148fe16ec0f2b3dc5b9dc26ed3"
+      "02-api-suite.txt": "fadf54722b29fe542a57013b0307b6d988ed929e6ebd0f1896f83cbd807491e5"
+    verifier: "Raíz 28 passed. API 123 passed."
+  - id: EV-live-secret-scan-70dd6b4
+    type: secret_scan
+    freshness: CURRENT
+    location: docs/rag/evidence/llm-live-rerun-70dd6b4/05-secret-scan.txt
+    sha256: "c8e35abdbcb464f7cc9068531534bfa9a9f0e1c9bbec0d2885f7106d20962785"
+    readme_sha256: "7f53968504e791bbdf9888af6415ad17c938437aea6263f246c541492523c142"
+    verifier: "0 secretos."
+  - id: EV-compound-query-and-expanded-recall
+    type: live_rerun
+    supports: [R35b, R37]
+    freshness: HISTORICAL
+    captured_at: "2026-11-06T18:23:00Z"
+    source: "Re-corrida de 2d04ec7: 26/27 y 502 length. Sustituida por la de 70dd6b4."
+    location: docs/rag/evidence/llm-live/08-recall-at-3-2d04ec7.txt
+    verifier: "Histórica. No es el cierre."
+  - id: EV-lockup
+    type: sha256
+    supports: [S06]
+    freshness: CURRENT
+    location: uis/knowledge-query/brand/signal-horizontal.svg
+    verifier: "85459232bf51e7bf7c94225fd4f2cd6b71a681b6d701cb4ffd6d2a142cf57a81"
+    notes: "Footer claro. signal-reverse.svg del ZIP es 19f897e5427e2187fece9eca51e6f5eeb9f1b82405990bae42ba18057683f38e y no se usa."

@@ -1,0 +1,13 @@
+{
+  "description": "Questions that are outside the commercial corpus. Used only to see whether min_score drops irrelevant context. Not part of Recall@3.",
+  "probes": [
+    {
+      "id": "probe-wifi",
+      "question": "What is the password for the Valencia office wifi?"
+    },
+    {
+      "id": "probe-weather",
+      "question": "Will it rain in Miami tomorrow afternoon?"
+    }
+  ]
+}

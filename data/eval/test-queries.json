@@ -1,0 +1,259 @@
+{
+  "description": "Questions for Recall@3. expected_text_contains is a verbatim span of the gold chunk. Objection questions are copied from the official objection-handling documents.",
+  "recall_k": 3,
+  "minimum_recall": 0.8,
+  "queries": [
+    {
+      "id": "en-service-headhunting",
+      "question": "What does executive and mid-management headhunting include?",
+      "language": "en",
+      "expected_source_document": "service-lines",
+      "expected_text_contains": "competency-based evaluation",
+      "kind": "service"
+    },
+    {
+      "id": "en-service-outsourcing",
+      "question": "What is the smallest customer support team a client can contract?",
+      "language": "en",
+      "expected_source_document": "service-lines",
+      "expected_text_contains": "contractable team size: 5 agents",
+      "kind": "service"
+    },
+    {
+      "id": "en-service-training",
+      "question": "Does a corporate training program include a certificate?",
+      "language": "en",
+      "expected_source_document": "service-lines",
+      "expected_text_contains": "completion certificate",
+      "kind": "service"
+    },
+    {
+      "id": "en-pricing-fee",
+      "question": "How is the executive headhunting fee calculated?",
+      "language": "en",
+      "expected_source_document": "pricing-model",
+      "expected_text_contains": "22% of the hired role's gross annual salary",
+      "kind": "pricing"
+    },
+    {
+      "id": "en-pricing-agent",
+      "question": "What is the monthly fee for one outsourced support agent?",
+      "language": "en",
+      "expected_source_document": "pricing-model",
+      "expected_text_contains": "between 1,800 and 2,400 USD",
+      "kind": "pricing"
+    },
+    {
+      "id": "en-pricing-training",
+      "question": "How much does an 8-week training program cost?",
+      "language": "en",
+      "expected_source_document": "pricing-model",
+      "expected_text_contains": "8-week program: starting at 6,200 USD",
+      "kind": "pricing"
+    },
+    {
+      "id": "en-sla-executive",
+      "question": "How long does an executive search usually take, and how large is the shortlist?",
+      "language": "en",
+      "expected_source_document": "hiring-process-sla",
+      "expected_text_contains": "8 weeks average, shortlist of 3",
+      "kind": "sla"
+    },
+    {
+      "id": "en-sla-escalation",
+      "question": "What should the consultant do if four weeks into an executive search no qualified candidate has been presented?",
+      "language": "en",
+      "expected_source_document": "hiring-process-sla",
+      "expected_text_contains": "escalate the case to Javier Almeida",
+      "kind": "sla"
+    },
+    {
+      "id": "en-sla-geography",
+      "question": "Do you guarantee a delivery time when the search is limited to one specific city?",
+      "language": "en",
+      "expected_source_document": "hiring-process-sla",
+      "expected_text_contains": "restrictive geographic requirements",
+      "kind": "sla"
+    },
+    {
+      "id": "en-objection-price",
+      "question": "22% seems expensive compared to other firms.",
+      "language": "en",
+      "expected_source_document": "objection-handling",
+      "expected_text_contains": "22% seems expensive compared to other firms.",
+      "kind": "objection"
+    },
+    {
+      "id": "en-objection-payment",
+      "question": "Can I pay everything at the end, once the candidate starts working?",
+      "language": "en",
+      "expected_source_document": "objection-handling",
+      "expected_text_contains": "three-installment payment schedule (30/30/40)",
+      "kind": "objection"
+    },
+    {
+      "id": "en-objection-shortlist",
+      "question": "What happens if I'm not satisfied with the shortlist presented?",
+      "language": "en",
+      "expected_source_document": "objection-handling",
+      "expected_text_contains": "one additional round of search at no cost",
+      "kind": "objection"
+    },
+    {
+      "id": "en-objection-competitors",
+      "question": "Do you work with companies in my same sector that are direct competitors?",
+      "language": "en",
+      "expected_source_document": "objection-handling",
+      "expected_text_contains": "conflict of interest",
+      "kind": "objection"
+    },
+    {
+      "id": "es-service-headhunting",
+      "question": "¿Qué incluye el headhunting de mandos medios y directivos?",
+      "language": "es",
+      "expected_source_document": "service-lines",
+      "expected_text_contains": "por competencias, y verificación de referencias",
+      "kind": "service"
+    },
+    {
+      "id": "es-service-outsourcing",
+      "question": "¿Cuál es el tamaño mínimo de un equipo de soporte que puede contratar un cliente?",
+      "language": "es",
+      "expected_source_document": "service-lines",
+      "expected_text_contains": "Tamaño mínimo de equipo contratable: 5 agentes",
+      "kind": "service"
+    },
+    {
+      "id": "es-service-training",
+      "question": "¿La formación corporativa incluye certificado?",
+      "language": "es",
+      "expected_source_document": "service-lines",
+      "expected_text_contains": "certificado de finalización",
+      "kind": "service"
+    },
+    {
+      "id": "es-pricing-fee",
+      "question": "¿Cómo se calcula la tarifa de headhunting ejecutivo?",
+      "language": "es",
+      "expected_source_document": "pricing-model",
+      "expected_text_contains": "22% del salario anual bruto",
+      "kind": "pricing"
+    },
+    {
+      "id": "es-pricing-training",
+      "question": "¿Cuánto cuesta un programa de formación de 8 semanas?",
+      "language": "es",
+      "expected_source_document": "pricing-model",
+      "expected_text_contains": "Programa de 8 semanas: desde 6.200 USD",
+      "kind": "pricing"
+    },
+    {
+      "id": "es-sla-executive",
+      "question": "¿Cuánto tarda en promedio una búsqueda de perfil ejecutivo y de cuántos candidatos es la terna?",
+      "language": "es",
+      "expected_source_document": "hiring-process-sla",
+      "expected_text_contains": "8 semanas promedio, terna de 3 candidatos",
+      "kind": "sla"
+    },
+    {
+      "id": "es-sla-escalation",
+      "question": "Si a las 4 semanas de una búsqueda ejecutiva no hay un candidato calificado, ¿qué debe hacer el consultor?",
+      "language": "es",
+      "expected_source_document": "hiring-process-sla",
+      "expected_text_contains": "escalar el caso a Javier",
+      "kind": "sla"
+    },
+    {
+      "id": "es-objection-price",
+      "question": "22% me parece caro comparado con otras firmas.",
+      "language": "es",
+      "expected_source_document": "objection-handling",
+      "expected_text_contains": "22% me parece caro comparado con otras firmas.",
+      "kind": "objection"
+    },
+    {
+      "id": "es-objection-payment",
+      "question": "¿Puedo pagar todo al final, cuando el candidato empiece a trabajar?",
+      "language": "es",
+      "expected_source_document": "objection-handling",
+      "expected_text_contains": "(30/30/40)",
+      "kind": "objection"
+    },
+    {
+      "id": "es-objection-shortlist",
+      "question": "¿Qué pasa si no estoy conforme con la terna presentada?",
+      "language": "es",
+      "expected_source_document": "objection-handling",
+      "expected_text_contains": "una ronda adicional de búsqueda sin costo",
+      "kind": "objection"
+    },
+    {
+      "id": "es-objection-competitors",
+      "question": "¿Trabajan con empresas de mi mismo sector que sean competencia directa?",
+      "language": "es",
+      "expected_source_document": "objection-handling",
+      "expected_text_contains": "conflicto directo",
+      "kind": "objection"
+    },
+    {
+      "id": "es-compound-fee-and-discount",
+      "question": "¿Cuál es la tarifa de Nexova y quién autoriza una rebaja?",
+      "language": "es",
+      "kind": "compound",
+      "expected_source_document": "pricing-model",
+      "expected_text_contains": "Tarifa estándar: 22% del salario anual bruto",
+      "expected_matches": [
+        {
+          "language": "es",
+          "expected_source_document": "pricing-model",
+          "expected_text_contains": "Tarifa estándar: 22% del salario anual bruto"
+        },
+        {
+          "language": "es",
+          "expected_source_document": "objection-handling",
+          "expected_text_contains": "aprobación de Marcos Ibáñez"
+        }
+      ]
+    },
+    {
+      "id": "es-compound-training-price-and-contents",
+      "question": "¿Cuánto cuesta un programa de formación de 8 semanas y qué incluye esa formación?",
+      "language": "es",
+      "kind": "compound",
+      "expected_source_document": "pricing-model",
+      "expected_text_contains": "Programa de 8 semanas: desde 6.200 USD",
+      "expected_matches": [
+        {
+          "language": "es",
+          "expected_source_document": "pricing-model",
+          "expected_text_contains": "Programa de 8 semanas: desde 6.200 USD"
+        },
+        {
+          "language": "es",
+          "expected_source_document": "service-lines",
+          "expected_text_contains": "certificado de finalización"
+        }
+      ]
+    },
+    {
+      "id": "es-compound-executive-time-and-escalation",
+      "question": "¿Cuánto tarda en promedio un perfil ejecutivo y qué debe hacer el consultor si a las 4 semanas no hay un candidato calificado?",
+      "language": "es",
+      "kind": "compound",
+      "expected_source_document": "hiring-process-sla",
+      "expected_text_contains": "8 semanas promedio, terna de 3 candidatos",
+      "expected_matches": [
+        {
+          "language": "es",
+          "expected_source_document": "hiring-process-sla",
+          "expected_text_contains": "8 semanas promedio, terna de 3 candidatos"
+        },
+        {
+          "language": "es",
+          "expected_source_document": "hiring-process-sla",
+          "expected_text_contains": "escalar el caso a Javier"
+        }
+      ]
+    }
+  ]
+}
