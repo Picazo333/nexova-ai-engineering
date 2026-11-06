@@ -32,10 +32,14 @@ def client(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> TestClient:
     from app.main import create_app
     from database import reset_db
 
+    from incident_store import reset_incidents_db
+
     reset_db()
     reset_auth_db()
+    reset_incidents_db()
     reset_store(tmp_path / "incidents")
     with TestClient(create_app()) as test_client:
         yield test_client
     reset_db()
     reset_auth_db()
+    reset_incidents_db()

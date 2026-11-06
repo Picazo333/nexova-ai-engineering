@@ -493,7 +493,107 @@ tr[data-status="suspended"] th {
   button.button,
   .panel,
   .drop,
-  #error {
+  #error,
+  .branch-field[data-highlight="1"] {
     border: 1px solid ButtonText;
+  }
+}
+
+.summary-grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+#incident-summary table {
+  width: 100%;
+}
+
+#incident-summary th:nth-child(1),
+#incident-summary td:nth-child(1),
+#incident-summary th:nth-child(2),
+#incident-summary td:nth-child(2) {
+  white-space: nowrap;
+}
+
+#incident-summary td:nth-child(3) {
+  white-space: normal;
+}
+
+input,
+select,
+textarea,
+button,
+.button {
+  scroll-margin-top: calc(var(--header) + var(--space-3));
+}
+
+.field-error,
+.form-error,
+#incident-list-error,
+#incident-summary-error {
+  color: var(--color-danger);
+}
+
+.form-error,
+.confirmation,
+#incident-list-error {
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+  margin-block: var(--space-4);
+}
+
+.confirmation {
+  border-color: var(--color-success);
+  color: var(--color-ink);
+}
+
+.field-hint {
+  margin: var(--space-2) 0 0;
+  color: var(--color-ink);
+}
+
+.branch-field[data-highlight="1"] {
+  border: 2px solid var(--color-warning);
+  border-radius: var(--radius-control);
+  padding: var(--space-4);
+  margin-block: var(--space-4);
+  background: var(--color-surface);
+}
+
+.branch-field[data-highlight="1"] #branch-reminder {
+  font-weight: 700;
+  margin-top: 0;
+}
+
+#incident-list[data-state="loading"],
+#incident-summary[data-state="loading"] {
+  min-height: var(--space-16);
+}
+
+#incident-filters .filter-grid {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .summary-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #incident-filters .filter-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  #incident-filters .filter-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-motion="full"] .confirmation[data-just-saved="1"],
+  html[data-motion="full"] tr[data-just-updated="1"] {
+    animation: report-in var(--motion-state) var(--motion-ease);
   }
 }
