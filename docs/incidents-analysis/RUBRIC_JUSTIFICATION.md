@@ -43,7 +43,7 @@ Commit de implementación: `d7952db5a37fffeec3f98dedf9a8ec20da5cb95b`. Pruebas: 
 | S12 | PASS | `GET /no/existe/ruta` → 404 con el texto de ruta no encontrada. `<script>` en la ruta se escapa. | `test_pages_statuses_and_static_lockup`. `ui-404-1280.png`. |
 | S13 | PASS | `meta robots noindex, nofollow`. Sin canonical, sitemap ni schema. SEO de landing pública: NO APLICA, es un backoffice. | `layout.html`. |
 | S14 | PASS | Test `test_front_end_transfer_budgets`. | `test_assets.py`. |
-| S15 | NO EJECUTADO | No se midió LCP ni INP con el perfil de laboratorio pedido. No se afirma un tiempo. | — |
+| S15 | PASS | Lighthouse 13.6.0 en Chrome 156 headless, contra `uvicorn` sin `--reload` en `http://127.0.0.1:8000/`. Throttling `simulate`: RTT 150 ms, 1638.4 kbps, CPU ×4. Móvil 390×844 (3 corridas): mediana LCP 904 ms, peor 941 ms, CLS 0, TBT 0 ms. Escritorio 1350×940 (3 corridas): mediana LCP 904 ms, peor 906 ms, CLS 0, TBT 0 ms. Por debajo de LCP 2,5 s, CLS 0,10 y TBT 200 ms. INP no lo mide Lighthouse en laboratorio; la cifra de bloqueo guardada es TBT. | `docs/incidents-analysis/lighthouse-summary.json`. Informes completos en `/opt/cursor/artifacts/lighthouse/`. |
 | S16 | NO EJECUTADO | Firefox no está instalado en esta máquina. | — |
 | S17 | NO EJECUTADO | Safari no está disponible. | — |
 | S18 | NO EJECUTADO | Hay reglas `forced-colors` en CSS, pero no hay captura de ese modo ni pase de lector de pantalla. axe no sustituye ese pase. | `css/app.css` al final del fichero. |

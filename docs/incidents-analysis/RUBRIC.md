@@ -47,7 +47,7 @@ Implementación: commit `d7952db5a37fffeec3f98dedf9a8ec20da5cb95b`.
 | S12 | sí | Una ruta inexistente responde HTTP 404. |
 | S13 | sí | App interna: `noindex`, sin sitemap ni dominio inventado. |
 | S14 | sí | CSS gzip ≤40 KiB y JS gzip ≤170 KiB, medidos. |
-| S15 | no | Laboratorio LCP/INP (390×844, CPU×4, red 150 ms, 3 corridas). |
+| S15 | sí | Lighthouse en Chrome headless sobre la UI servida en producción: móvil y escritorio, throttling simulado, 3 corridas. Guardar LCP, CLS y TBT. |
 | S16 | no | Firefox. |
 | S17 | no | Safari. |
 | S18 | no | Captura visual de forced-colors y pase manual de lector de pantalla. |

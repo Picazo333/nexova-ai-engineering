@@ -70,6 +70,16 @@ items:
     repo_commit: d7952db5a37fffeec3f98dedf9a8ec20da5cb95b
     freshness: CURRENT
     notes: No certifica WCAG.
+  - id: EV-lighthouse
+    type: external_report
+    source: lighthouse 13.6.0 Chrome 156 headless, throttling-method simulate, 3 runs mobile and 3 desktop
+    captured_at: "2026-11-06T08:38:19Z"
+    supports: [S15]
+    verifier: numericValue of largest-contentful-paint, cumulative-layout-shift, total-blocking-time
+    location: docs/incidents-analysis/lighthouse-summary.json
+    repo_commit: d7952db5a37fffeec3f98dedf9a8ec20da5cb95b
+    freshness: CURRENT
+    notes: Full JSON reports at /opt/cursor/artifacts/lighthouse/. Mobile median LCP 904.2 ms, CLS 0, TBT 0. Desktop median LCP 903.9 ms, CLS 0, TBT 0. Served by uvicorn without --reload. There is no separate frontend bundle.
   - id: EV-csv-hash
     type: asset_integrity
     source: sha256sum del CSV copiado del syllabus

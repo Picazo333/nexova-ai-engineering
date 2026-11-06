@@ -21,7 +21,7 @@ Entorno: Chrome en Linux, Playwright headless para anchos fijos y una ventana de
 | QA-14 | Contraste de tokens usados como texto | pares medidos | PASS | muted sobre blanco 6.61; acción con texto blanco 5.86. El borde `#788598` no se usa como texto | |
 | QA-15 | Lockup | pie 390 y 1280 | PASS | apilado y horizontal visibles, sin recorte | |
 | QA-16 | Consola limpia al abrir `/` | tras favicon | PASS | segunda pasada: sin mensajes de consola | |
-| QA-17 | LCP/INP laboratorio | 3 corridas | NO EJECUTADO | no medido | |
+| QA-17 | Lighthouse LCP, CLS, TBT | `/`, móvil 390×844 y escritorio 1350×940, throttling simulado, 3 corridas cada uno | PASS | `lighthouse-summary.json`. Móvil mediana LCP 904 ms, CLS 0, TBT 0 ms. Escritorio mediana LCP 904 ms, CLS 0, TBT 0 ms | La UI no tiene bundler: el build de producción es el proceso uvicorn sin recarga sirviendo los ficheros del commit |
 | QA-18 | Firefox y Safari | — | NO EJECUTADO | no instalados | |
 | QA-19 | forced-colors y lector de pantalla | — | NO EJECUTADO | hay CSS de forced-colors; no hay captura ni pase manual | |
 | QA-20 | Zoom CSS 200% a 390 | overflow | PASS | `zoom200-390` = 0. No es el zoom del navegador | |

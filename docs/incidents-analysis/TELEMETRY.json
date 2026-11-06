@@ -1,6 +1,6 @@
 {
   "started_at": "2026-11-06T07:54:00+00:00",
-  "ended_at": "2026-11-06T08:36:00+00:00",
+  "ended_at": "2026-11-06T08:40:00+00:00",
   "eval_repair_iterations": 2,
   "failures": [
     {
@@ -20,7 +20,8 @@
     "python -m pytest -q",
     "python3 scripts/analyze.py scripts/incidents-nexova.csv --no-export",
     "PYTHONPATH=packages:services/api uvicorn app.main:app --host 127.0.0.1 --port 8000",
-    "playwright Chrome: anchos 320/390/768/1024/1280/1440, axe, descarga, 404, reduced motion"
+    "playwright Chrome: anchos 320/390/768/1024/1280/1440, axe, descarga, 404, reduced motion",
+    "lighthouse 13.6.0 headless Chrome, throttling simulate RTT 150 ms / 1638.4 kbps / CPU x4, 3 mobile 390x844 and 3 desktop 1350x940 against uvicorn without --reload"
   ],
   "tokens_used": null,
   "tokens_note": "Este entorno no expone un contador de tokens de la sesión.",
