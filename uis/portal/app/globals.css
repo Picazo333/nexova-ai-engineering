@@ -365,13 +365,13 @@ th.num {
 .lockup-stacked {
   display: block;
   width: 280px;
-  height: auto;
+  height: 140px;
 }
 
 .lockup-wide {
   display: none;
   width: 400px;
-  height: auto;
+  height: 64px;
 }
 
 @media (min-width: 640px) {
