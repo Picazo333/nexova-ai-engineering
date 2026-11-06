@@ -14,13 +14,19 @@ Estado: PENDIENTE_REVISION_ORQUESTADOR. No está READY_TO_SUBMIT.
 | D01 | HITL_ENVIO_MIGUEL | Envío al LMS y enlace al instructor. |
 | D02 | HITL_MIGUEL | Merge a `main` cuando el PR esté aprobado. |
 
+## Pull request
+
+https://github.com/Picazo333/nexova-ai-engineering/pull/20
+
+Base: `feature/langgraph-agent-base` (`8858642`). Head de la implementación: `3e9ac08`. El commit `d399854` fija ese SHA en el manifiesto.
+
 ## Checklist de Miguel
 
-1. Revisar el PR de `feature/langgraph-external-tools` contra `feature/langgraph-agent-base`. No está mergeado.
+1. Revisar el PR https://github.com/Picazo333/nexova-ai-engineering/pull/20 contra `feature/langgraph-agent-base`. No está mergeado.
 2. Decidir el merge a `main` (D02).
 3. Enviar al LMS o compartir el enlace (D01).
 4. Cuando existan las keys, volver a correr `test_eval_live_answer_is_grounded_in_the_briefing` y una recuperación con `EMBEDDING_*`. Hasta entonces L01 y L02 siguen en BLOCKED_HITL.
-5. La etiqueta `langgraph-external-tools` del enunciado, si el repositorio no la tiene creada, la pone Miguel.
+5. La etiqueta `langgraph-external-tools` ya está en el PR.
 
 ## Qué no se rompió
 
