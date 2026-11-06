@@ -1,0 +1,43 @@
+{
+  "project": "ai-eng-milestone-rag-knowledge-base",
+  "orden": "038",
+  "commit": "9e9967d354ce148c7c28902fd75f4b64ab46252b",
+  "branch": "feature/rag-knowledge-base",
+  "pull_request": "https://github.com/Picazo333/nexova-ai-engineering/pull/16",
+  "base": "feature/error-handling-audit@97e7bb36",
+  "started_at": "2026-11-06T10:55:00+00:00",
+  "ended_at": "2026-11-06T14:47:00+00:00",
+  "eval_repair_iterations": 4,
+  "failures": [
+    "Agujas de test-queries.json partidas por el wrap del corpus: se acortaron a una línea.",
+    "POST de formulario sin python-multipart: se añadió en services/api.",
+    "El 503 visible estaba en inglés: el detalle HTTP pasó a español.",
+    "Rebase sobre 97e7bb36: pythonpath de pytest une packages/shared y la raíz."
+  ],
+  "verification_commands": [
+    "cd services/api && uv run pytest",
+    "uv run python -m pytest tests/pipelines/test_rag.py",
+    "uv run python -m pytest tests/pipelines tests/process tests/test_project_constraints.py",
+    "cd uis/portal && npm test",
+    "cd uis/portal && npx playwright test"
+  ],
+  "test_result": "Tras el rebase sobre 97e7bb36, la batería integrada (árbol de #18, que incluye 017+038+039) dio pytest de API 131 passed, raíz 31 passed y 1 skipped, Jest 19 passed, Playwright 10 passed. tests/pipelines/test_rag.py: 7 passed.",
+  "tokens_used": null,
+  "tokens_unmeasurable_reason": "Este runtime no expone un contador de tokens. No se inventa la cifra.",
+  "tokens_proxy": {
+    "method": "diff de git de los dos commits de 038 antes del rebase, más la duración de la corrida",
+    "diff_insertions_two_rag_commits": 4724,
+    "files_changed_two_rag_commits": 51,
+    "duration": "2026-11-06T10:55:00Z a 2026-11-06T14:47:00Z, con la reparación de rebase al final"
+  },
+  "rubric": {
+    "pass": 40,
+    "fail": 0,
+    "blocked_hitl": ["R11", "R20", "R22", "R35"],
+    "no_aplica": ["R29"],
+    "s06": "PASS",
+    "s06_lockup_sha256": "85459232bf51e7bf7c94225fd4f2cd6b71a681b6d701cb4ffd6d2a142cf57a81",
+    "line_33_clause": "PENDIENTE_CONFIRMACION_MIGUEL"
+  },
+  "status": "APROBADO_ORQUESTADOR_BLOCKED_HITL"
+}
