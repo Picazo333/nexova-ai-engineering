@@ -10,3 +10,9 @@ Esta carpeta contiene **scripts auxiliares** del monorepo: automatizaciones de d
 | Script | Qué hace |
 | --- | --- |
 | `train_sales_forecast.py` | Entrena y evalúa el pronóstico de ingreso mensual de Nexova. Escribe `output/metrics.md`, `output/metrics.json` y las gráficas. Ejecución: `uv run python scripts/train_sales_forecast.py`. |
+
+## Evaluación del modelo de regresión
+
+| Script | Qué hace |
+| --- | --- |
+| `evaluate_regression_model.py` | Validación cruzada temporal y curva de aprendizaje del pronóstico ya entrenado. No cambia el modelo. Escribe `data/eval/evaluation_report.md`, `data/eval/learning_curve.png` y `data/eval/cv_stability.png`. Ejecución: `uv run python scripts/evaluate_regression_model.py`. |
