@@ -4,7 +4,7 @@ base: feature/langgraph-external-tools
 base_sha: 54b86218ad5bb752cb23463b313f5214a3dbf689
 commit_sha: 0c13f665b3a28e142520c75054a7c5881484d49a
 implementation_commit: 0c13f665b3a28e142520c75054a7c5881484d49a
-pull_request: null
+pull_request: https://github.com/Picazo333/nexova-ai-engineering/pull/21
 status: PENDIENTE_REVISION_ORQUESTADOR
 items:
   - id: pytest-api
