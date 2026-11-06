@@ -5,7 +5,7 @@ Chequeo anti-IA: los README oficiales no prohíben herramientas de IA ni piden r
 | ID | Estado | Cómo se cumple | Evidencia |
 | --- | --- | --- | --- |
 | R01 | PASS | El portal vive en este monorepo, rama `feature/auth-frontend`. No hay otro repositorio. | `uis/portal/`. Rama creada desde `feature/auth-api`. |
-| R02 | PASS | No es una app solo de login. Tras entrar están el análisis de tickets, el directorio y el perfil, llamando a la API de 012. El backoffice vanilla sigue con `sessionStorage` y sus pruebas. | `uis/portal/README.md`. `uis/README.md`. Pytest 45 passed. |
+| R02 | PASS | No es una app solo de login. Tras entrar están el análisis de tickets, el directorio y el perfil, llamando a la API de 012. Nota: el portal (`uis/portal`, puerto 3000) guarda el token en `localStorage`; el backoffice del puerto 8000 sigue con el `sessionStorage` de 012 porque aquel contrato pedía el almacén de la pestaña y cambiarlo rompería esa entrega. Son orígenes distintos. | `uis/portal/README.md`. `uis/README.md`. Pytest 45 passed. |
 | R03 | PASS | `/login` pide correo y contraseña. | `uis/portal/app/login/page.tsx`. `components/LoginScreen.tsx`. |
 | R04 | PASS | El login correcto escribe el token y abre la vista principal `/`. | `LoginScreen.tsx` líneas 41-57 (`writeToken`, `router.push`). Test de registro, que termina en `/`. |
 | R05 | PASS | Un login rechazado muestra el mensaje de la API y no borra los campos. | `LoginScreen.tsx` líneas 58-63. Test «el login fallido conserva la contraseña». Captura `login-error-768.png`. |
@@ -17,7 +17,7 @@ Chequeo anti-IA: los README oficiales no prohíben herramientas de IA ni piden r
 | R11 | PASS | Protegidas: `/`, `/proveedores`, `/account/profile`. Públicas en el portal: `/login`, `/register`. El website de la raíz queda fuera. | Tabla en `uis/portal/README.md`. |
 | R12 | PASS | `SessionGate` lee `localStorage` y, si no hay token, va a `/login`. Si `GET /auth/me` responde 401, limpia y redirige. No existe `middleware.ts`. | `components/SessionGate.tsx` líneas 40-48. `e2e/auth.spec.ts` afirma que no hay middleware. |
 | R13 | PASS | `index.html`, `application.html` y `404.html` no mencionan login ni `localStorage`. Servidos en el puerto 4173 responden 200 y no redirigen. | `e2e/public.spec.ts`. |
-| R14 | PASS | Login y registro llaman a `writeToken`, que usa `localStorage`. | `lib/session.ts` líneas 12-16. |
+| R14 | PASS | El enunciado lo exige. `README.md` de `ai-eng-user-authentication-flows`, línea 34: «The token must be stored in `localStorage` and attached to every protected API call via the `Authorization: Bearer` header.» Línea 80: «On login and registration: store the token in `localStorage`.» Login y registro llaman a `writeToken`. | `lib/session.ts` líneas 12-16. Cita también en `uis/portal/README.md`. |
 | R15 | PASS | `apiFetch` y `apiDownload` leen el token y ponen `Authorization: Bearer` en las llamadas protegidas. Login y registro van con `auth: false` para no tratar un 401 de credenciales como sesión vencida. | `lib/api.ts` líneas 62-68 y 85-87. Test del header en `GET /auth/me` y en el PUT. |
 | R16 | PASS | «Cerrar sesión» borra la clave y abre `/login`. | `components/AppHeader.tsx` líneas 17-19. Test de logout. |
 | R17 | PASS | Un 401 de una llamada autenticada ejecuta `leaveForLogin`: borra el token y abre `/login?reason=expired`. | `lib/api.ts` líneas 23-30 y 85-87. Test del token caducado. |
