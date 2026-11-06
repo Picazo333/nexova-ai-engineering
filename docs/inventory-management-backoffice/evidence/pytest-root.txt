@@ -1,0 +1,7 @@
+Using CPython 3.12.3 interpreter at: /usr/bin/python3
+Creating virtual environment at: .venv
+Downloading playwright (46.2MiB)
+ Downloaded playwright
+Installed 75 packages in 45ms
+...................s.............................................        [100%]
+64 passed, 1 skipped in 3.55s

@@ -1,4 +1,33 @@
-# Backoffice — incidencias y proveedores
+# Backoffice — incidencias, proveedores e inventario
+
+## Inventario de activos
+
+El proceso Next.js de esta carpeta, puerto 3001, incluye la sección de inventario sobre la API de `services/api` (`/inventory`).
+
+Rutas:
+
+- `/backoffice/inventory/products` — activos (`Asset`) y `current_stock` calculado.
+- `/backoffice/inventory/orders/inbound` — entrada de activos (`AssetEntry`).
+- `/backoffice/inventory/orders/outbound` — salida de activos (`AssetExit`), con el stock del activo elegido antes de enviar.
+- `/backoffice/inventory/orders` — historial de solo lectura.
+
+Las llamadas viven en `lib/inventory.ts`. Los componentes no usan `fetch`. La base es `NEXT_PUBLIC_INVENTORY_API_URL` (vacía: `http://127.0.0.1:8000`). El navegador envía `Authorization: Bearer` con el JWT de `POST /auth/login`, guardado en `localStorage` de este origen bajo `nexova-access-token` (la misma clave que el portal; cada origen tiene su propio almacén).
+
+Sin sesión, esas cuatro rutas vuelven a `/login`. Copia `uis/backoffice/.env.example` a `.env.local` si quieres fijar la URL. `.env.local` no se versiona.
+
+```bash
+cd uis/backoffice
+npm install
+npm test
+npm run typecheck
+npm run dev
+```
+
+La API tiene que estar en marcha con `DATABASE_URL` de PostgreSQL. Sin esa variable, `/inventory` responde 503.
+
+Umbral visual, en `lib/stock.ts`: 0 sin stock, menos de 10 bajo, 10 o más saludable.
+
+## Pantallas que sirve la API
 
 La API (`services/api`) sirve las pantallas HTML de esta carpeta (`css/`, `js/`, `partials/`, `tokens/`, `brand/`). No sustituyen al sitio público de la raíz del repositorio.
 

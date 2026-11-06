@@ -1,0 +1,40 @@
+{
+  "failures": [],
+  "axeReports": [
+    {
+      "name": "products-1280",
+      "url": "http://127.0.0.1:3001/backoffice/inventory/products",
+      "violations": []
+    },
+    {
+      "name": "outbound-400-1280",
+      "url": "http://127.0.0.1:3001/backoffice/inventory/orders/outbound?asset=1",
+      "violations": []
+    },
+    {
+      "name": "inbound-confirm",
+      "url": "http://127.0.0.1:3001/backoffice/inventory/orders/inbound",
+      "violations": []
+    },
+    {
+      "name": "orders",
+      "url": "http://127.0.0.1:3001/backoffice/inventory/orders",
+      "violations": []
+    },
+    {
+      "name": "login",
+      "url": "http://127.0.0.1:3001/login?next=%2Fbackoffice%2Finventory%2Fproducts",
+      "violations": []
+    },
+    {
+      "name": "orders-empty",
+      "url": "http://127.0.0.1:3001/backoffice/inventory/orders",
+      "violations": []
+    },
+    {
+      "name": "products-error",
+      "url": "http://127.0.0.1:3001/backoffice/inventory/products",
+      "violations": []
+    }
+  ]
+}
