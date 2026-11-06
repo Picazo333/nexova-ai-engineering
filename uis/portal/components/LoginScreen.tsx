@@ -10,10 +10,19 @@ import { safeNext, viewLabel } from "@/lib/paths";
 import { writeToken } from "@/lib/session";
 import type { TokenResponse } from "@/lib/types";
 
-export function LoginScreen({ nextRaw, reason }: { nextRaw: string | null; reason: string | null }) {
+export function LoginScreen({
+  nextRaw,
+  reason,
+  notice,
+}: {
+  nextRaw: string | null;
+  reason: string | null;
+  notice: string | null;
+}) {
   const router = useRouter();
   const next = safeNext(nextRaw);
   const expired = reason === "expired";
+  const passwordUpdated = notice === "password-updated";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
@@ -92,6 +101,12 @@ export function LoginScreen({ nextRaw, reason }: { nextRaw: string | null; reaso
               </p>
             </div>
           ) : null}
+          {passwordUpdated ? (
+            <div className="banner" role="status">
+              <h2>Contraseña actualizada</h2>
+              <p>Entra con la nueva contraseña.</p>
+            </div>
+          ) : null}
           {formError ? (
             <ErrorBanner
               title="No se pudo entrar"
@@ -131,6 +146,9 @@ export function LoginScreen({ nextRaw, reason }: { nextRaw: string | null; reaso
                 onChange={(event) => setPassword(event.target.value)}
               />
             </div>
+            <p>
+              <a href="/forgot-password">¿Olvidaste tu contraseña?</a>
+            </p>
             <p className="actions">
               <button className="button" type="submit" disabled={pending} aria-busy={pending}>
                 Entrar

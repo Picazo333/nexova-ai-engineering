@@ -22,7 +22,7 @@ The 012 session form on those pages keeps the JWT in `sessionStorage` for that d
 
 ## `portal/`
 
-Next.js app for login, registration, profile, and the protected internal views. It calls the same API with `Authorization: Bearer` and stores the JWT in `localStorage`. See [`portal/README.md`](./portal/README.md).
+Next.js app for login, registration, password reset, profile, and the protected internal views. It calls the same API with `Authorization: Bearer` and stores the JWT in `localStorage`. See [`portal/README.md`](./portal/README.md).
 
 The public website stays at the repository root. It is not served by the portal and it does not check a token.
 

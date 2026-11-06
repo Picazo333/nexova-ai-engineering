@@ -14,10 +14,20 @@ def auth_environment(monkeypatch: pytest.MonkeyPatch, tmp_path: Path):
     monkeypatch.setenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30")
     monkeypatch.setenv("AUTH_BCRYPT_ROUNDS", "4")
     monkeypatch.setenv("AUTH_DATA_DIR", str(tmp_path / "auth"))
+    monkeypatch.setenv("EMAIL_TRANSPORT", "mock")
+    monkeypatch.setenv("PUBLIC_APP_URL", "http://127.0.0.1:3000")
+    monkeypatch.setenv("PASSWORD_RESET_EXPIRE_MINUTES", "30")
+    monkeypatch.setenv("PASSWORD_RESET_MAX_PER_HOUR", "5")
+    monkeypatch.delenv("RESEND_API_KEY", raising=False)
+    monkeypatch.delenv("SENDGRID_API_KEY", raising=False)
+    monkeypatch.delenv("PASSWORD_RESET_CAPTURE_FILE", raising=False)
+    from app.auth.mailer import clear_mock_outbox
     from app.auth.store import reset_auth_db
 
+    clear_mock_outbox()
     reset_auth_db()
     yield
+    clear_mock_outbox()
     reset_auth_db()
 
 

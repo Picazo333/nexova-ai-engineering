@@ -1,34 +1,33 @@
-# Revisión de excelencia — 040
+# Revisión de excelencia — 014
 
-Los extras no cambian el enunciado. Los dos pedidos en el lanzamiento están implementados. Un tercero se rechazó.
+Los extras no sustituyen la rúbrica. El correo real sigue en BLOCKED_HITL.
 
-## Visible — trazas lado a lado
+## Extra visible — IMPLEMENTADO
 
-Decisión: IMPLEMENT.
+Tres estados distintos cuando el enlace no se puede usar:
 
-`/agente` pone la ruta RAG y la ruta de tickets en dos columnas. Cada una muestra la respuesta y la traza (`route`, `sources`, nodos en orden). La pregunta de la tarifa, sin embeddings de 4Geeks, enseña el error real de configuración. La pregunta con un id creado por `POST /api/incidents` enseña el estado `in_progress` leído del gestor. El ticket 482 enseña el fallback, sin un estado inventado.
+- Sin `token`: «Falta el enlace de recuperación» y «Pedir un enlace».
+- Caducado: «El enlace ha caducado» y «Pedir otro enlace».
+- Ya usado: «Este enlace ya se usó» y el mismo camino de vuelta.
 
-Evidencia: `evidence/agente-lado-a-lado-1280.png`, `evidence/agente-lado-a-lado-390.png`, `evidence/agente-ticket-vacio-768.png`, `docs/langgraph/traces-side-by-side.json`.
+El enunciado pide un error claro y un enlace. Separar el motivo es lo que se ve al abrir la página. No cambia el contrato de la API: el `400` y el `code` ya existían.
 
-## Técnico — timeout, fallback y enrutamiento
+Evidencia: `evidence/restore-reset-empty-390.png`, `evidence/restore-reset-expired-768.png`, `evidence/restore-reset-used-1280.png`. El vídeo `evidence/restore-recorrido.webm` pasa por el estado vacío y termina en el aviso de contraseña actualizada.
 
-Decisión: IMPLEMENT.
+## Extra técnico — IMPLEMENTADO
 
-El enunciado ya pide timeout, fallback y dos evals. Lo que queda por encima del mínimo:
+1. **Un solo ganador.** `reset_password` comprueba la fila y escribe el hash dentro de `auth_lock`. `test_concurrent_reset_commits_only_one_password` lanza dos hilos con contraseñas distintas: uno responde bien, el otro recibe `used`, y solo la contraseña ganadora entra.
+2. **Tope por hora.** `PASSWORD_RESET_MAX_PER_HOUR` (defecto 5) cuenta intentos por correo, también si la cuenta no existe, y sigue respondiendo el mismo `200`. Por encima del tope no se crea otro enlace. Test `test_rate_limit_keeps_the_same_body_and_stops_sending`.
+3. **Auditoría mínima del enlace.** La fila guarda `created_at` y `remote_addr` (el par del socket, no una cabecera que el cliente pueda inventar). Esos campos no van en la respuesta HTTP.
 
-- El timeout de producción es 4,0 s y el test de comportamiento corta a los 0,2 s un lector que dormiría 2 s y devolvería `resolved`. La respuesta no contiene ese estado. Tiempo medido por debajo de 1 s.
-- El fallback cubre id ausente, timeout, token ausente y la frase en español.
-- Hay siete evals de ruta en `tests/pipelines/test_agent_routing.py`, no dos: tool, RAG, ausente, timeout, español, mixta y filtro `open` contra el almacén real.
-- El cliente HTTP de prueba solo registra `GET`, con el timeout 4 y el header `Authorization`.
+El HTML del correo (una columna, 16 px, enlace en botón y en texto) cubre la frase del enunciado «legible en móvil». No se cuenta como un tercer extra.
 
-Evidencia: `tests/pipelines/test_agent_routing.py`, `services/api/tests/test_ticket_tool.py`, `evidence/pytest-root.txt`, `evidence/pytest-api.txt`.
+## Rechazado
 
-## Router con modelo
+No se añadió un segundo producto visual (hero, métricas, testimonios). El portal ya es una herramienta interna.
 
-Decisión: REJECT.
+No se invalidan los JWT de sesión al cambiar la contraseña. El enunciado no lo pide y el token de acceso sigue siendo de corta duración. Hacerlo ahora cambiaría el contrato de 012.
 
-Un router que llamara al modelo de 4Geeks no se puede verificar: las keys no están. Marcarlo PASS con un doble contradice la regla de que un mock no cierra la integración real. El router determinista sí se verifica con las evals y no inventa estados.
+## Diferido
 
-## Inventario
-
-No es un extra. Es R09, NO_APLICA, porque el gestor del proyecto 021 no está en el monorepo.
+Medir el tiempo de respuesta de `forgot-password` para cerrar el canal de enumeración cuando Resend responde de verdad. Con el proveedor apagado la respuesta es la misma y no hay ida de red. Cuando haya clave, la llamada solo ocurre si la cuenta está activa: el cuerpo sigue siendo idéntico, el tiempo no. Dejarlo escrito evita fingir que el canal de tiempo está cerrado.
