@@ -1,13 +1,13 @@
 {
-  "note": "Tres corridas completas del grafo compilado. La primera recorre recepción, retrieve y generate_answer con un fragmento real de docs/company-knowledge-base/nexova-objection-handling.en.md. generate_answer aquí es un doble explícito que cita ese documento: GENERATION_MODEL_ID, GENERATION_BASE_URL y GENERATION_API_KEY están vacíos. No es una respuesta del modelo de 4Geeks y no cierra el criterio de anclaje en vivo (BLOCKED_HITL). Las otras dos corridas muestran las aristas condicionales: pregunta vacía, y retrieve sin contexto por encima del umbral.",
-  "live_generation": "BLOCKED_HITL",
+  "note": "La primera corrida es la traza devuelta por POST /agent/query en la máquina donde estaban GENERATION_* y EMBEDDING_* de 4Geeks. Está copiada tal cual desde evidence/llm-live/02-api-agent-query.txt (run_id 6f2faf5b-3ee5-4f61-973b-7027108e1a6e). generation_mode es pipeline. No es un doble. Las otras dos corridas siguen siendo las aristas de pregunta vacía y de retrieve sin contexto; no las produjo el modelo.",
+  "live_generation": "live",
   "runs": [
     {
-      "run_id": "4b4c3259-7d3c-4b6f-a82a-44a0c1319b4d",
-      "thread_id": "b66f94f5-1124-43d2-a101-86c16cbec3a0",
+      "run_id": "6f2faf5b-3ee5-4f61-973b-7027108e1a6e",
+      "thread_id": "25309f06-abf5-4fd8-830f-64ec721e7d13",
       "question": "Can you drop the executive-search fee from 22% to 15%?",
       "status": "answered",
-      "answer": "# Handling Common Prospect Objections\n\n\"22% seems expensive compared to other firms.\"\nSuggested response: explain that the fee includes the 6-month replacement\nguarantee and the reference verification process, which reduces the risk of\na bad hire. A discount below 22% must never be offered without Marcos\nIbáñez's approval.\n\n\"Can I pay everything at the end, once the candidate starts working?\"\nResponse: the three-installment payment schedule (30/30/40) is standard and\nnon-negotiable for new clients. Only clients with more than 2 years of\ncommercial relationship can request an alternative schedule, and it must be\napproved by Finance.\n\n\"What happens if I'm not satisfied with the shortlist presented?\"\nResponse: Nexova offers one additional round of search at no cost if none\nof the candidates in the initial shortlist are acceptable, provided the\nclient has given specific feedback on why they didn't fit.\n\n\"Do you work with companies in my same sector that are direct competitors?\"\nResponse: Nexova does not take on searches for two companies in direct\nconflict of interest in the same selection process simultaneously, but may\nhave worked with competitors in the past. This must be communicated with\ntransparency, never concealed.",
+      "answer": "I understand you're looking for a lower fee. Our standard executive-search fee is 22% of the hired role's gross annual salary, and that includes the 6‑month replacement guarantee and our full reference verification process. A reduction to 15% would require approval from Marcos Ibáñez, so I can't offer that directly. Would you like me to check with him?\n\nSources: pricing-model — Executive headhunting  \nSources: objection-handling — 22% seems expensive compared to other firms.",
       "error": "",
       "nodes": [
         {
@@ -18,32 +18,73 @@
             "context": [],
             "answer": "",
             "error": "",
-            "status": "received"
+            "status": "received",
+            "route": "",
+            "sources": [],
+            "ticket": {
+              "outcome": "not_called",
+              "message": "",
+              "tickets": []
+            }
           }
         },
         {
           "order": 2,
+          "node": "route_sources",
+          "output": {
+            "route": "rag",
+            "sources": [],
+            "ticket": {
+              "outcome": "not_called",
+              "message": "",
+              "tickets": []
+            },
+            "status": "routed",
+            "error": ""
+          }
+        },
+        {
+          "order": 3,
           "node": "retrieve_context",
           "output": {
             "context": [
               {
                 "company": "nexova",
-                "source_document": "objection-handling",
-                "section": "Fee objection",
+                "source_document": "pricing-model",
+                "section": "Executive headhunting",
                 "language": "en",
                 "chunk_index": 0,
-                "text": "# Handling Common Prospect Objections\n\n\"22% seems expensive compared to other firms.\"\nSuggested response: explain that the fee includes the 6-month replacement\nguarantee and the reference verification process, which reduces the risk of\na bad hire. A discount below 22% must never be offered without Marcos\nIbáñez's approval.\n\n\"Can I pay everything at the end, once the candidate starts working?\"\nResponse: the three-installment payment schedule (30/30/40) is standard and\nnon-negotiable for new clients. Only clients with more than 2 years of\ncommercial relationship can request an alternative schedule, and it must be\napproved by Finance.\n\n\"What happens if I'm not satisfied with the shortlist presented?\"\nResponse: Nexova offers one additional round of search at no cost if none\nof the candidates in the initial shortlist are acceptable, provided the\nclient has given specific feedback on why they didn't fit.\n\n\"Do you work with companies in my same sector that are direct competitors?\"\nResponse: Nexova does not take on searches for two companies in direct\nconflict of interest in the same selection process simultaneously, but may\nhave worked with competitors in the past. This must be communicated with\ntransparency, never concealed.\n"
+                "text": "# Pricing Model\n\nExecutive headhunting:\n- Standard fee: 22% of the hired role's gross annual salary.\n- Billed in three installments: 30% when the search begins, 30% when the\n  final shortlist is presented, 40% upon hire.\n- Free replacement guarantee if the candidate leaves the role within 6\n  months for causes attributable to the selection process."
+              },
+              {
+                "company": "nexova",
+                "source_document": "objection-handling",
+                "section": "22% seems expensive compared to other firms.",
+                "language": "en",
+                "chunk_index": 0,
+                "text": "# Handling Common Prospect Objections\n\n\"22% seems expensive compared to other firms.\"\nSuggested response: explain that the fee includes the 6-month replacement\nguarantee and the reference verification process, which reduces the risk of\na bad hire. A discount below 22% must never be offered without Marcos\nIbáñez's approval."
+              },
+              {
+                "company": "nexova",
+                "source_document": "pricing-model",
+                "section": "Headhunting ejecutivo",
+                "language": "es",
+                "chunk_index": 0,
+                "text": "# Modelo de Tarifas\n\nHeadhunting ejecutivo:\n- Tarifa estándar: 22% del salario anual bruto del cargo contratado.\n- Se factura en tres momentos: 30% al iniciar la búsqueda, 30% al presentar\n  la terna final, 40% al momento de la contratación.\n- Garantía de reemplazo gratuito si el candidato deja el cargo antes de 6\n  meses por causas atribuibles al proceso de selección."
               }
+            ],
+            "sources": [
+              "rag"
             ],
             "status": "retrieved",
             "error": ""
           }
         },
         {
-          "order": 3,
+          "order": 4,
           "node": "generate_answer",
           "output": {
-            "answer": "# Handling Common Prospect Objections\n\n\"22% seems expensive compared to other firms.\"\nSuggested response: explain that the fee includes the 6-month replacement\nguarantee and the reference verification process, which reduces the risk of\na bad hire. A discount below 22% must never be offered without Marcos\nIbáñez's approval.\n\n\"Can I pay everything at the end, once the candidate starts working?\"\nResponse: the three-installment payment schedule (30/30/40) is standard and\nnon-negotiable for new clients. Only clients with more than 2 years of\ncommercial relationship can request an alternative schedule, and it must be\napproved by Finance.\n\n\"What happens if I'm not satisfied with the shortlist presented?\"\nResponse: Nexova offers one additional round of search at no cost if none\nof the candidates in the initial shortlist are acceptable, provided the\nclient has given specific feedback on why they didn't fit.\n\n\"Do you work with companies in my same sector that are direct competitors?\"\nResponse: Nexova does not take on searches for two companies in direct\nconflict of interest in the same selection process simultaneously, but may\nhave worked with competitors in the past. This must be communicated with\ntransparency, never concealed.",
+            "answer": "I understand you're looking for a lower fee. Our standard executive-search fee is 22% of the hired role's gross annual salary, and that includes the 6‑month replacement guarantee and our full reference verification process. A reduction to 15% would require approval from Marcos Ibáñez, so I can't offer that directly. Would you like me to check with him?\n\nSources: pricing-model — Executive headhunting  \nSources: objection-handling — 22% seems expensive compared to other firms.",
             "error": "",
             "status": "answered"
           }
@@ -74,7 +115,7 @@
           "step": 1,
           "source": "loop",
           "next": [
-            "retrieve_context"
+            "route_sources"
           ],
           "status": "received",
           "context_count": 0,
@@ -84,29 +125,42 @@
           "step": 2,
           "source": "loop",
           "next": [
-            "generate_answer"
+            "retrieve_context"
           ],
-          "status": "retrieved",
-          "context_count": 1,
+          "status": "routed",
+          "context_count": 0,
           "has_answer": false
         },
         {
           "step": 3,
           "source": "loop",
+          "next": [
+            "generate_answer"
+          ],
+          "status": "retrieved",
+          "context_count": 3,
+          "has_answer": false
+        },
+        {
+          "step": 4,
+          "source": "loop",
           "next": [],
           "status": "answered",
-          "context_count": 1,
+          "context_count": 3,
           "has_answer": true
         }
       ],
-      "checkpoint_count": 5,
-      "generation_mode": "explicit_stand_in",
-      "retrieval_mode": "corpus_fixture",
-      "label": "full_run_with_briefing_context"
+      "checkpoint_count": 6,
+      "generation_mode": "pipeline",
+      "retrieval_mode": "pipeline",
+      "route": "rag",
+      "sources": [
+        "rag"
+      ]
     },
     {
-      "run_id": "32ee5ac5-00e6-4fc9-9963-d7a2d980ed83",
-      "thread_id": "2960e8fe-edd4-4595-bea1-ae76816f085b",
+      "run_id": "fdfc0bc9-b33d-4a43-b661-047c90a396b6",
+      "thread_id": "e193e297-87c2-4cc5-9d48-a6c4c54847ca",
       "question": "   ",
       "status": "empty_question",
       "answer": "",
@@ -176,11 +230,13 @@
       "checkpoint_count": 4,
       "generation_mode": "not_called",
       "retrieval_mode": "not_called",
+      "route": "",
+      "sources": [],
       "label": "empty_question"
     },
     {
-      "run_id": "1f6d4851-c86a-40c9-a29b-10fc5970db2a",
-      "thread_id": "54bf1f2d-76a4-4650-9d2a-13282a39581c",
+      "run_id": "625bdf4d-2384-4ba8-8304-45d7f52896f7",
+      "thread_id": "f7eaaca2-77ea-475e-85e0-b7f48e3365c5",
       "question": "What is the office wifi password?",
       "status": "insufficient_context",
       "answer": "I don't have information about that. The knowledge base returned no context above the threshold, so no answer was invented.",
@@ -194,20 +250,45 @@
             "context": [],
             "answer": "",
             "error": "",
-            "status": "received"
+            "status": "received",
+            "route": "",
+            "sources": [],
+            "ticket": {
+              "outcome": "not_called",
+              "message": "",
+              "tickets": []
+            }
           }
         },
         {
           "order": 2,
-          "node": "retrieve_context",
+          "node": "route_sources",
           "output": {
-            "context": [],
-            "status": "retrieved",
+            "route": "rag",
+            "sources": [],
+            "ticket": {
+              "outcome": "not_called",
+              "message": "",
+              "tickets": []
+            },
+            "status": "routed",
             "error": ""
           }
         },
         {
           "order": 3,
+          "node": "retrieve_context",
+          "output": {
+            "context": [],
+            "sources": [
+              "rag"
+            ],
+            "status": "retrieved",
+            "error": ""
+          }
+        },
+        {
+          "order": 4,
           "node": "insufficient_context",
           "output": {
             "answer": "I don't have information about that. The knowledge base returned no context above the threshold, so no answer was invented.",
@@ -241,7 +322,7 @@
           "step": 1,
           "source": "loop",
           "next": [
-            "retrieve_context"
+            "route_sources"
           ],
           "status": "received",
           "context_count": 0,
@@ -251,6 +332,16 @@
           "step": 2,
           "source": "loop",
           "next": [
+            "retrieve_context"
+          ],
+          "status": "routed",
+          "context_count": 0,
+          "has_answer": false
+        },
+        {
+          "step": 3,
+          "source": "loop",
+          "next": [
             "insufficient_context"
           ],
           "status": "retrieved",
@@ -258,7 +349,7 @@
           "has_answer": false
         },
         {
-          "step": 3,
+          "step": 4,
           "source": "loop",
           "next": [],
           "status": "insufficient_context",
@@ -266,10 +357,15 @@
           "has_answer": true
         }
       ],
-      "checkpoint_count": 5,
+      "checkpoint_count": 6,
       "generation_mode": "not_called",
       "retrieval_mode": "explicit_empty",
+      "route": "rag",
+      "sources": [
+        "rag"
+      ],
       "label": "no_context_above_threshold"
     }
-  ]
+  ],
+  "live_source": "evidence/llm-live/02-api-agent-query.txt"
 }

@@ -35,9 +35,12 @@ def test_endpoint_invokes_the_graph_and_stores_the_trace(client, monkeypatch):
     assert body["answer"] == "The standard fee is 22%."
     assert [item["node"] for item in body["trace"]["nodes"]] == [
         "receive_question",
+        "route_sources",
         "retrieve_context",
         "generate_answer",
     ]
+    assert body["trace"]["sources"] == ["rag"]
+    assert body["trace"]["route"] == "rag"
     assert body["trace"]["checkpoint_count"] >= 3
     stored = client.get(f"/agent/runs/{body['run_id']}")
     assert stored.status_code == 200

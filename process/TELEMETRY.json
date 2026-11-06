@@ -1,0 +1,79 @@
+{
+  "project": "ai-eng-langgraph-agent-tools",
+  "started_at": "2026-11-06T14:49:00+00:00",
+  "finished_at": "2026-11-06T17:58:06+00:00",
+  "repair_040_started_at": "2026-11-06T17:54:00+00:00",
+  "timezone": "UTC",
+  "eval_repair_iterations": 9,
+  "failures": [
+    {
+      "what": "Los evals de la raíz no importaban TinyDB.",
+      "repair": "tinydb==4.8.2 en el grupo dev de la raíz, la misma versión que la API."
+    },
+    {
+      "what": "trace-full-run.json no tenía el nodo route_sources.",
+      "repair": "Se regeneró con export_trace."
+    },
+    {
+      "what": "export_compare no encontraba nexova_incidents.",
+      "repair": "Se añade packages/shared al path antes de create_incident."
+    },
+    {
+      "what": "La aserción HTML buscaba un apóstrofo literal.",
+      "repair": "La comprobación usa el texto escapado information about that."
+    },
+    {
+      "what": "test_internal_error dejaba list_incidents parcheado y la prueba nueva recibía el centinela.",
+      "repair": "El test restaura la función original en finally."
+    },
+    {
+      "what": "Un 503 no devolvía la traza.",
+      "repair": "El cuerpo de error incluye trace, sin answer."
+    },
+    {
+      "what": "El vídeo duraba 1.96 s y luego 4.44 s.",
+      "repair": "La toma final dura 5.80 s."
+    },
+    {
+      "what": "Lighthouse esperaba confirmación interactiva.",
+      "repair": "Se relanzó con CI=1. Seis JSON válidos."
+    },
+    {
+      "what": "L01 y L02 seguían en BLOCKED_HITL y trace-full-run.json decía explicit_stand_in.",
+      "repair": "Miguel autorizó publicar la corrida live. Se copió evidence/llm-live/ tal cual. La traza de POST /agent/query sustituye el doble. L01 y L02 pasan a PASS. D01 y D02 no cambian."
+    }
+  ],
+  "verification_commands": [
+    "uv run python -m pytest tests/pipelines/test_agent_graph.py tests/pipelines/test_agent_routing.py tests/test_project_constraints.py",
+    "cd services/api && uv run pytest",
+    "PYTHONPATH=services/api:. uv run python -m app.agent.export_trace",
+    "PYTHONPATH=services/api:. uv run python -m app.agent.export_compare",
+    "npx lighthouse@12.6.0 http://127.0.0.1:8000/agente con CI=1, tres móvil y tres escritorio",
+    "uv run python -m pytest tests/pipelines/test_agent_graph.py tests/pipelines/test_agent_routing.py tests/test_project_constraints.py",
+    "cd services/api && uv run pytest"
+  ],
+  "tokens_used": null,
+  "tokens_unmeasurable_reason": "Este runtime no expone un contador de tokens de la sesión. No hay cifra que reportar sin inventarla.",
+  "tokens_proxy": {
+    "method": "duración de la sesión y volumen del diff git al cerrar",
+    "started_at": "2026-11-06T14:49:00+00:00",
+    "finished_at": "2026-11-06T17:58:06+00:00",
+    "duration_minutes": 26,
+    "tracked_diff_insertions_before_new_files": 535,
+    "evidence_dir_bytes": 3500000
+  },
+  "api_tests": "138 passed (re-run 2026-11-06T17:58:06Z)",
+  "api_baseline": "131 passed",
+  "root_pipeline_tests": "25 passed, 1 skipped on this VM without keys (re-run 2026-11-06T17:58:06Z)",
+  "live_evidence": {
+    "path": "evidence/llm-live/01-pytest-agent-live.txt",
+    "result": "22 passed, 0 skipped",
+    "api": "evidence/llm-live/02-api-agent-query.txt HTTP 200",
+    "status": "CURRENT"
+  },
+  "implementation_commit": "3e9ac08223be58d7e8302b33750ff4168a887786",
+  "pass_count": "24/27",
+  "pass_ids": "R01-R08, R10-R14, L01, L02, D03, U01-U08",
+  "rubric_rows": 27,
+  "pending": ["R09 NO_APLICA", "D01 HITL_ENVIO_MIGUEL", "D02 HITL_MIGUEL"]
+}

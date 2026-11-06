@@ -33,6 +33,14 @@ async def _read_question(request: Request) -> tuple[str | None, str]:
     return question, ""
 
 
+def _bearer(request: Request) -> str | None:
+    header = request.headers.get("authorization", "")
+    if not header.lower().startswith("bearer "):
+        return None
+    token = header[7:].strip()
+    return token or None
+
+
 @router.post("/agent/query")
 async def agent_query(request: Request):
     from app.agent.errors import GraphStructureError
@@ -42,7 +50,7 @@ async def agent_query(request: Request):
     if transport_error:
         return JSONResponse({"detail": transport_error}, status_code=422)
     try:
-        result = run_agent(question or "")
+        result = run_agent(question or "", access_token=_bearer(request))
     except GraphStructureError as exc:
         logger.error("agent graph rejected at compile: %s", type(exc).__name__)
         return JSONResponse({"detail": str(exc)}, status_code=500)
@@ -54,7 +62,11 @@ async def agent_query(request: Request):
         )
     if result.http_status != 200:
         return JSONResponse(
-            {"detail": result.error or "El agente no pudo completar la respuesta.", "run_id": result.run_id},
+            {
+                "detail": result.error or "El agente no pudo completar la respuesta.",
+                "run_id": result.run_id,
+                "trace": result.trace,
+            },
             status_code=result.http_status,
         )
     return {"answer": result.answer, "run_id": result.run_id, "trace": result.trace}

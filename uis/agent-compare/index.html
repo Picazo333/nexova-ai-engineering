@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Rutas del agente de soporte · Nexova</title>
+  <meta name="description" content="Compara una corrida del agente por la base de conocimiento con una corrida por el gestor de incidentes. El agente elige la ruta.">
+  <link rel="stylesheet" href="/tokens/tokens.css">
+  <link rel="stylesheet" href="/tokens/motion.css">
+  <link rel="stylesheet" href="/agente/styles.css">
+</head>
+<body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <header>
+    <p class="brand">Nexova · Agente de soporte</p>
+  </header>
+  <main id="contenido" class="wrap">
+    <h1>Rutas del agente</h1>
+    <p class="lead">La columna izquierda lanza una pregunta a la base de conocimiento. La columna derecha lanza una pregunta al gestor de incidentes. En las dos, el agente decide la ruta por el texto: no hay que pedir RAG ni tool.</p>
+    <section class="panel" aria-labelledby="sesion-titulo">
+      <h2 id="sesion-titulo">Sesión para consultar tickets</h2>
+      <p id="session-status" role="status">No hay una sesión en esta pestaña. La tool de tickets usa el mismo token que el gestor de incidentes.</p>
+      <p id="session-error" role="alert" tabindex="-1" hidden></p>
+      <form id="session-form">
+        <div class="fields">
+          <div>
+            <label for="session-email">Correo</label>
+            <input id="session-email" name="email" type="email" autocomplete="username" required maxlength="200">
+          </div>
+          <div>
+            <label for="session-password">Contraseña</label>
+            <input id="session-password" name="password" type="password" autocomplete="current-password" required minlength="8">
+          </div>
+        </div>
+        <div class="actions">
+          <button class="primary" id="session-submit" type="submit">Entrar</button>
+          <button id="session-logout" type="button" hidden>Cerrar sesión</button>
+          <a class="text-action" href="/">Crear cuenta</a>
+        </div>
+      </form>
+    </section>
+    <div class="compare">
+      <section class="panel" aria-labelledby="rag-titulo">
+        <h2 id="rag-titulo">Ruta RAG</h2>
+        <p>Políticas, tarifas y SLA. El ejemplo no crea datos.</p>
+        <form id="rag-form" method="post" action="/agente">
+          <input type="hidden" name="lane" value="rag">
+          <label for="rag-question">Pregunta</label>
+          <textarea id="rag-question" name="question" required maxlength="2000" rows="5">__RAG_QUESTION__</textarea>
+          <div class="actions">
+            <button class="primary" id="rag-submit" type="submit">Consultar la base</button>
+            <button type="button" id="rag-example" data-target="rag-question" data-question="¿Se puede bajar la tarifa de selección ejecutiva del 22% al 15%?">Usar la pregunta de la tarifa</button>
+          </div>
+        </form>
+        <div id="rag-result" data-state="__RAG_STATE__" aria-live="polite" aria-busy="false">
+          <h3>Resultado</h3>
+          <div id="rag-body">__RAG_BODY__</div>
+        </div>
+        <div id="rag-trace" class="trace">
+          <h3>Traza</h3>
+          __RAG_TRACE__
+        </div>
+      </section>
+      <section class="panel" aria-labelledby="tool-titulo">
+        <h2 id="tool-titulo">Ruta tool de tickets</h2>
+        <p>Estado real de una incidencia ya registrada. Esta pantalla no crea, no cambia y no borra tickets. <a href="/incidencias/nueva">Registrar una incidencia</a> en el gestor si todavía no hay ninguna.</p>
+        <form id="tool-form" method="post" action="/agente">
+          <input type="hidden" name="lane" value="tool">
+          <label for="tool-question">Pregunta</label>
+          <textarea id="tool-question" name="question" required maxlength="2000" rows="5">__TOOL_QUESTION__</textarea>
+          <div class="actions">
+            <button class="primary" id="tool-submit" type="submit">Consultar el ticket</button>
+            <button type="button" id="tool-example" data-target="tool-question" data-question="¿En qué estado está el ticket 482?">Usar la pregunta del ticket 482</button>
+          </div>
+        </form>
+        <div id="tool-result" data-state="__TOOL_STATE__" aria-live="polite" aria-busy="false">
+          <h3>Resultado</h3>
+          <div id="tool-body">__TOOL_BODY__</div>
+        </div>
+        <div id="tool-trace" class="trace">
+          <h3>Traza</h3>
+          __TOOL_TRACE__
+        </div>
+      </section>
+    </div>
+    <noscript>
+      <p>Sin JavaScript las dos columnas se envían igual, una cada vez, y la página vuelve con la traza. La sesión de esta pantalla no se guarda: para un ticket real entra antes en el gestor y usa la API con el token, o acepta la respuesta de que no se pudo confirmar el estado.</p>
+    </noscript>
+  </main>
+  <footer>
+    <p>Nexova. Herramienta interna para ver la ruta del agente de soporte.</p>
+    <img class="lockup lockup-horizontal" src="/brand/lockups/signal-horizontal.svg" width="1000" height="160" alt="4Geeks por Divinivid">
+    <img class="lockup lockup-stacked" src="/brand/lockups/signal-stacked.svg" width="600" height="300" alt="4Geeks por Divinivid">
+  </footer>
+  <script src="/agente/app.js" defer></script>
+</body>
+</html>

@@ -40,6 +40,7 @@ from app.routers.users import router as users_router
 from routes.suppliers import router as suppliers_router
 
 KNOWLEDGE_UI = Path(__file__).resolve().parents[3] / "uis" / "knowledge-query"
+AGENT_UI = Path(__file__).resolve().parents[3] / "uis" / "agent-compare"
 
 logger = logging.getLogger("nexova.api")
 
@@ -124,6 +125,34 @@ def create_app() -> FastAPI:
     @app.get("/conocimiento", include_in_schema=False)
     def knowledge_page() -> FileResponse:
         return FileResponse(KNOWLEDGE_UI / "index.html")
+
+    @app.get("/agente", include_in_schema=False)
+    def agent_compare_page() -> HTMLResponse:
+        from app.agent.compare_page import render_compare_page
+
+        return HTMLResponse(render_compare_page(), headers={"Cache-Control": "no-store"})
+
+    @app.post("/agente", include_in_schema=False)
+    async def agent_compare_submit(request: Request) -> HTMLResponse:
+        from app.agent.compare_page import render_submitted_page
+
+        form = await request.form()
+        lane = str(form.get("lane") or "")
+        question = str(form.get("question") or "")
+        header = request.headers.get("authorization", "")
+        token = header[7:].strip() if header.lower().startswith("bearer ") else None
+        return HTMLResponse(
+            render_submitted_page(lane=lane, question=question, access_token=token),
+            headers={"Cache-Control": "no-store"},
+        )
+
+    @app.get("/agente/styles.css", include_in_schema=False)
+    def agent_compare_css() -> FileResponse:
+        return FileResponse(AGENT_UI / "styles.css", media_type="text/css")
+
+    @app.get("/agente/app.js", include_in_schema=False)
+    def agent_compare_js() -> FileResponse:
+        return FileResponse(AGENT_UI / "app.js", media_type="text/javascript")
 
     @app.get("/privacidad", response_class=HTMLResponse)
     def privacy() -> HTMLResponse:

@@ -1,0 +1,459 @@
+{
+  "note": "La columna RAG es la traza live copiada tal cual de evidence/llm-live/02-api-agent-query.txt. El modelo de 4Geeks respondió la pregunta de la tarifa del 22% y citó a Marcos Ibáñez. La columna tool y la corrida de reserva siguen saliendo del gestor de incidentes en proceso: no las produjo ese modelo.",
+  "live_generation": "live",
+  "ticket_transport": "in_process",
+  "columns": [
+    {
+      "label": "rag",
+      "trace": {
+        "run_id": "6f2faf5b-3ee5-4f61-973b-7027108e1a6e",
+        "thread_id": "25309f06-abf5-4fd8-830f-64ec721e7d13",
+        "question": "Can you drop the executive-search fee from 22% to 15%?",
+        "status": "answered",
+        "answer": "I understand you're looking for a lower fee. Our standard executive-search fee is 22% of the hired role's gross annual salary, and that includes the 6‑month replacement guarantee and our full reference verification process. A reduction to 15% would require approval from Marcos Ibáñez, so I can't offer that directly. Would you like me to check with him?\n\nSources: pricing-model — Executive headhunting  \nSources: objection-handling — 22% seems expensive compared to other firms.",
+        "error": "",
+        "nodes": [
+          {
+            "order": 1,
+            "node": "receive_question",
+            "output": {
+              "question": "Can you drop the executive-search fee from 22% to 15%?",
+              "context": [],
+              "answer": "",
+              "error": "",
+              "status": "received",
+              "route": "",
+              "sources": [],
+              "ticket": {
+                "outcome": "not_called",
+                "message": "",
+                "tickets": []
+              }
+            }
+          },
+          {
+            "order": 2,
+            "node": "route_sources",
+            "output": {
+              "route": "rag",
+              "sources": [],
+              "ticket": {
+                "outcome": "not_called",
+                "message": "",
+                "tickets": []
+              },
+              "status": "routed",
+              "error": ""
+            }
+          },
+          {
+            "order": 3,
+            "node": "retrieve_context",
+            "output": {
+              "context": [
+                {
+                  "company": "nexova",
+                  "source_document": "pricing-model",
+                  "section": "Executive headhunting",
+                  "language": "en",
+                  "chunk_index": 0,
+                  "text": "# Pricing Model\n\nExecutive headhunting:\n- Standard fee: 22% of the hired role's gross annual salary.\n- Billed in three installments: 30% when the search begins, 30% when the\n  final shortlist is presented, 40% upon hire.\n- Free replacement guarantee if the candidate leaves the role within 6\n  months for causes attributable to the selection process."
+                },
+                {
+                  "company": "nexova",
+                  "source_document": "objection-handling",
+                  "section": "22% seems expensive compared to other firms.",
+                  "language": "en",
+                  "chunk_index": 0,
+                  "text": "# Handling Common Prospect Objections\n\n\"22% seems expensive compared to other firms.\"\nSuggested response: explain that the fee includes the 6-month replacement\nguarantee and the reference verification process, which reduces the risk of\na bad hire. A discount below 22% must never be offered without Marcos\nIbáñez's approval."
+                },
+                {
+                  "company": "nexova",
+                  "source_document": "pricing-model",
+                  "section": "Headhunting ejecutivo",
+                  "language": "es",
+                  "chunk_index": 0,
+                  "text": "# Modelo de Tarifas\n\nHeadhunting ejecutivo:\n- Tarifa estándar: 22% del salario anual bruto del cargo contratado.\n- Se factura en tres momentos: 30% al iniciar la búsqueda, 30% al presentar\n  la terna final, 40% al momento de la contratación.\n- Garantía de reemplazo gratuito si el candidato deja el cargo antes de 6\n  meses por causas atribuibles al proceso de selección."
+                }
+              ],
+              "sources": [
+                "rag"
+              ],
+              "status": "retrieved",
+              "error": ""
+            }
+          },
+          {
+            "order": 4,
+            "node": "generate_answer",
+            "output": {
+              "answer": "I understand you're looking for a lower fee. Our standard executive-search fee is 22% of the hired role's gross annual salary, and that includes the 6‑month replacement guarantee and our full reference verification process. A reduction to 15% would require approval from Marcos Ibáñez, so I can't offer that directly. Would you like me to check with him?\n\nSources: pricing-model — Executive headhunting  \nSources: objection-handling — 22% seems expensive compared to other firms.",
+              "error": "",
+              "status": "answered"
+            }
+          }
+        ],
+        "checkpoints": [
+          {
+            "step": -1,
+            "source": "input",
+            "next": [
+              "__start__"
+            ],
+            "status": "",
+            "context_count": 0,
+            "has_answer": false
+          },
+          {
+            "step": 0,
+            "source": "loop",
+            "next": [
+              "receive_question"
+            ],
+            "status": "",
+            "context_count": 0,
+            "has_answer": false
+          },
+          {
+            "step": 1,
+            "source": "loop",
+            "next": [
+              "route_sources"
+            ],
+            "status": "received",
+            "context_count": 0,
+            "has_answer": false
+          },
+          {
+            "step": 2,
+            "source": "loop",
+            "next": [
+              "retrieve_context"
+            ],
+            "status": "routed",
+            "context_count": 0,
+            "has_answer": false
+          },
+          {
+            "step": 3,
+            "source": "loop",
+            "next": [
+              "generate_answer"
+            ],
+            "status": "retrieved",
+            "context_count": 3,
+            "has_answer": false
+          },
+          {
+            "step": 4,
+            "source": "loop",
+            "next": [],
+            "status": "answered",
+            "context_count": 3,
+            "has_answer": true
+          }
+        ],
+        "checkpoint_count": 6,
+        "generation_mode": "pipeline",
+        "retrieval_mode": "pipeline",
+        "route": "rag",
+        "sources": [
+          "rag"
+        ]
+      }
+    },
+    {
+      "label": "ticket_tool",
+      "trace": {
+        "run_id": "71e2c903-b7fd-402d-9eb7-ba2bdea499ad",
+        "thread_id": "a6388c39-ea62-4afa-8895-4b5128d7a707",
+        "question": "What is the status of ticket ceb0940f-17e3-45be-bdbd-34ef523476d4?",
+        "status": "answered",
+        "answer": "Ticket ceb0940f-17e3-45be-bdbd-34ef523476d4 is in_progress (Asignada a un equipo o persona, en gestión activa). Category: technical_failure (Fallo de sistema o herramienta tecnológica (ATS, HubSpot, Zendesk, infraestructura)). Origin: customer (Reportada por un cliente corporativo). Branch: central (Central — Sede Valencia). Opened 2026-11-06T15:04:28Z. Updated 2026-11-06T15:04:28Z. Title: La caja no emite el contrato.",
+        "error": "",
+        "nodes": [
+          {
+            "order": 1,
+            "node": "receive_question",
+            "output": {
+              "question": "What is the status of ticket ceb0940f-17e3-45be-bdbd-34ef523476d4?",
+              "context": [],
+              "answer": "",
+              "error": "",
+              "status": "received",
+              "route": "",
+              "sources": [],
+              "ticket": {
+                "outcome": "not_called",
+                "message": "",
+                "tickets": []
+              }
+            }
+          },
+          {
+            "order": 2,
+            "node": "route_sources",
+            "output": {
+              "route": "ticket",
+              "sources": [],
+              "ticket": {
+                "outcome": "not_called",
+                "message": "",
+                "tickets": []
+              },
+              "status": "routed",
+              "error": ""
+            }
+          },
+          {
+            "order": 3,
+            "node": "lookup_ticket",
+            "output": {
+              "ticket": {
+                "outcome": "found",
+                "message": "",
+                "tickets": [
+                  {
+                    "id": "ceb0940f-17e3-45be-bdbd-34ef523476d4",
+                    "title": "La caja no emite el contrato",
+                    "description": "El cliente no puede descargar el contrato firmado desde el portal.",
+                    "category": "technical_failure",
+                    "status": "in_progress",
+                    "origin": "customer",
+                    "branch": "central",
+                    "created_at": "2026-11-06T15:04:28Z",
+                    "updated_at": "2026-11-06T15:04:28Z"
+                  }
+                ]
+              },
+              "sources": [
+                "ticket_tool"
+              ],
+              "status": "ticket_checked",
+              "error": ""
+            }
+          },
+          {
+            "order": 4,
+            "node": "report_ticket",
+            "output": {
+              "answer": "Ticket ceb0940f-17e3-45be-bdbd-34ef523476d4 is in_progress (Asignada a un equipo o persona, en gestión activa). Category: technical_failure (Fallo de sistema o herramienta tecnológica (ATS, HubSpot, Zendesk, infraestructura)). Origin: customer (Reportada por un cliente corporativo). Branch: central (Central — Sede Valencia). Opened 2026-11-06T15:04:28Z. Updated 2026-11-06T15:04:28Z. Title: La caja no emite el contrato.",
+              "error": "",
+              "status": "answered"
+            }
+          }
+        ],
+        "checkpoints": [
+          {
+            "step": -1,
+            "source": "input",
+            "next": [
+              "__start__"
+            ],
+            "status": "",
+            "context_count": 0,
+            "has_answer": false
+          },
+          {
+            "step": 0,
+            "source": "loop",
+            "next": [
+              "receive_question"
+            ],
+            "status": "",
+            "context_count": 0,
+            "has_answer": false
+          },
+          {
+            "step": 1,
+            "source": "loop",
+            "next": [
+              "route_sources"
+            ],
+            "status": "received",
+            "context_count": 0,
+            "has_answer": false
+          },
+          {
+            "step": 2,
+            "source": "loop",
+            "next": [
+              "lookup_ticket"
+            ],
+            "status": "routed",
+            "context_count": 0,
+            "has_answer": false
+          },
+          {
+            "step": 3,
+            "source": "loop",
+            "next": [
+              "report_ticket"
+            ],
+            "status": "ticket_checked",
+            "context_count": 0,
+            "has_answer": false
+          },
+          {
+            "step": 4,
+            "source": "loop",
+            "next": [],
+            "status": "answered",
+            "context_count": 0,
+            "has_answer": true
+          }
+        ],
+        "checkpoint_count": 6,
+        "generation_mode": "not_called",
+        "retrieval_mode": "not_called",
+        "route": "ticket",
+        "sources": [
+          "ticket_tool"
+        ],
+        "label": "ticket_tool",
+        "ticket_transport": "in_process"
+      }
+    }
+  ],
+  "fallback": {
+    "label": "ticket_missing",
+    "trace": {
+      "run_id": "fc59f40f-5e17-482c-9564-935dd288c43d",
+      "thread_id": "c79d3b15-2357-4b48-8f0c-dff9ad3f0511",
+      "question": "What's the status of ticket 482?",
+      "status": "ticket_unavailable",
+      "answer": "I couldn't confirm that ticket's status right now. That id is not in the incident manager.",
+      "error": "",
+      "nodes": [
+        {
+          "order": 1,
+          "node": "receive_question",
+          "output": {
+            "question": "What's the status of ticket 482?",
+            "context": [],
+            "answer": "",
+            "error": "",
+            "status": "received",
+            "route": "",
+            "sources": [],
+            "ticket": {
+              "outcome": "not_called",
+              "message": "",
+              "tickets": []
+            }
+          }
+        },
+        {
+          "order": 2,
+          "node": "route_sources",
+          "output": {
+            "route": "ticket",
+            "sources": [],
+            "ticket": {
+              "outcome": "not_called",
+              "message": "",
+              "tickets": []
+            },
+            "status": "routed",
+            "error": ""
+          }
+        },
+        {
+          "order": 3,
+          "node": "lookup_ticket",
+          "output": {
+            "ticket": {
+              "outcome": "not_found",
+              "message": "not_found",
+              "tickets": []
+            },
+            "sources": [
+              "ticket_tool"
+            ],
+            "status": "ticket_checked",
+            "error": ""
+          }
+        },
+        {
+          "order": 4,
+          "node": "report_ticket",
+          "output": {
+            "answer": "I couldn't confirm that ticket's status right now. That id is not in the incident manager.",
+            "error": "",
+            "status": "ticket_unavailable"
+          }
+        }
+      ],
+      "checkpoints": [
+        {
+          "step": -1,
+          "source": "input",
+          "next": [
+            "__start__"
+          ],
+          "status": "",
+          "context_count": 0,
+          "has_answer": false
+        },
+        {
+          "step": 0,
+          "source": "loop",
+          "next": [
+            "receive_question"
+          ],
+          "status": "",
+          "context_count": 0,
+          "has_answer": false
+        },
+        {
+          "step": 1,
+          "source": "loop",
+          "next": [
+            "route_sources"
+          ],
+          "status": "received",
+          "context_count": 0,
+          "has_answer": false
+        },
+        {
+          "step": 2,
+          "source": "loop",
+          "next": [
+            "lookup_ticket"
+          ],
+          "status": "routed",
+          "context_count": 0,
+          "has_answer": false
+        },
+        {
+          "step": 3,
+          "source": "loop",
+          "next": [
+            "report_ticket"
+          ],
+          "status": "ticket_checked",
+          "context_count": 0,
+          "has_answer": false
+        },
+        {
+          "step": 4,
+          "source": "loop",
+          "next": [],
+          "status": "ticket_unavailable",
+          "context_count": 0,
+          "has_answer": true
+        }
+      ],
+      "checkpoint_count": 6,
+      "generation_mode": "not_called",
+      "retrieval_mode": "not_called",
+      "route": "ticket",
+      "sources": [
+        "ticket_tool"
+      ],
+      "label": "ticket_missing",
+      "ticket_transport": "in_process"
+    }
+  },
+  "live_source": "evidence/llm-live/02-api-agent-query.txt"
+}
