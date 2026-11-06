@@ -1,0 +1,17 @@
+<h1>Privacidad de los datos de incidencias</h1>
+<p class="lead">Esta nota describe lo que hace esta herramienta con el CSV. Es una nota operativa del proyecto académico, no una política legal revisada.</p>
+<h2>Qué fichero entra</h2>
+<p>El export del helpdesk trae identificador de ticket, fecha, empresa cliente, categoría, descripción, agente, estado, correo del cliente final y, si el ticket está cerrado, la puntuación de satisfacción. El correo es un dato sensible: por eso el fichero no se manda a un servicio de IA.</p>
+<h2>Qué calcula la API</h2>
+<p>Valida cada fila con las reglas de Nexova, cuenta válidos e inválidos, reparte por categoría y estado, y calcula la media de satisfacción de los tickets CLOSED que sí tienen puntuación. El mismo cálculo es el del script <span class="code">analyze.py</span>.</p>
+<h2>Qué no se muestra ni se exporta</h2>
+<ul>
+  <li>Ningún correo, ni en pantalla, ni en el CSV de resultados, ni en los mensajes de error.</li>
+  <li>La descripción libre del ticket.</li>
+  <li>El fichero original. No se guarda en disco.</li>
+</ul>
+<h2>Qué sí se guarda</h2>
+<p>El último resumen agregado, en el disco local del proceso de la API (<span class="code">services/api/.data</span>). Sirve para que el botón de descarga siga disponible al refrescar la página. Si ese resumen llegara a contener el carácter de un correo, no se almacena.</p>
+<h2>Terceros</h2>
+<p>No hay analítica, cookies de seguimiento ni llamadas a servicios externos. El navegador solo habla con esta API.</p>
+<p><a href="/">Volver al análisis de incidencias</a></p>
