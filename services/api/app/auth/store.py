@@ -59,3 +59,13 @@ def users_table() -> Table:
 
 def profiles_table() -> Table:
     return get_auth_db().table("profiles")
+
+
+def reset_tokens_table() -> Table:
+    """Hashed single-use password reset tokens. The raw token is not stored."""
+    return get_auth_db().table("password_reset_tokens")
+
+
+def reset_attempts_table() -> Table:
+    """Forgot-password attempts, used to cap requests per email per hour."""
+    return get_auth_db().table("password_reset_attempts")

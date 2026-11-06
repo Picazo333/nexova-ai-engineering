@@ -3,6 +3,8 @@ import { safeNext, viewLabel } from "../lib/paths";
 test("safeNext conserva una ruta interna permitida", () => {
   expect(safeNext("/proveedores?country=Spain")).toBe("/proveedores?country=Spain");
   expect(safeNext("/account/profile")).toBe("/account/profile");
+  expect(safeNext("/account/change-password")).toBe("/account/change-password");
+  expect(viewLabel("/account/change-password")).toBe("el cambio de contraseña");
   expect(viewLabel("/proveedores?country=Spain")).toBe("el directorio de proveedores");
   expect(viewLabel("/account/profile")).toBe("tu perfil");
 });

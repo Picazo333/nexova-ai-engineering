@@ -120,6 +120,9 @@ No hay cookie ni sesión de servidor. El cliente envía `Authorization: Bearer <
 | `PUT` | `/users/{id}` | Token. Credenciales. El rol y `is_active` solo los cambia un admin. Si no es el dueño ni admin, `403`. |
 | `DELETE` | `/users/{id}` | Token. Borra también el perfil. Mismas reglas de dueño o admin. |
 | `POST` | `/auth/login` | Pública. JSON `email`/`password` o formulario `username`/`password` (botón Authorize de Swagger). |
+| `POST` | `/auth/forgot-password` | Pública. `{ email }`. Siempre `200` y la misma frase, exista o no la cuenta. |
+| `POST` | `/auth/reset-password` | Pública. `{ token, new_password }`. `400` si el enlace es inválido, caducó o ya se usó. |
+| `POST` | `/auth/change-password` | Token. `{ current_password, new_password }`. `400` si la actual no coincide. |
 | `GET` | `/auth/me` | Token. Correo, rol y perfil. |
 | `GET` | `/profiles/me` | Token. |
 | `PUT` | `/profiles/me` | Token. Solo el perfil de quien llama. |
@@ -158,6 +161,17 @@ En `/docs`, la descripción de la API es una guía en cinco pasos: registro, log
 | `ACCESS_TOKEN_EXPIRE_MINUTES` | ninguna | Minutos de vida del JWT. Obligatorio. |
 | `AUTH_DATA_DIR` | `services/api/.data` | Carpeta de `auth.json`. |
 | `AUTH_BCRYPT_ROUNDS` | `12` | Coste bcrypt. Las pruebas usan `4`. |
+| `EMAIL_TRANSPORT` | `resend` | `resend`, `sendgrid` o `mock`. `mock` no abre conexión y sirve para las pruebas. |
+| `RESEND_API_KEY` | ninguna | Clave de Resend, solo en el servidor. Vacía: no se llama a Resend. |
+| `SENDGRID_API_KEY` | ninguna | Clave de SendGrid si `EMAIL_TRANSPORT=sendgrid`. |
+| `EMAIL_FROM` | `Nexova <onboarding@resend.dev>` | Remitente. El defecto es el remitente de onboarding de Resend, que no es una clave. |
+| `PASSWORD_RESET_EXPIRE_MINUTES` | `30` | Vida del enlace, entre 15 y 60. |
+| `PASSWORD_RESET_MAX_PER_HOUR` | `5` | Tope de solicitudes por correo y hora. La respuesta sigue siendo la misma. |
+| `PUBLIC_APP_URL` | `http://127.0.0.1:3000` | Origen del enlace `/reset-password`. |
+
+El proveedor elegido para el envío real es **Resend** (`RESEND_API_KEY`). SendGrid queda como la otra opción del enunciado. La clave no se escribe en el código ni se manda al navegador. Sin clave, `POST /auth/forgot-password` responde 200 y no abre una conexión. `EMAIL_TRANSPORT=mock` guarda el mensaje en memoria para las pruebas; ese modo no demuestra un envío real.
+
+El enlace es un JWT firmado (`purpose=password_reset`, caducidad y un `jti`) y en TinyDB solo se guarda su SHA-256, con `expires_at` y `used_at`. Un segundo uso, un enlace caducado o dos peticiones a la vez dejan una sola contraseña nueva. Cambiar la contraseña anula los enlaces que siguieran vivos.
 
 ## Portal Next.js
 

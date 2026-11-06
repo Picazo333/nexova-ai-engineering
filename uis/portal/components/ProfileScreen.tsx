@@ -104,6 +104,9 @@ function ProfileForm({
         <dt>Rol</dt>
         <dd>{role}</dd>
       </dl>
+      <p>
+        <a href="/account/change-password">Cambiar contraseña</a>
+      </p>
       {empty && !saved ? (
         <div className="banner" role="status">
           <h2>El perfil no tiene datos de contacto</h2>

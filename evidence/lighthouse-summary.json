@@ -1,109 +1,391 @@
 {
-  "url": "http://127.0.0.1:8000/agente",
-  "lighthouse": "12.6.0",
-  "note": "INP no sale en laboratorio. La cifra de bloqueo guardada es TBT. JSON completos en /opt/cursor/artifacts/lighthouse/.",
-  "mobile": {
-    "runs": [
-      {
-        "n": 1,
-        "lcp_ms": 1359.0,
-        "cls": 0,
-        "tbt_ms": 0,
-        "inp_ms": null,
-        "formFactor": "mobile",
-        "throttlingMethod": "simulate",
-        "rttMs": 150,
-        "throughputKbps": 1638.4,
-        "cpuSlowdownMultiplier": 4,
-        "width": 390,
-        "height": 844
+  "verified_config": true,
+  "surfaces": {
+    "forgot-password": {
+      "desktop": {
+        "config": {
+          "formFactor": "desktop",
+          "throttlingMethod": "simulate",
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1,
+          "screen": {
+            "mobile": false,
+            "width": 1350,
+            "height": 940,
+            "deviceScaleFactor": 1,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "file": "forgot-password-desktop-1.json",
+            "lcp_ms": 431.582875,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1,
+            "js_transfer": 109747,
+            "css_transfer": 3015,
+            "total_transfer": 134982
+          },
+          {
+            "file": "forgot-password-desktop-2.json",
+            "lcp_ms": 430.2875,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1,
+            "js_transfer": 109747,
+            "css_transfer": 3015,
+            "total_transfer": 134982
+          },
+          {
+            "file": "forgot-password-desktop-3.json",
+            "lcp_ms": 426.8143,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1,
+            "js_transfer": 109747,
+            "css_transfer": 3015,
+            "total_transfer": 134982
+          }
+        ],
+        "median": {
+          "lcp_ms": 430.2875,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 431.582875,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null
+        }
       },
-      {
-        "n": 2,
-        "lcp_ms": 1357.7,
-        "cls": 0,
-        "tbt_ms": 0,
-        "inp_ms": null,
-        "formFactor": "mobile",
-        "throttlingMethod": "simulate",
-        "rttMs": 150,
-        "throughputKbps": 1638.4,
-        "cpuSlowdownMultiplier": 4,
-        "width": 390,
-        "height": 844
-      },
-      {
-        "n": 3,
-        "lcp_ms": 1360.1,
-        "cls": 0,
-        "tbt_ms": 0,
-        "inp_ms": null,
-        "formFactor": "mobile",
-        "throttlingMethod": "simulate",
-        "rttMs": 150,
-        "throughputKbps": 1638.4,
-        "cpuSlowdownMultiplier": 4,
-        "width": 390,
-        "height": 844
+      "mobile": {
+        "config": {
+          "formFactor": "mobile",
+          "throttlingMethod": "simulate",
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "cpuSlowdownMultiplier": 4,
+          "screen": {
+            "mobile": true,
+            "width": 390,
+            "height": 844,
+            "deviceScaleFactor": 2,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "file": "forgot-password-mobile-1.json",
+            "lcp_ms": 1821.763,
+            "cls": 0,
+            "tbt_ms": 19,
+            "inp_ms": null,
+            "performance": 1,
+            "js_transfer": 109747,
+            "css_transfer": 3015,
+            "total_transfer": 134982
+          },
+          {
+            "file": "forgot-password-mobile-2.json",
+            "lcp_ms": 1817.2843,
+            "cls": 0,
+            "tbt_ms": 17,
+            "inp_ms": null,
+            "performance": 1,
+            "js_transfer": 109747,
+            "css_transfer": 3015,
+            "total_transfer": 134982
+          },
+          {
+            "file": "forgot-password-mobile-3.json",
+            "lcp_ms": 1815.8217,
+            "cls": 0,
+            "tbt_ms": 14.5,
+            "inp_ms": null,
+            "performance": 1,
+            "js_transfer": 109747,
+            "css_transfer": 3015,
+            "total_transfer": 134982
+          }
+        ],
+        "median": {
+          "lcp_ms": 1817.2843,
+          "cls": 0,
+          "tbt_ms": 17,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 1821.763,
+          "cls": 0,
+          "tbt_ms": 19,
+          "inp_ms": null
+        }
       }
-    ],
-    "median_lcp_ms": 1359.0,
-    "worst_lcp_ms": 1360.1,
-    "median_cls": 0,
-    "worst_cls": 0,
-    "median_tbt_ms": 0,
-    "worst_tbt_ms": 0
+    },
+    "login": {
+      "desktop": {
+        "config": {
+          "formFactor": "desktop",
+          "throttlingMethod": "simulate",
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1,
+          "screen": {
+            "mobile": false,
+            "width": 1350,
+            "height": 940,
+            "deviceScaleFactor": 1,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "file": "login-desktop-1.json",
+            "lcp_ms": 436.8657,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1,
+            "js_transfer": 110184,
+            "css_transfer": 3015,
+            "total_transfer": 136129
+          },
+          {
+            "file": "login-desktop-2.json",
+            "lcp_ms": 429.28229999999996,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1,
+            "js_transfer": 110184,
+            "css_transfer": 3015,
+            "total_transfer": 136129
+          },
+          {
+            "file": "login-desktop-3.json",
+            "lcp_ms": 437.51650000000006,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1,
+            "js_transfer": 110184,
+            "css_transfer": 3015,
+            "total_transfer": 136129
+          }
+        ],
+        "median": {
+          "lcp_ms": 436.8657,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 437.51650000000006,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null
+        }
+      },
+      "mobile": {
+        "config": {
+          "formFactor": "mobile",
+          "throttlingMethod": "simulate",
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "cpuSlowdownMultiplier": 4,
+          "screen": {
+            "mobile": true,
+            "width": 390,
+            "height": 844,
+            "deviceScaleFactor": 2,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "file": "login-mobile-1.json",
+            "lcp_ms": 1814.2183,
+            "cls": 0,
+            "tbt_ms": 16.5,
+            "inp_ms": null,
+            "performance": 1,
+            "js_transfer": 110184,
+            "css_transfer": 3015,
+            "total_transfer": 136129
+          },
+          {
+            "file": "login-mobile-2.json",
+            "lcp_ms": 1848.7952,
+            "cls": 0,
+            "tbt_ms": 32.5,
+            "inp_ms": null,
+            "performance": 1,
+            "js_transfer": 110184,
+            "css_transfer": 3015,
+            "total_transfer": 136129
+          },
+          {
+            "file": "login-mobile-3.json",
+            "lcp_ms": 1585.5072999999998,
+            "cls": 0,
+            "tbt_ms": 15,
+            "inp_ms": null,
+            "performance": 1,
+            "js_transfer": 110184,
+            "css_transfer": 3015,
+            "total_transfer": 136129
+          }
+        ],
+        "median": {
+          "lcp_ms": 1814.2183,
+          "cls": 0,
+          "tbt_ms": 16.5,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 1848.7952,
+          "cls": 0,
+          "tbt_ms": 32.5,
+          "inp_ms": null
+        }
+      }
+    },
+    "reset-password": {
+      "desktop": {
+        "config": {
+          "formFactor": "desktop",
+          "throttlingMethod": "simulate",
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1,
+          "screen": {
+            "mobile": false,
+            "width": 1350,
+            "height": 940,
+            "deviceScaleFactor": 1,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "file": "reset-password-desktop-1.json",
+            "lcp_ms": 433.4113,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1,
+            "js_transfer": 109998,
+            "css_transfer": 3015,
+            "total_transfer": 135790
+          },
+          {
+            "file": "reset-password-desktop-2.json",
+            "lcp_ms": 436.039,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1,
+            "js_transfer": 109998,
+            "css_transfer": 3015,
+            "total_transfer": 135790
+          },
+          {
+            "file": "reset-password-desktop-3.json",
+            "lcp_ms": 428.056,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1,
+            "js_transfer": 109998,
+            "css_transfer": 3015,
+            "total_transfer": 135790
+          }
+        ],
+        "median": {
+          "lcp_ms": 433.4113,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 436.039,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null
+        }
+      },
+      "mobile": {
+        "config": {
+          "formFactor": "mobile",
+          "throttlingMethod": "simulate",
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "cpuSlowdownMultiplier": 4,
+          "screen": {
+            "mobile": true,
+            "width": 390,
+            "height": 844,
+            "deviceScaleFactor": 2,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "file": "reset-password-mobile-1.json",
+            "lcp_ms": 1817.646,
+            "cls": 0,
+            "tbt_ms": 15,
+            "inp_ms": null,
+            "performance": 1,
+            "js_transfer": 109998,
+            "css_transfer": 3015,
+            "total_transfer": 135790
+          },
+          {
+            "file": "reset-password-mobile-2.json",
+            "lcp_ms": 1812.0259,
+            "cls": 0,
+            "tbt_ms": 14.5,
+            "inp_ms": null,
+            "performance": 1,
+            "js_transfer": 109998,
+            "css_transfer": 3015,
+            "total_transfer": 135790
+          },
+          {
+            "file": "reset-password-mobile-3.json",
+            "lcp_ms": 1823.2187,
+            "cls": 0,
+            "tbt_ms": 18,
+            "inp_ms": null,
+            "performance": 1,
+            "js_transfer": 109998,
+            "css_transfer": 3015,
+            "total_transfer": 135790
+          }
+        ],
+        "median": {
+          "lcp_ms": 1817.646,
+          "cls": 0,
+          "tbt_ms": 15,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 1823.2187,
+          "cls": 0,
+          "tbt_ms": 18,
+          "inp_ms": null
+        }
+      }
+    }
   },
-  "desktop": {
-    "runs": [
-      {
-        "n": 1,
-        "lcp_ms": 328.4,
-        "cls": 0,
-        "tbt_ms": 0,
-        "inp_ms": null,
-        "formFactor": "desktop",
-        "throttlingMethod": "simulate",
-        "rttMs": 40,
-        "throughputKbps": 10240,
-        "cpuSlowdownMultiplier": 1,
-        "width": 1350,
-        "height": 940
-      },
-      {
-        "n": 2,
-        "lcp_ms": 328.2,
-        "cls": 0,
-        "tbt_ms": 0,
-        "inp_ms": null,
-        "formFactor": "desktop",
-        "throttlingMethod": "simulate",
-        "rttMs": 40,
-        "throughputKbps": 10240,
-        "cpuSlowdownMultiplier": 1,
-        "width": 1350,
-        "height": 940
-      },
-      {
-        "n": 3,
-        "lcp_ms": 331.2,
-        "cls": 0,
-        "tbt_ms": 0,
-        "inp_ms": null,
-        "formFactor": "desktop",
-        "throttlingMethod": "simulate",
-        "rttMs": 40,
-        "throughputKbps": 10240,
-        "cpuSlowdownMultiplier": 1,
-        "width": 1350,
-        "height": 940
-      }
-    ],
-    "median_lcp_ms": 328.4,
-    "worst_lcp_ms": 331.2,
-    "median_cls": 0,
-    "worst_cls": 0,
-    "median_tbt_ms": 0,
-    "worst_tbt_ms": 0
-  }
+  "notes": [],
+  "inp_note": "INP de laboratorio es null: Lighthouse simulate no mide una interacci\u00f3n real."
 }

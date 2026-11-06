@@ -33,6 +33,12 @@ Rutas del monorepo que ahora piden el mismo token: el directorio
 
 No hay cookie de sesión. El id del usuario en TinyDB viaja en el JWT como
 `sub` y como `user_uuid`.
+
+Recuperación de contraseña: `POST /auth/forgot-password` responde siempre
+200 y, si el correo tiene una cuenta activa y el correo transaccional está
+configurado, envía un enlace. `POST /auth/reset-password` cambia la
+contraseña con ese enlace de un solo uso. `POST /auth/change-password` pide
+el token de sesión y la contraseña actual.
 """.strip()
 
 OPENAPI_TAGS = [
@@ -42,7 +48,7 @@ OPENAPI_TAGS = [
     },
     {
         "name": "auth",
-        "description": "Paso 2 y paso 3. Login público. `GET /auth/me` exige token.",
+        "description": "Paso 2 y paso 3. Login público. `GET /auth/me` exige token. Recuperar y cambiar la contraseña vive en este grupo.",
     },
     {
         "name": "profiles",

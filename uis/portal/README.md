@@ -6,11 +6,14 @@ Aplicación Next.js (App Router) con el flujo de autenticación del ticket AUTH-
 
 | Ruta | Sesión |
 | --- | --- |
-| `/login` | Pública |
+| `/login` | Pública. Enlace «¿Olvidaste tu contraseña?» hacia `/forgot-password`. |
 | `/register` | Pública |
+| `/forgot-password` | Pública. Pide el correo y muestra siempre la misma confirmación. El formulario se desactiva al enviar. |
+| `/reset-password` | Pública. Lee `token` de la query. Si falta, explica cómo pedir otro enlace. |
 | `/` | Protegida. Es la vista autenticada principal: análisis de tickets. |
 | `/proveedores` | Protegida |
-| `/account/profile` | Protegida |
+| `/account/profile` | Protegida. Enlaza con el cambio de contraseña. |
+| `/account/change-password` | Protegida. Contraseña actual, nueva y confirmación. |
 
 El guard está en `components/SessionGate.tsx`. Lee `localStorage` (`nexova-access-token`) en el cliente. Si no hay token, redirige a `/login`. Si `GET /auth/me` responde `401`, `lib/api.ts` borra el token y abre `/login?reason=expired&next=...`. No hay `middleware.ts`: el middleware de Next.js no puede leer `localStorage`.
 
@@ -21,6 +24,12 @@ Nota. El portal Next.js de `uis/portal` (puerto 3000) guarda el token en `localS
 `lib/api.ts` añade `Authorization: Bearer` en las llamadas protegidas (`/auth/me`, `/profiles/me`, `/suppliers`, `/api/incidents/*`). Login y registro no adjuntan un token viejo: un `401` de credenciales incorrectas no se trata como sesión vencida. Un `401` con token sí redirige a login y la promesa se rechaza, para que el estado de carga no se quede colgado. Las frases salen de `lib/http-messages.ts`: se conserva el texto de la API si es legible y se sustituye una traza, un secreto o un `Unexpected token`. El aviso de error es el mismo en las pantallas (`ErrorBanner`: reintentar, ir al inicio y una línea de soporte) y la espera usa `LoadingState`.
 
 El logout está en la cabecera. Borra la clave y abre `/login`.
+
+## Contraseña
+
+`/forgot-password` llama a `POST /auth/forgot-password`. La frase de confirmación no dice si el correo existe. `/reset-password?token=` llama a `POST /auth/reset-password` y, si sale bien, abre `/login?notice=password-updated`. Un enlace inválido, caducado o ya usado muestra el motivo y un enlace a `/forgot-password`. `/account/change-password` comprueba que la nueva y la confirmación coinciden antes de llamar a la API.
+
+El correo lo envía la API, no este portal. Resend lee `RESEND_API_KEY` en el servidor. Esta copia no tiene esa clave: las pruebas del portal arrancan la API con `EMAIL_TRANSPORT=mock`, que no abre una conexión. Un mock no cuenta como envío real.
 
 ## Cómo encaja con el resto del monorepo
 

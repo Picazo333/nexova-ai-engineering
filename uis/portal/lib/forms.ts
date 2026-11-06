@@ -19,6 +19,13 @@ export function passwordError(value: string): string | null {
   return null;
 }
 
+export function passwordConfirmError(password: string, confirmation: string): string | null {
+  const problem = passwordError(password);
+  if (problem) return problem;
+  if (confirmation !== password) return "La confirmación no coincide con la nueva contraseña.";
+  return null;
+}
+
 export function textLimit(value: string, limit: number, label: string): string | null {
   if (value.trim().length > limit) return `${label} supera los ${limit} caracteres.`;
   return null;

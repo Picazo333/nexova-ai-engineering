@@ -9,6 +9,7 @@ const LINKS = [
   { href: "/", label: "Incidencias" },
   { href: "/proveedores", label: "Proveedores" },
   { href: "/account/profile", label: "Perfil" },
+  { href: "/account/change-password", label: "Contraseña" },
 ];
 
 export function AppHeader({ email }: { email: string }) {

@@ -1,4 +1,4 @@
-import { emailError, passwordError, textLimit } from "../lib/forms";
+import { emailError, passwordConfirmError, passwordError, textLimit } from "../lib/forms";
 
 test("emailError acepta un correo con espacios y mayúsculas", () => {
   expect(emailError("  ANA@Nexova.test ")).toBeNull();
@@ -23,6 +23,12 @@ test("passwordError cuenta bytes y no caracteres", () => {
   expect(passwordError("á".repeat(36))).toBeNull();
   expect(passwordError("á".repeat(37))).toMatch(/72 bytes/);
   expect(passwordError("a".repeat(73))).toMatch(/72 bytes/);
+});
+
+test("passwordConfirmError exige la misma contraseña válida", () => {
+  expect(passwordConfirmError("nueva-clave-9", "nueva-clave-9")).toBeNull();
+  expect(passwordConfirmError("corta", "corta")).toMatch(/8 caracteres/);
+  expect(passwordConfirmError("nueva-clave-9", "otra-clave-99")).toMatch(/no coincide/);
 });
 
 test("textLimit acepta un texto dentro del límite", () => {

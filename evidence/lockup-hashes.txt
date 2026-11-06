@@ -1,2 +1,2 @@
-PASS uis/backoffice/brand/lockups/signal-horizontal.svg 85459232bf51e7bf7c94225fd4f2cd6b71a681b6d701cb4ffd6d2a142cf57a81
-PASS uis/backoffice/brand/lockups/signal-stacked.svg 11314b300284db342bc15a7c7695c23199f65f68178af45586b62d01e9ea133a
+85459232bf51e7bf7c94225fd4f2cd6b71a681b6d701cb4ffd6d2a142cf57a81  /workspace/uis/portal/public/brand/lockups/signal-horizontal.svg
+11314b300284db342bc15a7c7695c23199f65f68178af45586b62d01e9ea133a  /workspace/uis/portal/public/brand/lockups/signal-stacked.svg

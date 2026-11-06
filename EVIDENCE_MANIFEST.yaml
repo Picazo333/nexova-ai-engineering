@@ -1,67 +1,56 @@
-project: ai-eng-langgraph-agent-tools
-branch: feature/langgraph-external-tools
-base: feature/langgraph-agent-base
-base_sha: 885864222222df7028defce029e506e9d8f00159
-commit_sha: 3e9ac08223be58d7e8302b33750ff4168a887786
-recorded_in: d399854428b74e93204903c54860fe7f55504787
-pull_request: https://github.com/Picazo333/nexova-ai-engineering/pull/20
+project: ai-eng-user-authentication-restore
+branch: feature/user-authentication-restore
+base: feature/langgraph-external-tools
+base_sha: 54b86218ad5bb752cb23463b313f5214a3dbf689
+commit_sha: null
+pull_request: null
 status: PENDIENTE_REVISION_ORQUESTADOR
 items:
   - id: pytest-api
     path: evidence/pytest-api.txt
-    rubric: [R03, R04, R05, R13, D03]
-    note: "138 passed. Base citada 131. Siete pruebas nuevas en test_ticket_tool.py."
+    rubric: [R02, R03, R04, R05, R06, R07, R08, R13, X02]
+    note: "156 passed. Línea de partida 138. Dieciocho pruebas en test_password_recovery.py."
   - id: pytest-root
     path: evidence/pytest-root.txt
-    rubric: [R07, R08, R10, R12, R13, L01]
-    note: "25 passed, 1 skipped. El skip es L01 BLOCKED_HITL."
-  - id: trace-rag-and-tool
-    path: docs/langgraph/traces-side-by-side.json
-    rubric: [R08, R10, R12, D03]
-    note: "Columna RAG con doble explícito. Columna tool leída del gestor. Fallback del ticket 482."
-  - id: trace-part1-export
-    path: docs/langgraph/trace-full-run.json
-    rubric: [R12, L01]
-    note: "Regenerado con route_sources. live_generation BLOCKED_HITL."
+    rubric: [R01]
+    note: "57 passed, 1 skipped. El skip es la generación en vivo ya bloqueada. No se rompió la suite anterior."
+  - id: portal-e2e
+    path: uis/portal/e2e/password.spec.ts
+    rubric: [R09, R10, R11, R12, U04]
+    note: "Playwright 14 passed. Cuatro pruebas nuevas de contraseña y las diez anteriores."
   - id: shots-390
-    path: evidence/agente-idle-390.png
-    rubric: [U01, U02, U08]
+    path: evidence/restore-login-390.png
+    rubric: [U01, U02, U05, U08, R12]
+    note: "Serie restore-*-390.png: login, éxito, forgot idle/loading/error/success, reset empty/expired/used, change idle/error."
   - id: shots-768
-    path: evidence/agente-ticket-vacio-768.png
-    rubric: [U01, U02, R08]
+    path: evidence/restore-forgot-success-768.png
+    rubric: [U01, U02, R03, R09]
+    note: "Misma serie a 768 px. Confirmación anti-enumeración y formulario desactivado."
   - id: shots-1280
-    path: evidence/agente-lado-a-lado-1280.png
-    rubric: [U01, U02, R03, R12]
+    path: evidence/restore-reset-expired-1280.png
+    rubric: [U01, U02, R10, X01]
+    note: "Misma serie a 1280 px, incluido el enlace caducado con vuelta a /forgot-password."
   - id: video
-    path: evidence/agente-recorrido.webm
-    rubric: [U03]
-    note: "Duración 5.80 s."
+    path: evidence/restore-recorrido.webm
+    rubric: [U03, R10, R12]
+    note: "Duración 5,52 s. Login, recuperación, enlace ausente y aviso de contraseña actualizada."
   - id: reduced
-    path: evidence/agente-reduced-1280.png
+    path: evidence/restore-reduced-1280.png
     rubric: [U04]
-  - id: lockup
-    path: evidence/lockup-hashes.txt
-    rubric: [U05]
-  - id: lighthouse
-    path: evidence/lighthouse-summary.json
-    rubric: [U06]
-    note: "JSON completos fuera del repo, en /opt/cursor/artifacts/lighthouse/."
+    note: "evidence/restore-reduced-motion.txt: animationName none, data-motion reduced."
   - id: axe
     path: evidence/axe.json
     rubric: [U07]
-    note: "0 violaciones."
-  - id: rubric
-    path: rubric/RUBRIC.md
-    rubric: []
-  - id: justification
-    path: rubric/RUBRIC_JUSTIFICATION.md
-    rubric: []
-  - id: excellence
-    path: quality/EXCELLENCE_REVIEW.md
-    rubric: []
-  - id: design-qa
-    path: quality/DESIGN-QA.md
-    rubric: [U01]
-  - id: final-audit
-    path: quality/FINAL_AUDIT.md
-    rubric: [D01, D02]
+    note: "Seis estados. Cero violaciones serious o critical."
+  - id: lighthouse
+    path: evidence/lighthouse-summary.json
+    rubric: [U06]
+    note: "18 corridas. JSON completos solo en /opt/cursor/artifacts/lighthouse/. INP de laboratorio null."
+  - id: lockup
+    path: evidence/lockup-hashes.txt
+    rubric: [U05]
+    note: "Horizontal 85459232bf51e7bf7c94225fd4f2cd6b71a681b6d701cb4ffd6d2a142cf57a81. Igual al paquete SIGNAL."
+  - id: mailer-blocked
+    path: services/api/app/auth/mailer.py
+    rubric: [R07, R08, V01]
+    note: "Integración Resend y SendGrid por entorno. V01 BLOCKED_HITL: no hubo envío real."
