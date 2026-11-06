@@ -51,5 +51,5 @@ items:
     path: docs/caching-optimisation/evidence/axe.json
     rubric: [X01]
     note: "0 violaciones en el historial con HIT y en el formulario de salida. No certifica WCAG."
-content_sha: pending
-commit_sha_note: "Se rellena con el SHA del commit que añade este manifiesto. El commit siguiente, si solo escribe el SHA, no cambia el resto."
+content_sha: 1de0e9aa3cf3026e2bb926056ae3e2221d9ffddb
+commit_sha_note: "1de0e9a es el commit del informe, el código y las capturas. Este commit solo escribe ese SHA."
