@@ -51,7 +51,7 @@ uv run python -m pytest tests/pipelines/test_agent_graph.py
 PYTHONPATH=services/api uv run python -m app.agent.export_trace
 ```
 
-El export en [docs/langgraph/trace-full-run.json](docs/langgraph/trace-full-run.json) es una corrida completa. La generación cita el documento oficial de objeciones porque `GENERATION_*` está vacío. No es una respuesta del modelo en vivo. El eval de anclaje en vivo termina en `BLOCKED_HITL` hasta que existan esas variables y `EMBEDDING_*`. Un doble no aprueba ese criterio.
+El export en [docs/langgraph/trace-full-run.json](docs/langgraph/trace-full-run.json) sale de la captura live en [docs/langgraph/evidence/llm-live/](docs/langgraph/evidence/llm-live/). Esa corrida llamó a `online/openrouter/deepseek/deepseek-v4-flash` en `https://llm.4geeks.ai/v1`. En la pregunta de la tarifa la respuesta mantiene el 22% y deriva el descuento a Marcos Ibáñez. `uv run python -m pytest tests/pipelines/test_agent_graph.py -k live` pasó en esa máquina (13 passed, sin skip). Lo que la captura no trae queda en null. Un test de routing puede sustituir `retrieve` y `generate_answer`; ese sustituto no es la traza publicada. Sin las dos configuraciones de modelo en este proceso, el mismo test live se salta y no inventa una respuesta.
 
 ---
 

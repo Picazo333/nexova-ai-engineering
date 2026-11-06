@@ -1,8 +1,8 @@
-"""Write a consultable export of complete graph runs.
+"""Publish the trace export from the recorded 4Geeks run.
 
-The generation step quotes the official document that retrieval returned.
-That stand-in is explicit: the 4Geeks generation model is not configured,
-and this file is not a pass of the live-answer criterion.
+The file `docs/langgraph/evidence/llm-live/02-run-agent-live.json` is the
+capture. This module does not call the model and does not fill timings or
+token counts that are absent from that file.
 """
 
 from __future__ import annotations
@@ -11,105 +11,145 @@ import argparse
 import json
 from pathlib import Path
 
-from langgraph.checkpoint.memory import InMemorySaver
-
-from app.agent.graph import run_agent
 from data.rag_settings import ROOT
 
-CORPUS = ROOT / "docs" / "company-knowledge-base"
+LIVE_PATH = ROOT / "docs" / "langgraph" / "evidence" / "llm-live" / "02-run-agent-live.json"
+README_PATH = ROOT / "docs" / "langgraph" / "evidence" / "llm-live" / "README.md"
+DEFAULT_OUT = ROOT / "docs" / "langgraph" / "trace-full-run.json"
+BASE_URL = "https://llm.4geeks.ai/v1"
 
 
-def corpus_chunk(filename: str, source: str, section: str, language: str) -> dict:
-    text = (CORPUS / filename).read_text(encoding="utf-8")
+def _sources(answer: str) -> list[dict]:
+    found: list[dict] = []
+    for raw in answer.splitlines():
+        line = raw.strip()
+        if line.startswith("Sources:"):
+            line = line.split(":", 1)[1].strip()
+        if " — " not in line:
+            continue
+        document, section = line.split(" — ", 1)
+        document = document.strip()
+        section = section.strip()
+        if not document or not section or " " in document:
+            continue
+        found.append({"source_document": document, "section": section})
+    return found
+
+
+def _nodes(status: str, answer: str) -> tuple[list[dict] | None, str | None]:
+    """Node names follow the compiled graph for this status.
+
+    The capture does not include each node's payload. Outputs we do not have
+    stay null.
+    """
+
+    if status == "answered":
+        names = ["receive_question", "retrieve_context", "generate_answer"]
+        basis = (
+            "status answered solo lo escribe generate_answer, "
+            "después de receive_question y retrieve_context."
+        )
+    elif status == "insufficient_context":
+        names = ["receive_question", "retrieve_context", "insufficient_context"]
+        basis = (
+            "status insufficient_context solo lo escribe ese nodo, "
+            "después de receive_question y retrieve_context, y no llama al modelo."
+        )
+    else:
+        return None, f"02-run-agent-live.json no define un camino de nodos para status {status}."
+    nodes = []
+    for order, name in enumerate(names, start=1):
+        carries_answer = name in {"generate_answer", "insufficient_context"}
+        nodes.append(
+            {
+                "order": order,
+                "node": name,
+                "output": {"answer": answer, "status": status} if carries_answer else None,
+                "output_reason": None
+                if carries_answer
+                else "02-run-agent-live.json no incluye la salida de este nodo.",
+            }
+        )
+    return nodes, basis
+
+
+def build_export(live_path: Path = LIVE_PATH, readme_path: Path = README_PATH) -> dict:
+    live = json.loads(live_path.read_text(encoding="utf-8"))
+    readme = readme_path.read_text(encoding="utf-8")
+    if BASE_URL not in readme:
+        raise ValueError("El README de la evidencia no declara la base del modelo.")
+    model = live.get("modelo_generacion")
+    embedder = live.get("modelo_embeddings")
+    runs = []
+    for item in live["resultados"]:
+        answer = item.get("answer") or ""
+        status = item.get("status")
+        nodes, basis = _nodes(status, answer)
+        called = status == "answered"
+        runs.append(
+            {
+                "label": "live_fee_grounding" if called else "live_outside_corpus",
+                "question": item.get("pregunta"),
+                "status": status,
+                "answer": answer,
+                "error": item.get("error", ""),
+                "latencia_s": item.get("latencia_s"),
+                "generation_mode": "live" if called else "not_called",
+                "model": model if called else None,
+                "model_reason": None
+                if called
+                else "Esta corrida no llamó al modelo de generación. El id configurado en la captura es modelo_generacion.",
+                "configured_generation_model": model,
+                "embedding_model": embedder,
+                "generation_base_url": BASE_URL if called else None,
+                "sources": _sources(answer),
+                "nodes": nodes,
+                "nodes_basis": basis,
+                "checkpoints": None,
+                "checkpoints_reason": "02-run-agent-live.json no incluye checkpoints.",
+                "tokens": None,
+                "tokens_reason": "02-run-agent-live.json no incluye tokens.",
+                "run_id": None,
+                "run_id_reason": "02-run-agent-live.json no incluye run_id.",
+            }
+        )
     return {
-        "company": "nexova",
-        "source_document": source,
-        "section": section,
-        "language": language,
-        "chunk_index": 0,
-        "text": text,
-    }
-
-
-def quote_context(_question: str, context: list[dict]) -> str:
-    blocks = [str(item.get("text") or "").strip() for item in context if str(item.get("text") or "").strip()]
-    if not blocks:
-        raise RuntimeError("the stand-in was called without context")
-    return "\n\n".join(blocks)
-
-
-def build_export(destination: Path) -> dict:
-    fee = corpus_chunk(
-        "nexova-objection-handling.en.md",
-        "objection-handling",
-        "Fee objection",
-        "en",
-    )
-    runs = [
-        run_agent(
-            "Can you drop the executive-search fee from 22% to 15%?",
-            retrieve_fn=lambda question, **kwargs: [fee],
-            generate_fn=quote_context,
-            checkpointer=InMemorySaver(),
-            metadata={
-                "generation_mode": "explicit_stand_in",
-                "retrieval_mode": "corpus_fixture",
-                "label": "full_run_with_briefing_context",
-            },
-        ),
-        run_agent(
-            "   ",
-            checkpointer=InMemorySaver(),
-            metadata={
-                "generation_mode": "not_called",
-                "retrieval_mode": "not_called",
-                "label": "empty_question",
-            },
-        ),
-        run_agent(
-            "What is the office wifi password?",
-            retrieve_fn=lambda question, **kwargs: [],
-            generate_fn=quote_context,
-            checkpointer=InMemorySaver(),
-            metadata={
-                "generation_mode": "not_called",
-                "retrieval_mode": "explicit_empty",
-                "label": "no_context_above_threshold",
-            },
-        ),
-    ]
-    document = {
         "note": (
-            "Tres corridas completas del grafo compilado. La primera recorre "
-            "recepción, retrieve y generate_answer con un fragmento real de "
-            "docs/company-knowledge-base/nexova-objection-handling.en.md. "
-            "generate_answer aquí es un doble explícito que cita ese documento: "
-            "GENERATION_MODEL_ID, GENERATION_BASE_URL y GENERATION_API_KEY están "
-            "vacíos. No es una respuesta del modelo de 4Geeks y no cierra el "
-            "criterio de anclaje en vivo (BLOCKED_HITL). Las otras dos corridas "
-            "muestran las aristas condicionales: pregunta vacía, y retrieve sin "
-            "contexto por encima del umbral."
+            "Export de la corrida live registrada en "
+            "docs/langgraph/evidence/llm-live/02-run-agent-live.json. "
+            "La respuesta de la tarifa sale del modelo de generación indicado. "
+            "Los campos que esa captura no trae están en null con su razón. "
+            "No se añadieron tiempos ni tokens distintos de latencia_s."
         ),
-        "live_generation": "BLOCKED_HITL",
-        "runs": [item.trace for item in runs],
+        "live_generation": "measured",
+        "currency": "CURRENT",
+        "evidence": "docs/langgraph/evidence/llm-live/02-run-agent-live.json",
+        "hora": live.get("hora"),
+        "modelo_generacion": model,
+        "modelo_embeddings": embedder,
+        "generation_base_url": BASE_URL,
+        "generation_base_url_source": "docs/langgraph/evidence/llm-live/README.md",
+        "tokens": None,
+        "tokens_reason": "02-run-agent-live.json no incluye tokens.",
+        "runs": runs,
     }
+
+
+def write_export(destination: Path, document: dict | None = None) -> dict:
+    payload = build_export() if document is None else document
     destination.parent.mkdir(parents=True, exist_ok=True)
-    destination.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    return document
+    destination.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return payload
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Export complete agent traces.")
-    parser.add_argument(
-        "--out",
-        default=str(ROOT / "docs" / "langgraph" / "trace-full-run.json"),
-        help="Destination JSON path.",
-    )
+    parser = argparse.ArgumentParser(description="Write the live trace export.")
+    parser.add_argument("--out", default=str(DEFAULT_OUT))
     args = parser.parse_args()
     destination = Path(args.out)
-    document = build_export(destination)
+    document = write_export(destination)
     labels = [item["label"] for item in document["runs"]]
-    print(f"wrote {destination} runs={','.join(labels)}")
+    print(f"wrote {destination} runs={','.join(labels)} model={document['modelo_generacion']}")
 
 
 if __name__ == "__main__":

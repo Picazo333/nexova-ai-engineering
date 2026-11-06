@@ -1,0 +1,21 @@
+{
+  "hora": "2026-11-06 11:44:25 CST",
+  "modelo_generacion": "online/openrouter/deepseek/deepseek-v4-flash",
+  "modelo_embeddings": "online/openrouter/perplexity/pplx-embed-v1-0.6b",
+  "resultados": [
+    {
+      "pregunta": "Can you drop the executive-search fee from 22% to 15%?",
+      "status": "answered",
+      "answer": "I appreciate you bringing that up. Our standard executive-search fee is 22% of the role's gross annual salary, and that includes a 6‑month replacement guarantee and thorough reference verification—both of which reduce your risk of a bad hire. A reduction to 15% would be a discount below our standard fee, and per our policy, that kind of adjustment requires approval from our Managing Partner, Marcos Ibáñez. I can flag that request with him, but I can't confirm the lower rate without his sign‑off.\n\nIn the meantime, would you like me to walk through the full value behind our 22% fee, including how we protect your investment?\n\nSources: pricing-model — Executive headhunting\nobjection-handling — 22% seems expensive compared to other firms.",
+      "error": "",
+      "latencia_s": 8.08
+    },
+    {
+      "pregunta": "¿Cuál es la capital de Mongolia?",
+      "status": "insufficient_context",
+      "answer": "No tengo información sobre eso. La base de conocimiento no devolvió contexto por encima del umbral, así que no invento una respuesta.",
+      "error": "",
+      "latencia_s": 0.63
+    }
+  ]
+}

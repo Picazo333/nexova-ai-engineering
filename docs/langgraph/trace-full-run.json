@@ -1,275 +1,114 @@
 {
-  "note": "Tres corridas completas del grafo compilado. La primera recorre recepción, retrieve y generate_answer con un fragmento real de docs/company-knowledge-base/nexova-objection-handling.en.md. generate_answer aquí es un doble explícito que cita ese documento: GENERATION_MODEL_ID, GENERATION_BASE_URL y GENERATION_API_KEY están vacíos. No es una respuesta del modelo de 4Geeks y no cierra el criterio de anclaje en vivo (BLOCKED_HITL). Las otras dos corridas muestran las aristas condicionales: pregunta vacía, y retrieve sin contexto por encima del umbral.",
-  "live_generation": "BLOCKED_HITL",
+  "note": "Export de la corrida live registrada en docs/langgraph/evidence/llm-live/02-run-agent-live.json. La respuesta de la tarifa sale del modelo de generación indicado. Los campos que esa captura no trae están en null con su razón. No se añadieron tiempos ni tokens distintos de latencia_s.",
+  "live_generation": "measured",
+  "currency": "CURRENT",
+  "evidence": "docs/langgraph/evidence/llm-live/02-run-agent-live.json",
+  "hora": "2026-11-06 11:44:25 CST",
+  "modelo_generacion": "online/openrouter/deepseek/deepseek-v4-flash",
+  "modelo_embeddings": "online/openrouter/perplexity/pplx-embed-v1-0.6b",
+  "generation_base_url": "https://llm.4geeks.ai/v1",
+  "generation_base_url_source": "docs/langgraph/evidence/llm-live/README.md",
+  "tokens": null,
+  "tokens_reason": "02-run-agent-live.json no incluye tokens.",
   "runs": [
     {
-      "run_id": "4b4c3259-7d3c-4b6f-a82a-44a0c1319b4d",
-      "thread_id": "b66f94f5-1124-43d2-a101-86c16cbec3a0",
+      "label": "live_fee_grounding",
       "question": "Can you drop the executive-search fee from 22% to 15%?",
       "status": "answered",
-      "answer": "# Handling Common Prospect Objections\n\n\"22% seems expensive compared to other firms.\"\nSuggested response: explain that the fee includes the 6-month replacement\nguarantee and the reference verification process, which reduces the risk of\na bad hire. A discount below 22% must never be offered without Marcos\nIbáñez's approval.\n\n\"Can I pay everything at the end, once the candidate starts working?\"\nResponse: the three-installment payment schedule (30/30/40) is standard and\nnon-negotiable for new clients. Only clients with more than 2 years of\ncommercial relationship can request an alternative schedule, and it must be\napproved by Finance.\n\n\"What happens if I'm not satisfied with the shortlist presented?\"\nResponse: Nexova offers one additional round of search at no cost if none\nof the candidates in the initial shortlist are acceptable, provided the\nclient has given specific feedback on why they didn't fit.\n\n\"Do you work with companies in my same sector that are direct competitors?\"\nResponse: Nexova does not take on searches for two companies in direct\nconflict of interest in the same selection process simultaneously, but may\nhave worked with competitors in the past. This must be communicated with\ntransparency, never concealed.",
+      "answer": "I appreciate you bringing that up. Our standard executive-search fee is 22% of the role's gross annual salary, and that includes a 6‑month replacement guarantee and thorough reference verification—both of which reduce your risk of a bad hire. A reduction to 15% would be a discount below our standard fee, and per our policy, that kind of adjustment requires approval from our Managing Partner, Marcos Ibáñez. I can flag that request with him, but I can't confirm the lower rate without his sign‑off.\n\nIn the meantime, would you like me to walk through the full value behind our 22% fee, including how we protect your investment?\n\nSources: pricing-model — Executive headhunting\nobjection-handling — 22% seems expensive compared to other firms.",
       "error": "",
+      "latencia_s": 8.08,
+      "generation_mode": "live",
+      "model": "online/openrouter/deepseek/deepseek-v4-flash",
+      "model_reason": null,
+      "configured_generation_model": "online/openrouter/deepseek/deepseek-v4-flash",
+      "embedding_model": "online/openrouter/perplexity/pplx-embed-v1-0.6b",
+      "generation_base_url": "https://llm.4geeks.ai/v1",
+      "sources": [
+        {
+          "source_document": "pricing-model",
+          "section": "Executive headhunting"
+        },
+        {
+          "source_document": "objection-handling",
+          "section": "22% seems expensive compared to other firms."
+        }
+      ],
       "nodes": [
         {
           "order": 1,
           "node": "receive_question",
-          "output": {
-            "question": "Can you drop the executive-search fee from 22% to 15%?",
-            "context": [],
-            "answer": "",
-            "error": "",
-            "status": "received"
-          }
+          "output": null,
+          "output_reason": "02-run-agent-live.json no incluye la salida de este nodo."
         },
         {
           "order": 2,
           "node": "retrieve_context",
-          "output": {
-            "context": [
-              {
-                "company": "nexova",
-                "source_document": "objection-handling",
-                "section": "Fee objection",
-                "language": "en",
-                "chunk_index": 0,
-                "text": "# Handling Common Prospect Objections\n\n\"22% seems expensive compared to other firms.\"\nSuggested response: explain that the fee includes the 6-month replacement\nguarantee and the reference verification process, which reduces the risk of\na bad hire. A discount below 22% must never be offered without Marcos\nIbáñez's approval.\n\n\"Can I pay everything at the end, once the candidate starts working?\"\nResponse: the three-installment payment schedule (30/30/40) is standard and\nnon-negotiable for new clients. Only clients with more than 2 years of\ncommercial relationship can request an alternative schedule, and it must be\napproved by Finance.\n\n\"What happens if I'm not satisfied with the shortlist presented?\"\nResponse: Nexova offers one additional round of search at no cost if none\nof the candidates in the initial shortlist are acceptable, provided the\nclient has given specific feedback on why they didn't fit.\n\n\"Do you work with companies in my same sector that are direct competitors?\"\nResponse: Nexova does not take on searches for two companies in direct\nconflict of interest in the same selection process simultaneously, but may\nhave worked with competitors in the past. This must be communicated with\ntransparency, never concealed.\n"
-              }
-            ],
-            "status": "retrieved",
-            "error": ""
-          }
+          "output": null,
+          "output_reason": "02-run-agent-live.json no incluye la salida de este nodo."
         },
         {
           "order": 3,
           "node": "generate_answer",
           "output": {
-            "answer": "# Handling Common Prospect Objections\n\n\"22% seems expensive compared to other firms.\"\nSuggested response: explain that the fee includes the 6-month replacement\nguarantee and the reference verification process, which reduces the risk of\na bad hire. A discount below 22% must never be offered without Marcos\nIbáñez's approval.\n\n\"Can I pay everything at the end, once the candidate starts working?\"\nResponse: the three-installment payment schedule (30/30/40) is standard and\nnon-negotiable for new clients. Only clients with more than 2 years of\ncommercial relationship can request an alternative schedule, and it must be\napproved by Finance.\n\n\"What happens if I'm not satisfied with the shortlist presented?\"\nResponse: Nexova offers one additional round of search at no cost if none\nof the candidates in the initial shortlist are acceptable, provided the\nclient has given specific feedback on why they didn't fit.\n\n\"Do you work with companies in my same sector that are direct competitors?\"\nResponse: Nexova does not take on searches for two companies in direct\nconflict of interest in the same selection process simultaneously, but may\nhave worked with competitors in the past. This must be communicated with\ntransparency, never concealed.",
-            "error": "",
+            "answer": "I appreciate you bringing that up. Our standard executive-search fee is 22% of the role's gross annual salary, and that includes a 6‑month replacement guarantee and thorough reference verification—both of which reduce your risk of a bad hire. A reduction to 15% would be a discount below our standard fee, and per our policy, that kind of adjustment requires approval from our Managing Partner, Marcos Ibáñez. I can flag that request with him, but I can't confirm the lower rate without his sign‑off.\n\nIn the meantime, would you like me to walk through the full value behind our 22% fee, including how we protect your investment?\n\nSources: pricing-model — Executive headhunting\nobjection-handling — 22% seems expensive compared to other firms.",
             "status": "answered"
-          }
+          },
+          "output_reason": null
         }
       ],
-      "checkpoints": [
-        {
-          "step": -1,
-          "source": "input",
-          "next": [
-            "__start__"
-          ],
-          "status": "",
-          "context_count": 0,
-          "has_answer": false
-        },
-        {
-          "step": 0,
-          "source": "loop",
-          "next": [
-            "receive_question"
-          ],
-          "status": "",
-          "context_count": 0,
-          "has_answer": false
-        },
-        {
-          "step": 1,
-          "source": "loop",
-          "next": [
-            "retrieve_context"
-          ],
-          "status": "received",
-          "context_count": 0,
-          "has_answer": false
-        },
-        {
-          "step": 2,
-          "source": "loop",
-          "next": [
-            "generate_answer"
-          ],
-          "status": "retrieved",
-          "context_count": 1,
-          "has_answer": false
-        },
-        {
-          "step": 3,
-          "source": "loop",
-          "next": [],
-          "status": "answered",
-          "context_count": 1,
-          "has_answer": true
-        }
-      ],
-      "checkpoint_count": 5,
-      "generation_mode": "explicit_stand_in",
-      "retrieval_mode": "corpus_fixture",
-      "label": "full_run_with_briefing_context"
+      "nodes_basis": "status answered solo lo escribe generate_answer, después de receive_question y retrieve_context.",
+      "checkpoints": null,
+      "checkpoints_reason": "02-run-agent-live.json no incluye checkpoints.",
+      "tokens": null,
+      "tokens_reason": "02-run-agent-live.json no incluye tokens.",
+      "run_id": null,
+      "run_id_reason": "02-run-agent-live.json no incluye run_id."
     },
     {
-      "run_id": "32ee5ac5-00e6-4fc9-9963-d7a2d980ed83",
-      "thread_id": "2960e8fe-edd4-4595-bea1-ae76816f085b",
-      "question": "   ",
-      "status": "empty_question",
-      "answer": "",
-      "error": "Escribe una pregunta antes de consultar.",
-      "nodes": [
-        {
-          "order": 1,
-          "node": "receive_question",
-          "output": {
-            "question": "",
-            "context": [],
-            "answer": "",
-            "error": "Escribe una pregunta antes de consultar.",
-            "status": "empty_question"
-          }
-        },
-        {
-          "order": 2,
-          "node": "refuse_empty",
-          "output": {
-            "answer": "",
-            "error": "Escribe una pregunta antes de consultar.",
-            "status": "empty_question"
-          }
-        }
-      ],
-      "checkpoints": [
-        {
-          "step": -1,
-          "source": "input",
-          "next": [
-            "__start__"
-          ],
-          "status": "",
-          "context_count": 0,
-          "has_answer": false
-        },
-        {
-          "step": 0,
-          "source": "loop",
-          "next": [
-            "receive_question"
-          ],
-          "status": "",
-          "context_count": 0,
-          "has_answer": false
-        },
-        {
-          "step": 1,
-          "source": "loop",
-          "next": [
-            "refuse_empty"
-          ],
-          "status": "empty_question",
-          "context_count": 0,
-          "has_answer": false
-        },
-        {
-          "step": 2,
-          "source": "loop",
-          "next": [],
-          "status": "empty_question",
-          "context_count": 0,
-          "has_answer": false
-        }
-      ],
-      "checkpoint_count": 4,
-      "generation_mode": "not_called",
-      "retrieval_mode": "not_called",
-      "label": "empty_question"
-    },
-    {
-      "run_id": "1f6d4851-c86a-40c9-a29b-10fc5970db2a",
-      "thread_id": "54bf1f2d-76a4-4650-9d2a-13282a39581c",
-      "question": "What is the office wifi password?",
+      "label": "live_outside_corpus",
+      "question": "¿Cuál es la capital de Mongolia?",
       "status": "insufficient_context",
-      "answer": "I don't have information about that. The knowledge base returned no context above the threshold, so no answer was invented.",
+      "answer": "No tengo información sobre eso. La base de conocimiento no devolvió contexto por encima del umbral, así que no invento una respuesta.",
       "error": "",
+      "latencia_s": 0.63,
+      "generation_mode": "not_called",
+      "model": null,
+      "model_reason": "Esta corrida no llamó al modelo de generación. El id configurado en la captura es modelo_generacion.",
+      "configured_generation_model": "online/openrouter/deepseek/deepseek-v4-flash",
+      "embedding_model": "online/openrouter/perplexity/pplx-embed-v1-0.6b",
+      "generation_base_url": null,
+      "sources": [],
       "nodes": [
         {
           "order": 1,
           "node": "receive_question",
-          "output": {
-            "question": "What is the office wifi password?",
-            "context": [],
-            "answer": "",
-            "error": "",
-            "status": "received"
-          }
+          "output": null,
+          "output_reason": "02-run-agent-live.json no incluye la salida de este nodo."
         },
         {
           "order": 2,
           "node": "retrieve_context",
-          "output": {
-            "context": [],
-            "status": "retrieved",
-            "error": ""
-          }
+          "output": null,
+          "output_reason": "02-run-agent-live.json no incluye la salida de este nodo."
         },
         {
           "order": 3,
           "node": "insufficient_context",
           "output": {
-            "answer": "I don't have information about that. The knowledge base returned no context above the threshold, so no answer was invented.",
-            "error": "",
+            "answer": "No tengo información sobre eso. La base de conocimiento no devolvió contexto por encima del umbral, así que no invento una respuesta.",
             "status": "insufficient_context"
-          }
+          },
+          "output_reason": null
         }
       ],
-      "checkpoints": [
-        {
-          "step": -1,
-          "source": "input",
-          "next": [
-            "__start__"
-          ],
-          "status": "",
-          "context_count": 0,
-          "has_answer": false
-        },
-        {
-          "step": 0,
-          "source": "loop",
-          "next": [
-            "receive_question"
-          ],
-          "status": "",
-          "context_count": 0,
-          "has_answer": false
-        },
-        {
-          "step": 1,
-          "source": "loop",
-          "next": [
-            "retrieve_context"
-          ],
-          "status": "received",
-          "context_count": 0,
-          "has_answer": false
-        },
-        {
-          "step": 2,
-          "source": "loop",
-          "next": [
-            "insufficient_context"
-          ],
-          "status": "retrieved",
-          "context_count": 0,
-          "has_answer": false
-        },
-        {
-          "step": 3,
-          "source": "loop",
-          "next": [],
-          "status": "insufficient_context",
-          "context_count": 0,
-          "has_answer": true
-        }
-      ],
-      "checkpoint_count": 5,
-      "generation_mode": "not_called",
-      "retrieval_mode": "explicit_empty",
-      "label": "no_context_above_threshold"
+      "nodes_basis": "status insufficient_context solo lo escribe ese nodo, después de receive_question y retrieve_context, y no llama al modelo.",
+      "checkpoints": null,
+      "checkpoints_reason": "02-run-agent-live.json no incluye checkpoints.",
+      "tokens": null,
+      "tokens_reason": "02-run-agent-live.json no incluye tokens.",
+      "run_id": null,
+      "run_id_reason": "02-run-agent-live.json no incluye run_id."
     }
   ]
 }

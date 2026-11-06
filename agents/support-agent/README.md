@@ -23,6 +23,6 @@ uv run python -m pytest tests/pipelines/test_agent_graph.py
 PYTHONPATH=services/api uv run python -m app.agent.export_trace
 ```
 
-Live generation needs `GENERATION_MODEL_ID`, `GENERATION_BASE_URL`, and `GENERATION_API_KEY`, and retrieval against the remote embedder needs `EMBEDDING_*`. While those are empty, the live grounding eval reports `BLOCKED_HITL`. The checked-in export uses an explicit stand-in and says so.
+The published trace is the live 4Geeks run in `docs/langgraph/evidence/llm-live/`. Generation model: `online/openrouter/deepseek/deepseek-v4-flash` at `https://llm.4geeks.ai/v1`. The fee answer keeps 22% and names Marcos Ibáñez. Rebuild the export with `PYTHONPATH=services/api uv run python -m app.agent.export_trace`. Routing tests may stub the two pipeline functions. Those stubs are not the published trace.
 
 > _Spanish version: [README.es.md](./README.es.md)._

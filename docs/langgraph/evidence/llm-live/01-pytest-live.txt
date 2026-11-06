@@ -1,0 +1,17 @@
+2026-11-06 11:43:34 CST
+$ uv run python -m pytest tests/pipelines/test_agent_graph.py -k live -rs -v
+cachedir: .pytest_cache
+rootdir: /workspace/llm-run/nexova
+configfile: pytest.ini (WARNING: ignoring pytest config in pyproject.toml!)
+plugins: langsmith-0.14.17, anyio-4.16.0
+collecting ... collected 13 items / 12 deselected / 1 selected
+
+tests/pipelines/test_agent_graph.py::test_eval_live_answer_is_grounded_in_the_briefing PASSED [100%]
+
+======================= 1 passed, 12 deselected in 5.53s =======================
+Exception ignored in: <function QdrantClient.__del__ at 0x7fbcf20f2de0>
+Traceback (most recent call last):
+  File "/workspace/llm-run/nexova/.venv/lib/python3.13/site-packages/qdrant_client/qdrant_client.py", line 172, in __del__
+  File "/workspace/llm-run/nexova/.venv/lib/python3.13/site-packages/qdrant_client/qdrant_client.py", line 181, in close
+  File "/workspace/llm-run/nexova/.venv/lib/python3.13/site-packages/qdrant_client/local/qdrant_local.py", line 113, in close
+ImportError: sys.meta_path is None, Python is likely shutting down

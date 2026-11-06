@@ -51,7 +51,7 @@ uv run python -m pytest tests/pipelines/test_agent_graph.py
 PYTHONPATH=services/api uv run python -m app.agent.export_trace
 ```
 
-The export checked in at [docs/langgraph/trace-full-run.json](docs/langgraph/trace-full-run.json) is a complete run. Its generation step quotes the official objection document because `GENERATION_*` is empty. That file is not a live-model answer. The live grounding eval skips with `BLOCKED_HITL` until those variables and `EMBEDDING_*` are set. A stand-in does not pass that criterion.
+The checked-in export [docs/langgraph/trace-full-run.json](docs/langgraph/trace-full-run.json) is rebuilt from the live capture in [docs/langgraph/evidence/llm-live/](docs/langgraph/evidence/llm-live/). That run called `online/openrouter/deepseek/deepseek-v4-flash` at `https://llm.4geeks.ai/v1`. On the fee question the answer keeps 22% and sends a discount to Marcos Ibáñez. `uv run python -m pytest tests/pipelines/test_agent_graph.py -k live` passed on that machine (13 passed, no skip). Fields the capture does not contain stay null. A routing test may still stub `retrieve` and `generate_answer`; that stub is not the published trace. Without the two model settings in this process, the same live test skips and does not invent an answer.
 
 ---
 

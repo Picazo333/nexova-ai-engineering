@@ -1,0 +1,41 @@
+currency: CURRENT
+project: 039-ai-eng-langgraph-agent-base
+pr: https://github.com/Picazo333/nexova-ai-engineering/pull/18
+verified_head: 885864222222df7028defce029e506e9d8f00159
+captured_at: "2026-11-06 11:43-11:45 CST"
+branch: feature/langgraph-agent-base
+
+items:
+  - id: R16
+    status: PASS
+    currency: CURRENT
+    summary: >
+      test_eval_live_answer_is_grounded_in_the_briefing PASSED.
+      13 passed, sin skip. La respuesta mantiene el 22% y deriva
+      el descuento a Marcos Ibáñez. Cita pricing-model y objection-handling.
+    evidence:
+      - docs/langgraph/evidence/llm-live/README.md
+      - docs/langgraph/evidence/llm-live/01-pytest-live.txt
+      - docs/langgraph/evidence/llm-live/02-run-agent-live.json
+      - docs/langgraph/evidence/llm-live/03-pytest-agent-graph-full.txt
+    sha256:
+      README.md: cb1ceb934a6e3ed993bfd49746ed09140033e2541176f13afa17f907f37df5e5
+      01-pytest-live.txt: 9bd41167b04d7bdca118feb8edb470471ad29676f17f0c2fc986babb83e10d45
+      02-run-agent-live.json: e545ad56a96dbe29d0364a10565103b3c4c6df7a94ec3e749f1e8dbc7b5767e9
+      03-pytest-agent-graph-full.txt: 0106bd11e5ed2201a8e1461f9b38df93c7a4c4b8b738aa454d4f564af0db7a85
+  - id: R25
+    status: PASS
+    currency: CURRENT
+    summary: >
+      El export publicado sale de 02-run-agent-live.json.
+      Modelo online/openrouter/deepseek/deepseek-v4-flash en
+      https://llm.4geeks.ai/v1. Tokens y checkpoints null:
+      la captura no los trae. Los dobles siguen solo en tests de routing.
+    evidence:
+      - docs/langgraph/trace-full-run.json
+      - services/api/app/agent/export_trace.py
+    model: online/openrouter/deepseek/deepseek-v4-flash
+    generation_base_url: https://llm.4geeks.ai/v1
+    tokens: null
+    tokens_reason: 02-run-agent-live.json no incluye tokens
+    latencia_s: [8.08, 0.63]

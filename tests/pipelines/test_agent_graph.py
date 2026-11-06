@@ -242,37 +242,58 @@ def test_graph_source_reuses_pipeline_functions():
     assert "def query(" in rag
 
 
-def test_committed_trace_export_shows_a_full_run():
-    document_path = ROOT / "docs" / "langgraph" / "trace-full-run.json"
+def test_committed_trace_export_shows_the_live_run():
     import json
 
+    document_path = ROOT / "docs" / "langgraph" / "trace-full-run.json"
+    live_path = ROOT / "docs" / "langgraph" / "evidence" / "llm-live" / "02-run-agent-live.json"
     document = json.loads(document_path.read_text(encoding="utf-8"))
-    assert document["live_generation"] == "BLOCKED_HITL"
+    live = json.loads(live_path.read_text(encoding="utf-8"))
+    assert document["live_generation"] == "measured"
+    assert document["currency"] == "CURRENT"
+    assert document["modelo_generacion"] == "online/openrouter/deepseek/deepseek-v4-flash"
+    assert document["modelo_generacion"] == live["modelo_generacion"]
+    assert document["generation_base_url"] == "https://llm.4geeks.ai/v1"
+    assert document["tokens"] is None
     by_label = {item["label"]: item for item in document["runs"]}
-    full = by_label["full_run_with_briefing_context"]
+    full = by_label["live_fee_grounding"]
     assert [item["node"] for item in full["nodes"]] == [
         "receive_question",
         "retrieve_context",
         "generate_answer",
     ]
-    assert full["generation_mode"] == "explicit_stand_in"
-    assert full["checkpoint_count"] >= 3
-    context_text = full["nodes"][1]["output"]["context"][0]["text"]
-    assert "Marcos" in context_text and "22%" in context_text
-    assert "Marcos" in full["answer"] and "22%" in full["answer"]
-    empty = by_label["empty_question"]
-    assert [item["node"] for item in empty["nodes"]] == ["receive_question", "refuse_empty"]
-    gap = by_label["no_context_above_threshold"]
-    assert gap["nodes"][-1]["node"] == "insufficient_context"
-    assert gap["answer"].startswith("I don't have information about that.")
+    assert full["generation_mode"] == "live"
+    assert full["latencia_s"] == 8.08
+    assert full["answer"] == live["resultados"][0]["answer"]
+    assert "22%" in full["answer"] and "Marcos Ibáñez" in full["answer"]
+    assert full["sources"] == [
+        {"source_document": "pricing-model", "section": "Executive headhunting"},
+        {
+            "source_document": "objection-handling",
+            "section": "22% seems expensive compared to other firms.",
+        },
+    ]
+    assert full["checkpoints"] is None
+    assert full["tokens"] is None
+    gap = by_label["live_outside_corpus"]
+    assert [item["node"] for item in gap["nodes"]] == [
+        "receive_question",
+        "retrieve_context",
+        "insufficient_context",
+    ]
+    assert gap["generation_mode"] == "not_called"
+    assert gap["model"] is None
+    assert gap["answer"].startswith("No tengo información sobre eso.")
+    assert gap["latencia_s"] == 0.63
 
 
 def test_eval_live_answer_is_grounded_in_the_briefing(tmp_path):
     settings = load_settings()
     if not (settings.generation_remote_ready and settings.embedding_remote_ready):
         pytest.skip(
-            "BLOCKED_HITL: GENERATION_* and EMBEDDING_* are empty. "
-            "A stand-in answer is not a pass of live grounding."
+            "GENERATION_* and EMBEDDING_* are empty in this process. "
+            "The recorded live run is docs/langgraph/evidence/llm-live/. "
+            "This process does not invent an answer."
         )
     result = run_agent(
         "Can you drop the executive-search fee from 22% to 15%?",
