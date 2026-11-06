@@ -6,7 +6,7 @@ Los extras no cambian el enunciado. Los dos pedidos en el lanzamiento están imp
 
 Decisión: IMPLEMENT.
 
-`/agente` pone la ruta RAG y la ruta de tickets en dos columnas. Cada una muestra la respuesta y la traza (`route`, `sources`, nodos en orden). La pregunta de la tarifa, sin embeddings de 4Geeks, enseña el error real de configuración. La pregunta con un id creado por `POST /api/incidents` enseña el estado `in_progress` leído del gestor. El ticket 482 enseña el fallback, sin un estado inventado.
+`/agente` pone la ruta RAG y la ruta de tickets en dos columnas. Cada una muestra la respuesta y la traza (`route`, `sources`, nodos en orden). Las capturas de esta VM, sin keys, enseñan el error de configuración en la tarifa y el `in_progress` real de un id creado por `POST /api/incidents`. El ticket 482 enseña el fallback. La traza live de la tarifa, con el 22% y Marcos Ibáñez, está en `evidence/llm-live/02-api-agent-query.txt` y es la columna RAG de `docs/langgraph/traces-side-by-side.json`.
 
 Evidencia: `evidence/agente-lado-a-lado-1280.png`, `evidence/agente-lado-a-lado-390.png`, `evidence/agente-ticket-vacio-768.png`, `docs/langgraph/traces-side-by-side.json`.
 
@@ -27,7 +27,7 @@ Evidencia: `tests/pipelines/test_agent_routing.py`, `services/api/tests/test_tic
 
 Decisión: REJECT.
 
-Un router que llamara al modelo de 4Geeks no se puede verificar: las keys no están. Marcarlo PASS con un doble contradice la regla de que un mock no cierra la integración real. El router determinista sí se verifica con las evals y no inventa estados.
+La generación y los embeddings live ya tienen PASS en `evidence/llm-live/` (22 passed, 0 skipped, HTTP 200). El router sigue siendo determinista. Sustituirlo por una llamada al modelo no añade un criterio del enunciado, y un doble de ese router no sería PASS. Las evals de ruta cubren la decisión.
 
 ## Inventario
 

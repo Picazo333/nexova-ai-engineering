@@ -7,6 +7,21 @@ recorded_in: d399854428b74e93204903c54860fe7f55504787
 pull_request: https://github.com/Picazo333/nexova-ai-engineering/pull/20
 status: PENDIENTE_REVISION_ORQUESTADOR
 items:
+  - id: llm-live-readme
+    path: evidence/llm-live/README.md
+    status: CURRENT
+    rubric: [L01, L02]
+    note: "Índice de la corrida live del 2026-11-06 11:44–11:46 CST, head 54b8621. Copiado tal cual."
+  - id: llm-live-pytest
+    path: evidence/llm-live/01-pytest-agent-live.txt
+    status: CURRENT
+    rubric: [L01, L02]
+    note: "22 passed in 9.19s. 0 skipped. Copiado tal cual."
+  - id: llm-live-api
+    path: evidence/llm-live/02-api-agent-query.txt
+    status: CURRENT
+    rubric: [L01, L02]
+    note: "POST /agent/query HTTP 200. Nodos receive_question, route_sources, retrieve_context, generate_answer. Copiado tal cual."
   - id: pytest-api
     path: evidence/pytest-api.txt
     rubric: [R03, R04, R05, R13, D03]
@@ -14,15 +29,15 @@ items:
   - id: pytest-root
     path: evidence/pytest-root.txt
     rubric: [R07, R08, R10, R12, R13, L01]
-    note: "25 passed, 1 skipped. El skip es L01 BLOCKED_HITL."
+    note: "Re-corrida en esta VM, sin keys. El PASS de L01/L02 es evidence/llm-live/, status CURRENT."
   - id: trace-rag-and-tool
     path: docs/langgraph/traces-side-by-side.json
     rubric: [R08, R10, R12, D03]
-    note: "Columna RAG con doble explícito. Columna tool leída del gestor. Fallback del ticket 482."
+    note: "Columna RAG = traza live copiada de 02-api-agent-query.txt. Columna tool leída del gestor. Fallback del ticket 482."
   - id: trace-part1-export
     path: docs/langgraph/trace-full-run.json
     rubric: [R12, L01]
-    note: "Regenerado con route_sources. live_generation BLOCKED_HITL."
+    note: "Primera corrida = traza live, generation_mode pipeline, run_id 6f2faf5b-3ee5-4f61-973b-7027108e1a6e. Sin explicit_stand_in."
   - id: shots-390
     path: evidence/agente-idle-390.png
     rubric: [U01, U02, U08]

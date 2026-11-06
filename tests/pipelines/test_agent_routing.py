@@ -54,12 +54,16 @@ def test_committed_side_by_side_traces_show_rag_then_tool():
     import json
 
     document = json.loads((ROOT / "docs" / "langgraph" / "traces-side-by-side.json").read_text(encoding="utf-8"))
-    assert document["live_generation"] == "BLOCKED_HITL"
+    assert document["live_generation"] == "live"
+    assert document["live_source"] == "evidence/llm-live/02-api-agent-query.txt"
     assert document["ticket_transport"] == "in_process"
     by_label = {item["label"]: item["trace"] for item in document["columns"]}
     rag = by_label["rag"]
     ticket = by_label["ticket_tool"]
     assert rag["sources"] == ["rag"]
+    assert rag["generation_mode"] == "pipeline"
+    assert rag["run_id"] == "6f2faf5b-3ee5-4f61-973b-7027108e1a6e"
+    assert "22%" in rag["answer"] and "Marcos" in rag["answer"]
     assert "lookup_ticket" not in [item["node"] for item in rag["nodes"]]
     assert ticket["sources"] == ["ticket_tool"]
     assert "retrieve_context" not in [item["node"] for item in ticket["nodes"]]

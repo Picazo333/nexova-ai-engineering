@@ -59,7 +59,7 @@ PYTHONPATH=services/api:. uv run python -m app.agent.export_trace
 PYTHONPATH=services/api:. uv run python -m app.agent.export_compare
 ```
 
-[docs/langgraph/trace-full-run.json](docs/langgraph/trace-full-run.json) is a complete RAG-shaped run. Its generation step quotes the official objection document because `GENERATION_*` is empty. [docs/langgraph/traces-side-by-side.json](docs/langgraph/traces-side-by-side.json) puts that kind of RAG trace next to a ticket trace read from the incident manager. Neither file is a live-model answer. The live grounding eval skips with `BLOCKED_HITL` until `GENERATION_*` and `EMBEDDING_*` are set. A stand-in does not pass that criterion.
+[docs/langgraph/trace-full-run.json](docs/langgraph/trace-full-run.json) starts with the live `POST /agent/query` trace copied from [evidence/llm-live/02-api-agent-query.txt](evidence/llm-live/02-api-agent-query.txt). That answer keeps the 22% fee and names Marcos Ibáñez. [docs/langgraph/traces-side-by-side.json](docs/langgraph/traces-side-by-side.json) puts that same trace next to a ticket trace read from the incident manager. The pytest log of that live run is [evidence/llm-live/01-pytest-agent-live.txt](evidence/llm-live/01-pytest-agent-live.txt): 22 passed, 0 skipped. This VM still skips the live eval when `GENERATION_*` and `EMBEDDING_*` are empty. A stand-in does not pass that criterion.
 
 ---
 

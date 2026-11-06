@@ -22,8 +22,8 @@ Orden de autoridad: enunciado 4Geeks > SIGNAL. Hay UI en `/agente`, así que SIG
 | R12 | sí | sí | La traza de cada corrida muestra si se usó el RAG, la tool o ambos, y en qué orden. |
 | R13 | sí | sí | Hay al menos dos evals nuevos de enrutamiento en `tests/pipelines/`: una pregunta de tool y una de RAG. El fallback es el tercero, opcional en el enunciado. |
 | R14 | sí | sí | El código nuevo vive en `services/<agent-service>/` y los evals en `tests/pipelines/`. |
-| L01 | sí | no | La generación en vivo del RAG, anclada al briefing, con el modelo de 4Geeks. Un doble no es PASS. |
-| L02 | sí | no | La recuperación en vivo con el embedder de 4Geeks. Un doble o fastembed no es PASS. |
+| L01 | sí | sí | La generación en vivo del RAG, anclada al briefing, con el modelo de 4Geeks. Un doble no es PASS. |
+| L02 | sí | sí | La recuperación en vivo con el embedder de 4Geeks. Un doble o fastembed no es PASS. |
 | D01 | sí | no | Enviar el proyecto al LMS o compartir el enlace de entrega con el instructor. |
 | D02 | sí | no | Merge del PR a `main` después de la aprobación. El enunciado lo pide; esta ejecución no lo hace. |
 | D03 | sí | sí | Pull Request propio, separado del de la parte 1, con la traza de la tool, la traza del RAG y la salida de los evals. |

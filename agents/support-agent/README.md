@@ -32,6 +32,6 @@ PYTHONPATH=services/api:. uv run python -m app.agent.export_trace
 PYTHONPATH=services/api:. uv run python -m app.agent.export_compare
 ```
 
-Live generation needs `GENERATION_MODEL_ID`, `GENERATION_BASE_URL`, and `GENERATION_API_KEY`, and retrieval against the remote embedder needs `EMBEDDING_*`. While those are empty, the live grounding eval reports `BLOCKED_HITL`. The checked-in exports use an explicit stand-in for generation and say so. The ticket column does not: it reads an incident the manager stored.
+Live generation needs `GENERATION_MODEL_ID`, `GENERATION_BASE_URL`, and `GENERATION_API_KEY`, and retrieval against the remote embedder needs `EMBEDDING_*`. The recorded live run is `evidence/llm-live/`: 22 passed, 0 skipped, and `POST /agent/query` returned HTTP 200 with `receive_question` → `route_sources` → `retrieve_context` → `generate_answer`. That trace is the first run of `docs/langgraph/trace-full-run.json`. This checkout still skips the live eval when those variables are empty. A stand-in does not pass that criterion. The ticket column reads an incident the manager stored.
 
 > _Spanish version: [README.es.md](./README.es.md)._

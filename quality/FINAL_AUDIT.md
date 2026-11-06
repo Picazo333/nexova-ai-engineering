@@ -4,33 +4,31 @@ Estado: PENDIENTE_REVISION_ORQUESTADOR. No está READY_TO_SUBMIT.
 
 ## Cierre
 
-22/22 criterios que se pueden implementar en esta VM están en PASS. La rúbrica tiene 27 filas. Las otras cinco no son un fallo de implementación:
+24/27 filas en PASS (R01–R08, R10–R14, L01, L02, D03, U01–U08). Las otras tres no son un fallo de implementación:
 
 | ID | Estado | Motivo |
 | --- | --- | --- |
-| R09 | NO_APLICA | No hay gestor de inventario (021). No se inventó stock. |
-| L01 | BLOCKED_HITL | Faltan `GENERATION_*`. Un doble no es PASS. |
-| L02 | BLOCKED_HITL | Faltan `EMBEDDING_*`. fastembed no sustituye el criterio. |
-| D01 | HITL_ENVIO_MIGUEL | Envío al LMS y enlace al instructor. |
-| D02 | HITL_MIGUEL | Merge a `main` cuando el PR esté aprobado. |
+| R09 | NO_APLICA | El enunciado lo deja opcional y prohibe simular el inventario. Citas en `rubric/RUBRIC_JUSTIFICATION.md`: `OFFICIAL_README.es.md` L29, L33, L65, L78 y L92. |
+| D01 | HITL_ENVIO_MIGUEL | Envío al LMS y enlace al instructor. Sigue siendo de Miguel. |
+| D02 | HITL_MIGUEL | Merge a `main` cuando el PR esté aprobado. Sigue siendo de Miguel. No hay merge. |
 
 ## Pull request
 
 https://github.com/Picazo333/nexova-ai-engineering/pull/20
 
-Base: `feature/langgraph-agent-base` (`8858642`). Head de la implementación: `3e9ac08`. El commit `d399854` fija ese SHA en el manifiesto.
+Base: `feature/langgraph-agent-base` (`8858642`). La tool está en `3e9ac08`. Esta reparación publica `evidence/llm-live/` y deja L01 y L02 en PASS. El head es el de la rama después de este commit.
 
 ## Checklist de Miguel
 
 1. Revisar el PR https://github.com/Picazo333/nexova-ai-engineering/pull/20 contra `feature/langgraph-agent-base`. No está mergeado.
 2. Decidir el merge a `main` (D02).
 3. Enviar al LMS o compartir el enlace (D01).
-4. Cuando existan las keys, volver a correr `test_eval_live_answer_is_grounded_in_the_briefing` y una recuperación con `EMBEDDING_*`. Hasta entonces L01 y L02 siguen en BLOCKED_HITL.
+4. L01 y L02 están en PASS con `evidence/llm-live/` (22 passed, 0 skipped; HTTP 200 y la traza `receive_question` → `route_sources` → `retrieve_context` → `generate_answer`). D01 y D02 no cambian.
 5. La etiqueta `langgraph-external-tools` ya está en el PR.
 
 ## Qué no se rompió
 
-`cd services/api && uv run pytest`: 138 passed. La base citada era 131. Las siete pruebas nuevas están en `services/api/tests/test_ticket_tool.py`. El resto de 017, 038 y 039 sigue en verde, incluida la suite de la raíz: 25 passed y 1 skipped (el skip es L01).
+Re-corrida en esta VM el 2026-11-06 17:58 UTC: `cd services/api && uv run pytest` 138 passed. Raíz (`test_agent_graph`, `test_agent_routing`, `test_project_constraints`): 25 passed, 1 skipped. El skip es el eval en vivo porque esta VM no tiene las keys. La corrida que cierra L01 y L02 es `evidence/llm-live/01-pytest-agent-live.txt`: 22 passed, 0 skipped. La base citada de la API era 131.
 
 ## Límites
 
@@ -49,3 +47,4 @@ Base: `feature/langgraph-agent-base` (`8858642`). Head de la implementación: `3
 6. Un 503 no devolvía la traza. Ahora el cuerpo lleva `trace` además de `detail` y `run_id`, sin el campo `answer`.
 7. El vídeo salió en 1,96 s y luego en 4,44 s. La toma final dura 5,80 s.
 8. Lighthouse se quedó en el prompt de telemetría. Se relanzó con `CI=1`.
+9. L01 y L02 estaban en BLOCKED_HITL y el export decía `explicit_stand_in`. La corrida live se copió a `evidence/llm-live/` y sustituyó esa traza. D01 y D02 no se tocaron.

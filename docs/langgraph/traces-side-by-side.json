@@ -1,16 +1,16 @@
 {
-  "note": "Dos columnas y una corrida de reserva. La columna RAG usa un doble explícito de generación porque GENERATION_* está vacío (BLOCKED_HITL): no es una respuesta del modelo de 4Geeks. La columna tool inserta una incidencia con create_incident, la función del gestor, y la vuelve a leer con la tool. El estado del texto sale de ese registro. La tercera corrida pide el ticket 482, que no existe, y no inventa un estado.",
-  "live_generation": "BLOCKED_HITL",
+  "note": "La columna RAG es la traza live copiada tal cual de evidence/llm-live/02-api-agent-query.txt. El modelo de 4Geeks respondió la pregunta de la tarifa del 22% y citó a Marcos Ibáñez. La columna tool y la corrida de reserva siguen saliendo del gestor de incidentes en proceso: no las produjo ese modelo.",
+  "live_generation": "live",
   "ticket_transport": "in_process",
   "columns": [
     {
       "label": "rag",
       "trace": {
-        "run_id": "2ab997c6-c14c-4598-9e5c-b36ef38cac8f",
-        "thread_id": "6e91a178-e5a7-426e-9009-ed5d282fbc64",
+        "run_id": "6f2faf5b-3ee5-4f61-973b-7027108e1a6e",
+        "thread_id": "25309f06-abf5-4fd8-830f-64ec721e7d13",
         "question": "Can you drop the executive-search fee from 22% to 15%?",
         "status": "answered",
-        "answer": "# Handling Common Prospect Objections\n\n\"22% seems expensive compared to other firms.\"\nSuggested response: explain that the fee includes the 6-month replacement\nguarantee and the reference verification process, which reduces the risk of\na bad hire. A discount below 22% must never be offered without Marcos\nIbáñez's approval.\n\n\"Can I pay everything at the end, once the candidate starts working?\"\nResponse: the three-installment payment schedule (30/30/40) is standard and\nnon-negotiable for new clients. Only clients with more than 2 years of\ncommercial relationship can request an alternative schedule, and it must be\napproved by Finance.\n\n\"What happens if I'm not satisfied with the shortlist presented?\"\nResponse: Nexova offers one additional round of search at no cost if none\nof the candidates in the initial shortlist are acceptable, provided the\nclient has given specific feedback on why they didn't fit.\n\n\"Do you work with companies in my same sector that are direct competitors?\"\nResponse: Nexova does not take on searches for two companies in direct\nconflict of interest in the same selection process simultaneously, but may\nhave worked with competitors in the past. This must be communicated with\ntransparency, never concealed.",
+        "answer": "I understand you're looking for a lower fee. Our standard executive-search fee is 22% of the hired role's gross annual salary, and that includes the 6‑month replacement guarantee and our full reference verification process. A reduction to 15% would require approval from Marcos Ibáñez, so I can't offer that directly. Would you like me to check with him?\n\nSources: pricing-model — Executive headhunting  \nSources: objection-handling — 22% seems expensive compared to other firms.",
         "error": "",
         "nodes": [
           {
@@ -53,11 +53,27 @@
               "context": [
                 {
                   "company": "nexova",
-                  "source_document": "objection-handling",
-                  "section": "Fee objection",
+                  "source_document": "pricing-model",
+                  "section": "Executive headhunting",
                   "language": "en",
                   "chunk_index": 0,
-                  "text": "# Handling Common Prospect Objections\n\n\"22% seems expensive compared to other firms.\"\nSuggested response: explain that the fee includes the 6-month replacement\nguarantee and the reference verification process, which reduces the risk of\na bad hire. A discount below 22% must never be offered without Marcos\nIbáñez's approval.\n\n\"Can I pay everything at the end, once the candidate starts working?\"\nResponse: the three-installment payment schedule (30/30/40) is standard and\nnon-negotiable for new clients. Only clients with more than 2 years of\ncommercial relationship can request an alternative schedule, and it must be\napproved by Finance.\n\n\"What happens if I'm not satisfied with the shortlist presented?\"\nResponse: Nexova offers one additional round of search at no cost if none\nof the candidates in the initial shortlist are acceptable, provided the\nclient has given specific feedback on why they didn't fit.\n\n\"Do you work with companies in my same sector that are direct competitors?\"\nResponse: Nexova does not take on searches for two companies in direct\nconflict of interest in the same selection process simultaneously, but may\nhave worked with competitors in the past. This must be communicated with\ntransparency, never concealed.\n"
+                  "text": "# Pricing Model\n\nExecutive headhunting:\n- Standard fee: 22% of the hired role's gross annual salary.\n- Billed in three installments: 30% when the search begins, 30% when the\n  final shortlist is presented, 40% upon hire.\n- Free replacement guarantee if the candidate leaves the role within 6\n  months for causes attributable to the selection process."
+                },
+                {
+                  "company": "nexova",
+                  "source_document": "objection-handling",
+                  "section": "22% seems expensive compared to other firms.",
+                  "language": "en",
+                  "chunk_index": 0,
+                  "text": "# Handling Common Prospect Objections\n\n\"22% seems expensive compared to other firms.\"\nSuggested response: explain that the fee includes the 6-month replacement\nguarantee and the reference verification process, which reduces the risk of\na bad hire. A discount below 22% must never be offered without Marcos\nIbáñez's approval."
+                },
+                {
+                  "company": "nexova",
+                  "source_document": "pricing-model",
+                  "section": "Headhunting ejecutivo",
+                  "language": "es",
+                  "chunk_index": 0,
+                  "text": "# Modelo de Tarifas\n\nHeadhunting ejecutivo:\n- Tarifa estándar: 22% del salario anual bruto del cargo contratado.\n- Se factura en tres momentos: 30% al iniciar la búsqueda, 30% al presentar\n  la terna final, 40% al momento de la contratación.\n- Garantía de reemplazo gratuito si el candidato deja el cargo antes de 6\n  meses por causas atribuibles al proceso de selección."
                 }
               ],
               "sources": [
@@ -71,7 +87,7 @@
             "order": 4,
             "node": "generate_answer",
             "output": {
-              "answer": "# Handling Common Prospect Objections\n\n\"22% seems expensive compared to other firms.\"\nSuggested response: explain that the fee includes the 6-month replacement\nguarantee and the reference verification process, which reduces the risk of\na bad hire. A discount below 22% must never be offered without Marcos\nIbáñez's approval.\n\n\"Can I pay everything at the end, once the candidate starts working?\"\nResponse: the three-installment payment schedule (30/30/40) is standard and\nnon-negotiable for new clients. Only clients with more than 2 years of\ncommercial relationship can request an alternative schedule, and it must be\napproved by Finance.\n\n\"What happens if I'm not satisfied with the shortlist presented?\"\nResponse: Nexova offers one additional round of search at no cost if none\nof the candidates in the initial shortlist are acceptable, provided the\nclient has given specific feedback on why they didn't fit.\n\n\"Do you work with companies in my same sector that are direct competitors?\"\nResponse: Nexova does not take on searches for two companies in direct\nconflict of interest in the same selection process simultaneously, but may\nhave worked with competitors in the past. This must be communicated with\ntransparency, never concealed.",
+              "answer": "I understand you're looking for a lower fee. Our standard executive-search fee is 22% of the hired role's gross annual salary, and that includes the 6‑month replacement guarantee and our full reference verification process. A reduction to 15% would require approval from Marcos Ibáñez, so I can't offer that directly. Would you like me to check with him?\n\nSources: pricing-model — Executive headhunting  \nSources: objection-handling — 22% seems expensive compared to other firms.",
               "error": "",
               "status": "answered"
             }
@@ -125,7 +141,7 @@
               "generate_answer"
             ],
             "status": "retrieved",
-            "context_count": 1,
+            "context_count": 3,
             "has_answer": false
           },
           {
@@ -133,18 +149,17 @@
             "source": "loop",
             "next": [],
             "status": "answered",
-            "context_count": 1,
+            "context_count": 3,
             "has_answer": true
           }
         ],
         "checkpoint_count": 6,
-        "generation_mode": "explicit_stand_in",
-        "retrieval_mode": "corpus_fixture",
+        "generation_mode": "pipeline",
+        "retrieval_mode": "pipeline",
         "route": "rag",
         "sources": [
           "rag"
-        ],
-        "label": "rag"
+        ]
       }
     },
     {
@@ -439,5 +454,6 @@
       "label": "ticket_missing",
       "ticket_transport": "in_process"
     }
-  }
+  },
+  "live_source": "evidence/llm-live/02-api-agent-query.txt"
 }
