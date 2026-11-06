@@ -1,0 +1,98 @@
+{
+  "lighthouse-directory-desktop.json": {
+    "url": "http://127.0.0.1:8000/proveedores",
+    "fetchTime": "2026-11-06T09:43:29.826Z",
+    "formFactor": "desktop",
+    "throttlingMethod": "simulate",
+    "throttling": {
+      "rttMs": 40,
+      "throughputKbps": 10240,
+      "cpuSlowdownMultiplier": 1
+    },
+    "screen": {
+      "mobile": false,
+      "width": 1350,
+      "height": 940,
+      "deviceScaleFactor": 1,
+      "disabled": false
+    },
+    "performance": 1,
+    "LCP_ms": 251.31490000000002,
+    "CLS": 0,
+    "TBT_ms": 0,
+    "INP": null,
+    "FCP_ms": 251.31490000000002
+  },
+  "lighthouse-directory-mobile.json": {
+    "url": "http://127.0.0.1:8000/proveedores",
+    "fetchTime": "2026-11-06T09:43:40.165Z",
+    "formFactor": "mobile",
+    "throttlingMethod": "simulate",
+    "throttling": {
+      "rttMs": 40,
+      "throughputKbps": 10240,
+      "cpuSlowdownMultiplier": 1
+    },
+    "screen": {
+      "mobile": true,
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 2,
+      "disabled": false
+    },
+    "performance": 1,
+    "LCP_ms": 243.598,
+    "CLS": 0,
+    "TBT_ms": 0,
+    "INP": null,
+    "FCP_ms": 243.598
+  },
+  "lighthouse-home-desktop.json": {
+    "url": "http://127.0.0.1:8000/",
+    "fetchTime": "2026-11-06T09:43:08.897Z",
+    "formFactor": "desktop",
+    "throttlingMethod": "simulate",
+    "throttling": {
+      "rttMs": 40,
+      "throughputKbps": 10240,
+      "cpuSlowdownMultiplier": 1
+    },
+    "screen": {
+      "mobile": false,
+      "width": 1350,
+      "height": 940,
+      "deviceScaleFactor": 1,
+      "disabled": false
+    },
+    "performance": 1,
+    "LCP_ms": 251.6101,
+    "CLS": 0,
+    "TBT_ms": 0,
+    "INP": null,
+    "FCP_ms": 251.6101
+  },
+  "lighthouse-home-mobile.json": {
+    "url": "http://127.0.0.1:8000/",
+    "fetchTime": "2026-11-06T09:43:19.313Z",
+    "formFactor": "mobile",
+    "throttlingMethod": "simulate",
+    "throttling": {
+      "rttMs": 40,
+      "throughputKbps": 10240,
+      "cpuSlowdownMultiplier": 1
+    },
+    "screen": {
+      "mobile": true,
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 2,
+      "disabled": false
+    },
+    "performance": 1,
+    "LCP_ms": 246.91860000000003,
+    "CLS": 0,
+    "TBT_ms": 0,
+    "INP": null,
+    "FCP_ms": 246.91860000000003
+  }
+}

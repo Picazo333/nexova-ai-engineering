@@ -31,6 +31,9 @@ def test_front_end_transfer_budgets() -> None:
         (BACKOFFICE / name).read_bytes()
         for name in ("tokens/tokens.css", "tokens/motion.css", "css/app.css")
     )
-    js = (BACKOFFICE / "js" / "motion-pref.js").read_bytes() + (BACKOFFICE / "js" / "app.js").read_bytes()
+    js = b"".join(
+        (BACKOFFICE / "js" / name).read_bytes()
+        for name in ("motion-pref.js", "app.js", "auth.js", "suppliers.js")
+    )
     assert len(gzip.compress(css)) <= 40 * 1024
     assert len(gzip.compress(js)) <= 170 * 1024

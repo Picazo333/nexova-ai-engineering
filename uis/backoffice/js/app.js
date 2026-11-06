@@ -96,10 +96,11 @@
     loading.textContent = "Analizando el fichero. El cálculo sigue en la API interna.";
     resultsEl.appendChild(loading);
     statusEl.textContent = loading.textContent;
+    var analyzeHeaders = { Accept: "text/html", "X-Report-Fragment": "1" };
     fetch(form.action, {
       method: "POST",
       body: new FormData(form),
-      headers: { Accept: "text/html", "X-Report-Fragment": "1" },
+      headers: window.nexovaAuth ? window.nexovaAuth.headers(analyzeHeaders) : analyzeHeaders,
       signal: controller.signal,
       cache: "no-store"
     }).then(function (response) {
@@ -207,12 +208,24 @@
     }
     event.preventDefault();
     var fallback = document.getElementById("export-csv");
-    fetch(link.href, { headers: { Accept: "text/csv" }, cache: "no-store" }).then(function (response) {
+    var exportHeaders = { Accept: "text/csv" };
+    fetch(link.href, {
+      headers: window.nexovaAuth ? window.nexovaAuth.headers(exportHeaders) : exportHeaders,
+      cache: "no-store"
+    }).then(function (response) {
+      if (response.status === 401) {
+        statusEl.textContent = "";
+        showError("La sesión no es válida o falta. Entra de nuevo para descargar el CSV.");
+        return null;
+      }
       if (!response.ok) {
         throw new Error("missing");
       }
       return response.blob();
     }).then(function (blob) {
+      if (!blob) {
+        return;
+      }
       saveBlob(blob);
       statusEl.textContent = "Descarga de results.csv iniciada desde la API.";
     }).catch(function () {
