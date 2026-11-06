@@ -43,11 +43,11 @@ El proceso carga `services/api/.env` y no pisa variables que ya estén en el ent
 ```bash
 cd services/api
 uv sync --group dev
-cd ../..
-services/api/.venv/bin/python -m pytest -q
+uv run pytest
+uv run pytest --cov
 ```
 
-CI instala `services/api/requirements.txt`, que fija las mismas versiones de `python-jose` y `libpass`.
+Esa es la raíz del proyecto FastAPI. `uv run pytest` también recoge `packages/incident_analysis/tests`. `uv run pytest --cov` mide `app.auth` y falla por debajo del 70%. Desde la raíz del monorepo, `make test` hace el mismo `cd`. CI entra en `services/api` y lanza `uv run pytest`. `requirements.txt` sigue fijando las mismas versiones de `python-jose` y `libpass`.
 
 ## Directorio de proveedores
 

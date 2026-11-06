@@ -166,11 +166,34 @@ def _error_as_json(request: Request) -> bool:
     return "application/json" in accept and "text/html" not in accept
 
 
+# Starlette's own HTTPException uses these English strings. They are not a
+# decision of this API, so the public Spanish sentence stays in their place.
+_FRAMEWORK_DETAIL = {
+    "Not Found",
+    "Method Not Allowed",
+    "Not authenticated",
+    "Unauthorized",
+    "Forbidden",
+}
+
+
 def _error_content(exc: StarletteHTTPException) -> dict:
     if isinstance(exc.detail, dict):
         return exc.detail
-    if exc.status_code in (401, 403) and isinstance(exc.detail, str) and exc.detail:
-        code = "unauthorized" if exc.status_code == 401 else "forbidden"
+    # 4xx details written by the routers (duplicate email, empty password,
+    # empty update) are the decision. 5xx stays generic.
+    if (
+        isinstance(exc.detail, str)
+        and exc.detail
+        and exc.status_code < 500
+        and exc.detail not in _FRAMEWORK_DETAIL
+    ):
+        if exc.status_code == 401:
+            code = "unauthorized"
+        elif exc.status_code == 403:
+            code = "forbidden"
+        else:
+            code = "http_error"
         return {"error": code, "message": exc.detail, "detail": exc.detail}
     return {
         "error": "http_error",
