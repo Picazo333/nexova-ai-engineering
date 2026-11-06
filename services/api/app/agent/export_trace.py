@@ -80,8 +80,9 @@ def build_export(destination: Path) -> dict:
     ]
     document = {
         "note": (
-            "Tres corridas completas del grafo compilado. La primera recorre "
-            "recepción, retrieve y generate_answer con un fragmento real de "
+            "Tres corridas completas del grafo compilado. La primera pasa por "
+            "recepción, la decisión de ruta, retrieve y generate_answer con un "
+            "fragmento real de "
             "docs/company-knowledge-base/nexova-objection-handling.en.md. "
             "generate_answer aquí es un doble explícito que cita ese documento: "
             "GENERATION_MODEL_ID, GENERATION_BASE_URL y GENERATION_API_KEY están "

@@ -42,16 +42,24 @@ The query page is `http://127.0.0.1:8000/conocimiento`. `RAG_EMBED_BACKEND=faste
 
 ## LangGraph support agent
 
-The graph is `services/api/app/agent/`. `services/api/app/main.py` mounts `POST /agent/query` and `GET /agent/runs/{run_id}` on the same FastAPI app. The receive, retrieve, and generation nodes are separate. Conditional edges send an empty question to a refusal, and a retrieval with no chunk above the threshold to an honest answer. Otherwise the generation node calls `generate_answer(question, context)`. `query()` stays the monolithic RAG helper and is not a graph node.
+The graph is `services/api/app/agent/`. `services/api/app/main.py` mounts `POST /agent/query` and `GET /agent/runs/{run_id}` on the same FastAPI app. The page at `/agente` shows a RAG run and a ticket-tool run side by side.
 
-`uv add langgraph` declared the package in the root project (for `tests/pipelines/`) and in `services/api` (for the endpoint). Each run compiles the graph before executing, checkpoints every step in memory, and writes a JSON trace under `data/agent_traces/` (`AGENT_TRACE_DIR` overrides it; the directory is gitignored).
+Nodes: `receive_question`, `route_sources`, `retrieve_context`, `lookup_ticket`, `report_ticket`, `generate_answer`, `compose_sources`, `refuse_empty`, `insufficient_context`. A conditional edge after `route_sources` sends the question to the knowledge base, the ticket tool, or both, from the wording alone. `query()` stays the monolithic RAG helper and is not a graph node.
+
+The ticket tool is read-only. By default it calls `get_incident` / `list_incidents` in `services/api/incident_store.py` — the same functions behind `GET /api/incidents` and `GET /api/incidents/{id}`. It does not create, update, or delete incidents. The HTTP routes require a bearer token; the in-process reader checks that same token and does not keep it in the trace. Set `INCIDENT_API_BASE_URL` to call those routes over HTTP instead. `INCIDENT_API_TOKEN` is optional and only used for that HTTP hop. Both stay empty in `.env.example`.
+
+The call waits at most 4 seconds (`TICKET_TOOL_TIMEOUT_SECONDS`). A timeout, an error, a missing token, or a missing ticket returns “I couldn't confirm that ticket's status right now.” (Spanish: “No pude confirmar el estado de ese ticket ahora mismo.”). The answer does not invent a status.
+
+There is no inventory manager in this monorepo, so there is no inventory tool and no stand-in stock list.
 
 ```bash
-uv run python -m pytest tests/pipelines/test_agent_graph.py
-PYTHONPATH=services/api uv run python -m app.agent.export_trace
+uv run python -m pytest tests/pipelines/test_agent_graph.py tests/pipelines/test_agent_routing.py
+cd services/api && uv run pytest
+PYTHONPATH=services/api:. uv run python -m app.agent.export_trace
+PYTHONPATH=services/api:. uv run python -m app.agent.export_compare
 ```
 
-The export checked in at [docs/langgraph/trace-full-run.json](docs/langgraph/trace-full-run.json) is a complete run. Its generation step quotes the official objection document because `GENERATION_*` is empty. That file is not a live-model answer. The live grounding eval skips with `BLOCKED_HITL` until those variables and `EMBEDDING_*` are set. A stand-in does not pass that criterion.
+[docs/langgraph/trace-full-run.json](docs/langgraph/trace-full-run.json) is a complete RAG-shaped run. Its generation step quotes the official objection document because `GENERATION_*` is empty. [docs/langgraph/traces-side-by-side.json](docs/langgraph/traces-side-by-side.json) puts that kind of RAG trace next to a ticket trace read from the incident manager. Neither file is a live-model answer. The live grounding eval skips with `BLOCKED_HITL` until `GENERATION_*` and `EMBEDDING_*` are set. A stand-in does not pass that criterion.
 
 ---
 

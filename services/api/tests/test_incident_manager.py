@@ -185,10 +185,14 @@ def test_internal_error_does_not_return_the_exception(
     def boom(*_args, **_kwargs):
         raise RuntimeError("secret-sentinel Traceback line")
 
+    original = records.list_incidents
     records.list_incidents = boom
-    with TestClient(application, raise_server_exceptions=False) as test_client:
-        attach_operator(test_client)
-        response = test_client.get("/api/incidents", headers={"Accept": "application/json"})
+    try:
+        with TestClient(application, raise_server_exceptions=False) as test_client:
+            attach_operator(test_client)
+            response = test_client.get("/api/incidents", headers={"Accept": "application/json"})
+    finally:
+        records.list_incidents = original
     assert response.status_code == 500
     assert response.json()["error"] == "internal_error"
     assert "secret-sentinel" not in response.text

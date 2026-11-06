@@ -75,11 +75,11 @@ def test_eval_discount_trace_keeps_the_briefing_approval_fact(tmp_path):
         tmp_path,
     )
     names = [item["node"] for item in result.trace["nodes"]]
-    assert names == ["receive_question", "retrieve_context", "generate_answer"]
+    assert names == ["receive_question", "route_sources", "retrieve_context", "generate_answer"]
     assert names.index("retrieve_context") < names.index("generate_answer")
     handed = seen["generate_context"][0]["text"]
     assert "Marcos" in handed and "22%" in handed
-    assert handed == result.trace["nodes"][1]["output"]["context"][0]["text"]
+    assert handed == result.trace["nodes"][2]["output"]["context"][0]["text"]
     assert result.answer == "STAND_IN_NOT_A_MODEL"
     statuses = [item["status"] for item in result.trace["checkpoints"]]
     assert "received" in statuses
@@ -99,7 +99,7 @@ def test_eval_training_price_trace_keeps_the_briefing_amount(tmp_path):
     names = [item["node"] for item in result.trace["nodes"]]
     assert names.index("retrieve_context") < names.index("generate_answer")
     assert "6,200" in seen["generate_context"][0]["text"]
-    assert result.trace["nodes"][1]["output"]["context"][0]["source_document"] == "pricing-model"
+    assert result.trace["nodes"][2]["output"]["context"][0]["source_document"] == "pricing-model"
 
 
 def test_eval_sla_trace_keeps_the_briefing_escalation(tmp_path):
@@ -116,8 +116,9 @@ def test_eval_sla_trace_keeps_the_briefing_escalation(tmp_path):
         chunk,
         tmp_path,
     )
-    assert [item["node"] for item in result.trace["nodes"]][:2] == [
+    assert [item["node"] for item in result.trace["nodes"]][:3] == [
         "receive_question",
+        "route_sources",
         "retrieve_context",
     ]
     assert "Javier Almeida" in seen["generate_context"][0]["text"]
@@ -151,6 +152,7 @@ def test_eval_empty_context_answers_honestly_without_generation(tmp_path):
     )
     assert [item["node"] for item in result.trace["nodes"]] == [
         "receive_question",
+        "route_sources",
         "retrieve_context",
         "insufficient_context",
     ]
@@ -186,6 +188,7 @@ def test_resume_continues_from_the_retrieve_checkpoint(tmp_path):
     assert paused.status == "paused"
     assert [item["node"] for item in paused.trace["nodes"]] == [
         "receive_question",
+        "route_sources",
         "retrieve_context",
     ]
     continued = resume_agent(compiled, paused.thread_id, trace_dir=tmp_path)
@@ -252,12 +255,13 @@ def test_committed_trace_export_shows_a_full_run():
     full = by_label["full_run_with_briefing_context"]
     assert [item["node"] for item in full["nodes"]] == [
         "receive_question",
+        "route_sources",
         "retrieve_context",
         "generate_answer",
     ]
     assert full["generation_mode"] == "explicit_stand_in"
     assert full["checkpoint_count"] >= 3
-    context_text = full["nodes"][1]["output"]["context"][0]["text"]
+    context_text = full["nodes"][2]["output"]["context"][0]["text"]
     assert "Marcos" in context_text and "22%" in context_text
     assert "Marcos" in full["answer"] and "22%" in full["answer"]
     empty = by_label["empty_question"]

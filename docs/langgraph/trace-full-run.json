@@ -1,10 +1,10 @@
 {
-  "note": "Tres corridas completas del grafo compilado. La primera recorre recepción, retrieve y generate_answer con un fragmento real de docs/company-knowledge-base/nexova-objection-handling.en.md. generate_answer aquí es un doble explícito que cita ese documento: GENERATION_MODEL_ID, GENERATION_BASE_URL y GENERATION_API_KEY están vacíos. No es una respuesta del modelo de 4Geeks y no cierra el criterio de anclaje en vivo (BLOCKED_HITL). Las otras dos corridas muestran las aristas condicionales: pregunta vacía, y retrieve sin contexto por encima del umbral.",
+  "note": "Tres corridas completas del grafo compilado. La primera pasa por recepción, la decisión de ruta, retrieve y generate_answer con un fragmento real de docs/company-knowledge-base/nexova-objection-handling.en.md. generate_answer aquí es un doble explícito que cita ese documento: GENERATION_MODEL_ID, GENERATION_BASE_URL y GENERATION_API_KEY están vacíos. No es una respuesta del modelo de 4Geeks y no cierra el criterio de anclaje en vivo (BLOCKED_HITL). Las otras dos corridas muestran las aristas condicionales: pregunta vacía, y retrieve sin contexto por encima del umbral.",
   "live_generation": "BLOCKED_HITL",
   "runs": [
     {
-      "run_id": "4b4c3259-7d3c-4b6f-a82a-44a0c1319b4d",
-      "thread_id": "b66f94f5-1124-43d2-a101-86c16cbec3a0",
+      "run_id": "7f5d82b7-f625-4b9d-a7b1-836a08b6a865",
+      "thread_id": "fdea8580-c614-4939-9d7b-e705a01fe819",
       "question": "Can you drop the executive-search fee from 22% to 15%?",
       "status": "answered",
       "answer": "# Handling Common Prospect Objections\n\n\"22% seems expensive compared to other firms.\"\nSuggested response: explain that the fee includes the 6-month replacement\nguarantee and the reference verification process, which reduces the risk of\na bad hire. A discount below 22% must never be offered without Marcos\nIbáñez's approval.\n\n\"Can I pay everything at the end, once the candidate starts working?\"\nResponse: the three-installment payment schedule (30/30/40) is standard and\nnon-negotiable for new clients. Only clients with more than 2 years of\ncommercial relationship can request an alternative schedule, and it must be\napproved by Finance.\n\n\"What happens if I'm not satisfied with the shortlist presented?\"\nResponse: Nexova offers one additional round of search at no cost if none\nof the candidates in the initial shortlist are acceptable, provided the\nclient has given specific feedback on why they didn't fit.\n\n\"Do you work with companies in my same sector that are direct competitors?\"\nResponse: Nexova does not take on searches for two companies in direct\nconflict of interest in the same selection process simultaneously, but may\nhave worked with competitors in the past. This must be communicated with\ntransparency, never concealed.",
@@ -18,11 +18,33 @@
             "context": [],
             "answer": "",
             "error": "",
-            "status": "received"
+            "status": "received",
+            "route": "",
+            "sources": [],
+            "ticket": {
+              "outcome": "not_called",
+              "message": "",
+              "tickets": []
+            }
           }
         },
         {
           "order": 2,
+          "node": "route_sources",
+          "output": {
+            "route": "rag",
+            "sources": [],
+            "ticket": {
+              "outcome": "not_called",
+              "message": "",
+              "tickets": []
+            },
+            "status": "routed",
+            "error": ""
+          }
+        },
+        {
+          "order": 3,
           "node": "retrieve_context",
           "output": {
             "context": [
@@ -35,12 +57,15 @@
                 "text": "# Handling Common Prospect Objections\n\n\"22% seems expensive compared to other firms.\"\nSuggested response: explain that the fee includes the 6-month replacement\nguarantee and the reference verification process, which reduces the risk of\na bad hire. A discount below 22% must never be offered without Marcos\nIbáñez's approval.\n\n\"Can I pay everything at the end, once the candidate starts working?\"\nResponse: the three-installment payment schedule (30/30/40) is standard and\nnon-negotiable for new clients. Only clients with more than 2 years of\ncommercial relationship can request an alternative schedule, and it must be\napproved by Finance.\n\n\"What happens if I'm not satisfied with the shortlist presented?\"\nResponse: Nexova offers one additional round of search at no cost if none\nof the candidates in the initial shortlist are acceptable, provided the\nclient has given specific feedback on why they didn't fit.\n\n\"Do you work with companies in my same sector that are direct competitors?\"\nResponse: Nexova does not take on searches for two companies in direct\nconflict of interest in the same selection process simultaneously, but may\nhave worked with competitors in the past. This must be communicated with\ntransparency, never concealed.\n"
               }
             ],
+            "sources": [
+              "rag"
+            ],
             "status": "retrieved",
             "error": ""
           }
         },
         {
-          "order": 3,
+          "order": 4,
           "node": "generate_answer",
           "output": {
             "answer": "# Handling Common Prospect Objections\n\n\"22% seems expensive compared to other firms.\"\nSuggested response: explain that the fee includes the 6-month replacement\nguarantee and the reference verification process, which reduces the risk of\na bad hire. A discount below 22% must never be offered without Marcos\nIbáñez's approval.\n\n\"Can I pay everything at the end, once the candidate starts working?\"\nResponse: the three-installment payment schedule (30/30/40) is standard and\nnon-negotiable for new clients. Only clients with more than 2 years of\ncommercial relationship can request an alternative schedule, and it must be\napproved by Finance.\n\n\"What happens if I'm not satisfied with the shortlist presented?\"\nResponse: Nexova offers one additional round of search at no cost if none\nof the candidates in the initial shortlist are acceptable, provided the\nclient has given specific feedback on why they didn't fit.\n\n\"Do you work with companies in my same sector that are direct competitors?\"\nResponse: Nexova does not take on searches for two companies in direct\nconflict of interest in the same selection process simultaneously, but may\nhave worked with competitors in the past. This must be communicated with\ntransparency, never concealed.",
@@ -74,7 +99,7 @@
           "step": 1,
           "source": "loop",
           "next": [
-            "retrieve_context"
+            "route_sources"
           ],
           "status": "received",
           "context_count": 0,
@@ -84,6 +109,16 @@
           "step": 2,
           "source": "loop",
           "next": [
+            "retrieve_context"
+          ],
+          "status": "routed",
+          "context_count": 0,
+          "has_answer": false
+        },
+        {
+          "step": 3,
+          "source": "loop",
+          "next": [
             "generate_answer"
           ],
           "status": "retrieved",
@@ -91,7 +126,7 @@
           "has_answer": false
         },
         {
-          "step": 3,
+          "step": 4,
           "source": "loop",
           "next": [],
           "status": "answered",
@@ -99,14 +134,18 @@
           "has_answer": true
         }
       ],
-      "checkpoint_count": 5,
+      "checkpoint_count": 6,
       "generation_mode": "explicit_stand_in",
       "retrieval_mode": "corpus_fixture",
+      "route": "rag",
+      "sources": [
+        "rag"
+      ],
       "label": "full_run_with_briefing_context"
     },
     {
-      "run_id": "32ee5ac5-00e6-4fc9-9963-d7a2d980ed83",
-      "thread_id": "2960e8fe-edd4-4595-bea1-ae76816f085b",
+      "run_id": "fdfc0bc9-b33d-4a43-b661-047c90a396b6",
+      "thread_id": "e193e297-87c2-4cc5-9d48-a6c4c54847ca",
       "question": "   ",
       "status": "empty_question",
       "answer": "",
@@ -176,11 +215,13 @@
       "checkpoint_count": 4,
       "generation_mode": "not_called",
       "retrieval_mode": "not_called",
+      "route": "",
+      "sources": [],
       "label": "empty_question"
     },
     {
-      "run_id": "1f6d4851-c86a-40c9-a29b-10fc5970db2a",
-      "thread_id": "54bf1f2d-76a4-4650-9d2a-13282a39581c",
+      "run_id": "625bdf4d-2384-4ba8-8304-45d7f52896f7",
+      "thread_id": "f7eaaca2-77ea-475e-85e0-b7f48e3365c5",
       "question": "What is the office wifi password?",
       "status": "insufficient_context",
       "answer": "I don't have information about that. The knowledge base returned no context above the threshold, so no answer was invented.",
@@ -194,20 +235,45 @@
             "context": [],
             "answer": "",
             "error": "",
-            "status": "received"
+            "status": "received",
+            "route": "",
+            "sources": [],
+            "ticket": {
+              "outcome": "not_called",
+              "message": "",
+              "tickets": []
+            }
           }
         },
         {
           "order": 2,
-          "node": "retrieve_context",
+          "node": "route_sources",
           "output": {
-            "context": [],
-            "status": "retrieved",
+            "route": "rag",
+            "sources": [],
+            "ticket": {
+              "outcome": "not_called",
+              "message": "",
+              "tickets": []
+            },
+            "status": "routed",
             "error": ""
           }
         },
         {
           "order": 3,
+          "node": "retrieve_context",
+          "output": {
+            "context": [],
+            "sources": [
+              "rag"
+            ],
+            "status": "retrieved",
+            "error": ""
+          }
+        },
+        {
+          "order": 4,
           "node": "insufficient_context",
           "output": {
             "answer": "I don't have information about that. The knowledge base returned no context above the threshold, so no answer was invented.",
@@ -241,7 +307,7 @@
           "step": 1,
           "source": "loop",
           "next": [
-            "retrieve_context"
+            "route_sources"
           ],
           "status": "received",
           "context_count": 0,
@@ -251,6 +317,16 @@
           "step": 2,
           "source": "loop",
           "next": [
+            "retrieve_context"
+          ],
+          "status": "routed",
+          "context_count": 0,
+          "has_answer": false
+        },
+        {
+          "step": 3,
+          "source": "loop",
+          "next": [
             "insufficient_context"
           ],
           "status": "retrieved",
@@ -258,7 +334,7 @@
           "has_answer": false
         },
         {
-          "step": 3,
+          "step": 4,
           "source": "loop",
           "next": [],
           "status": "insufficient_context",
@@ -266,9 +342,13 @@
           "has_answer": true
         }
       ],
-      "checkpoint_count": 5,
+      "checkpoint_count": 6,
       "generation_mode": "not_called",
       "retrieval_mode": "explicit_empty",
+      "route": "rag",
+      "sources": [
+        "rag"
+      ],
       "label": "no_context_above_threshold"
     }
   ]

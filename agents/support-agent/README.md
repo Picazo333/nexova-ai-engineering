@@ -1,28 +1,37 @@
 # Support agent
 
-Sales-support graph for an SDR. It answers one question from the Nexova knowledge base.
+Sales-support graph for one question. It answers from the Nexova knowledge base or from the incident manager, and it chooses which one from the question text.
 
-The graph, the checkpoints, and the trace writer are `services/api/app/agent/`. The HTTP entry is `POST /agent/query` on the existing FastAPI app (`services/api/app/main.py`). `GET /agent/runs/{run_id}` returns the stored trace.
+The graph, the checkpoints, and the trace writer are `services/api/app/agent/`. The HTTP entry is `POST /agent/query` on the existing FastAPI app (`services/api/app/main.py`). `GET /agent/runs/{run_id}` returns the stored trace. `/agente` shows a RAG trace and a ticket trace side by side.
 
 Nodes:
 
 1. `receive_question` — keeps the question and rejects an empty or oversized one.
-2. `retrieve_context` — calls `retrieve()` in `data/pipelines/rag.py`.
-3. `generate_answer` — calls `generate_answer(question, context)` with the chunks from step 2.
+2. `route_sources` — sets `rag`, `ticket`, or `both`.
+3. `retrieve_context` — calls `retrieve()` in `data/pipelines/rag.py`.
+4. `lookup_ticket` — calls the read-only ticket tool.
+5. `generate_answer` — calls `generate_answer(question, context)` with the chunks from step 3.
+6. `report_ticket` / `compose_sources` — write the answer from the tool payload, and from the RAG answer when both sources ran.
 
 Conditional edges:
 
-- Empty or invalid question → `refuse_empty`. Retrieval does not run.
+- Empty or invalid question → `refuse_empty`. Retrieval and the tool do not run.
+- Ticket wording, and no policy wording → `lookup_ticket` only.
+- Policy wording, and no ticket wording → `retrieve_context` only.
+- Both signals → `lookup_ticket`, then `retrieve_context`.
 - No chunk above the threshold → `insufficient_context`. Generation does not run.
-- Otherwise → `generate_answer`.
+- Tool timeout, error, missing token, or unknown id → an honest sentence. No status is invented.
 
-`query()` is not a node. The state is `question`, `context`, `answer`, `error`, and `status`. There is no conversation history.
+`query()` is not a node. The state is `question`, `context`, `answer`, `error`, `status`, `route`, `sources`, and `ticket`. There is no conversation history.
+
+The ticket tool lives in `services/api/app/agent/tools/tickets.py`. See `agents/tools/README.md`.
 
 ```bash
-uv run python -m pytest tests/pipelines/test_agent_graph.py
-PYTHONPATH=services/api uv run python -m app.agent.export_trace
+uv run python -m pytest tests/pipelines/test_agent_graph.py tests/pipelines/test_agent_routing.py
+PYTHONPATH=services/api:. uv run python -m app.agent.export_trace
+PYTHONPATH=services/api:. uv run python -m app.agent.export_compare
 ```
 
-Live generation needs `GENERATION_MODEL_ID`, `GENERATION_BASE_URL`, and `GENERATION_API_KEY`, and retrieval against the remote embedder needs `EMBEDDING_*`. While those are empty, the live grounding eval reports `BLOCKED_HITL`. The checked-in export uses an explicit stand-in and says so.
+Live generation needs `GENERATION_MODEL_ID`, `GENERATION_BASE_URL`, and `GENERATION_API_KEY`, and retrieval against the remote embedder needs `EMBEDDING_*`. While those are empty, the live grounding eval reports `BLOCKED_HITL`. The checked-in exports use an explicit stand-in for generation and say so. The ticket column does not: it reads an incident the manager stored.
 
 > _Spanish version: [README.es.md](./README.es.md)._

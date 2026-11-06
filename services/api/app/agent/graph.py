@@ -1,10 +1,12 @@
 """Compiled support-agent graph.
 
-The state is the question, the retrieved payloads, the answer, and a status.
-It does not carry the conversation. Nodes call `retrieve` and
-`generate_answer` from `data/pipelines/rag.py`. They do not call `query()`.
+The state is one question, the retrieved payloads, an optional ticket lookup,
+the answer, and a status. It does not carry the conversation. Retrieval and
+generation call `retrieve` and `generate_answer` from `data/pipelines/rag.py`.
+Ticket questions call the read-only incident tool. Neither path calls `query()`.
 
-Every run compiles the graph, checkpoints each step, and writes a JSON trace.
+Every run compiles the graph, checkpoints each step, and writes a JSON trace
+that records which source ran, and in what order.
 """
 
 from __future__ import annotations
@@ -21,11 +23,27 @@ from langgraph.graph import END, START, StateGraph
 from typing_extensions import TypedDict
 
 from app.agent.errors import GraphStructureError
+from app.agent.routing import decide_route, parse_ticket_query
+from app.agent.tools.tickets import (
+    TICKET_TOOL_TIMEOUT_SECONDS,
+    call_with_timeout,
+    reader_for_request,
+    render_ticket_answer,
+)
 from data.rag_settings import ROOT
 
 logger = logging.getLogger(__name__)
 
-ALLOWED_STATE_KEYS = {"question", "context", "answer", "error", "status"}
+ALLOWED_STATE_KEYS = {
+    "question",
+    "context",
+    "answer",
+    "error",
+    "status",
+    "route",
+    "sources",
+    "ticket",
+}
 HONEST_EN = "I don't have information about that."
 HONEST_ES = "No tengo información sobre eso."
 MAX_QUESTION_LENGTH = 2000
@@ -40,6 +58,9 @@ class AgentState(TypedDict, total=False):
     answer: str
     error: str
     status: str
+    route: str
+    sources: list[str]
+    ticket: dict
 
 
 @dataclass
@@ -113,6 +134,9 @@ def receive_question(state: AgentState) -> dict:
         "answer": "",
         "error": "",
         "status": "received",
+        "route": "",
+        "sources": [],
+        "ticket": {"outcome": "not_called", "tickets": [], "message": ""},
     }
 
 
@@ -131,7 +155,7 @@ def route_after_receive(state: AgentState) -> str:
         return "refuse_empty"
     if not str(state.get("question") or "").strip():
         return "refuse_empty"
-    return "retrieve_context"
+    return "route_sources"
 
 
 def refuse_empty(state: AgentState) -> dict:
@@ -145,16 +169,30 @@ def refuse_empty(state: AgentState) -> dict:
     }
 
 
+def _with_rag(state: AgentState) -> list[str]:
+    sources = [str(item) for item in (state.get("sources") or [])]
+    if "rag" not in sources:
+        sources.append("rag")
+    return sources
+
+
 def make_retrieve(retrieve_fn: RetrieveFn) -> Callable[[AgentState], dict]:
     def retrieve_context(state: AgentState) -> dict:
+        from data.rag_errors import RagError
         from data.rag_settings import load_settings
 
+        sources = _with_rag(state)
         settings = load_settings()
-        chunks = retrieve_fn(
-            state.get("question") or "",
-            k=settings.top_k,
-            min_score=settings.min_score,
-        )
+        try:
+            chunks = retrieve_fn(
+                state.get("question") or "",
+                k=settings.top_k,
+                min_score=settings.min_score,
+            )
+        except RagError:
+            if state.get("route") != "both":
+                raise
+            return {"context": [], "sources": sources, "status": "retrieved", "error": ""}
         if not isinstance(chunks, list):
             raise TypeError("retrieve() devolvió un valor que no es una lista.")
         clean: list[dict] = []
@@ -164,7 +202,7 @@ def make_retrieve(retrieve_fn: RetrieveFn) -> Callable[[AgentState], dict]:
             payload = dict(item)
             payload.pop("score", None)
             clean.append(payload)
-        return {"context": clean, "status": "retrieved", "error": ""}
+        return {"context": clean, "sources": sources, "status": "retrieved", "error": ""}
 
     return retrieve_context
 
@@ -185,14 +223,95 @@ def insufficient_context(state: AgentState) -> dict:
 
 def make_generate(generate_fn: GenerateFn) -> Callable[[AgentState], dict]:
     def generate_answer_node(state: AgentState) -> dict:
-        answer = generate_fn(state.get("question") or "", list(state.get("context") or []))
-        if not isinstance(answer, str) or not answer.strip():
-            from data.rag_errors import GenerationCallFailed
+        from data.rag_errors import GenerationCallFailed, RagError
 
-            raise GenerationCallFailed("The generation endpoint returned an empty answer.")
+        try:
+            answer = generate_fn(state.get("question") or "", list(state.get("context") or []))
+            if not isinstance(answer, str) or not answer.strip():
+                raise GenerationCallFailed("The generation endpoint returned an empty answer.")
+        except RagError:
+            if state.get("route") != "both":
+                raise
+            return {
+                "answer": honest_message(state.get("question") or ""),
+                "error": "",
+                "status": "insufficient_context",
+            }
         return {"answer": answer.strip(), "error": "", "status": "answered"}
 
     return generate_answer_node
+
+
+def route_sources(state: AgentState) -> dict:
+    route = decide_route(state.get("question") or "")
+    if route not in {"rag", "ticket", "both"}:
+        route = "rag"
+    return {
+        "route": route,
+        "sources": [],
+        "ticket": {"outcome": "not_called", "tickets": [], "message": ""},
+        "status": "routed",
+        "error": "",
+    }
+
+
+def route_after_decision(state: AgentState) -> str:
+    if state.get("route") in {"ticket", "both"}:
+        return "lookup_ticket"
+    return "retrieve_context"
+
+
+def make_lookup(reader: Any, timeout: float) -> Callable[[AgentState], dict]:
+    def lookup_ticket(state: AgentState) -> dict:
+        query = parse_ticket_query(state.get("question") or "")
+        result = call_with_timeout(lambda: reader.lookup(query), timeout)
+        sources = [str(item) for item in (state.get("sources") or [])]
+        if "ticket_tool" not in sources:
+            sources.append("ticket_tool")
+        return {
+            "ticket": result,
+            "sources": sources,
+            "status": "ticket_checked",
+            "error": "",
+        }
+
+    return lookup_ticket
+
+
+def route_after_lookup(state: AgentState) -> str:
+    if state.get("route") == "both":
+        return "retrieve_context"
+    return "report_ticket"
+
+
+def report_ticket(state: AgentState) -> dict:
+    ticket = state.get("ticket") if isinstance(state.get("ticket"), dict) else {}
+    answer = render_ticket_answer(ticket, state.get("question") or "")
+    status = "answered" if ticket.get("outcome") == "found" else "ticket_unavailable"
+    return {"answer": answer, "error": "", "status": status}
+
+
+def route_after_generate(state: AgentState) -> str:
+    if state.get("route") == "both":
+        return "compose_sources"
+    return "finish"
+
+
+def route_after_insufficient(state: AgentState) -> str:
+    if state.get("route") == "both":
+        return "compose_sources"
+    return "finish"
+
+
+def compose_sources(state: AgentState) -> dict:
+    ticket = state.get("ticket") if isinstance(state.get("ticket"), dict) else {}
+    question = state.get("question") or ""
+    ticket_text = render_ticket_answer(ticket, question).strip()
+    rag_text = str(state.get("answer") or "").strip()
+    parts = [part for part in (ticket_text, rag_text) if part]
+    rag_answered = state.get("status") == "answered" and bool(rag_text)
+    status = "answered" if ticket.get("outcome") == "found" or rag_answered else "ticket_unavailable"
+    return {"answer": "\n\n".join(parts), "error": "", "status": status}
 
 
 def _guard(fn: Callable[[AgentState], dict]) -> Callable[[AgentState], dict]:
@@ -297,18 +416,37 @@ def _walk(adjacency: dict[str, set[str]], origin: str) -> set[str]:
     return seen
 
 
-def build_graph(retrieve_fn: RetrieveFn, generate_fn: GenerateFn) -> StateGraph:
+def build_graph(
+    retrieve_fn: RetrieveFn,
+    generate_fn: GenerateFn,
+    ticket_reader: Any,
+    ticket_timeout: float,
+) -> StateGraph:
     builder = StateGraph(AgentState)
     builder.add_node("receive_question", _guard(receive_question))
+    builder.add_node("route_sources", _guard(route_sources))
     builder.add_node("retrieve_context", _guard(make_retrieve(retrieve_fn)))
+    builder.add_node("lookup_ticket", _guard(make_lookup(ticket_reader, ticket_timeout)))
+    builder.add_node("report_ticket", _guard(report_ticket))
     builder.add_node("generate_answer", _guard(make_generate(generate_fn)))
+    builder.add_node("compose_sources", _guard(compose_sources))
     builder.add_node("refuse_empty", _guard(refuse_empty))
     builder.add_node("insufficient_context", _guard(insufficient_context))
     builder.add_edge(START, "receive_question")
     builder.add_conditional_edges(
         "receive_question",
         route_after_receive,
-        {"retrieve_context": "retrieve_context", "refuse_empty": "refuse_empty"},
+        {"route_sources": "route_sources", "refuse_empty": "refuse_empty"},
+    )
+    builder.add_conditional_edges(
+        "route_sources",
+        route_after_decision,
+        {"retrieve_context": "retrieve_context", "lookup_ticket": "lookup_ticket"},
+    )
+    builder.add_conditional_edges(
+        "lookup_ticket",
+        route_after_lookup,
+        {"retrieve_context": "retrieve_context", "report_ticket": "report_ticket"},
     )
     builder.add_conditional_edges(
         "retrieve_context",
@@ -318,9 +456,19 @@ def build_graph(retrieve_fn: RetrieveFn, generate_fn: GenerateFn) -> StateGraph:
             "insufficient_context": "insufficient_context",
         },
     )
-    builder.add_edge("generate_answer", END)
+    builder.add_conditional_edges(
+        "generate_answer",
+        route_after_generate,
+        {"compose_sources": "compose_sources", "finish": END},
+    )
+    builder.add_conditional_edges(
+        "insufficient_context",
+        route_after_insufficient,
+        {"compose_sources": "compose_sources", "finish": END},
+    )
+    builder.add_edge("report_ticket", END)
+    builder.add_edge("compose_sources", END)
     builder.add_edge("refuse_empty", END)
-    builder.add_edge("insufficient_context", END)
     return builder
 
 
@@ -348,19 +496,42 @@ def compile_builder(
         raise GraphStructureError(f"El grafo no se pudo compilar: {exc}") from exc
 
 
+def _transport_name(reader: Any) -> str:
+    name = type(reader).__name__
+    if name == "HttpIncidentReader":
+        return "http"
+    if name == "InProcessIncidentReader":
+        return "in_process"
+    if name == "DeniedReader":
+        return "denied"
+    return "injected"
+
+
 def compile_agent(
     *,
     retrieve_fn: RetrieveFn | None = None,
     generate_fn: GenerateFn | None = None,
     checkpointer: InMemorySaver | None = None,
     interrupt_after: list[str] | None = None,
+    ticket_reader: Any | None = None,
+    ticket_timeout: float | None = None,
+    access_token: str | None = None,
 ):
-    builder = build_graph(retrieve_fn or default_retrieve, generate_fn or default_generate)
-    return compile_builder(
+    timeout = TICKET_TOOL_TIMEOUT_SECONDS if ticket_timeout is None else float(ticket_timeout)
+    reader = ticket_reader if ticket_reader is not None else reader_for_request(access_token, timeout)
+    builder = build_graph(
+        retrieve_fn or default_retrieve,
+        generate_fn or default_generate,
+        reader,
+        timeout,
+    )
+    compiled = compile_builder(
         builder,
         checkpointer=checkpointer if checkpointer is not None else default_checkpointer(),
         interrupt_after=interrupt_after,
     )
+    compiled.ticket_transport = _transport_name(reader)  # type: ignore[attr-defined]
+    return compiled
 
 
 def run_agent(
@@ -373,12 +544,18 @@ def run_agent(
     trace_dir: Path | str | None = None,
     interrupt_after: list[str] | None = None,
     metadata: dict | None = None,
+    ticket_reader: Any | None = None,
+    ticket_timeout: float | None = None,
+    access_token: str | None = None,
 ) -> AgentRun:
     compiled = compile_agent(
         retrieve_fn=retrieve_fn,
         generate_fn=generate_fn,
         checkpointer=checkpointer,
         interrupt_after=interrupt_after,
+        ticket_reader=ticket_reader,
+        ticket_timeout=ticket_timeout,
+        access_token=access_token,
     )
     return execute(
         compiled,
@@ -421,6 +598,7 @@ def _drive(
     run_id = str(uuid.uuid4())
     config = {"configurable": {"thread_id": thread_id}}
     executed: list[dict] = []
+    values: dict = {}
     try:
         for update in compiled.stream(graph_input, config, stream_mode="updates"):
             for name, payload in update.items():
@@ -454,6 +632,8 @@ def _drive(
         compiled=compiled,
         config=config,
         metadata=metadata,
+        state_values=values,
+        ticket_transport=str(getattr(compiled, "ticket_transport", "") or ""),
     )
     save_trace(trace, resolve_trace_dir(trace_dir))
     return AgentRun(
@@ -486,7 +666,30 @@ def _public_output(payload: Any) -> dict:
     context = output.get("context")
     if isinstance(context, list):
         output["context"] = [_public_chunk(item) for item in context]
+    ticket = output.get("ticket")
+    if isinstance(ticket, dict):
+        output["ticket"] = _public_ticket(ticket)
+    sources = output.get("sources")
+    if isinstance(sources, list):
+        output["sources"] = [str(item) for item in sources if str(item) in {"rag", "ticket_tool"}]
     return output
+
+
+def _public_ticket(payload: dict) -> dict:
+    from app.agent.tools.tickets import PUBLIC_FIELDS
+
+    tickets = []
+    raw_rows = payload.get("tickets")
+    if isinstance(raw_rows, list):
+        for row in raw_rows:
+            if not isinstance(row, dict):
+                continue
+            tickets.append({key: row[key] for key in PUBLIC_FIELDS if isinstance(row.get(key), str)})
+    return {
+        "outcome": str(payload.get("outcome") or ""),
+        "message": str(payload.get("message") or ""),
+        "tickets": tickets,
+    }
 
 
 def _public_chunk(item: Any) -> dict:
@@ -524,7 +727,7 @@ def _classify(exc: Exception) -> tuple[str, str]:
 def _http_status(status: str, answer: str) -> int:
     if status == "paused":
         return 200
-    if status in {"answered", "insufficient_context"} and answer.strip():
+    if status in {"answered", "insufficient_context", "ticket_unavailable"} and answer.strip():
         return 200
     if status in {"empty_question", "invalid_question"}:
         return 422
@@ -545,11 +748,15 @@ def _trace_document(
     compiled: Any,
     config: dict,
     metadata: dict | None,
+    state_values: dict | None = None,
+    ticket_transport: str = "",
 ) -> dict:
     numbered = []
     for index, item in enumerate(nodes, start=1):
         numbered.append({"order": index, "node": item["node"], "output": item["output"]})
     checkpoints = _checkpoints(compiled, config)
+    values = state_values or {}
+    route = _route_from(numbered, values)
     document = {
         "run_id": run_id,
         "thread_id": thread_id,
@@ -562,10 +769,41 @@ def _trace_document(
         "checkpoint_count": len(checkpoints),
         "generation_mode": "pipeline",
         "retrieval_mode": "pipeline",
+        "route": route,
+        "sources": _sources_from(numbered, values),
     }
     if metadata:
         document.update(metadata)
+    document["route"] = route
+    document["sources"] = _sources_from(numbered, values)
+    if route in {"ticket", "both"} and ticket_transport:
+        document["ticket_transport"] = ticket_transport
     return document
+
+
+def _route_from(nodes: list[dict], values: dict) -> str:
+    route = str(values.get("route") or "")
+    if route in {"rag", "ticket", "both"}:
+        return route
+    for item in nodes:
+        output = item.get("output") or {}
+        if item.get("node") == "route_sources" and str(output.get("route") or "") in {"rag", "ticket", "both"}:
+            return str(output["route"])
+    return ""
+
+
+def _sources_from(nodes: list[dict], values: dict) -> list[str]:
+    stored = values.get("sources")
+    if isinstance(stored, list) and stored:
+        return [str(item) for item in stored if str(item) in {"rag", "ticket_tool"}]
+    found: list[str] = []
+    for item in nodes:
+        output = item.get("output") or {}
+        for name in output.get("sources") or []:
+            text = str(name)
+            if text in {"rag", "ticket_tool"} and text not in found:
+                found.append(text)
+    return found
 
 
 def _checkpoints(compiled: Any, config: dict) -> list[dict]:
