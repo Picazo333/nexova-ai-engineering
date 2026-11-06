@@ -1,0 +1,44 @@
+{
+  "project": "ai-eng-error-handling",
+  "orden": "017",
+  "commit": "2bbaf910cbad5c309f0b85b245b5f8285e9c27fa",
+  "branch": "feature/error-handling-audit",
+  "pull_request": "https://github.com/Picazo333/nexova-ai-engineering/pull/19",
+  "base": "feature/centralized-incident-manager@677f9da",
+  "started_at": null,
+  "ended_at": null,
+  "eval_repair_iterations": null,
+  "failures": [],
+  "verification_commands": [
+    "cd services/api && uv run pytest",
+    "cd uis/portal && npx jest --coverage",
+    "cd uis/portal && npx playwright test"
+  ],
+  "test_result": "pytest 115 passed; Jest 19 passed; Playwright 10 passed (citado en FINAL_AUDIT; no reejecutado en esta reparación documental)",
+  "tokens_used": null,
+  "tokens_unmeasurable_reason": "Este runtime no expone un contador de tokens de la conversación ni una API local de uso. No se inventa la cifra. El TELEMETRY canónico faltaba en process/; este borrador se crea en la reparación forense 2026-11-06 07:39 CST sin inventar started_at/ended_at ni proxy numérico.",
+  "tokens_proxy": {
+    "method": "No medido en esta reparación documental. Proxy pendiente de relleno con bytes de contexto/diff si se republica el cierre.",
+    "context_read_bytes": null,
+    "repo_bytes_written": null,
+    "diff_insertions": null,
+    "diff_deletions": null,
+    "artifact_bytes": null,
+    "duration": null,
+    "note": "BORRADOR LOCAL — pendiente de publicar al repo/PR. No inventar cifras."
+  },
+  "status": "READY_TO_SUBMIT",
+  "publication": {
+    "local_only": false,
+    "pending_publish": false,
+    "published_at": "2026-11-06T14:40:00Z",
+    "destination": "docs/error-handling/TELEMETRY.json",
+    "pr": "https://github.com/Picazo333/nexova-ai-engineering/pull/19",
+    "authorized_by": "Miguel 2026-11-06 08:36 CST"
+  },
+  "count_correction": {
+    "previous_claimed": "28/28",
+    "canonical": "29/29",
+    "breakdown": "R01-R21=21; E01-E02=2; S01-S06=6"
+  }
+}
