@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Auditoría Lighthouse · antes y después</title>
+  <style>
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: #18202B; background: #F7F8FA; }
+    main { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 32px 0 64px; }
+    h1 { font-size: 1.75rem; line-height: 1.25; margin: 0 0 8px; }
+    h2 { font-size: 1.25rem; margin: 40px 0 8px; }
+    p, li { line-height: 1.45; }
+    .note { color: #505E70; max-width: 68ch; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    figure { margin: 0; background: #fff; border: 1px solid #788598; }
+    figcaption { padding: 12px 14px 4px; font-size: 0.95rem; }
+    img { display: block; width: 100%; height: auto; }
+    .scores { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 14px 14px; }
+    .scores span { border: 1px solid #788598; padding: 4px 8px; font-variant-numeric: tabular-nums; }
+    @media (max-width: 800px) { .pair { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Lighthouse, antes y después</h1>
+    <p class="note">Mediana de tres corridas en Chrome headless, build de producción, throttling <code>simulate</code>. La captura es la corrida central. Móvil 390×844, RTT 150 ms, 1638.4 kbps, CPU ×4. Escritorio RTT 40 ms, 10240 kbps, CPU ×1. INP no sale en este modo de laboratorio.</p>
+
+    <h2>Sitio corporativo · inicio, móvil</h2>
+    <div class="pair">
+      <figure>
+        <figcaption>Antes. Performance 94. LCP 2.71 s. FCP 2.11 s. TBT 46 ms. CLS 0.</figcaption>
+        <img src="before/site-home-mobile.png" alt="Lighthouse del inicio en móvil antes del cambio: Performance 94, Accesibilidad 100, Best Practices 100, SEO 100, LCP 2.7 segundos." width="1280" height="900">
+        <div class="scores"><span>Perf 94</span><span>A11y 100</span><span>BP 100</span><span>SEO 100</span></div>
+      </figure>
+      <figure>
+        <figcaption>Después. Performance 98. LCP 2.25 s. FCP 1.42 s. TBT 0 ms. CLS 0.</figcaption>
+        <img src="after/site-home-mobile.png" alt="Lighthouse del inicio en móvil después del CSS compilado: Performance 98, el resto 100, LCP 2.3 segundos." width="1280" height="900">
+        <div class="scores"><span>Perf 98</span><span>A11y 100</span><span>BP 100</span><span>SEO 100</span></div>
+      </figure>
+    </div>
+
+    <h2>Sitio corporativo · solicitud, móvil</h2>
+    <div class="pair">
+      <figure>
+        <figcaption>Antes. Performance 98. LCP 1.97 s. FCP 1.97 s. TBT 45 ms.</figcaption>
+        <img src="before/site-application-mobile.png" alt="Lighthouse de la solicitud en móvil antes: Performance 98." width="1280" height="900">
+        <div class="scores"><span>Perf 98</span><span>A11y 100</span><span>BP 100</span><span>SEO 100</span></div>
+      </figure>
+      <figure>
+        <figcaption>Después. Performance 100. LCP 1.05 s. FCP 1.05 s. TBT 0 ms.</figcaption>
+        <img src="after/site-application-mobile.png" alt="Lighthouse de la solicitud en móvil después: Performance 100 y LCP 1.1 segundos." width="1280" height="900">
+        <div class="scores"><span>Perf 100</span><span>A11y 100</span><span>BP 100</span><span>SEO 100</span></div>
+      </figure>
+    </div>
+
+    <h2>Backoffice · panel, móvil</h2>
+    <div class="pair">
+      <figure>
+        <figcaption>Antes. Performance 100. Best Practices 96. SEO 63. CLS 0.023.</figcaption>
+        <img src="before/backoffice-home-mobile.png" alt="Lighthouse del panel antes: Best Practices 96 y SEO 63." width="1280" height="900">
+        <div class="scores"><span>Perf 100</span><span>A11y 100</span><span>BP 96</span><span>SEO 63</span></div>
+      </figure>
+      <figure>
+        <figcaption>Después. Performance 100. Best Practices 100. SEO 63. CLS 0.</figcaption>
+        <img src="after/backoffice-home-mobile.png" alt="Lighthouse del panel después: Best Practices 100, SEO 63, CLS 0." width="1280" height="900">
+        <div class="scores"><span>Perf 100</span><span>A11y 100</span><span>BP 100</span><span>SEO 63</span></div>
+      </figure>
+    </div>
+
+    <h2>Portal Next · entrar, móvil</h2>
+    <div class="pair">
+      <figure>
+        <figcaption>Antes. Performance 100. Accesibilidad 100. Best Practices 100. SEO 63. LCP 0.76 s. CLS 0.</figcaption>
+        <img src="before/portal-login-mobile.png" alt="Lighthouse del login del portal antes: Performance 100 y SEO 63." width="1280" height="900">
+        <div class="scores"><span>Perf 100</span><span>A11y 100</span><span>BP 100</span><span>SEO 63</span></div>
+      </figure>
+      <figure>
+        <figcaption>Después. Las mismas cuatro puntuaciones. El noindex del portal no se quitó.</figcaption>
+        <img src="after/portal-login-mobile.png" alt="Lighthouse del login del portal después: Performance 100 y SEO 63." width="1280" height="900">
+        <div class="scores"><span>Perf 100</span><span>A11y 100</span><span>BP 100</span><span>SEO 63</span></div>
+      </figure>
+    </div>
+
+    <p class="note">El resto de capturas, escritorio incluido, está en <code>audit/before/</code> y <code>audit/after/</code>. El detalle numérico de las tres corridas está en <code>docs/performance-web-vitals/evidence/lighthouse-summary.json</code>.</p>
+  </main>
+</body>
+</html>

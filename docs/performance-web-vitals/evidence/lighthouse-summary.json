@@ -1,0 +1,1634 @@
+{
+  "lighthouse": "13.6.0",
+  "method": "Chrome headless, throttling simulate, tres corridas, mediana. INP no lo emite Lighthouse en laboratorio; el sustituto es TBT.",
+  "inp": null,
+  "inp_reason": "Lighthouse 13 con throttling simulate no publica Interaction to Next Paint. No se inventa un INP.",
+  "before": {
+    "backoffice-home|desktop": {
+      "runs": 3,
+      "config": {
+        "form": "desktop",
+        "method": "simulate",
+        "rtt": 40,
+        "tp": 10240,
+        "cpu": 1,
+        "w": 1350,
+        "h": 940
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 0.96,
+      "seo": 0.63,
+      "lcp_ms": 211.08,
+      "lcp_worst_ms": 212.22,
+      "cls": 0.05927,
+      "cls_worst": 0.05927,
+      "tbt_ms": 0,
+      "tbt_worst_ms": 0,
+      "fcp_ms": 211.08,
+      "fcp_worst_ms": 212.22,
+      "ttfb_ms": 2,
+      "ttfb_worst_ms": 2,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          210.17,
+          211.08,
+          212.22
+        ],
+        "cls": [
+          0.05927,
+          0.05927,
+          0.05927
+        ],
+        "tbt_ms": [
+          0,
+          0,
+          0
+        ],
+        "fcp_ms": [
+          210.17,
+          211.08,
+          212.22
+        ],
+        "ttfb_ms": [
+          2,
+          2,
+          2
+        ]
+      }
+    },
+    "backoffice-home|mobile": {
+      "runs": 3,
+      "config": {
+        "form": "mobile",
+        "method": "simulate",
+        "rtt": 150,
+        "tp": 1638.4,
+        "cpu": 4,
+        "w": 390,
+        "h": 844
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 0.96,
+      "seo": 0.63,
+      "lcp_ms": 763.46,
+      "lcp_worst_ms": 765.84,
+      "cls": 0.02304,
+      "cls_worst": 0.02304,
+      "tbt_ms": 20,
+      "tbt_worst_ms": 29,
+      "fcp_ms": 763.46,
+      "fcp_worst_ms": 765.84,
+      "ttfb_ms": 2,
+      "ttfb_worst_ms": 3,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          763.46,
+          763.26,
+          765.84
+        ],
+        "cls": [
+          0.02304,
+          0.02304,
+          0.02304
+        ],
+        "tbt_ms": [
+          15,
+          20,
+          29
+        ],
+        "fcp_ms": [
+          763.46,
+          763.26,
+          765.84
+        ],
+        "ttfb_ms": [
+          2,
+          3,
+          2
+        ]
+      }
+    },
+    "backoffice-login|desktop": {
+      "runs": 3,
+      "config": {
+        "form": "desktop",
+        "method": "simulate",
+        "rtt": 40,
+        "tp": 10240,
+        "cpu": 1,
+        "w": 1350,
+        "h": 940
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 0.96,
+      "seo": 0.63,
+      "lcp_ms": 210.31,
+      "lcp_worst_ms": 211.56,
+      "cls": 0,
+      "cls_worst": 0,
+      "tbt_ms": 0,
+      "tbt_worst_ms": 0,
+      "fcp_ms": 210.31,
+      "fcp_worst_ms": 211.56,
+      "ttfb_ms": 6,
+      "ttfb_worst_ms": 7,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          208.5,
+          210.31,
+          211.56
+        ],
+        "cls": [
+          0,
+          0,
+          0
+        ],
+        "tbt_ms": [
+          0,
+          0,
+          0
+        ],
+        "fcp_ms": [
+          208.5,
+          210.31,
+          211.56
+        ],
+        "ttfb_ms": [
+          7,
+          6,
+          6
+        ]
+      }
+    },
+    "backoffice-login|mobile": {
+      "runs": 3,
+      "config": {
+        "form": "mobile",
+        "method": "simulate",
+        "rtt": 150,
+        "tp": 1638.4,
+        "cpu": 4,
+        "w": 390,
+        "h": 844
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 0.96,
+      "seo": 0.63,
+      "lcp_ms": 761.29,
+      "lcp_worst_ms": 763.44,
+      "cls": 0,
+      "cls_worst": 0,
+      "tbt_ms": 15,
+      "tbt_worst_ms": 15,
+      "fcp_ms": 761.29,
+      "fcp_worst_ms": 763.44,
+      "ttfb_ms": 6,
+      "ttfb_worst_ms": 7,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          763.44,
+          759.16,
+          761.29
+        ],
+        "cls": [
+          0,
+          0,
+          0
+        ],
+        "tbt_ms": [
+          15,
+          14.5,
+          15
+        ],
+        "fcp_ms": [
+          763.44,
+          759.16,
+          761.29
+        ],
+        "ttfb_ms": [
+          7,
+          6,
+          6
+        ]
+      }
+    },
+    "backoffice-products|desktop": {
+      "runs": 3,
+      "config": {
+        "form": "desktop",
+        "method": "simulate",
+        "rtt": 40,
+        "tp": 10240,
+        "cpu": 1,
+        "w": 1350,
+        "h": 940
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 0.96,
+      "seo": 0.63,
+      "lcp_ms": 477.9,
+      "lcp_worst_ms": 488.82,
+      "cls": 0,
+      "cls_worst": 0,
+      "tbt_ms": 0,
+      "tbt_worst_ms": 0,
+      "fcp_ms": 210.23,
+      "fcp_worst_ms": 216.47,
+      "ttfb_ms": 6,
+      "ttfb_worst_ms": 6,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          488.82,
+          477.9,
+          477.82
+        ],
+        "cls": [
+          0,
+          0,
+          0
+        ],
+        "tbt_ms": [
+          0,
+          0,
+          0
+        ],
+        "fcp_ms": [
+          216.47,
+          210.23,
+          210.18
+        ],
+        "ttfb_ms": [
+          6,
+          6,
+          5
+        ]
+      }
+    },
+    "backoffice-products|mobile": {
+      "runs": 3,
+      "config": {
+        "form": "mobile",
+        "method": "simulate",
+        "rtt": 150,
+        "tp": 1638.4,
+        "cpu": 4,
+        "w": 390,
+        "h": 844
+      },
+      "performance": 0.99,
+      "accessibility": 1,
+      "bestPractices": 0.96,
+      "seo": 0.63,
+      "lcp_ms": 1984.67,
+      "lcp_worst_ms": 1991.77,
+      "cls": 0.02705,
+      "cls_worst": 0.02705,
+      "tbt_ms": 23.5,
+      "tbt_worst_ms": 28.5,
+      "fcp_ms": 761.13,
+      "fcp_worst_ms": 762.67,
+      "ttfb_ms": 6,
+      "ttfb_worst_ms": 7,
+      "values": {
+        "performance": [
+          0.99,
+          0.99,
+          0.99
+        ],
+        "lcp_ms": [
+          1984.67,
+          1968.13,
+          1991.77
+        ],
+        "cls": [
+          0.02705,
+          0.02705,
+          0.02705
+        ],
+        "tbt_ms": [
+          23.5,
+          16,
+          28.5
+        ],
+        "fcp_ms": [
+          762.67,
+          761.13,
+          759.77
+        ],
+        "ttfb_ms": [
+          6,
+          6,
+          7
+        ]
+      }
+    },
+    "portal-home|desktop": {
+      "runs": 3,
+      "config": {
+        "form": "desktop",
+        "method": "simulate",
+        "rtt": 40,
+        "tp": 10240,
+        "cpu": 1,
+        "w": 1350,
+        "h": 940
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 0.63,
+      "lcp_ms": 476.11,
+      "lcp_worst_ms": 479.77,
+      "cls": 0.03293,
+      "cls_worst": 0.03293,
+      "tbt_ms": 0,
+      "tbt_worst_ms": 0,
+      "fcp_ms": 210.74,
+      "fcp_worst_ms": 213.18,
+      "ttfb_ms": 2,
+      "ttfb_worst_ms": 3,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          470.02,
+          479.77,
+          476.11
+        ],
+        "cls": [
+          0.03293,
+          0.03293,
+          0.03293
+        ],
+        "tbt_ms": [
+          0,
+          0,
+          0
+        ],
+        "fcp_ms": [
+          206.68,
+          213.18,
+          210.74
+        ],
+        "ttfb_ms": [
+          3,
+          2,
+          2
+        ]
+      }
+    },
+    "portal-home|mobile": {
+      "runs": 3,
+      "config": {
+        "form": "mobile",
+        "method": "simulate",
+        "rtt": 150,
+        "tp": 1638.4,
+        "cpu": 4,
+        "w": 390,
+        "h": 844
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 0.63,
+      "lcp_ms": 1890.84,
+      "lcp_worst_ms": 1893.63,
+      "cls": 0.02184,
+      "cls_worst": 0.02184,
+      "tbt_ms": 16,
+      "tbt_worst_ms": 16,
+      "fcp_ms": 759.05,
+      "fcp_worst_ms": 760.64,
+      "ttfb_ms": 3,
+      "ttfb_worst_ms": 3,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          1893.63,
+          1890.84,
+          1889.35
+        ],
+        "cls": [
+          0.02184,
+          0.02184,
+          0.02184
+        ],
+        "tbt_ms": [
+          16,
+          14,
+          16
+        ],
+        "fcp_ms": [
+          760.64,
+          759.05,
+          758.2
+        ],
+        "ttfb_ms": [
+          3,
+          3,
+          3
+        ]
+      }
+    },
+    "portal-login|desktop": {
+      "runs": 3,
+      "config": {
+        "form": "desktop",
+        "method": "simulate",
+        "rtt": 40,
+        "tp": 10240,
+        "cpu": 1,
+        "w": 1350,
+        "h": 940
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 0.63,
+      "lcp_ms": 210.07,
+      "lcp_worst_ms": 211.42,
+      "cls": 0,
+      "cls_worst": 0,
+      "tbt_ms": 0,
+      "tbt_worst_ms": 0,
+      "fcp_ms": 210.07,
+      "fcp_worst_ms": 211.42,
+      "ttfb_ms": 6,
+      "ttfb_worst_ms": 7,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          210.07,
+          211.42,
+          206.38
+        ],
+        "cls": [
+          0,
+          0,
+          0
+        ],
+        "tbt_ms": [
+          0,
+          0,
+          0
+        ],
+        "fcp_ms": [
+          210.07,
+          211.42,
+          206.38
+        ],
+        "ttfb_ms": [
+          7,
+          6,
+          6
+        ]
+      }
+    },
+    "portal-login|mobile": {
+      "runs": 3,
+      "config": {
+        "form": "mobile",
+        "method": "simulate",
+        "rtt": 150,
+        "tp": 1638.4,
+        "cpu": 4,
+        "w": 390,
+        "h": 844
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 0.63,
+      "lcp_ms": 759.15,
+      "lcp_worst_ms": 759.29,
+      "cls": 0,
+      "cls_worst": 0,
+      "tbt_ms": 15.5,
+      "tbt_worst_ms": 16,
+      "fcp_ms": 759.15,
+      "fcp_worst_ms": 759.29,
+      "ttfb_ms": 8,
+      "ttfb_worst_ms": 8,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          759.29,
+          759.15,
+          757.85
+        ],
+        "cls": [
+          0,
+          0,
+          0
+        ],
+        "tbt_ms": [
+          14.5,
+          16,
+          15.5
+        ],
+        "fcp_ms": [
+          759.29,
+          759.15,
+          757.85
+        ],
+        "ttfb_ms": [
+          7,
+          8,
+          8
+        ]
+      }
+    },
+    "site-application|desktop": {
+      "runs": 3,
+      "config": {
+        "form": "desktop",
+        "method": "simulate",
+        "rtt": 40,
+        "tp": 10240,
+        "cpu": 1,
+        "w": 1350,
+        "h": 940
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 1,
+      "lcp_ms": 534.54,
+      "lcp_worst_ms": 535.42,
+      "cls": 0.00088,
+      "cls_worst": 0.00088,
+      "tbt_ms": 0,
+      "tbt_worst_ms": 0,
+      "fcp_ms": 534.54,
+      "fcp_worst_ms": 535.42,
+      "ttfb_ms": 0,
+      "ttfb_worst_ms": 1,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          534.54,
+          535.42,
+          531.43
+        ],
+        "cls": [
+          0.00088,
+          0.00088,
+          0.00088
+        ],
+        "tbt_ms": [
+          0,
+          0,
+          0
+        ],
+        "fcp_ms": [
+          534.54,
+          535.42,
+          531.43
+        ],
+        "ttfb_ms": [
+          0,
+          1,
+          0
+        ]
+      }
+    },
+    "site-application|mobile": {
+      "runs": 3,
+      "config": {
+        "form": "mobile",
+        "method": "simulate",
+        "rtt": 150,
+        "tp": 1638.4,
+        "cpu": 4,
+        "w": 390,
+        "h": 844
+      },
+      "performance": 0.98,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 1,
+      "lcp_ms": 1971.59,
+      "lcp_worst_ms": 1989.63,
+      "cls": 0,
+      "cls_worst": 0,
+      "tbt_ms": 44.5,
+      "tbt_worst_ms": 76,
+      "fcp_ms": 1971.59,
+      "fcp_worst_ms": 1989.63,
+      "ttfb_ms": 0,
+      "ttfb_worst_ms": 1,
+      "values": {
+        "performance": [
+          0.98,
+          0.97,
+          0.98
+        ],
+        "lcp_ms": [
+          1970.07,
+          1989.63,
+          1971.59
+        ],
+        "cls": [
+          0,
+          0,
+          0
+        ],
+        "tbt_ms": [
+          44.5,
+          76,
+          42.5
+        ],
+        "fcp_ms": [
+          1970.07,
+          1989.63,
+          1971.59
+        ],
+        "ttfb_ms": [
+          0,
+          1,
+          0
+        ]
+      }
+    },
+    "site-home|desktop": {
+      "runs": 3,
+      "config": {
+        "form": "desktop",
+        "method": "simulate",
+        "rtt": 40,
+        "tp": 10240,
+        "cpu": 1,
+        "w": 1350,
+        "h": 940
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 1,
+      "lcp_ms": 610.86,
+      "lcp_worst_ms": 611.14,
+      "cls": 0.00002,
+      "cls_worst": 0.00002,
+      "tbt_ms": 0,
+      "tbt_worst_ms": 0,
+      "fcp_ms": 570.59,
+      "fcp_worst_ms": 570.88,
+      "ttfb_ms": 1,
+      "ttfb_worst_ms": 1,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          605.67,
+          611.14,
+          610.86
+        ],
+        "cls": [
+          0.00002,
+          0.00002,
+          0.00002
+        ],
+        "tbt_ms": [
+          0,
+          0,
+          0
+        ],
+        "fcp_ms": [
+          565.34,
+          570.88,
+          570.59
+        ],
+        "ttfb_ms": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    "site-home|mobile": {
+      "runs": 3,
+      "config": {
+        "form": "mobile",
+        "method": "simulate",
+        "rtt": 150,
+        "tp": 1638.4,
+        "cpu": 4,
+        "w": 390,
+        "h": 844
+      },
+      "performance": 0.94,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 1,
+      "lcp_ms": 2710.47,
+      "lcp_worst_ms": 2717.86,
+      "cls": 0,
+      "cls_worst": 0,
+      "tbt_ms": 46,
+      "tbt_worst_ms": 54,
+      "fcp_ms": 2109.93,
+      "fcp_worst_ms": 2117.32,
+      "ttfb_ms": 0,
+      "ttfb_worst_ms": 1,
+      "values": {
+        "performance": [
+          0.94,
+          0.94,
+          0.94
+        ],
+        "lcp_ms": [
+          2710.47,
+          2717.86,
+          2704.63
+        ],
+        "cls": [
+          0,
+          0,
+          0
+        ],
+        "tbt_ms": [
+          46,
+          54,
+          37
+        ],
+        "fcp_ms": [
+          2109.93,
+          2117.32,
+          2103.56
+        ],
+        "ttfb_ms": [
+          0,
+          1,
+          0
+        ]
+      }
+    }
+  },
+  "after": {
+    "backoffice-home|desktop": {
+      "runs": 3,
+      "config": {
+        "form": "desktop",
+        "method": "simulate",
+        "rtt": 40,
+        "tp": 10240,
+        "cpu": 1,
+        "w": 1350,
+        "h": 940
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 0.63,
+      "lcp_ms": 211.76,
+      "lcp_worst_ms": 214.44,
+      "cls": 0.00755,
+      "cls_worst": 0.00755,
+      "tbt_ms": 0,
+      "tbt_worst_ms": 0,
+      "fcp_ms": 211.76,
+      "fcp_worst_ms": 214.44,
+      "ttfb_ms": 2,
+      "ttfb_worst_ms": 4,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          214.44,
+          211.76,
+          209.72
+        ],
+        "cls": [
+          0.00755,
+          0.00755,
+          0.00755
+        ],
+        "tbt_ms": [
+          0,
+          0,
+          0
+        ],
+        "fcp_ms": [
+          214.44,
+          211.76,
+          209.72
+        ],
+        "ttfb_ms": [
+          2,
+          4,
+          2
+        ]
+      }
+    },
+    "backoffice-home|mobile": {
+      "runs": 3,
+      "config": {
+        "form": "mobile",
+        "method": "simulate",
+        "rtt": 150,
+        "tp": 1638.4,
+        "cpu": 4,
+        "w": 390,
+        "h": 844
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 0.63,
+      "lcp_ms": 765.72,
+      "lcp_worst_ms": 770.05,
+      "cls": 0,
+      "cls_worst": 0,
+      "tbt_ms": 24.5,
+      "tbt_worst_ms": 25,
+      "fcp_ms": 765.72,
+      "fcp_worst_ms": 770.05,
+      "ttfb_ms": 3,
+      "ttfb_worst_ms": 6,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          770.05,
+          761.36,
+          765.72
+        ],
+        "cls": [
+          0,
+          0,
+          0
+        ],
+        "tbt_ms": [
+          24.5,
+          25,
+          20.5
+        ],
+        "fcp_ms": [
+          770.05,
+          761.36,
+          765.72
+        ],
+        "ttfb_ms": [
+          6,
+          3,
+          3
+        ]
+      }
+    },
+    "backoffice-login|desktop": {
+      "runs": 3,
+      "config": {
+        "form": "desktop",
+        "method": "simulate",
+        "rtt": 40,
+        "tp": 10240,
+        "cpu": 1,
+        "w": 1350,
+        "h": 940
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 0.63,
+      "lcp_ms": 213.7,
+      "lcp_worst_ms": 215.35,
+      "cls": 0,
+      "cls_worst": 0,
+      "tbt_ms": 0,
+      "tbt_worst_ms": 0,
+      "fcp_ms": 213.7,
+      "fcp_worst_ms": 215.35,
+      "ttfb_ms": 9,
+      "ttfb_worst_ms": 9,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          213.7,
+          210.69,
+          215.35
+        ],
+        "cls": [
+          0,
+          0,
+          0
+        ],
+        "tbt_ms": [
+          0,
+          0,
+          0
+        ],
+        "fcp_ms": [
+          213.7,
+          210.69,
+          215.35
+        ],
+        "ttfb_ms": [
+          9,
+          9,
+          7
+        ]
+      }
+    },
+    "backoffice-login|mobile": {
+      "runs": 3,
+      "config": {
+        "form": "mobile",
+        "method": "simulate",
+        "rtt": 150,
+        "tp": 1638.4,
+        "cpu": 4,
+        "w": 390,
+        "h": 844
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 0.63,
+      "lcp_ms": 761.76,
+      "lcp_worst_ms": 770.24,
+      "cls": 0,
+      "cls_worst": 0,
+      "tbt_ms": 18.5,
+      "tbt_worst_ms": 21.5,
+      "fcp_ms": 761.76,
+      "fcp_worst_ms": 770.24,
+      "ttfb_ms": 9,
+      "ttfb_worst_ms": 29,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          760.92,
+          761.76,
+          770.24
+        ],
+        "cls": [
+          0,
+          0,
+          0
+        ],
+        "tbt_ms": [
+          16,
+          21.5,
+          18.5
+        ],
+        "fcp_ms": [
+          760.92,
+          761.76,
+          770.24
+        ],
+        "ttfb_ms": [
+          29,
+          9,
+          8
+        ]
+      }
+    },
+    "backoffice-products|desktop": {
+      "runs": 3,
+      "config": {
+        "form": "desktop",
+        "method": "simulate",
+        "rtt": 40,
+        "tp": 10240,
+        "cpu": 1,
+        "w": 1350,
+        "h": 940
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 0.63,
+      "lcp_ms": 480.19,
+      "lcp_worst_ms": 482.65,
+      "cls": 0,
+      "cls_worst": 0,
+      "tbt_ms": 0,
+      "tbt_worst_ms": 0,
+      "fcp_ms": 211.54,
+      "fcp_worst_ms": 212.94,
+      "ttfb_ms": 6,
+      "ttfb_worst_ms": 6,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          474.94,
+          482.65,
+          480.19
+        ],
+        "cls": [
+          0,
+          0,
+          0
+        ],
+        "tbt_ms": [
+          0,
+          0,
+          0
+        ],
+        "fcp_ms": [
+          208.53,
+          212.94,
+          211.54
+        ],
+        "ttfb_ms": [
+          6,
+          6,
+          6
+        ]
+      }
+    },
+    "backoffice-products|mobile": {
+      "runs": 3,
+      "config": {
+        "form": "mobile",
+        "method": "simulate",
+        "rtt": 150,
+        "tp": 1638.4,
+        "cpu": 4,
+        "w": 390,
+        "h": 844
+      },
+      "performance": 0.99,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 0.63,
+      "lcp_ms": 1966.26,
+      "lcp_worst_ms": 2202.96,
+      "cls": 0.02705,
+      "cls_worst": 0.02705,
+      "tbt_ms": 16,
+      "tbt_worst_ms": 46,
+      "fcp_ms": 760.26,
+      "fcp_worst_ms": 762.55,
+      "ttfb_ms": 8,
+      "ttfb_worst_ms": 8,
+      "values": {
+        "performance": [
+          1,
+          0.99,
+          0.99
+        ],
+        "lcp_ms": [
+          1662.55,
+          2202.96,
+          1966.26
+        ],
+        "cls": [
+          0.02705,
+          0.02705,
+          0.02705
+        ],
+        "tbt_ms": [
+          16,
+          46,
+          15.5
+        ],
+        "fcp_ms": [
+          762.55,
+          756.96,
+          760.26
+        ],
+        "ttfb_ms": [
+          8,
+          8,
+          6
+        ]
+      }
+    },
+    "portal-home|desktop": {
+      "runs": 3,
+      "config": {
+        "form": "desktop",
+        "method": "simulate",
+        "rtt": 40,
+        "tp": 10240,
+        "cpu": 1,
+        "w": 1350,
+        "h": 940
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 0.63,
+      "lcp_ms": 476.81,
+      "lcp_worst_ms": 476.99,
+      "cls": 0.03293,
+      "cls_worst": 0.03293,
+      "tbt_ms": 0,
+      "tbt_worst_ms": 0,
+      "fcp_ms": 211.21,
+      "fcp_worst_ms": 211.32,
+      "ttfb_ms": 3,
+      "ttfb_worst_ms": 4,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          469.22,
+          476.99,
+          476.81
+        ],
+        "cls": [
+          0.03293,
+          0.03293,
+          0.03293
+        ],
+        "tbt_ms": [
+          0,
+          0,
+          0
+        ],
+        "fcp_ms": [
+          206.15,
+          211.32,
+          211.21
+        ],
+        "ttfb_ms": [
+          3,
+          3,
+          4
+        ]
+      }
+    },
+    "portal-home|mobile": {
+      "runs": 3,
+      "config": {
+        "form": "mobile",
+        "method": "simulate",
+        "rtt": 150,
+        "tp": 1638.4,
+        "cpu": 4,
+        "w": 390,
+        "h": 844
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 0.63,
+      "lcp_ms": 1893.06,
+      "lcp_worst_ms": 1903.93,
+      "cls": 0.02184,
+      "cls_worst": 0.02184,
+      "tbt_ms": 26.5,
+      "tbt_worst_ms": 34.5,
+      "fcp_ms": 760.32,
+      "fcp_worst_ms": 766.53,
+      "ttfb_ms": 3,
+      "ttfb_worst_ms": 8,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          1903.93,
+          1892.22,
+          1893.06
+        ],
+        "cls": [
+          0.02184,
+          0.02184,
+          0.02184
+        ],
+        "tbt_ms": [
+          26.5,
+          34.5,
+          21.5
+        ],
+        "fcp_ms": [
+          766.53,
+          759.84,
+          760.32
+        ],
+        "ttfb_ms": [
+          8,
+          3,
+          3
+        ]
+      }
+    },
+    "portal-login|desktop": {
+      "runs": 3,
+      "config": {
+        "form": "desktop",
+        "method": "simulate",
+        "rtt": 40,
+        "tp": 10240,
+        "cpu": 1,
+        "w": 1350,
+        "h": 940
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 0.63,
+      "lcp_ms": 210.74,
+      "lcp_worst_ms": 211.03,
+      "cls": 0,
+      "cls_worst": 0,
+      "tbt_ms": 0,
+      "tbt_worst_ms": 0,
+      "fcp_ms": 210.74,
+      "fcp_worst_ms": 211.03,
+      "ttfb_ms": 7,
+      "ttfb_worst_ms": 9,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          208.18,
+          210.74,
+          211.03
+        ],
+        "cls": [
+          0,
+          0,
+          0
+        ],
+        "tbt_ms": [
+          0,
+          0,
+          0
+        ],
+        "fcp_ms": [
+          208.18,
+          210.74,
+          211.03
+        ],
+        "ttfb_ms": [
+          7,
+          6,
+          9
+        ]
+      }
+    },
+    "portal-login|mobile": {
+      "runs": 3,
+      "config": {
+        "form": "mobile",
+        "method": "simulate",
+        "rtt": 150,
+        "tp": 1638.4,
+        "cpu": 4,
+        "w": 390,
+        "h": 844
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 0.63,
+      "lcp_ms": 762.19,
+      "lcp_worst_ms": 765.22,
+      "cls": 0,
+      "cls_worst": 0,
+      "tbt_ms": 24,
+      "tbt_worst_ms": 43.5,
+      "fcp_ms": 762.19,
+      "fcp_worst_ms": 765.22,
+      "ttfb_ms": 7,
+      "ttfb_worst_ms": 10,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          765.22,
+          760.78,
+          762.19
+        ],
+        "cls": [
+          0,
+          0,
+          0
+        ],
+        "tbt_ms": [
+          18,
+          43.5,
+          24
+        ],
+        "fcp_ms": [
+          765.22,
+          760.78,
+          762.19
+        ],
+        "ttfb_ms": [
+          10,
+          7,
+          7
+        ]
+      }
+    },
+    "site-application|desktop": {
+      "runs": 3,
+      "config": {
+        "form": "desktop",
+        "method": "simulate",
+        "rtt": 40,
+        "tp": 10240,
+        "cpu": 1,
+        "w": 1350,
+        "h": 940
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 1,
+      "lcp_ms": 290.78,
+      "lcp_worst_ms": 293.63,
+      "cls": 0.00088,
+      "cls_worst": 0.00095,
+      "tbt_ms": 0,
+      "tbt_worst_ms": 0,
+      "fcp_ms": 290.78,
+      "fcp_worst_ms": 293.63,
+      "ttfb_ms": 1,
+      "ttfb_worst_ms": 1,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          283.56,
+          290.78,
+          293.63
+        ],
+        "cls": [
+          0.00095,
+          0,
+          0.00088
+        ],
+        "tbt_ms": [
+          0,
+          0,
+          0
+        ],
+        "fcp_ms": [
+          283.56,
+          290.78,
+          293.63
+        ],
+        "ttfb_ms": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    "site-application|mobile": {
+      "runs": 3,
+      "config": {
+        "form": "mobile",
+        "method": "simulate",
+        "rtt": 150,
+        "tp": 1638.4,
+        "cpu": 4,
+        "w": 390,
+        "h": 844
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 1,
+      "lcp_ms": 1053.18,
+      "lcp_worst_ms": 1054.59,
+      "cls": 0,
+      "cls_worst": 0,
+      "tbt_ms": 0,
+      "tbt_worst_ms": 0,
+      "fcp_ms": 1053.18,
+      "fcp_worst_ms": 1054.59,
+      "ttfb_ms": 1,
+      "ttfb_worst_ms": 1,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          1053.18,
+          1054.59,
+          1052.21
+        ],
+        "cls": [
+          0,
+          0,
+          0
+        ],
+        "tbt_ms": [
+          0,
+          0,
+          0
+        ],
+        "fcp_ms": [
+          1053.18,
+          1054.59,
+          1052.21
+        ],
+        "ttfb_ms": [
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    "site-home|desktop": {
+      "runs": 3,
+      "config": {
+        "form": "desktop",
+        "method": "simulate",
+        "rtt": 40,
+        "tp": 10240,
+        "cpu": 1,
+        "w": 1350,
+        "h": 940
+      },
+      "performance": 1,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 1,
+      "lcp_ms": 523.55,
+      "lcp_worst_ms": 525.15,
+      "cls": 0.00002,
+      "cls_worst": 0.00002,
+      "tbt_ms": 0,
+      "tbt_worst_ms": 0,
+      "fcp_ms": 282.37,
+      "fcp_worst_ms": 283.43,
+      "ttfb_ms": 0,
+      "ttfb_worst_ms": 4,
+      "values": {
+        "performance": [
+          1,
+          1,
+          1
+        ],
+        "lcp_ms": [
+          523.55,
+          525.15,
+          523.32
+        ],
+        "cls": [
+          0.00002,
+          0.00002,
+          0.00002
+        ],
+        "tbt_ms": [
+          0,
+          0,
+          0
+        ],
+        "fcp_ms": [
+          282.37,
+          283.43,
+          282.21
+        ],
+        "ttfb_ms": [
+          0,
+          4,
+          0
+        ]
+      }
+    },
+    "site-home|mobile": {
+      "runs": 3,
+      "config": {
+        "form": "mobile",
+        "method": "simulate",
+        "rtt": 150,
+        "tp": 1638.4,
+        "cpu": 4,
+        "w": 390,
+        "h": 844
+      },
+      "performance": 0.98,
+      "accessibility": 1,
+      "bestPractices": 1,
+      "seo": 1,
+      "lcp_ms": 2252.54,
+      "lcp_worst_ms": 2253.91,
+      "cls": 0,
+      "cls_worst": 0,
+      "tbt_ms": 0,
+      "tbt_worst_ms": 4,
+      "fcp_ms": 1414.6,
+      "fcp_worst_ms": 1424.7,
+      "ttfb_ms": 0,
+      "ttfb_worst_ms": 1,
+      "values": {
+        "performance": [
+          0.98,
+          0.98,
+          0.98
+        ],
+        "lcp_ms": [
+          2252.54,
+          2252.28,
+          2253.91
+        ],
+        "cls": [
+          0,
+          0,
+          0
+        ],
+        "tbt_ms": [
+          4,
+          0,
+          0
+        ],
+        "fcp_ms": [
+          1424.7,
+          1399.52,
+          1414.6
+        ],
+        "ttfb_ms": [
+          1,
+          0,
+          0
+        ]
+      }
+    }
+  }
+}

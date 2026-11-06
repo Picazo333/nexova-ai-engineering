@@ -68,11 +68,16 @@ export function StackStatus() {
         data-arrived={arrived ? "true" : "false"}
         aria-live="polite"
       >
-        {stack.phase === "error" ? (
-          <p className="alert" role="alert">
-            {stack.message} El filtro se conserva.
-          </p>
-        ) : null}
+        <p
+          className={stack.phase === "error" ? "alert stack-status" : "note stack-status"}
+          role={stack.phase === "error" ? "alert" : "status"}
+        >
+          {stack.phase === "error"
+            ? `${stack.message} El filtro se conserva.`
+            : stack.phase === "ok"
+              ? "La API responde."
+              : "Comprobando la conexión con la API."}
+        </p>
         <div className="table-scroll" role="region" aria-label="Comprobación de la API" tabIndex={0}>
           <table>
             <caption>Conexión con la API</caption>

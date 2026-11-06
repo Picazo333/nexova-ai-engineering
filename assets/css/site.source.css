@@ -1,0 +1,35 @@
+/* Fuente del CSS de producción. Regenerar con:
+   npx --yes @tailwindcss/cli@4.1.16 -i assets/css/site.source.css -o assets/css/site.css --minify
+   desde la raíz del repositorio, con tailwindcss 4.1.16 instalado. */
+@import "tailwindcss";
+@source "../../index.html";
+@source "../../application.html";
+@source "../../404.html";
+@source "../../validation.js";
+
+@theme {
+      --color-marfil: #F3E9DB;
+      --color-marfil-claro: #FAF5EC;
+      --color-arena: #D7C4A8;
+      --color-mineral: #6B5E4E;
+      --color-tinta: #0E2A4A;
+      --color-tinta-profunda: #091D35;
+      --color-terracota: #B5522E;
+      --color-terracota-700: #9A4324;
+      --color-miel: #D9A441;
+      --color-carbon: #1B1B1B;
+      --color-borde-control: #8C7B64;
+      --color-error: #A1321F;
+      --color-exito: #2F5D3A;
+      --color-blanco: #FFFDF9;
+      --font-display: "Newsreader", "Iowan Old Style", Georgia, serif;
+      --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --ease-snap: cubic-bezier(.2,.9,.1,1);
+    }
+    @font-face { font-family: "Newsreader"; src: url("../fonts/newsreader-latin-wght.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Inter"; src: url("../fonts/inter-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Inter"; src: url("../fonts/inter-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Inter"; src: url("../fonts/inter-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+    [data-hero][data-mode="scrolly"] { height: 410vh; }
+    [data-office][data-mode="scrolly"] { height: 300vh; }
+    [data-mode="scrolly"] > [data-stage] { position: sticky; top: 0; height: 100svh; overflow: hidden; }
