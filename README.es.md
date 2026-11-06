@@ -40,6 +40,19 @@ uv run python -m pytest tests/pipelines/test_rag.py
 
 La pantalla queda en `http://127.0.0.1:8000/conocimiento`. `RAG_EMBED_BACKEND=fastembed` indexa con un modelo abierto local. No es el modelo de embeddings de 4Geeks. `uv run python -m data.eval.recall_at_3` imprime `BLOCKED_HITL` para el criterio oficial mientras falten las variables remotas. El diseño está en [docs/rag/rag-design.md](docs/rag/rag-design.md).
 
+## Agente de soporte con LangGraph
+
+El grafo está en `services/api/app/agent/`. `services/api/app/main.py` monta `POST /agent/query` y `GET /agent/runs/{run_id}` en la misma app FastAPI. Los nodos de recepción, recuperación y generación están separados. Las aristas condicionales mandan una pregunta vacía a un rechazo, y una recuperación sin fragmentos por encima del umbral a una respuesta honesta. Con contexto, el nodo de generación llama a `generate_answer(question, context)`. `query()` sigue siendo el atajo monolítico del RAG y no es un nodo.
+
+`uv add langgraph` declaró el paquete en el proyecto de la raíz (para `tests/pipelines/`) y en `services/api` (para el endpoint). Cada corrida compila el grafo antes de ejecutarse, guarda un checkpoint por paso en memoria y escribe una traza JSON en `data/agent_traces/` (`AGENT_TRACE_DIR` cambia esa carpeta; no se versiona).
+
+```bash
+uv run python -m pytest tests/pipelines/test_agent_graph.py
+PYTHONPATH=services/api uv run python -m app.agent.export_trace
+```
+
+El export en [docs/langgraph/trace-full-run.json](docs/langgraph/trace-full-run.json) es una corrida completa. La generación cita el documento oficial de objeciones porque `GENERATION_*` está vacío. No es una respuesta del modelo en vivo. El eval de anclaje en vivo termina en `BLOCKED_HITL` hasta que existan esas variables y `EMBEDDING_*`. Un doble no aprueba ese criterio.
+
 ---
 
 ## Propósito

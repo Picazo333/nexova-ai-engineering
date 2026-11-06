@@ -28,6 +28,7 @@ from app.pages import (
     render_privacy,
     render_server_error,
 )
+from app.routers.agent import router as agent_router
 from app.routers.auth import router as auth_router
 from app.routers.directory_ui import router as directory_router
 from app.routers.incident_records import router as incident_records_router
@@ -42,7 +43,7 @@ KNOWLEDGE_UI = Path(__file__).resolve().parents[3] / "uis" / "knowledge-query"
 
 logger = logging.getLogger("nexova.api")
 
-API_ROOTS = ("/api/", "/users", "/auth", "/profiles")
+API_ROOTS = ("/api/", "/users", "/auth", "/profiles", "/agent")
 
 
 @asynccontextmanager
@@ -101,6 +102,7 @@ def create_app() -> FastAPI:
     app.include_router(suppliers_router)
     app.include_router(directory_router)
     app.include_router(knowledge_router)
+    app.include_router(agent_router)
     app.mount("/ui", StaticFiles(directory=KNOWLEDGE_UI), name="knowledge-ui")
     app.mount("/css", StaticFiles(directory=BACKOFFICE_DIR / "css"), name="css")
     app.mount("/js", StaticFiles(directory=BACKOFFICE_DIR / "js"), name="js")

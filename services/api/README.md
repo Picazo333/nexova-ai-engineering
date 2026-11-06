@@ -52,6 +52,21 @@ services/api/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
 
 El punto inicial del `PYTHONPATH` deja importable `data/`, que es lo que usa `POST /knowledge/query`. La página de esa consulta está en `/conocimiento`. El backoffice de incidencias sigue en `/`. `uv run pytest` añade además `packages/shared` (reglas de incidencias) y la raíz del repo (el paquete `data`). El catálogo HTTP de `app/http_catalog.py` sigue aplicando a auth e incidencias; la consulta comercial arma su propia respuesta y no sustituye esas frases.
 
+## Agente LangGraph
+
+El grafo está en `app/agent/` y el router en `app/routers/agent.py`. Se monta en `create_app()` junto al resto de routers.
+
+| Método | Ruta | Resultado |
+| --- | --- | --- |
+| `POST` | `/agent/query` | Invoca el grafo. Cuerpo JSON `{"question": "..."}`. `200` con `answer`, `run_id` y `trace`. |
+| `GET` | `/agent/runs/{run_id}` | Traza JSON de esa corrida, o `404`. |
+
+El nodo `retrieve_context` llama a `data.pipelines.rag.retrieve`. El nodo `generate_answer` llama a `data.pipelines.rag.generate_answer`. Ningún nodo llama a `query()`. Una pregunta vacía no recupera. Si `retrieve` no deja contexto por encima del umbral, la respuesta dice que no hay información y no llama al modelo. Si un nodo falla, la respuesta HTTP lleva un mensaje y no el stack trace.
+
+Cada corrida compila el grafo, escribe checkpoints y guarda la traza en `data/agent_traces/` (o en `AGENT_TRACE_DIR`). Esa carpeta no se versiona. El export de una corrida completa está en `docs/langgraph/trace-full-run.json`.
+
+Los evals del grafo viven en `tests/pipelines/test_agent_graph.py` y se ejecutan desde la raíz del monorepo: `uv run python -m pytest tests/pipelines/test_agent_graph.py`.
+
 El proceso carga `services/api/.env` y no pisa variables que ya estén en el entorno. Abre `http://127.0.0.1:8000`. La guía de Swagger está en `http://127.0.0.1:8000/docs`.
 
 ## Pruebas
