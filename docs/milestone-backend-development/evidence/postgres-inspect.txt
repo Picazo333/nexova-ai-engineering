@@ -1,0 +1,44 @@
+SET
+            server_version             
+---------------------------------------
+ 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)
+(1 row)
+
+ table_name 
+------------
+ asset
+ assetentry
+ assetexit
+(3 rows)
+
+ column_name |     data_type     
+-------------+-------------------
+ id          | integer
+ name        | character varying
+ sku         | character varying
+ category    | character varying
+ office      | character varying
+(5 rows)
+
+ table_name |                 definition                  
+------------+---------------------------------------------
+ assetentry | FOREIGN KEY (asset_id) REFERENCES asset(id)
+ assetexit  | FOREIGN KEY (asset_id) REFERENCES asset(id)
+(2 rows)
+
+     sku     | inbound | outbound 
+-------------+---------+----------
+ NXV-IT-001  |      15 |        3
+ NXV-IT-002  |       8 |        2
+ NXV-OFF-001 |      30 |       12
+ NXV-PER-001 |      20 |        0
+ NXV-PER-002 |       0 |        0
+ NXV-PER-010 |       4 |        0
+ NXV-TRN-001 |      15 |        0
+(7 rows)
+
+ user_tables 
+-------------
+           0
+(1 row)
+

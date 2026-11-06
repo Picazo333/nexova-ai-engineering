@@ -35,6 +35,7 @@ from app.routers.incident_records import router as incident_records_router
 from app.routers.incident_ui import router as incident_ui_router
 from app.routers.incidents import router as incidents_router
 from app.routers.profiles import router as profiles_router
+from app.routers.inventory import router as inventory_router
 from app.routers.knowledge import router as knowledge_router
 from app.routers.users import router as users_router
 from routes.suppliers import router as suppliers_router
@@ -44,7 +45,7 @@ AGENT_UI = Path(__file__).resolve().parents[3] / "uis" / "agent-compare"
 
 logger = logging.getLogger("nexova.api")
 
-API_ROOTS = ("/api/", "/users", "/auth", "/profiles", "/agent")
+API_ROOTS = ("/api/", "/users", "/auth", "/profiles", "/agent", "/inventory")
 
 
 @asynccontextmanager
@@ -61,9 +62,14 @@ async def _lifespan(_app: FastAPI):
 
         inserted, skipped = seed_suppliers()
         logger.info("supplier seed inserted=%s skipped=%s", inserted, skipped)
+    from app.inventory.database import init_databases
+
+    init_databases()
     yield
+    from app.inventory.database import reset_engine
     from database import reset_db
 
+    reset_engine()
     reset_db()
     reset_auth_db()
     from incident_store import reset_incidents_db
@@ -104,6 +110,7 @@ def create_app() -> FastAPI:
     app.include_router(directory_router)
     app.include_router(knowledge_router)
     app.include_router(agent_router)
+    app.include_router(inventory_router)
     app.mount("/ui", StaticFiles(directory=KNOWLEDGE_UI), name="knowledge-ui")
     app.mount("/css", StaticFiles(directory=BACKOFFICE_DIR / "css"), name="css")
     app.mount("/js", StaticFiles(directory=BACKOFFICE_DIR / "js"), name="js")

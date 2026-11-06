@@ -1,0 +1,32 @@
+POST /users -> 201
+{"id":"35f56551-3914-4021-82d2-ad9db287db30","email":"ops-evidence@nexova.test","is_active":true,"role":"user","created_at":"2026-11-06T17:08:31+00:00","profile":{"id":"013178ef-dfc7-4f5f-acaf-d093a997c1d1","user_id":"35f56551-3914-4021-82d2-ad9db287db30","name":"Operaciones IT","phone":null,"address":null}}
+
+POST /auth/login -> 200
+{"access_token": "<redacted>", "token_type": "bearer", "expires_in": 1800, "user_uuid": "35f56551-3914-4021-82d2-ad9db287db30"}
+
+GET /auth/me -> 200
+{"id":"35f56551-3914-4021-82d2-ad9db287db30","email":"ops-evidence@nexova.test","role":"user","profile":{"id":"013178ef-dfc7-4f5f-acaf-d093a997c1d1","user_id":"35f56551-3914-4021-82d2-ad9db287db30","name":"Operaciones IT","phone":null,"address":null}}
+
+GET /inventory/products -> 200
+[{"id":1,"name":"Laptop 14\" Business","sku":"NXV-IT-001","category":"hardware","office":"Valencia","current_stock":12},{"id":2,"name":"Laptop 14\" Business","sku":"NXV-IT-002","category":"hardware","office":"Miami","current_stock":6},{"id":3,"name":"Ergonomic mouse","sku":"NXV-PER-001","category":"peripherals","office":"Valencia","current_stock":20},{"id":4,"name":"USB-C Hub","sku":"NXV-PER-002","category":"peripherals","office":"Miami","current_stock":0},{"id":5,"name":"A4 paper ream","sku":"NXV-OFF-001","category":"office_supplies","office":"Valencia","current_stock":18},{"id":6,"name":"Leadership training workbook","sku":"NXV-TRN-001","category":"training_materials","office":"Valencia","current_stock":15}]
+
+POST /inventory/orders/outbound -> 400
+{"error":"http_error","message":"Insufficient stock for asset 'Laptop 14\" Business'. Available: 12, requested: 13.","detail":"Insufficient stock for asset 'Laptop 14\" Business'. Available: 12, requested: 13."}
+
+GET /inventory/products/1 -> 200
+{"id":1,"name":"Laptop 14\" Business","sku":"NXV-IT-001","category":"hardware","office":"Valencia","current_stock":12}
+
+POST /inventory/products -> 422
+{"error":"http_error","message":"Hay un campo que no se acepta.","detail":"Hay un campo que no se acepta."}
+
+POST /inventory/products -> 401
+{"error":"unauthorized","message":"Falta el token de acceso.","detail":"Falta el token de acceso."}
+
+POST /inventory/products -> 201
+{"id":7,"name":"Dock","sku":"NXV-PER-010","category":"peripherals","office":"Miami","current_stock":0}
+
+POST /inventory/orders/inbound -> 201
+{"id":7,"order_type":"inbound","asset_id":7,"asset_name":"Dock","asset_sku":"NXV-PER-010","asset_category":"peripherals","quantity":4,"office":"Miami","created_at":"2026-11-06T17:08:31.247282Z","user_uuid":"35f56551-3914-4021-82d2-ad9db287db30","supplier":"Office Depot Miami","exit_type":null,"assigned_to":null}
+
+GET /inventory/orders -> 200
+[{"id":1,"order_type":"inbound","asset_id":1,"asset_name":"Laptop 14\" Business","asset_sku":"NXV-IT-001","asset_category":"hardware","quantity":10,"office":"Valencia","created_at":"2026-03-02T09:00:00Z","user_uuid":"00000000-0000-4000-8000-000000000201","supplier":"TechDistrib Valencia S.L.","exit_type":null,"assigned_to":null},{"id":2,"order_type":"inbound","asset_id":1,"asset_name":"Laptop 14\" Business","asset_sku":"NXV-IT-001","asset_category":"hardware","quantity":5,"office":"Valencia","created_at":"2026-03-02T09:01:00Z","user_uuid":"00000000-0000-4000-8000-000000000201","supplier":"TechDistrib Valencia S.L.","exit_type":null,"assigned_to":null},{"id":3,"order_type":"inbound","asset_id":2,"asset_name":"Laptop 14\" Business","asset_sku":"NXV-IT-002","asset_category":"hardware","quantity":8,"office":"Miami","created_at":"2026-03-02T09:02:00Z","user_uuid":"00000000-0000-4000-8000-000000000201","supplier":"Office Depot Miami","exit_type":null,"assigned_to":null},{"id":4,"order_type":"inbound","asset_id":3,"asset_name":"Ergonomic mouse","asset_sku":"NXV-PER-001","asset_category":"peripherals","quantity":20,"office":"Valencia","created_at":"2026-03-02T09:03:00Z","user_uuid":"00000000-0000-4000-8000-000000000201","supplier":"TechDistrib Valencia S.L.","exit_type":null,"assigned_to":null},{"id":5,"order_type":"inbound","asset_id":5,"asset_name":"A4 paper ream","asset_sku":"NXV-OFF-001","asset_category":"office_supplies","quantity":30,"office":"Valencia","created_at":"2026-03-02T09:04:00Z","user_uuid":"00000000-0000-4000-8000-000000000201","supplier":"TechDistrib Valencia S.L.","exit_type":null,"assigned_to":null},{"id":6,"order_type":"inbound","asset_id":6,"asset_name":"Leadership training workbook","asset_sku":"NXV-TRN-001","asset_category":"training_materials","quantity":15,"office":"Valencia","created_at":"2026-03-02T09:05:00Z","user_uuid":"00000000-0000-4000-8000-000000000201","supplier":"TechDistrib Valencia S.L.","exit_type":null,"assigned_to":null},{"id":1,"order_type":"outbound","asset_id":1,"asset_name":"Laptop 14\" Business","asset_sku":"NXV-IT-001","asset_category":"hardware","quantity":3,"office":"Valencia","created_at":"2026-03-02T09:06:00Z","user_uuid":"00000000-0000-4000-8000-000000000201","supplier":null,"exit_type":"allocation","assigned_to":"NXV-EMP-1042"},{"id":2,"order_type":"outbound","asset_id":2,"asset_name":"Laptop 14\" Business","asset_sku":"NXV-IT-002","asset_category":"hardware","quantity":2,"office":"Miami","created_at":"2026-03-02T09:07:00Z","user_uuid":"00000000-0000-4000-8000-000000000201","supplier":null,"exit_type":"allocation","assigned_to":"NXV-EMP-2201"},{"id":3,"order_type":"outbound","asset_id":5,"asset_name":"A4 paper ream","asset_sku":"NXV-OFF-001","asset_category":"office_supplies","quantity":12,"office":"Valencia","created_at":"2026-03-02T09:08:00Z","user_uuid":"00000000-0000-4000-8000-000000000201","supplier":null,"exit_type":"consumption","assigned_to":null},{"id":7,"order_type":"inbound","asset_id":7,"asset_name":"Dock","asset_sku":"NXV-PER-010","asset_category":"peripherals","quantity":4,"office":"Miami","created_at":"2026-11-06T17:08:31.247282Z","user_uuid":"35f56551-3914-4021-82d2-ad9db287db30","supplier":"Office Depot Miami","exit_type":null,"assigned_to":null}]

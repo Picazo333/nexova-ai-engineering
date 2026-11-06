@@ -50,7 +50,7 @@ The ticket tool is read-only. By default it calls `get_incident` / `list_inciden
 
 The call waits at most 4 seconds (`TICKET_TOOL_TIMEOUT_SECONDS`). A timeout, an error, a missing token, or a missing ticket returns “I couldn't confirm that ticket's status right now.” (Spanish: “No pude confirmar el estado de ese ticket ahora mismo.”). The answer does not invent a status.
 
-There is no inventory manager in this monorepo, so there is no inventory tool and no stand-in stock list.
+The support agent still has no inventory tool and does not answer stock questions. Equipment stock is the inventory API under `/inventory` (SQLModel, PostgreSQL). That API is not a tool of the graph.
 
 ```bash
 uv run python -m pytest tests/pipelines/test_agent_graph.py tests/pipelines/test_agent_routing.py
