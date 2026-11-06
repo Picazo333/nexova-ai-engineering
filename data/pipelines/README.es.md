@@ -6,3 +6,7 @@ Cada subcarpeta o archivo dentro de `data/pipelines/` debe representar **un pipe
 
 - **Propósito principal**: unificar en un único lugar la lógica de movimiento y transformación de datos que soporta las aplicaciones y analíticas de la compañía.
 - **Recomendación**: documenta aquí los pipelines que vayas añadiendo, describiendo su objetivo, orígenes/destinos de datos, dependencias y cómo ejecutarlos en desarrollo, pruebas y producción.
+
+## Pronóstico de ventas
+
+El código importable de este pronóstico está en [`/pipelines`](../../pipelines) y el script de entrenamiento en [`/scripts/train_sales_forecast.py`](../../scripts/train_sales_forecast.py). El enunciado pide las pruebas en `tests/pipelines/` y el script en `scripts/`. Esta carpeta sigue siendo el sitio del monorepo para otros ETL.
