@@ -1,6 +1,10 @@
-# API de incidencias de Nexova
+# API de Nexova
 
-Un solo proceso FastAPI, como pide `services/README.md`. El router `app/routers/incidents.py` solo traduce HTTP. Las reglas del CSV están en `packages/incident_analysis` y son las mismas que usa `scripts/analyze.py`.
+Un solo proceso FastAPI, como pide `services/README.md`. Sirve el análisis de incidencias y el directorio de proveedores.
+
+## Incidencias
+
+El router `app/routers/incidents.py` solo traduce HTTP. Las reglas del CSV están en `packages/incident_analysis` y son las mismas que usa `scripts/analyze.py`.
 
 Las rutas de este entregable son las del enunciado, no un prefijo distinto:
 
@@ -33,6 +37,30 @@ pip install -r services/api/requirements.txt
 python -m pytest -q
 ```
 
+## Directorio de proveedores
+
+TinyDB local, sin claves externas. Los 15 contratos iniciales salen de `scripts/nexova-supplier-BRIEFING.es.md` (syllabus `content/contexts/supplier-directory/nexova-BRIEFING`). Los campos estructurados coinciden con la versión en inglés; las notas están en español, como el backoffice. No son un directorio genérico.
+
+Al arrancar, la API ejecuta el seeder si `SUPPLIERS_AUTOSEED` no es `0`. Repetirlo no duplica nombres.
+
+```bash
+cd services/api
+uv run seed
+```
+
+La consola imprime `Se insertaron N registros.`
+
+| Método | Ruta | Resultado |
+| --- | --- | --- |
+| `POST` | `/suppliers` | Alta. `201` y el objeto con `id`. `422` si el cuerpo no cumple el modelo. |
+| `GET` | `/suppliers` | Listado. Filtros opcionales `country`, `category` y `status`. |
+| `GET` | `/suppliers/{id}` | Detalle, o `404`. |
+| `PATCH` | `/suppliers/{id}/rate` | Cambia `monthly_rate` y reescribe `updated_at`. Rechaza tarifas ≤ 0. |
+| `PATCH` | `/suppliers/{id}/status` | `active` o `suspended`. Cualquier otro valor es `422`. |
+| `DELETE` | `/suppliers/{id}` | Elimina. `404` si el id no existe. |
+
+`updated_at` lo escribe el servidor. Un proveedor de `Spain` tiene que usar `EUR` y uno de `USA`, `USD`. La página del directorio está en `/proveedores` (el path `/suppliers` es la API). Los formularios HTML usan `POST` y redirigen; la interfaz con JavaScript llama a `PATCH`.
+
 ## Variables
 
 | Variable | Defecto | Uso |
@@ -40,3 +68,5 @@ python -m pytest -q
 | `INCIDENTS_DATA_DIR` | `services/api/.data` | Carpeta del último resumen |
 | `INCIDENTS_MAX_UPLOAD_BYTES` | `33554432` | Tope del CSV |
 | `INCIDENTS_CORS_ORIGINS` | localhost en los puertos 8000 y 3000 | Orígenes permitidos, lista separada por comas. Sin credenciales y sin comodín. |
+| `SUPPLIERS_DATA_DIR` | `services/api/.data` | Carpeta de `suppliers.json`. |
+| `SUPPLIERS_AUTOSEED` | `1` | `0` arranca sin cargar el briefing. |

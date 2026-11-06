@@ -16,4 +16,4 @@ Organiza `uis/` por **distintas áreas de la compañía** — cada subcarpeta ag
 
 ## `backoffice/`
 
-Pantalla interna de análisis de incidencias. La sirve `services/api` en `/`. No sustituye al sitio público de la raíz del repositorio. Ver [`backoffice/README.md`](./backoffice/README.md).
+Pantallas internas de análisis de incidencias (`/`) y del directorio de proveedores (`/proveedores`). Las sirve `services/api`. No sustituyen al sitio público de la raíz del repositorio. Ver [`backoffice/README.md`](./backoffice/README.md).

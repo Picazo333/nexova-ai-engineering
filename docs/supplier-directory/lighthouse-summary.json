@@ -1,0 +1,67 @@
+{
+  "mobile": [
+    {
+      "form": "mobile",
+      "method": "simulate",
+      "rtt": 150,
+      "kbps": 1638.4,
+      "cpu": 4,
+      "lcp": 1661.072,
+      "cls": 0,
+      "tbt": 0
+    },
+    {
+      "form": "mobile",
+      "method": "simulate",
+      "rtt": 150,
+      "kbps": 1638.4,
+      "cpu": 4,
+      "lcp": 1657.3478,
+      "cls": 0,
+      "tbt": 0
+    },
+    {
+      "form": "mobile",
+      "method": "simulate",
+      "rtt": 150,
+      "kbps": 1638.4,
+      "cpu": 4,
+      "lcp": 1655.7858,
+      "cls": 0,
+      "tbt": 0
+    }
+  ],
+  "desktop_label": "viewport escritorio con throttling móvil (más estricto)",
+  "desktop": [
+    {
+      "form": "desktop",
+      "method": "simulate",
+      "rtt": 150,
+      "kbps": 1638.4,
+      "cpu": 4,
+      "lcp": 1659.1923,
+      "cls": 0,
+      "tbt": 0
+    },
+    {
+      "form": "desktop",
+      "method": "simulate",
+      "rtt": 150,
+      "kbps": 1638.4,
+      "cpu": 4,
+      "lcp": 1660.4024,
+      "cls": 0,
+      "tbt": 0
+    },
+    {
+      "form": "desktop",
+      "method": "simulate",
+      "rtt": 150,
+      "kbps": 1638.4,
+      "cpu": 4,
+      "lcp": 1661.9636,
+      "cls": 0,
+      "tbt": 0
+    }
+  ]
+}

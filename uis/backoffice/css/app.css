@@ -277,6 +277,208 @@ ul {
   to { background-color: transparent; }
 }
 
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.directory-page,
+#contenido {
+  min-width: 0;
+}
+
+.filter-grid,
+.form-grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.directory input[type="text"],
+.directory input[type="number"],
+.directory input[type="email"],
+.directory input[type="date"],
+.directory select,
+.directory textarea,
+#contenido input[type="text"],
+#contenido input[type="number"],
+#contenido input[type="email"],
+#contenido input[type="date"],
+#contenido select,
+#contenido textarea {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+}
+
+#contenido textarea {
+  min-height: 6rem;
+}
+
+#contenido fieldset {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  margin: var(--space-4) 0;
+  padding: var(--space-4);
+}
+
+#contenido legend {
+  font-weight: 700;
+  padding: 0 var(--space-2);
+}
+
+.checks {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.checks label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  font-weight: 400;
+}
+
+.checks input {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.button-secondary,
+a.button-secondary,
+button.button-secondary {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  border-color: var(--color-action);
+}
+
+.button-secondary:hover,
+a.button-secondary:hover,
+button.button-secondary:hover {
+  background: var(--color-selected);
+  color: var(--color-ink);
+  border-color: var(--color-action-hover);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  border: 1px solid currentColor;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+}
+
+.badge-active { color: var(--color-success); }
+.badge-suspended,
+.badge-overdue { color: var(--color-danger); }
+.badge-upcoming { color: var(--color-warning); }
+
+tr[data-status="suspended"] th {
+  box-decoration-break: clone;
+}
+
+#directory-list .table-scroll table {
+  width: max-content;
+  min-width: 100%;
+}
+
+#directory-list th,
+#directory-list td {
+  overflow-wrap: normal;
+  word-break: normal;
+  min-width: 9rem;
+}
+
+#directory-list th:nth-child(3),
+#directory-list td:nth-child(3),
+#directory-list th:nth-child(7),
+#directory-list td:nth-child(7),
+#directory-list th:nth-child(8),
+#directory-list td:nth-child(8) {
+  min-width: 14rem;
+}
+
+#directory-list th:last-child,
+#directory-list td:last-child {
+  min-width: 18rem;
+}
+
+.rate-form,
+.status-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: end;
+  margin-bottom: var(--space-3);
+}
+
+.rate-form input {
+  width: 8.5rem;
+  min-width: 8rem;
+}
+
+#directory-error,
+#create-error {
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+  margin-block: var(--space-4);
+}
+
+#directory-notice {
+  border: 1px solid var(--color-success);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+}
+
+#directory-loading {
+  font-weight: 700;
+}
+
+#filter-memory {
+  max-width: var(--measure);
+}
+
+@media (min-width: 768px) {
+  .filter-grid,
+  .form-grid.two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .filter-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .checks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-motion="full"] tr[data-just-updated="1"] {
+    animation: row-ack var(--motion-state) var(--motion-ease);
+  }
+}
+
+@keyframes row-ack {
+  from { background-color: var(--color-selected); }
+  to { background-color: transparent; }
+}
+
 @media (forced-colors: active) {
   .button,
   button.button,
