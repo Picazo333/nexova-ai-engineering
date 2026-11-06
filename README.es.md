@@ -11,7 +11,15 @@ _These instructions are also available in [English](./README.md)._
 
 ## Base de conocimiento RAG
 
-Las preguntas comerciales se responden con los documentos oficiales de Nexova en `docs/company-knowledge-base/`. `setup()` y `embed()` están en `data/process/rag.py`. `retrieve()`, `generate_answer()` y `query()` están en `data/pipelines/rag.py`. FastAPI expone `POST /knowledge/query`. La pantalla está en `uis/knowledge-query/`.
+Las preguntas comerciales se responden con los documentos oficiales de Nexova en `docs/company-knowledge-base/`. `setup()` y `embed()` están en `data/process/rag.py`. `retrieve()`, `generate_answer()` y `query()` están en `data/pipelines/rag.py`. La app FastAPI que ya vive en `services/api` expone `POST /knowledge/query`. La pantalla está en `uis/knowledge-query/` y se sirve en `/conocimiento`.
+
+El `pyproject.toml` y el `uv.lock` de la raíz se quedan porque el enunciado fija esos comandos y esas rutas:
+
+- Línea 59: instalar con `uv add` (cliente de Qdrant, librería de embeddings, SDK de generación, FastAPI), nunca con `pip install` ni `pipenv`.
+- Líneas 68–72: el chunking en `data/process/rag.py`, la recuperación en `data/pipelines/rag.py`, el endpoint en `services/api/`, la UI en `uis/` y los tests en `tests/pipelines/test_rag.py`.
+- Línea 114: `python -m pytest tests/pipelines/test_rag.py`.
+
+Ese proyecto de la raíz es solo para `data/` y `tests/`. `services/api` conserva su propio `pyproject.toml` y su `uv.lock`. FastAPI, uvicorn y las librerías de autenticación viven ahí. El router de conocimiento se monta en `services/api/app/main.py`. No arranca una segunda app.
 
 Qdrant está en `docker-compose.yml`. Si `QDRANT_URL` queda vacío, el cliente Python usa el motor embebido y guarda los datos en `data/qdrant/`. Esa carpeta no se versiona: `setup()` la vuelve a crear.
 
@@ -22,11 +30,15 @@ cp .env.example .env
 # Sin esos valores las llamadas reales no se ejecutan y el servicio no inventa una respuesta.
 docker compose up -d qdrant   # opcional; sin esto se usa el motor embebido
 uv run python -m data.process.rag
-uv run uvicorn services.api.app:app --host 127.0.0.1 --port 8000
+cd services/api && uv sync
+cd ../..
+export PYTHONPATH=.:packages:services/api
+export JWT_SECRET=local-dev-only
+services/api/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
 uv run python -m pytest tests/pipelines/test_rag.py
 ```
 
-`RAG_EMBED_BACKEND=fastembed` indexa con un modelo abierto local. No es el modelo de embeddings de 4Geeks. `uv run python -m data.eval.recall_at_3` imprime `BLOCKED_HITL` para el criterio oficial mientras falten las variables remotas. El diseño está en [docs/rag/rag-design.md](docs/rag/rag-design.md).
+La pantalla queda en `http://127.0.0.1:8000/conocimiento`. `RAG_EMBED_BACKEND=fastembed` indexa con un modelo abierto local. No es el modelo de embeddings de 4Geeks. `uv run python -m data.eval.recall_at_3` imprime `BLOCKED_HITL` para el criterio oficial mientras falten las variables remotas. El diseño está en [docs/rag/rag-design.md](docs/rag/rag-design.md).
 
 ---
 

@@ -79,7 +79,10 @@ uv sync --all-groups
 cp .env.example .env
 docker compose up -d qdrant          # o dejar QDRANT_URL vacío y usar el motor embebido
 uv run python -m data.process.rag
-uv run uvicorn services.api.app:app --host 127.0.0.1 --port 8000
+cd services/api && uv sync && cd ../..
+export PYTHONPATH=.:packages:services/api
+export JWT_SECRET=local-dev-only
+services/api/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
 uv run python -m pytest tests/pipelines/test_rag.py
 uv run python -m data.eval.recall_at_3
 ```

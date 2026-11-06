@@ -1,23 +1,20 @@
 [project]
 name = "nexova-ai-engineering"
 version = "0.1.0"
-description = "Nexova commercial RAG knowledge base"
+description = "Nexova data and RAG tests. The FastAPI app keeps its own project in services/api."
 requires-python = ">=3.11"
 dependencies = [
-    "fastapi>=0.162.0",
     "fastembed>=0.9.1",
     "httpx>=0.28.1",
     "openai>=3.46.0",
-    "python-multipart>=0.0.33",
     "qdrant-client>=1.20.0",
-    "uvicorn>=0.54.0",
 ]
 
 [tool.uv]
 package = false
 
 [tool.pytest.ini_options]
-pythonpath = ["."]
+pythonpath = [".", "services/api", "packages"]
 addopts = "-m 'not integration'"
 markers = [
   "integration: requires the local open-source embedder and writes a Qdrant collection",
@@ -26,6 +23,8 @@ testpaths = ["tests"]
 
 [dependency-groups]
 dev = [
+    "fastapi>=0.162.0",
     "playwright>=1.64.1",
     "pytest>=9.2.0",
+    "python-multipart>=0.0.33",
 ]

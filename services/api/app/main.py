@@ -6,6 +6,7 @@ import html
 import logging
 import os
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
@@ -33,8 +34,11 @@ from app.routers.incident_records import router as incident_records_router
 from app.routers.incident_ui import router as incident_ui_router
 from app.routers.incidents import router as incidents_router
 from app.routers.profiles import router as profiles_router
+from app.routers.knowledge import router as knowledge_router
 from app.routers.users import router as users_router
 from routes.suppliers import router as suppliers_router
+
+KNOWLEDGE_UI = Path(__file__).resolve().parents[3] / "uis" / "knowledge-query"
 
 logger = logging.getLogger("nexova.api")
 
@@ -96,6 +100,8 @@ def create_app() -> FastAPI:
     app.include_router(incident_ui_router)
     app.include_router(suppliers_router)
     app.include_router(directory_router)
+    app.include_router(knowledge_router)
+    app.mount("/ui", StaticFiles(directory=KNOWLEDGE_UI), name="knowledge-ui")
     app.mount("/css", StaticFiles(directory=BACKOFFICE_DIR / "css"), name="css")
     app.mount("/js", StaticFiles(directory=BACKOFFICE_DIR / "js"), name="js")
     app.mount("/tokens", StaticFiles(directory=BACKOFFICE_DIR / "tokens"), name="tokens")
@@ -112,6 +118,10 @@ def create_app() -> FastAPI:
     @app.get("/", response_class=HTMLResponse)
     def home() -> HTMLResponse:
         return HTMLResponse(render_home(), headers={"Cache-Control": "no-store"})
+
+    @app.get("/conocimiento", include_in_schema=False)
+    def knowledge_page() -> FileResponse:
+        return FileResponse(KNOWLEDGE_UI / "index.html")
 
     @app.get("/privacidad", response_class=HTMLResponse)
     def privacy() -> HTMLResponse:
