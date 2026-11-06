@@ -33,7 +33,7 @@ PostgreSQL 16.15 en local. Con `NEXOVA_TEST_DATABASE_URL`: `uv run pytest` en `s
 | R27 | PASS | La contraseña local y la URI no aparecen en el diff ni en las transcripciones. `git check-ignore` cubre `.env`. | `evidence/http-transcript.txt` (el token va como `<redacted>`). |
 | R28 | PASS | `list_orders` usa `selectinload`. El test cuenta los `SELECT` de un listado de 9 órdenes y exige 6 o menos. Un N+1 se iría por encima. | `service.py` `list_orders`. Test `test_listing_orders_does_not_query_once_per_row`. |
 | R29 | PASS | Rúbrica, justificación, excelencia, auditoría, evidencia, manifiesto y telemetría están en esta carpeta. | Este directorio. |
-| R30 | PASS | El PR queda abierto contra `feature/company-monorepo-container`. No hay merge ni envío al LMS. El README no añade colaboradores. | Cuerpo del PR. |
+| R30 | PASS | El PR #23 queda abierto contra `feature/company-monorepo-container`. No hay merge ni envío al LMS. El README no añade colaboradores. | https://github.com/Picazo333/nexova-ai-engineering/pull/23 |
 | S01 | BLOCKED_HITL | Hace falta la URI de Transaction pooler de un proyecto Supabase. No está en el entorno y no se inventa. | `RUNBOOK_SUPABASE.md` pasos 1-3. |
 | S02 | BLOCKED_HITL | No hubo conexión a un host `pooler.supabase.com`. El PASS de R25 es PostgreSQL local. | `RUNBOOK_SUPABASE.md`. `postgres-inspect.txt` muestra Ubuntu 16.15, no Supabase. |
 | D01 | HITL_ENVIO_MIGUEL | Enviar la URL del fork o del PR por la plataforma del estudiante. | Checklist de `quality/FINAL_AUDIT.md`. |

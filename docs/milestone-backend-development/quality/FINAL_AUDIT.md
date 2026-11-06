@@ -2,6 +2,10 @@
 
 Estado: **PENDIENTE_REVISION_ORQUESTADOR**. No es READY_TO_SUBMIT. No hubo merge. No se envió nada al LMS.
 
+PR: https://github.com/Picazo333/nexova-ai-engineering/pull/23 contra `feature/company-monorepo-container`.
+
+Implementación: `0a7de2bb8436198d274409edce5173f77d48029c`.
+
 ## Resultado
 
 30/30 criterios que cuentan: PASS (R01–R30).

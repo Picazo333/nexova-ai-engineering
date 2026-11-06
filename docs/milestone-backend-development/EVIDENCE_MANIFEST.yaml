@@ -2,6 +2,7 @@ project: ai-eng-milestone-backend-development
 base: feature/company-monorepo-container
 base_sha: 2232caf225a0e899fea4c93ab83ce2f36ecdfafe
 implementation_commit: 0a7de2bb8436198d274409edce5173f77d48029c
+pull_request: https://github.com/Picazo333/nexova-ai-engineering/pull/23
 status: PENDIENTE_REVISION_ORQUESTADOR
 items:
   - id: EV-pytest-postgres
