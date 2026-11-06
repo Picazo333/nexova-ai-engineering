@@ -113,6 +113,10 @@ Read the linked `README.md` inside each folder before you start coding there.
 
 **Flow:** `raw` → `pipelines` → `process` → consumed by `services/`, `uis/`, or `agents/`. Use `eval` to prove quality.
 
+### Sales forecast
+
+Monthly revenue forecast for Nexova. Entry point: `scripts/train_sales_forecast.py`. Definitions, the 8-year/2-year split, and how to run it: [`pipelines/README.md`](./pipelines/README.md). Series: `data/raw/nexova_sales.csv` (official file, see `data/raw/SALES_DATASET.md`). Spanish: [`pipelines/README.es.md`](./pipelines/README.es.md).
+
 ### `agents/` — AI agents
 
 **Purpose:** Autonomous or semi-autonomous AI assistants for the company.
