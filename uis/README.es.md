@@ -13,3 +13,13 @@ Organiza `uis/` por **distintas áreas de la compañía** — cada subcarpeta ag
 - **Recomendación**: documenta en este archivo (o en sub-READMEs) las aplicaciones que vayas añadiendo, su objetivo, tecnología usada y cómo ejecutarlas.
 
 > _These instructions are also available in [English](./README.md)._
+
+## Aplicaciones
+
+### `talent-pipeline-tracker`
+
+Aplicación interna en Next.js para Operaciones de Selección de Nexova. Lista, filtra y actualiza candidaturas contra la API pública del tracker del curso.
+
+- Tecnología: Next.js (App Router), React, TypeScript, Tailwind CSS.
+- Ejecución: `cd uis/talent-pipeline-tracker && npm install && npm run dev`
+- Documentación: [`talent-pipeline-tracker/README.md`](./talent-pipeline-tracker/README.md)
