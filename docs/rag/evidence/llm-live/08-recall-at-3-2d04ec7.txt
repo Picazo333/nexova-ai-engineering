@@ -1,0 +1,21 @@
+COMMAND: uv run python -m data.eval.recall_at_3
+{
+  "queries": 27,
+  "hits": 26,
+  "recall_at_3": 0.9629629629629629,
+  "threshold": 0.8,
+  "meets_threshold_for_this_embedder": true,
+  "hits_above_configured_min_score": 26,
+  "min_score": 0.4,
+  "embedder": "remote",
+  "official_4geeks_criterion": "measured"
+}
+wrote /workspace/llm-run/wt-2d04ec7/data/eval/recall-report.json
+Exception ignored in: <function QdrantClient.__del__ at 0x7f79269e2480>
+Traceback (most recent call last):
+  File "/workspace/llm-run/wt-2d04ec7/.venv/lib/python3.13/site-packages/qdrant_client/qdrant_client.py", line 172, in __del__
+  File "/workspace/llm-run/wt-2d04ec7/.venv/lib/python3.13/site-packages/qdrant_client/qdrant_client.py", line 181, in close
+  File "/workspace/llm-run/wt-2d04ec7/.venv/lib/python3.13/site-packages/qdrant_client/local/qdrant_local.py", line 113, in close
+ImportError: sys.meta_path is None, Python is likely shutting down
+
+EXIT: 0

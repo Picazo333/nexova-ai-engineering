@@ -48,9 +48,63 @@ def test_retrieve_excludes_scores_below_min_score_and_can_return_fewer_than_k(mo
     assert len(result) < 5
     assert all(isinstance(item, dict) for item in result)
     assert "score" not in result[0]
-    assert client.kwargs["limit"] == 5
-    assert client.kwargs["score_threshold"] == 0.4
+    assert client.kwargs["limit"] >= 5
+    assert client.kwargs["score_threshold"] is None
     assert client.kwargs["collection_name"] == "nexova_knowledge"
+
+
+def test_literal_term_keeps_a_chunk_the_vector_score_would_drop(monkeypatch):
+    """'tarifa' is in the pricing chunk, but a generic question scores it under min_score.
+
+    Vector-only retrieval returns the service-lines neighbor and drops the fee.
+    """
+
+    _patch_search(
+        monkeypatch,
+        [
+            _Point(
+                0.62,
+                {
+                    "text": "Nexova opera tres líneas de negocio.",
+                    "source_document": "service-lines",
+                    "language": "es",
+                    "chunk_index": 0,
+                    "section": "lineas",
+                },
+            ),
+            _Point(
+                0.22,
+                {
+                    "text": "Tarifa estándar: 22% del salario anual bruto del cargo contratado.",
+                    "source_document": "pricing-model",
+                    "language": "es",
+                    "chunk_index": 0,
+                    "section": "Headhunting ejecutivo",
+                },
+            ),
+        ],
+    )
+    result = retrieve("¿Cuál es la tarifa de Nexova", k=3, min_score=0.4)
+    assert any("Tarifa estándar: 22%" in item["text"] for item in result)
+
+
+def test_off_corpus_words_do_not_promote_a_below_threshold_chunk(monkeypatch):
+    _patch_search(
+        monkeypatch,
+        [
+            _Point(
+                0.31,
+                {
+                    "text": "Nexova opera tres líneas de negocio.",
+                    "source_document": "service-lines",
+                    "language": "es",
+                    "chunk_index": 0,
+                    "section": "lineas",
+                },
+            )
+        ],
+    )
+    assert retrieve("¿Quién ganó el mundial de fútbol de 2098?", k=5, min_score=0.4) == []
 
 
 def test_retrieve_stops_at_k_even_when_more_hits_clear_the_threshold(monkeypatch):
@@ -319,3 +373,24 @@ def test_prompt_carries_the_briefing_voice_and_commercial_rules():
     assert "6-month replacement guarantee" in text
     assert "conflict of interest" in text
     assert "Sources:" in text
+    assert "two short paragraphs" in text
+
+
+def test_complete_chat_requests_a_token_budget_above_the_old_cap(monkeypatch):
+    from data.pipelines.rag import complete_chat
+    from data.rag_settings import load_settings
+
+    _generation_env(monkeypatch)
+    completions = _scripted_openai(monkeypatch, [(_FULL_ANSWER, "stop")])
+    # The scripted client records kwargs via a wrapper installed below.
+    seen: dict = {}
+    original = completions.create
+
+    def _capture(**kwargs):
+        seen.update(kwargs)
+        return original(**kwargs)
+
+    completions.create = _capture
+    complete_chat([{"role": "user", "content": "¿Cuánto tarda?"}], load_settings())
+    assert seen["max_tokens"] >= 1500
+    assert seen["max_tokens"] > 700

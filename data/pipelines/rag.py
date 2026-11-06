@@ -32,10 +32,61 @@ Commercial rules:
 - If the prospect asks about competitor clients, be transparent: Nexova does not take simultaneous searches for two companies in a direct conflict of interest in the same selection process, and it may have worked with competitors in the past. Never conceal that.
 
 Answer in the same language as the question.
+Write at most two short paragraphs, then the source lines. Do not add a sales close beyond one sentence.
 After the answer, cite only sources present in the context, one per line, exactly as:
 Sources: <source_document> — <section>
 Do not include similarity scores, chunk indexes, or raw search payloads.
 """
+
+# Question words and the company name are not evidence. A hit on "tarifa"
+# is. "Nexova" alone is not, because it is in almost every chunk.
+_STOPWORDS = frozenset(
+    {
+        "nexova",
+        "cual",
+        "cuál",
+        "cuales",
+        "cuáles",
+        "como",
+        "cómo",
+        "cuando",
+        "cuándo",
+        "cuanto",
+        "cuánto",
+        "donde",
+        "dónde",
+        "quien",
+        "quién",
+        "quienes",
+        "quiénes",
+        "para",
+        "porque",
+        "qué",
+        "que",
+        "esta",
+        "este",
+        "esto",
+        "esas",
+        "esos",
+        "what",
+        "when",
+        "where",
+        "which",
+        "who",
+        "whom",
+        "whose",
+        "how",
+        "does",
+        "with",
+        "from",
+        "that",
+        "this",
+        "your",
+        "have",
+        "been",
+    }
+)
+_VECTOR_POOL = 16
 
 
 _CONJUNCTION = re.compile(r"\s+(?:y|e|o|u|and|or)\s+", re.IGNORECASE)
@@ -63,34 +114,69 @@ def compound_clauses(question: str) -> list[str]:
     return clauses[:3]
 
 
+def _content_terms(text: str) -> list[str]:
+    terms = []
+    for token in re.findall(r"\w+", (text or "").lower(), flags=re.UNICODE):
+        if len(token) < 4 or token in _STOPWORDS:
+            continue
+        terms.append(token)
+    return terms
+
+
+def _term_overlap(query_terms: list[str], chunk_text: str) -> int:
+    if not query_terms:
+        return 0
+    haystack = set(re.findall(r"\w+", (chunk_text or "").lower(), flags=re.UNICODE))
+    return sum(1 for term in query_terms if term in haystack)
+
+
 def _search_once(text: str, *, k: int, min_score: float) -> list[dict]:
+    """Vector neighbors, plus chunks that literally contain a query term.
+
+    A generic clause such as "cuál es la tarifa" can leave the pricing chunk
+    under min_score even though the word "tarifa" is in that chunk. The pool
+    is wider than k and is not cut by min_score inside Qdrant. A neighbor
+    stays if its cosine clears min_score or it shares a content term. Shared
+    stopwords do not count, so an off-corpus question still comes back empty.
+    """
+
     vector = indexing.embed(text)
     client = indexing.get_qdrant_client()
+    pool = max(k * 4, _VECTOR_POOL)
     response = client.query_points(
         collection_name=COLLECTION,
         query=vector,
-        limit=k,
-        score_threshold=min_score,
+        limit=pool,
+        score_threshold=None,
         with_payload=True,
     )
-    kept: list[dict] = []
+    query_terms = _content_terms(text)
+    ranked: list[tuple[float, int, dict]] = []
     for point in response.points:
-        score = float(point.score)
-        if score < min_score:
-            logger.info("drop hit below min_score score=%.4f", score)
-            continue
         payload = dict(point.payload or {})
         payload.pop("score", None)
+        score = float(point.score)
+        overlap = _term_overlap(query_terms, str(payload.get("text", "")))
+        if score < min_score and overlap <= 0:
+            logger.info("drop hit below min_score score=%.4f", score)
+            continue
         logger.info(
-            "hit score=%.4f source=%s section=%s",
+            "hit score=%.4f overlap=%s source=%s section=%s",
             score,
+            overlap,
             payload.get("source_document"),
             payload.get("section"),
         )
-        kept.append(payload)
-        if len(kept) >= k:
-            break
-    return kept
+        ranked.append((score, overlap, payload))
+    by_vector = sorted(range(len(ranked)), key=lambda index: ranked[index][0], reverse=True)
+    by_terms = [index for index in sorted(range(len(ranked)), key=lambda index: ranked[index][1], reverse=True) if ranked[index][1] > 0]
+    fused: dict[int, float] = {}
+    for rank, index in enumerate(by_vector):
+        fused[index] = fused.get(index, 0.0) + 1.0 / (60 + rank)
+    for rank, index in enumerate(by_terms):
+        fused[index] = fused.get(index, 0.0) + 1.0 / (60 + rank)
+    order = sorted(fused, key=lambda index: fused[index], reverse=True)
+    return [ranked[index][2] for index in order[:k]]
 
 
 def _chunk_key(payload: dict) -> tuple:
@@ -216,7 +302,7 @@ def complete_chat(messages: list[dict], settings) -> str:
                 model=settings.generation_model_id,
                 messages=messages,
                 temperature=0.2,
-                max_tokens=700,
+                max_tokens=2000,
             )
         except Exception as exc:
             last_reason = type(exc).__name__

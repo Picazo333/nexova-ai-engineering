@@ -49,10 +49,10 @@ items:
     type: pending_live_rerun
     supports: [R35b, R37]
     freshness: PENDIENTE_RECORRIDA
-    captured_at: null
-    source: "Recall@3 del test-queries.json ampliado y POST /knowledge/query de la pregunta de tarifa y rebaja"
+    captured_at: "2026-11-06T18:23:00Z"
+    source: "Re-corrida live de 2d04ec7: 26/27 y POST tarifa+rebaja en 502 length. El head siguiente aún no se midió."
     location: data/eval/test-queries.json
-    verifier: "No ejecutado en este head. La corrida 24/24 de llm-live no incluye las 3 preguntas compuestas. No es PASS."
+    verifier: "26/27 no es PASS del set ampliado. El 502 length no es PASS de la consulta. Hace falta otra corrida live."
     commands:
       - "uv run python -m data.eval.recall_at_3"
       - "curl -s -X POST http://127.0.0.1:18038/knowledge/query -H 'Content-Type: application/json' -d '{\"question\":\"¿Cuál es la tarifa de Nexova y quién autoriza una rebaja?\"}'"
