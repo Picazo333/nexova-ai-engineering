@@ -3,7 +3,7 @@ company: Nexova
 branch: feature/supplier-directory
 base: feature/incidents-analysis
 status: PENDIENTE_REVISION_ORQUESTADOR
-commit: HEAD
+commit: e86d48932f0c1954da591617c6c167968590ab8f
 pytest: "35 passed"
 briefing:
   searched:
