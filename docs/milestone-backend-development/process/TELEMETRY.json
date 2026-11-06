@@ -1,0 +1,50 @@
+{
+  "project": "ai-eng-milestone-backend-development",
+  "started_at": "2026-11-06T16:56:00+00:00",
+  "ended_at": "2026-11-06T17:11:45+00:00",
+  "tokens_used": null,
+  "tokens_note": "Este entorno no expone un contador de tokens de la sesión.",
+  "tokens_unmeasurable_reason": "La sesión no entrega un contador de tokens de entrada ni de salida. No hay variable de entorno, API local ni campo de uso en la respuesta del modelo. No se inventa una cifra.",
+  "tokens_proxy": {
+    "method": "Tamaño del diff de feature/milestone-backend-development contra feature/company-monorepo-container (2232caf) y duración entre started_at y el cierre de la evidencia.",
+    "diff_bytes": 156309,
+    "files_changed": 37,
+    "insertions": 2136,
+    "deletions": 5,
+    "duration_seconds": 945,
+    "implementation_commit": "0a7de2bb8436198d274409edce5173f77d48029c"
+  },
+  "eval_repair_iterations": 1,
+  "failures": [
+    {
+      "what": "El 503 de /inventory no trae la clave detail: el catálogo HTTP no repite el detalle de un 5xx.",
+      "repair": "La prueba comprueba el 503, el código http_error y que el cuerpo no lleva una URI. El aviso operativo queda en el log, no en el cliente."
+    },
+    {
+      "what": "La prueba de FK dejaba un engine.connect() sin cerrar y el INSERT no veía el esquema de la prueba.",
+      "repair": "La conexión va dentro de with. La prueba pasa y pg_constraint muestra las dos FK."
+    }
+  ],
+  "verification_commands": [
+    "cd services/api && uv add sqlmodel psycopg2-binary",
+    "cd services/api && uv run pytest -q   # sin NEXOVA_TEST_DATABASE_URL: 162 passed, 7 skipped",
+    "cd services/api && NEXOVA_TEST_DATABASE_URL=postgresql://… uv run pytest -q   # 169 passed",
+    "cd services/api && uv run pytest --cov -q   # app.auth 91.60%",
+    "uv run python -m pytest tests packages/incident_analysis/tests -q   # 64 passed, 1 skipped",
+    "uvicorn app.main:app --host 127.0.0.1 --port 8011 con DATABASE_URL de PostgreSQL 16.15",
+    "psql: version, information_schema.columns, pg_constraint"
+  ],
+  "postgres": {
+    "server_version": "16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)",
+    "dialect": "postgresql",
+    "sqlite_used_as_pass": false,
+    "supabase_project": false
+  },
+  "pytest": {
+    "api_without_postgres_url": "162 passed, 7 skipped",
+    "api_with_postgres": "169 passed",
+    "api_baseline_before_this_milestone": "157 passed",
+    "root": "64 passed, 1 skipped",
+    "auth_coverage_percent": 91.6
+  }
+}

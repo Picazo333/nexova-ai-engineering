@@ -1,0 +1,47 @@
+project: ai-eng-milestone-backend-development
+base: feature/company-monorepo-container
+base_sha: 2232caf225a0e899fea4c93ab83ce2f36ecdfafe
+implementation_commit: 0a7de2bb8436198d274409edce5173f77d48029c
+pull_request: https://github.com/Picazo333/nexova-ai-engineering/pull/23
+status: PENDIENTE_REVISION_ORQUESTADOR
+items:
+  - id: EV-pytest-postgres
+    rubric: [R02, R25, R26, E02]
+    path: docs/milestone-backend-development/evidence/pytest-postgres.txt
+    command: cd services/api && uv run pytest -q
+    note: 169 passed contra PostgreSQL local. La URI no está en el archivo.
+  - id: EV-pytest-sin-postgres
+    rubric: [R26]
+    path: docs/milestone-backend-development/evidence/pytest-sin-postgres.txt
+    command: cd services/api && uv run pytest -q
+    note: 162 passed, 7 skipped. Los 7 no son un PASS de Postgres.
+  - id: EV-pytest-cov
+    rubric: [R02, R26]
+    path: docs/milestone-backend-development/evidence/pytest-cov.txt
+    note: app.auth 91.60%, mínimo 70.
+  - id: EV-pytest-raiz
+    rubric: [R26]
+    path: docs/milestone-backend-development/evidence/pytest-raiz.txt
+    note: 64 passed, 1 skipped. El skip de generación en vivo ya estaba.
+  - id: EV-http
+    rubric: [R14, R15, R16, R18, R19, R22, E01]
+    path: docs/milestone-backend-development/evidence/http-transcript.txt
+    note: Puerto 8011. Token redactado. user_uuid de TinyDB en la entrada nueva.
+  - id: EV-postgres
+    rubric: [R07, R08, R09, R21, R22, R25, S02]
+    path: docs/milestone-backend-development/evidence/postgres-inspect.txt
+    note: PostgreSQL 16.15. Tres tablas, dos FK, cero tablas de usuario, sin columna current_stock.
+  - id: EV-briefing-en
+    rubric: [R23, R24]
+    path: docs/milestone-backend-development/source/nexova-BRIEFING.en.md
+    sha256: 34a829fd735a5a7724a5b87993d99de4df038ba1f4ef59e593d171da35cb9138
+  - id: EV-briefing-es
+    rubric: [R23]
+    path: docs/milestone-backend-development/source/nexova-BRIEFING.es.md
+    sha256: f63d6e046724070dabb9663c6c5ce198c7b3e1b7f33e3f272500a7b2f43b0b66
+  - id: EV-readme
+    rubric: [E01, R04, R10]
+    path: services/api/README.md
+  - id: EV-runbook
+    rubric: [S01, S02, D01, D02]
+    path: docs/milestone-backend-development/RUNBOOK_SUPABASE.md

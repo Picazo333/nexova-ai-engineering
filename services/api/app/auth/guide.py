@@ -66,4 +66,11 @@ OPENAPI_TAGS = [
         "name": "directory-page",
         "description": "Página HTML del directorio. Sin token no incluye tarifas ni contactos.",
     },
+    {
+        "name": "inventory",
+        "description": (
+            "Activos, entradas y salidas. El stock se calcula con las órdenes. "
+            "Las escrituras exigen token. El user_uuid sale del usuario de TinyDB."
+        ),
+    },
 ]

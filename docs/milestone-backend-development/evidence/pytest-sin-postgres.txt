@@ -1,0 +1,7 @@
+Comando: cd services/api && uv run pytest -q
+NEXOVA_TEST_DATABASE_URL: ausente
+DATABASE_URL: ausente (el fixture de pruebas también la retira)
+............................................................sssssss..... [ 42%]
+........................................................................ [ 85%]
+.........................                                                [100%]
+162 passed, 7 skipped in 4.54s

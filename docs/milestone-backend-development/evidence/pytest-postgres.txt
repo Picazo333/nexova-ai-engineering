@@ -1,0 +1,7 @@
+Comando: cd services/api && uv run pytest -q
+NEXOVA_TEST_DATABASE_URL: postgresql (host local, usuario de prueba, base nexova_inventory). La URI no se copia aquí.
+Motor: PostgreSQL 16.15. Dialect sqlalchemy: postgresql. No es SQLite.
+........................................................................ [ 42%]
+........................................................................ [ 85%]
+.........................                                                [100%]
+169 passed in 5.19s
