@@ -1,0 +1,42 @@
+{
+  "project": "022-ai-eng-inventory-management-backoffice",
+  "started_at": "2026-11-06T17:13:00Z",
+  "finished_at": "2026-11-06T17:52:00Z",
+  "timezone": "UTC",
+  "eval_repair_iterations": 6,
+  "repairs": [
+    "Reinicio del dev server tras un .next inconsistente",
+    "El 400 exige assigned_to en una asignación; el recorrido lo rellena",
+    "overflow-wrap solo en datos mono para no partir Valencia",
+    "Videos alargados a 7.8 s y 5.1 s",
+    "DATABASE_URL sacada del .env local para no romper el 503 de la suite",
+    "Caja fija del lockup y pie al fondo del viewport: CLS móvil de productos de 0.234 a 0.027"
+  ],
+  "commands": [
+    "cd uis/backoffice && npx tsc --noEmit",
+    "cd uis/backoffice && npx jest --coverage",
+    "cd uis/backoffice && npm run build",
+    "cd services/api && NEXOVA_TEST_DATABASE_URL=... uv run pytest",
+    "cd services/api && NEXOVA_TEST_DATABASE_URL=... uv run pytest --cov",
+    "uv run python -m pytest tests packages/incident_analysis/tests",
+    "cd uis/portal && npx jest --coverage",
+    "cd uis/portal && npx playwright test",
+    "node uis/backoffice/scripts/capture-inventory.mjs",
+    "npx lighthouse@12 con lh-mobile.js y lh-desktop.js, tres corridas"
+  ],
+  "results": {
+    "api_pytest_postgres": "169 passed",
+    "api_coverage_auth": "91.60%",
+    "root_pytest": "64 passed, 1 skipped",
+    "portal_jest": "20 passed",
+    "portal_playwright": "14 passed",
+    "backoffice_jest": "14 passed"
+  },
+  "tokens_used": null,
+  "tokens_unmeasurable_reason": "Este runtime no expone un contador de tokens de la sesión.",
+  "tokens_proxy": {
+    "method": "diff de la rama más la evidencia de capturas y los JSON de Lighthouse fuera del repo",
+    "started_at": "2026-11-06T17:13:00Z",
+    "finished_at": "2026-11-06T17:52:00Z"
+  }
+}

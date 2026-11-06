@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+import { readStack } from "@/lib/stack";
+
 const FILTER_KEY = "nexova-backoffice-filter";
 
 type Stack =
@@ -25,11 +27,10 @@ export function StackStatus() {
     let ignore = false;
     setStack({ phase: "loading" });
     setArrived(false);
-    fetch("/api/stack", { cache: "no-store", signal: controller.signal })
-      .then(async (response) => {
-        const body = (await response.json()) as { ok?: boolean; upstream?: string; message?: string };
+    readStack(controller.signal)
+      .then((body) => {
         if (ignore) return;
-        if (response.ok && body.ok && body.upstream) {
+        if (body.ok && body.upstream) {
           setStack({ phase: "ok", upstream: body.upstream });
           setArrived(true);
           return;

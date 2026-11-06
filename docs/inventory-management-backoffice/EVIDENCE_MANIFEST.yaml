@@ -1,0 +1,71 @@
+project: 022-ai-eng-inventory-management-backoffice
+base: feature/milestone-backend-development
+base_sha: 106083a0c15b0367938fd5bd712573d72a342ad2
+head_sha: b9c199566576ca2613233ef049eb66397e0846ea
+items:
+  - id: http-transcript
+    path: docs/inventory-management-backoffice/evidence/http-transcript.txt
+    rubric: [R03, R13, R15, R25]
+  - id: products-1280
+    path: docs/inventory-management-backoffice/evidence/products-1280.png
+    rubric: [R04, R05, R06, R07, R21, S05, E01]
+  - id: products-390
+    path: docs/inventory-management-backoffice/evidence/products-390.png
+    rubric: [S05]
+  - id: products-768
+    path: docs/inventory-management-backoffice/evidence/products-768.png
+    rubric: [S05]
+  - id: outbound-warning
+    path: docs/inventory-management-backoffice/evidence/outbound-warning-1280.png
+    rubric: [R14]
+  - id: outbound-400
+    path: docs/inventory-management-backoffice/evidence/outbound-400-1280.png
+    rubric: [R12, R13, R15]
+  - id: inbound-confirm
+    path: docs/inventory-management-backoffice/evidence/inbound-confirm-768.png
+    rubric: [R08, R10, E01]
+  - id: orders
+    path: docs/inventory-management-backoffice/evidence/orders-1280.png
+    rubric: [R16, R17, R18, R19]
+  - id: login
+    path: docs/inventory-management-backoffice/evidence/login-redirect-1280.png
+    rubric: [R11, R20]
+  - id: loading
+    path: docs/inventory-management-backoffice/evidence/products-loading-390.png
+    rubric: [S03]
+  - id: empty
+    path: docs/inventory-management-backoffice/evidence/products-empty-390.png
+    rubric: [S03, E01]
+  - id: error
+    path: docs/inventory-management-backoffice/evidence/products-error-390.png
+    rubric: [R03, R10, S03]
+  - id: reduced
+    path: docs/inventory-management-backoffice/evidence/products-reduced-1280.png
+    rubric: [S07]
+  - id: video
+    path: docs/inventory-management-backoffice/evidence/recorrido-salida-400.webm
+    rubric: [S06, R14, R15]
+  - id: video-reduced
+    path: docs/inventory-management-backoffice/evidence/recorrido-reduced.webm
+    rubric: [S07]
+  - id: axe
+    path: docs/inventory-management-backoffice/evidence/axe-summary.json
+    rubric: [S04]
+  - id: lighthouse
+    path: docs/inventory-management-backoffice/evidence/lighthouse-summary.json
+    rubric: [S09]
+  - id: pytest-postgres
+    path: docs/inventory-management-backoffice/evidence/pytest-postgres.txt
+    rubric: [R25]
+  - id: pytest-root
+    path: docs/inventory-management-backoffice/evidence/pytest-root.txt
+    rubric: [R24]
+  - id: portal-jest
+    path: docs/inventory-management-backoffice/evidence/portal-jest.txt
+    rubric: [R24]
+  - id: portal-playwright
+    path: docs/inventory-management-backoffice/evidence/portal-playwright.txt
+    rubric: [R24]
+  - id: lockup-sha256
+    note: "signal-horizontal.svg 85459232bf51e7bf7c94225fd4f2cd6b71a681b6d701cb4ffd6d2a142cf57a81"
+    rubric: [S08]
