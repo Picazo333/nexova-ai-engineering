@@ -4,16 +4,17 @@ from __future__ import annotations
 
 from urllib.parse import urlencode
 
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Depends, Request
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse, RedirectResponse, Response
 from pydantic import ValidationError
 
 import directory
+from app.auth.deps import get_current_user
 from app.directory_page import render_directory
 from models import RateUpdate, StatusUpdate, SupplierCreate, SupplierQuery, validation_message
 
-router = APIRouter(tags=["suppliers"])
+router = APIRouter(tags=["suppliers"], dependencies=[Depends(get_current_user)])
 
 NOT_FOUND = "No existe un proveedor con ese id."
 

@@ -63,6 +63,28 @@ def render_server_error() -> str:
     )
 
 
+def render_auth_required(status: int, message: str) -> str:
+    if status == 403:
+        title = "No puedes hacer eso"
+        description = "La sesión es válida, pero este recurso no es tuyo."
+    else:
+        title = "Hace falta una sesión"
+        description = "Esta operación pide un token de acceso."
+    safe = html.escape(message)
+    body = (
+        f"<h1>{html.escape(title)}</h1>"
+        f"<p>{safe}</p>"
+        "<p>Entra con el formulario de esta página. El token se guarda en la pestaña "
+        "y cada llamada lleva la cabecera Authorization. No hay cookie de sesión.</p>"
+    )
+    return _layout(
+        title=f"{title} · Nexova",
+        description=description,
+        main=body,
+        current="",
+    )
+
+
 def render_results_fragment(payload: dict) -> str:
     """Success markup shared by the no-JS page and the fetch response."""
     source = html.escape(str(payload["source_name"]))
@@ -296,6 +318,7 @@ def render_page(
 
 def _layout(*, title: str, description: str, main: str, current: str, page_script: str = "") -> str:
     template = _read("layout.html")
+    main = _with_session(main)
     return (
         template.replace("{{TITLE}}", html.escape(title))
         .replace("{{DESCRIPTION}}", html.escape(description))
@@ -305,6 +328,14 @@ def _layout(*, title: str, description: str, main: str, current: str, page_scrip
         .replace("{{CURRENT_SUPPLIERS}}", ' aria-current="page"' if current == "suppliers" else "")
         .replace("{{CURRENT_PRIVACY}}", ' aria-current="page"' if current == "privacy" else "")
     )
+
+
+def _with_session(main: str) -> str:
+    panel = _read("session.html")
+    marker = "</h1>"
+    if marker in main:
+        return main.replace(marker, marker + panel, 1)
+    return panel + main
 
 
 def _read(name: str) -> str:

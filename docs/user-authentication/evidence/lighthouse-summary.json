@@ -1,0 +1,212 @@
+{
+  "lighthouseVersion": "13.6.0",
+  "measured_at": "2026-11-06T09:53:50Z/2026-11-06T09:55:39Z",
+  "runs_per_surface": 3,
+  "aggregation": "La mediana es el valor central de las tres corridas. La peor es el máximo de cada métrica.",
+  "note": "La medición anterior aplicaba el throttling de escritorio también al móvil. Esta la sustituye. El JSON completo de cada corrida está en /opt/cursor/artifacts/lighthouse/ y no en el repositorio.",
+  "budgets": {
+    "LCP_ms": 2500,
+    "CLS": 0.1,
+    "TBT_ms": 200
+  },
+  "mobile_median_within_budget": true,
+  "full_json_dir": "/opt/cursor/artifacts/lighthouse/",
+  "surfaces": {
+    "/": {
+      "desktop": {
+        "settings": {
+          "formFactor": "desktop",
+          "throttlingMethod": "simulate",
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1,
+          "screen": {
+            "mobile": false,
+            "width": 1350,
+            "height": 940,
+            "deviceScaleFactor": 1
+          }
+        },
+        "runs": [
+          {
+            "file": "home-desktop-1.json",
+            "fetchTime": "2026-11-06T09:53:52.462Z",
+            "LCP_ms": 246.7251,
+            "CLS": 0,
+            "TBT_ms": 0
+          },
+          {
+            "file": "home-desktop-2.json",
+            "fetchTime": "2026-11-06T09:54:32.213Z",
+            "LCP_ms": 249.2874,
+            "CLS": 0,
+            "TBT_ms": 0
+          },
+          {
+            "file": "home-desktop-3.json",
+            "fetchTime": "2026-11-06T09:55:11.998Z",
+            "LCP_ms": 249.6904,
+            "CLS": 0,
+            "TBT_ms": 0
+          }
+        ],
+        "median": {
+          "LCP_ms": 249.2874,
+          "CLS": 0,
+          "TBT_ms": 0
+        },
+        "worst": {
+          "LCP_ms": 249.6904,
+          "CLS": 0,
+          "TBT_ms": 0
+        }
+      },
+      "mobile": {
+        "settings": {
+          "formFactor": "mobile",
+          "throttlingMethod": "simulate",
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "cpuSlowdownMultiplier": 4,
+          "screen": {
+            "mobile": true,
+            "width": 390,
+            "height": 844,
+            "deviceScaleFactor": 2
+          }
+        },
+        "runs": [
+          {
+            "file": "home-mobile-1.json",
+            "fetchTime": "2026-11-06T09:54:02.390Z",
+            "LCP_ms": 1053.6064,
+            "CLS": 0,
+            "TBT_ms": 0
+          },
+          {
+            "file": "home-mobile-2.json",
+            "fetchTime": "2026-11-06T09:54:42.217Z",
+            "LCP_ms": 1057.8607,
+            "CLS": 0,
+            "TBT_ms": 0
+          },
+          {
+            "file": "home-mobile-3.json",
+            "fetchTime": "2026-11-06T09:55:22.023Z",
+            "LCP_ms": 1056.7286,
+            "CLS": 0,
+            "TBT_ms": 0
+          }
+        ],
+        "median": {
+          "LCP_ms": 1056.7286,
+          "CLS": 0,
+          "TBT_ms": 0
+        },
+        "worst": {
+          "LCP_ms": 1057.8607,
+          "CLS": 0,
+          "TBT_ms": 0
+        }
+      }
+    },
+    "/proveedores": {
+      "desktop": {
+        "settings": {
+          "formFactor": "desktop",
+          "throttlingMethod": "simulate",
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1,
+          "screen": {
+            "mobile": false,
+            "width": 1350,
+            "height": 940,
+            "deviceScaleFactor": 1
+          }
+        },
+        "runs": [
+          {
+            "file": "directory-desktop-1.json",
+            "fetchTime": "2026-11-06T09:54:12.334Z",
+            "LCP_ms": 246.3951,
+            "CLS": 0,
+            "TBT_ms": 0
+          },
+          {
+            "file": "directory-desktop-2.json",
+            "fetchTime": "2026-11-06T09:54:52.110Z",
+            "LCP_ms": 250.76319999999998,
+            "CLS": 0,
+            "TBT_ms": 0
+          },
+          {
+            "file": "directory-desktop-3.json",
+            "fetchTime": "2026-11-06T09:55:32.057Z",
+            "LCP_ms": 247.1605,
+            "CLS": 0,
+            "TBT_ms": 0
+          }
+        ],
+        "median": {
+          "LCP_ms": 247.1605,
+          "CLS": 0,
+          "TBT_ms": 0
+        },
+        "worst": {
+          "LCP_ms": 250.76319999999998,
+          "CLS": 0,
+          "TBT_ms": 0
+        }
+      },
+      "mobile": {
+        "settings": {
+          "formFactor": "mobile",
+          "throttlingMethod": "simulate",
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "cpuSlowdownMultiplier": 4,
+          "screen": {
+            "mobile": true,
+            "width": 390,
+            "height": 844,
+            "deviceScaleFactor": 2
+          }
+        },
+        "runs": [
+          {
+            "file": "directory-mobile-1.json",
+            "fetchTime": "2026-11-06T09:54:22.238Z",
+            "LCP_ms": 1078.8047,
+            "CLS": 0,
+            "TBT_ms": 0
+          },
+          {
+            "file": "directory-mobile-2.json",
+            "fetchTime": "2026-11-06T09:55:02.018Z",
+            "LCP_ms": 1055.6774,
+            "CLS": 0,
+            "TBT_ms": 0
+          },
+          {
+            "file": "directory-mobile-3.json",
+            "fetchTime": "2026-11-06T09:55:41.996Z",
+            "LCP_ms": 1055.6146,
+            "CLS": 0,
+            "TBT_ms": 0
+          }
+        ],
+        "median": {
+          "LCP_ms": 1055.6774,
+          "CLS": 0,
+          "TBT_ms": 0
+        },
+        "worst": {
+          "LCP_ms": 1078.8047,
+          "CLS": 0,
+          "TBT_ms": 0
+        }
+      }
+    }
+  }
+}
