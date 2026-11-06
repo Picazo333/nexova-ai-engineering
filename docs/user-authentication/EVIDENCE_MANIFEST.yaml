@@ -5,8 +5,8 @@ merge_order:
   - "PR #9 feature/incidents-analysis"
   - "PR #10 feature/supplier-directory"
   - "este PR, feature/auth-api"
-commit_sha: null
-commit_sha_note: "Se rellena en el commit de cierre con el SHA del commit de código. El tip de la rama es el que hay que revisar."
+content_commit: b861391a28d34b28599c6b171e22bb765f624bfd
+commit_sha_note: "b861391 contiene el código, los tests y la evidencia. El tip de feature/auth-api añade este SHA al manifiesto."
 status: PENDIENTE_REVISION_ORQUESTADOR
 pytest: docs/user-authentication/evidence/pytest.txt
 http: docs/user-authentication/evidence/http-transcript.txt
