@@ -76,10 +76,15 @@
   }
 
   function messageFrom(text, fallback) {
+    if (window.nexovaErrors) return window.nexovaErrors.human(422, text, fallback);
     try {
       var data = JSON.parse(text);
-      if (data && typeof data.message === "string" && data.message) return data.message;
-      if (data && typeof data.detail === "string" && data.detail) return data.detail;
+      if (data && typeof data.message === "string" && data.message && data.message.indexOf("Traceback") === -1) {
+        return data.message;
+      }
+      if (data && typeof data.detail === "string" && data.detail && data.detail.indexOf("Traceback") === -1) {
+        return data.detail;
+      }
     } catch (err) {
       /* HTML responses use the fallback sentence. */
     }
@@ -100,6 +105,7 @@
     list.setAttribute("data-state", "loading");
     var pending = document.createElement("p");
     pending.id = "directory-loading";
+    pending.className = "loading-state";
     pending.textContent = "Cargando proveedores…";
     list.prepend(pending);
     statusEl.textContent = "Cargando proveedores…";

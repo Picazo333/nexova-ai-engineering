@@ -45,17 +45,30 @@ def main(argv: list[str] | None = None) -> int:
         print(f"error: no está el fichero {path.name}", file=sys.stderr)
         return 1
     try:
-        plan = prepare_csv(path.read_bytes())
+        raw = path.read_bytes()
+    except OSError:
+        print("error: no se pudo leer el fichero.", file=sys.stderr)
+        return 1
+    try:
+        plan = prepare_csv(raw)
     except AnalysisError as exc:
         print(f"error: {exc.message_es}", file=sys.stderr)
         return 1
 
-    from incident_store import insert_new
+    try:
+        from incident_store import insert_new
+    except ImportError:
+        print("error: no está disponible el almacén de incidencias.", file=sys.stderr)
+        return 1
 
     inserted = 0
     skipped = 0
     for row in plan.accepted:
-        stored = insert_new(_record(row))
+        try:
+            stored = insert_new(_record(row))
+        except OSError:
+            print("error: no se pudo guardar la incidencia.", file=sys.stderr)
+            return 1
         if stored is None:
             skipped += 1
         else:

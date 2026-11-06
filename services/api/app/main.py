@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import html
 import logging
 import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -16,7 +18,15 @@ from app.auth.guide import API_DESCRIPTION, OPENAPI_TAGS
 from app.auth.security import AuthConfigError, expire_minutes, jwt_secret, load_local_env
 from app.auth.store import reset_auth_db
 from app.config import BACKOFFICE_DIR, cors_origins
-from app.pages import render_auth_required, render_home, render_not_found, render_privacy, render_server_error
+from app.http_catalog import catalog_message, message_from_validation, public_body, safe_detail
+from app.pages import (
+    render_auth_required,
+    render_home,
+    render_not_found,
+    render_page,
+    render_privacy,
+    render_server_error,
+)
 from app.routers.auth import router as auth_router
 from app.routers.directory_ui import router as directory_router
 from app.routers.incident_records import router as incident_records_router
@@ -27,13 +37,6 @@ from app.routers.users import router as users_router
 from routes.suppliers import router as suppliers_router
 
 logger = logging.getLogger("nexova.api")
-
-PUBLIC_HTTP_MESSAGES = {
-    401: "Falta un token válido.",
-    403: "No tienes permiso para ese recurso.",
-    404: "No encontrado.",
-    405: "Ese método no está admitido en esta ruta.",
-}
 
 API_ROOTS = ("/api/", "/users", "/auth", "/profiles")
 
@@ -114,6 +117,16 @@ def create_app() -> FastAPI:
     def privacy() -> HTMLResponse:
         return HTMLResponse(render_privacy(), headers={"Cache-Control": "no-store"})
 
+    @app.exception_handler(RequestValidationError)
+    async def invalid_request(request: Request, exc: RequestValidationError) -> HTMLResponse | JSONResponse:
+        message = message_from_validation(exc.errors())
+        if _error_as_json(request):
+            return JSONResponse(
+                status_code=422,
+                content={"error": "http_error", "message": message, "detail": message},
+            )
+        return HTMLResponse(_validation_page(message), status_code=422)
+
     @app.exception_handler(StarletteHTTPException)
     async def http_error(request: Request, exc: StarletteHTTPException) -> HTMLResponse | JSONResponse:
         headers = {key: value for key, value in (exc.headers or {}).items()}
@@ -122,7 +135,8 @@ def create_app() -> FastAPI:
         if _error_as_json(request):
             return JSONResponse(status_code=exc.status_code, content=_error_content(exc), headers=headers)
         if exc.status_code in (401, 403):
-            message = exc.detail if isinstance(exc.detail, str) else PUBLIC_HTTP_MESSAGES[exc.status_code]
+            raw = exc.detail if isinstance(exc.detail, str) else ""
+            message = safe_detail(exc.status_code, raw) or catalog_message(exc.status_code)
             return HTMLResponse(
                 render_auth_required(exc.status_code, message),
                 status_code=exc.status_code,
@@ -130,6 +144,9 @@ def create_app() -> FastAPI:
             )
         if exc.status_code == 404:
             return HTMLResponse(render_not_found(request.url.path), status_code=404, headers=headers)
+        if exc.status_code == 422 and isinstance(exc.detail, str):
+            message = safe_detail(422, exc.detail) or catalog_message(422)
+            return HTMLResponse(_validation_page(message), status_code=422, headers=headers)
         return HTMLResponse(render_server_error(), status_code=exc.status_code, headers=headers)
 
     @app.exception_handler(Exception)
@@ -173,39 +190,24 @@ def _error_as_json(request: Request) -> bool:
     return "application/json" in accept and "text/html" not in accept
 
 
-# Starlette's own HTTPException uses these English strings. They are not a
-# decision of this API, so the public Spanish sentence stays in their place.
-_FRAMEWORK_DETAIL = {
-    "Not Found",
-    "Method Not Allowed",
-    "Not authenticated",
-    "Unauthorized",
-    "Forbidden",
-}
-
-
 def _error_content(exc: StarletteHTTPException) -> dict:
-    if isinstance(exc.detail, dict):
-        return exc.detail
-    # 4xx details written by the routers (duplicate email, empty password,
-    # empty update) are the decision. 5xx stays generic.
-    if (
-        isinstance(exc.detail, str)
-        and exc.detail
-        and exc.status_code < 500
-        and exc.detail not in _FRAMEWORK_DETAIL
-    ):
-        if exc.status_code == 401:
-            code = "unauthorized"
-        elif exc.status_code == 403:
-            code = "forbidden"
-        else:
-            code = "http_error"
-        return {"error": code, "message": exc.detail, "detail": exc.detail}
-    return {
-        "error": "http_error",
-        "message": PUBLIC_HTTP_MESSAGES.get(exc.status_code, "No se pudo completar la solicitud."),
-    }
+    # 4xx sentences written by the routers stay. 5xx and anything that looks
+    # like a trace, a path, or a secret is replaced by the catalog.
+    return public_body(exc.status_code, exc.detail)
+
+
+def _validation_page(message: str) -> str:
+    return render_page(
+        title="Datos no válidos · Nexova",
+        description="La solicitud no se puede aceptar.",
+        main=(
+            "<h1>Hay datos que no se pueden aceptar</h1>"
+            f"<p>{html.escape(message)}</p>"
+            '<p class="actions"><a class="button" href="/">Ir al inicio</a></p>'
+            "<p>Si se repite, contacta con el soporte interno de Nexova.</p>"
+        ),
+        current="",
+    )
 
 
 def _prefer_json(request: Request) -> bool:

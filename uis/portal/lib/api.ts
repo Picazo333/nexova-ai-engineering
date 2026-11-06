@@ -1,3 +1,4 @@
+import { fieldMessage, humanMessage } from "@/lib/http-messages";
 import { clearToken, readToken } from "@/lib/session";
 
 export class ApiError extends Error {
@@ -41,20 +42,19 @@ function fieldErrors(body: unknown): Record<string, string> {
     if (!Array.isArray(loc) || typeof raw !== "string") continue;
     const name = [...loc].reverse().find((part) => part !== "body" && typeof part === "string");
     if (typeof name !== "string") continue;
-    fields[name] = raw.replace(/^Value error,\s*/, "");
+    fields[name] = fieldMessage(raw);
   }
   return fields;
 }
 
 function messageFrom(body: unknown, status: number): string {
-  if (status === 409) return "Ya existe una cuenta con ese correo.";
+  let candidate = "";
   if (body && typeof body === "object") {
     const record = body as { message?: unknown; detail?: unknown };
-    if (typeof record.message === "string" && record.message) return record.message;
-    if (typeof record.detail === "string" && record.detail) return record.detail;
+    if (typeof record.message === "string" && record.message) candidate = record.message;
+    else if (typeof record.detail === "string" && record.detail) candidate = record.detail;
   }
-  if (status === 401) return "El correo o la contraseña no coinciden con una cuenta activa.";
-  return "No se pudo completar la solicitud.";
+  return humanMessage(status, candidate);
 }
 
 type Options = { auth?: boolean };
@@ -84,7 +84,7 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}, options?
   }
   if (response.status === 401 && auth) {
     leaveForLogin();
-    return new Promise<T>(() => {});
+    throw new ApiError(401, humanMessage(401, "La sesión ha caducado. Vuelve a entrar."));
   }
   if (!response.ok) {
     const fields = fieldErrors(body);
@@ -106,7 +106,7 @@ export async function apiDownload(path: string): Promise<Blob> {
   }
   if (response.status === 401) {
     leaveForLogin();
-    return new Promise<Blob>(() => {});
+    throw new ApiError(401, humanMessage(401, "La sesión ha caducado. Vuelve a entrar."));
   }
   if (!response.ok) {
     const text = await response.text();
