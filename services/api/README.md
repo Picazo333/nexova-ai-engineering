@@ -127,3 +127,7 @@ En `/docs`, la descripción de la API es una guía en cinco pasos: registro, log
 | `ACCESS_TOKEN_EXPIRE_MINUTES` | ninguna | Minutos de vida del JWT. Obligatorio. |
 | `AUTH_DATA_DIR` | `services/api/.data` | Carpeta de `auth.json`. |
 | `AUTH_BCRYPT_ROUNDS` | `12` | Coste bcrypt. Las pruebas usan `4`. |
+
+## Portal Next.js
+
+`uis/portal` es el frontend de los flujos de autenticación. Corre en el puerto 3000 y llama a esta API en el 8000. El JWT va en `localStorage` del origen del portal y en la cabecera `Authorization`. El backoffice que sirve esta API en `/` y `/proveedores` no cambia: sigue usando `sessionStorage` de esa otra origen. El sitio público de la raíz del repositorio no pasa por aquí.
