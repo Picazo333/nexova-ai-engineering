@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 import logging
+import re
 
 import data.process.rag as indexing
 from data.rag_errors import GenerationCallFailed, GenerationNotConfigured
@@ -37,34 +38,45 @@ Do not include similarity scores, chunk indexes, or raw search payloads.
 """
 
 
-def retrieve(query: str, *, k: int = 5, min_score: float | None = None) -> list[dict]:
-    """Embed the question, search Qdrant, and drop hits below `min_score`.
+_CONJUNCTION = re.compile(r"\s+(?:y|e|o|u|and|or)\s+", re.IGNORECASE)
 
-    The return value is a list of payloads. It can be shorter than `k`,
-    including empty. Raw SDK objects and scores are not returned; scores are
-    logged on the server only.
+
+def compound_clauses(question: str) -> list[str]:
+    """Split a question that asks two things at once.
+
+    One embedding of "tarifa y quién autoriza una rebaja" sits between two
+    different chunks and can miss the fee block. Each side is searched on
+    its own when both sides are real clauses (at least four words). A single
+    topic, or a conjunction inside a short phrase, stays one search.
     """
 
-    cleaned = (query or "").strip()
-    if not cleaned:
-        raise ValueError("query must not be blank.")
-    if k < 1:
-        raise ValueError("k must be at least 1.")
-    settings = load_settings()
-    threshold = settings.min_score if min_score is None else min_score
-    vector = indexing.embed(cleaned)
+    text = " ".join((question or "").split())
+    parts = _CONJUNCTION.split(text)
+    clauses: list[str] = []
+    for part in parts:
+        cleaned = part.strip()
+        words = re.findall(r"\w+", cleaned, flags=re.UNICODE)
+        if len(words) >= 4:
+            clauses.append(cleaned)
+    if len(clauses) < 2:
+        return [text]
+    return clauses[:3]
+
+
+def _search_once(text: str, *, k: int, min_score: float) -> list[dict]:
+    vector = indexing.embed(text)
     client = indexing.get_qdrant_client()
     response = client.query_points(
         collection_name=COLLECTION,
         query=vector,
         limit=k,
-        score_threshold=threshold,
+        score_threshold=min_score,
         with_payload=True,
     )
     kept: list[dict] = []
     for point in response.points:
         score = float(point.score)
-        if score < threshold:
+        if score < min_score:
             logger.info("drop hit below min_score score=%.4f", score)
             continue
         payload = dict(point.payload or {})
@@ -79,6 +91,55 @@ def retrieve(query: str, *, k: int = 5, min_score: float | None = None) -> list[
         if len(kept) >= k:
             break
     return kept
+
+
+def _chunk_key(payload: dict) -> tuple:
+    return (
+        payload.get("source_document"),
+        payload.get("language"),
+        payload.get("chunk_index"),
+        payload.get("section"),
+    )
+
+
+def retrieve(query: str, *, k: int = 5, min_score: float | None = None) -> list[dict]:
+    """Embed the question, search Qdrant, and drop hits below `min_score`.
+
+    The return value is a list of payloads. It can be shorter than `k`,
+    including empty. Raw SDK objects and scores are not returned; scores are
+    logged on the server only.
+
+    A compound question is searched once per clause. The lists are merged in
+    round-robin order and capped at `k`, so each clause can place its best
+    chunk in the result instead of one blended vector filling every slot.
+    """
+
+    cleaned = (query or "").strip()
+    if not cleaned:
+        raise ValueError("query must not be blank.")
+    if k < 1:
+        raise ValueError("k must be at least 1.")
+    settings = load_settings()
+    threshold = settings.min_score if min_score is None else min_score
+    clauses = compound_clauses(cleaned)
+    if len(clauses) == 1:
+        return _search_once(clauses[0], k=k, min_score=threshold)
+    batches = [_search_once(clause, k=k, min_score=threshold) for clause in clauses]
+    merged: list[dict] = []
+    seen: set[tuple] = set()
+    for rank in range(k):
+        for batch in batches:
+            if rank >= len(batch):
+                continue
+            item = batch[rank]
+            key = _chunk_key(item)
+            if key in seen:
+                continue
+            seen.add(key)
+            merged.append(item)
+            if len(merged) >= k:
+                return merged
+    return merged
 
 
 def build_messages(question: str, context: list[dict]) -> list[dict]:

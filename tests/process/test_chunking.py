@@ -55,11 +55,14 @@ def test_needles_in_test_queries_exist_in_exactly_one_chunk():
     covered = {(spec["expected_source_document"], spec["language"]) for spec in specs}
     assert covered == {(source, language) for source, language in CORPUS_FILES.values()}
     for spec in specs:
-        matches = [
-            chunk
-            for chunk in chunks
-            if chunk.language == spec["language"]
-            and chunk.source_document == spec["expected_source_document"]
-            and spec["expected_text_contains"] in chunk.text
-        ]
-        assert len(matches) == 1, spec["id"]
+        groups = spec.get("expected_matches") or [spec]
+        assert len(groups) >= 1
+        for group in groups:
+            matches = [
+                chunk
+                for chunk in chunks
+                if chunk.language == group["language"]
+                and chunk.source_document == group["expected_source_document"]
+                and group["expected_text_contains"] in chunk.text
+            ]
+            assert len(matches) == 1, spec["id"]

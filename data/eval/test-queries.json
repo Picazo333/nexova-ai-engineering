@@ -194,6 +194,66 @@
       "expected_source_document": "objection-handling",
       "expected_text_contains": "conflicto directo",
       "kind": "objection"
+    },
+    {
+      "id": "es-compound-fee-and-discount",
+      "question": "¿Cuál es la tarifa de Nexova y quién autoriza una rebaja?",
+      "language": "es",
+      "kind": "compound",
+      "expected_source_document": "pricing-model",
+      "expected_text_contains": "Tarifa estándar: 22% del salario anual bruto",
+      "expected_matches": [
+        {
+          "language": "es",
+          "expected_source_document": "pricing-model",
+          "expected_text_contains": "Tarifa estándar: 22% del salario anual bruto"
+        },
+        {
+          "language": "es",
+          "expected_source_document": "objection-handling",
+          "expected_text_contains": "aprobación de Marcos Ibáñez"
+        }
+      ]
+    },
+    {
+      "id": "es-compound-training-price-and-contents",
+      "question": "¿Cuánto cuesta un programa de formación de 8 semanas y qué incluye esa formación?",
+      "language": "es",
+      "kind": "compound",
+      "expected_source_document": "pricing-model",
+      "expected_text_contains": "Programa de 8 semanas: desde 6.200 USD",
+      "expected_matches": [
+        {
+          "language": "es",
+          "expected_source_document": "pricing-model",
+          "expected_text_contains": "Programa de 8 semanas: desde 6.200 USD"
+        },
+        {
+          "language": "es",
+          "expected_source_document": "service-lines",
+          "expected_text_contains": "certificado de finalización"
+        }
+      ]
+    },
+    {
+      "id": "es-compound-executive-time-and-escalation",
+      "question": "¿Cuánto tarda en promedio un perfil ejecutivo y qué debe hacer el consultor si a las 4 semanas no hay un candidato calificado?",
+      "language": "es",
+      "kind": "compound",
+      "expected_source_document": "hiring-process-sla",
+      "expected_text_contains": "8 semanas promedio, terna de 3 candidatos",
+      "expected_matches": [
+        {
+          "language": "es",
+          "expected_source_document": "hiring-process-sla",
+          "expected_text_contains": "8 semanas promedio, terna de 3 candidatos"
+        },
+        {
+          "language": "es",
+          "expected_source_document": "hiring-process-sla",
+          "expected_text_contains": "escalar el caso a Javier"
+        }
+      ]
     }
   ]
 }

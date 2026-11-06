@@ -31,12 +31,23 @@ def load_queries(path: Path = QUERIES_PATH) -> list[dict]:
     return queries
 
 
+def expected_groups(spec: dict) -> list[dict]:
+    matches = spec.get("expected_matches")
+    if matches:
+        return matches
+    return [spec]
+
+
 def is_relevant(payload: dict, spec: dict) -> bool:
     if payload.get("source_document") != spec["expected_source_document"]:
         return False
     if payload.get("language") != spec["language"]:
         return False
     return spec["expected_text_contains"] in str(payload.get("text", ""))
+
+
+def covers_all(results: list[dict], spec: dict) -> bool:
+    return all(any(is_relevant(item, group) for item in results) for group in expected_groups(spec))
 
 
 def recall_at_3(queries: list[dict] | None = None) -> dict:
@@ -49,14 +60,13 @@ def recall_at_3(queries: list[dict] | None = None) -> dict:
     hits_above_threshold = 0
     rows = []
     for spec in specs:
-        ranked = retrieve(spec["question"], k=3, min_score=-1.0)
-        matched = next((item for item in ranked if is_relevant(item, spec)), None)
-        ok = matched is not None
+        ranked = retrieve(spec["question"], k=3, min_score=-1.0)[:3]
+        ok = covers_all(ranked, spec)
         hits += int(ok)
         above = False
         if ok:
             filtered = retrieve(spec["question"], k=5, min_score=settings.min_score)
-            above = any(is_relevant(item, spec) for item in filtered)
+            above = covers_all(filtered, spec)
             hits_above_threshold += int(above)
         rows.append(
             {

@@ -45,6 +45,17 @@ items:
     source: POST /knowledge/query
     location: docs/rag/evidence/llm-live/05-api-knowledge-query.txt
     verifier: "Reintentos HTTP 200 con respuesta completa y Sources. El primer cuerpo {answer: Gra} es el defecto, no el PASS."
+  - id: EV-compound-query-and-expanded-recall
+    type: pending_live_rerun
+    supports: [R35b, R37]
+    freshness: PENDIENTE_RECORRIDA
+    captured_at: null
+    source: "Recall@3 del test-queries.json ampliado y POST /knowledge/query de la pregunta de tarifa y rebaja"
+    location: data/eval/test-queries.json
+    verifier: "No ejecutado en este head. La corrida 24/24 de llm-live no incluye las 3 preguntas compuestas. No es PASS."
+    commands:
+      - "uv run python -m data.eval.recall_at_3"
+      - "curl -s -X POST http://127.0.0.1:18038/knowledge/query -H 'Content-Type: application/json' -d '{\"question\":\"¿Cuál es la tarifa de Nexova y quién autoriza una rebaja?\"}'"
   - id: EV-lockup
     type: sha256
     supports: [S06]

@@ -71,6 +71,97 @@ def test_retrieve_can_return_nothing(monkeypatch):
     assert retrieve("fee", k=5, min_score=0.4) == []
 
 
+def test_compound_clauses_split_two_real_clauses_only():
+    from data.pipelines.rag import compound_clauses
+
+    parts = compound_clauses("¿Cuál es la tarifa de Nexova y quién autoriza una rebaja?")
+    assert len(parts) == 2
+    assert "tarifa" in parts[0].lower()
+    assert "rebaja" in parts[1].lower()
+    assert compound_clauses("entrega de 6 y 8 semanas") == ["entrega de 6 y 8 semanas"]
+
+
+def test_compound_question_retrieves_each_clause_not_only_the_blended_hit(monkeypatch):
+    """One embedding of the whole question returns the wrong objection chunk.
+
+    That is what the live call did. Each clause has to be searched, or the
+    fee chunk never enters the result.
+    """
+
+    asked: list[str] = []
+
+    def fake_embed(text: str) -> list[float]:
+        asked.append(text)
+        return [1.0, 0.0, float(len(asked))]
+
+    class _Client:
+        def query_points(self, **kwargs):
+            text = asked[-1].lower()
+            if "tarifa" in text and "rebaja" in text:
+                payload = {
+                    "text": "¿Qué pasa si no estoy conforme con la terna presentada?",
+                    "source_document": "objection-handling",
+                    "language": "es",
+                    "chunk_index": 2,
+                    "section": "terna",
+                }
+            elif "tarifa" in text:
+                payload = {
+                    "text": "Tarifa estándar: 22% del salario anual bruto del cargo contratado.",
+                    "source_document": "pricing-model",
+                    "language": "es",
+                    "chunk_index": 0,
+                    "section": "Headhunting ejecutivo",
+                }
+            elif "rebaja" in text or "autoriza" in text:
+                payload = {
+                    "text": "sin aprobación de Marcos Ibáñez",
+                    "source_document": "objection-handling",
+                    "language": "es",
+                    "chunk_index": 0,
+                    "section": "22% me parece caro",
+                }
+            else:
+                payload = {
+                    "text": "otro",
+                    "source_document": "service-lines",
+                    "language": "es",
+                    "chunk_index": 1,
+                    "section": "otro",
+                }
+            return _Response([_Point(0.88, payload)])
+
+    monkeypatch.setattr("data.process.rag.embed", fake_embed)
+    monkeypatch.setattr("data.process.rag.get_qdrant_client", lambda: _Client())
+    result = retrieve(
+        "¿Cuál es la tarifa de Nexova y quién autoriza una rebaja?",
+        k=3,
+        min_score=0.4,
+    )
+    combined = " ".join(item["text"] for item in result)
+    assert "Tarifa estándar: 22%" in combined
+    assert "Marcos Ibáñez" in combined
+    assert len(asked) >= 2
+
+
+def test_compound_question_outside_the_corpus_stays_empty(monkeypatch):
+    monkeypatch.setattr("data.process.rag.embed", lambda text: [0.2, 0.1])
+
+    class _Empty:
+        def query_points(self, **kwargs):
+            return _Response([])
+
+    monkeypatch.setattr("data.process.rag.get_qdrant_client", lambda: _Empty())
+    assert (
+        retrieve(
+            "¿Cuál es la capital de Mongolia y cuántos habitantes tiene?",
+            k=5,
+            min_score=0.4,
+        )
+        == []
+    )
+
+
 def test_query_returns_model_output_and_does_not_skip_generation(monkeypatch):
     raw = "RAW_CHUNK_TEXT_XYZ"
     monkeypatch.setattr(

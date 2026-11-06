@@ -11,6 +11,7 @@ commit_sha_note: "b861391 contiene el código, los tests y la evidencia. El tip 
 status: PENDIENTE_REVISION_ORQUESTADOR
 pytest: docs/user-authentication/evidence/pytest.txt
 http: docs/user-authentication/evidence/http-transcript.txt
+http_redaction: "El access_token del login se sustituyó por «<JWT redactado: caducado, emitido en la corrida de 017>». Este manifiesto no registraba el sha256 del transcript; no se inventa un hash anterior."
 items:
   - id: R02
     path: services/api/pyproject.toml
@@ -41,7 +42,7 @@ items:
     note: "403 GET y PUT de otro usuario"
   - id: R14
     path: docs/user-authentication/evidence/http-transcript.txt
-    note: "200 login"
+    note: "200 login. El access_token de esa respuesta está redactado; el resto del JSON se conserva."
   - id: R28
     path: docs/user-authentication/evidence/swagger-guide-1280.png
   - id: R28
