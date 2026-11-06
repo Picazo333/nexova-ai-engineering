@@ -31,16 +31,21 @@ El listado de proveedores queda debajo del panel de sesión y de los filtros. En
 
 ## Lighthouse
 
-Laboratorio local, `throttling-method=simulate`, RTT 40 ms, throughput 10240 kbps, CPU ×1. No se usó el throttling móvil de CPU ×4.
+Tres corridas por superficie, el 2026-11-06, con `throttling-method=simulate`. La mediana es el valor central. La peor es el máximo de cada métrica. Una medición anterior aplicaba el throttling de escritorio también al móvil; esta la sustituye.
 
-| Página | Forma | LCP | CLS | TBT | INP |
+| Forma | Red y CPU | Viewport |
+| --- | --- | --- |
+| Escritorio | RTT 40 ms, 10240 kbps, CPU ×1 | 1350×940 |
+| Móvil | RTT 150 ms, 1638.4 kbps, CPU ×4 | 390×844 |
+
+| Página | Forma | LCP mediana | LCP peor | CLS | TBT |
 | --- | --- | --- | --- | --- | --- |
-| `/` | escritorio 1350×940 | 252 ms | 0 | 0 ms | no medido en laboratorio |
-| `/` | móvil 390×844 | 247 ms | 0 | 0 ms | no medido en laboratorio |
-| `/proveedores` | escritorio | 251 ms | 0 | 0 ms | no medido en laboratorio |
-| `/proveedores` | móvil 390×844 | 244 ms | 0 | 0 ms | no medido en laboratorio |
+| `/` | escritorio | 249 ms | 250 ms | 0 | 0 ms |
+| `/` | móvil | 1057 ms | 1058 ms | 0 | 0 ms |
+| `/proveedores` | escritorio | 247 ms | 251 ms | 0 | 0 ms |
+| `/proveedores` | móvil | 1056 ms | 1079 ms | 0 | 0 ms |
 
-Fuente: `docs/user-authentication/evidence/lighthouse-summary.json`. INP no aparece en el informe de laboratorio de Lighthouse; no se inventa. TBT es el dato de bloqueo que sí devolvió la herramienta.
+Ninguna mediana móvil pasa de LCP 2,5 s, CLS 0,1 ni TBT 200 ms. INP no aparece en el laboratorio; no se inventa. Los JSON completos de las doce corridas están en `/opt/cursor/artifacts/lighthouse/`. En el repositorio solo queda `docs/user-authentication/evidence/lighthouse-summary.json`.
 
 Presupuestos de transferencia: el test `test_front_end_transfer_budgets` incluye `auth.js` junto al JS ya existente y sigue bajo 170 KiB gzip. El CSS, con el panel de sesión, sigue bajo 40 KiB gzip.
 

@@ -80,14 +80,10 @@ items:
     path: docs/user-authentication/evidence/session-loading-390.png
   - id: U03
     path: docs/user-authentication/evidence/lighthouse-summary.json
+    note: "Tres corridas, mediana y peor. Móvil con RTT 150 ms, 1638.4 kbps y CPU ×4. Escritorio con RTT 40 ms y CPU ×1."
   - id: U03
-    path: docs/user-authentication/evidence/lighthouse-home-desktop.json
-  - id: U03
-    path: docs/user-authentication/evidence/lighthouse-home-mobile.json
-  - id: U03
-    path: docs/user-authentication/evidence/lighthouse-directory-desktop.json
-  - id: U03
-    path: docs/user-authentication/evidence/lighthouse-directory-mobile.json
+    path: /opt/cursor/artifacts/lighthouse/
+    note: "JSON completo de las doce corridas. No está en el repositorio."
   - id: U01
     path: /opt/cursor/artifacts/auth-directorio-con-sesion.mp4
     note: "Recorrido grabado: directorio sin filas, registro, directorio con LinkedIn Talent Solutions e InfoJobs, Swagger con la guía."
