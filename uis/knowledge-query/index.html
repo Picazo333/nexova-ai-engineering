@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Consulta comercial de Nexova</title>
+  <meta name="description" content="Consulta interna para el equipo de ventas de Nexova. La respuesta la redacta el modelo a partir de los documentos comerciales indexados.">
+  <link rel="stylesheet" href="/ui/tokens.css">
+  <link rel="stylesheet" href="/ui/styles.css">
+</head>
+<body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <header>
+    <p class="brand">Nexova · Ventas</p>
+  </header>
+  <main id="contenido" class="wrap">
+    <h1>Pregunta de un prospecto</h1>
+    <p class="lead">El equipo comercial consulta las líneas de servicio, las tarifas, el SLA de selección y las objeciones que ya están por escrito.</p>
+    <div class="layout">
+      <div>
+        <form id="query-form" class="panel" method="post" action="/knowledge/query">
+          <label for="question">Pregunta</label>
+          <textarea id="question" name="question" required maxlength="2000" rows="5"></textarea>
+          <div class="actions">
+            <button class="primary" id="submit" type="submit">Consultar la base</button>
+          </div>
+        </form>
+        <section id="result" class="panel" data-state="empty" aria-live="polite" aria-busy="false">
+          <h2>Respuesta</h2>
+          <div id="result-body">
+            <p>Todavía no hay respuesta. Escribe la pregunta y consulta la base.</p>
+          </div>
+        </section>
+      </div>
+      <aside class="panel" aria-labelledby="base-title">
+        <h2 id="base-title">Base comercial</h2>
+        <p id="index-status" class="status">Comprobando la colección nexova_knowledge.</p>
+        <h3>Documentos</h3>
+        <ul id="documents">
+          <li>Cargando documentos.</li>
+        </ul>
+        <noscript>
+          <ul class="docs">
+            <li>Service Lines · en</li>
+            <li>Líneas de Servicio · es</li>
+            <li>Pricing Model · en</li>
+            <li>Modelo de Tarifas · es</li>
+            <li>Hiring Process SLA · en</li>
+            <li>SLA del Proceso de Contratación · es</li>
+            <li>Handling Common Prospect Objections · en</li>
+            <li>Manejo de Objeciones Comunes de Prospectos · es</li>
+          </ul>
+        </noscript>
+        <h3>Preguntas de ejemplo</h3>
+        <ul class="examples">
+          <li><button type="button" data-question="¿Cuánto cuesta un programa de formación de 8 semanas?">¿Cuánto cuesta un programa de formación de 8 semanas?</button></li>
+          <li><button type="button" data-question="¿Qué pasa si no estoy conforme con la terna presentada?">¿Qué pasa si no estoy conforme con la terna presentada?</button></li>
+          <li><button type="button" data-question="22% me parece caro comparado con otras firmas.">22% me parece caro comparado con otras firmas.</button></li>
+          <li><button type="button" data-question="¿Puedo pagar todo al final, cuando el candidato empiece a trabajar?">¿Puedo pagar todo al final, cuando el candidato empiece a trabajar?</button></li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+  <p id="live" class="visually-hidden" aria-live="assertive"></p>
+  <footer>
+    <p>Nexova Solutions. Herramienta interna de consulta comercial.</p>
+  </footer>
+  <script src="/ui/app.js" defer></script>
+</body>
+</html>

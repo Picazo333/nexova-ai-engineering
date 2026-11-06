@@ -1,0 +1,41 @@
+{
+  "url": "http://127.0.0.1:8000/",
+  "method": "lighthouse simulate, three runs",
+  "mobile_target": {
+    "viewport": "390x844",
+    "rttMs": 150,
+    "throughputKbps": 1638.4,
+    "cpuSlowdownMultiplier": 4
+  },
+  "desktop_target": {
+    "viewport": "1280x800",
+    "rttMs": 40,
+    "throughputKbps": 10240,
+    "cpuSlowdownMultiplier": 1
+  },
+  "median": {
+    "mobile": {
+      "lcp_ms": 1368.6227999999999,
+      "cls": 0,
+      "tbt_ms": 0
+    },
+    "desktop": {
+      "lcp_ms": 329.57755,
+      "cls": 0.01958246496586417,
+      "tbt_ms": 0
+    }
+  },
+  "worst": {
+    "mobile": {
+      "lcp_ms": 1372.8072499999998,
+      "cls": 0,
+      "tbt_ms": 0
+    },
+    "desktop": {
+      "lcp_ms": 330.4167,
+      "cls": 0.01958246496586417,
+      "tbt_ms": 0
+    }
+  },
+  "config_verified": true
+}

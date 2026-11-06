@@ -11,4 +11,4 @@ Each subfolder inside `services/` must correspond to **one specific service** (f
 
 ## `api/`
 
-Central FastAPI app. Incidents: `POST /api/incidents/analyze` and `GET /api/incidents/results/export`. Suppliers: `/suppliers` plus the directory page `/proveedores`. Auth: `/auth`, `/users` and `/profiles` (TinyDB, JWT). Those incident and supplier routes require a bearer token. Run instructions: [`api/README.md`](./api/README.md).
+Central FastAPI app. Incidents: `POST /api/incidents/analyze` and `GET /api/incidents/results/export`. Suppliers: `/suppliers` plus the directory page `/proveedores`. Auth: `/auth`, `/users` and `/profiles` (TinyDB, JWT). Those incident and supplier routes require a bearer token. The commercial knowledge query is `POST /knowledge/query` on the same process, and the page is `/conocimiento`. Run instructions: [`api/README.md`](./api/README.md).

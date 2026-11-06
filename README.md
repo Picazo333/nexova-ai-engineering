@@ -9,6 +9,27 @@ _Estas instrucciones tambien estan disponibles en [espanol](./README.es.md)._
 
 ---
 
+## RAG knowledge base
+
+Sales questions are answered from the official Nexova documents in `docs/company-knowledge-base/`. The pipeline is `setup()` and `embed()` in `data/process/rag.py`, then `retrieve()`, `generate_answer()` and `query()` in `data/pipelines/rag.py`. FastAPI exposes `POST /knowledge/query`. The query page is `uis/knowledge-query/`.
+
+Qdrant is declared in `docker-compose.yml`. With `QDRANT_URL` empty, the Python client uses its embedded engine and stores data in `data/qdrant/`, which is gitignored and recreated by `setup()`.
+
+```bash
+uv sync --all-groups
+cp .env.example .env
+# Fill EMBEDDING_* and GENERATION_* with two different 4Geeks model IDs when you have them.
+# Without those values the live model calls refuse to run. They do not invent an answer.
+docker compose up -d qdrant   # optional; omit it to use the embedded engine
+uv run python -m data.process.rag
+uv run uvicorn services.api.app:app --host 127.0.0.1 --port 8000
+uv run python -m pytest tests/pipelines/test_rag.py
+```
+
+`RAG_EMBED_BACKEND=fastembed` indexes with a local open-source model so retrieval can be exercised. That model is not the 4Geeks embeddings model. `uv run python -m data.eval.recall_at_3` prints `BLOCKED_HITL` for the official criterion unless the remote embeddings settings are present. The design note is [docs/rag/rag-design.md](docs/rag/rag-design.md).
+
+---
+
 ## Purpose
 
 This repository is the **starter template** for transversal projects. You will work on real company scenarios (Brasaland, TrackFlow, Nexova), building deliverables that map to course milestones (Web, Programming, Backend, Telemetry, RAG, Agents, Workflows, Real-time).

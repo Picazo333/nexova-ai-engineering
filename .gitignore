@@ -5,6 +5,7 @@ __pycache__/
 venv/
 *.egg-info/
 .mypy_cache/
+.ruff_cache/
 services/api/.data/
 services/api/.env
 .env
@@ -13,3 +14,5 @@ results.csv
 htmlcov/
 coverage.xml
 uis/portal/coverage/
+data/qdrant/
+data/eval/recall-report.json
