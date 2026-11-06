@@ -58,6 +58,7 @@
   "api_tests": "138 passed",
   "api_baseline": "131 passed",
   "root_pipeline_tests": "25 passed, 1 skipped",
+  "implementation_commit": "3e9ac08223be58d7e8302b33750ff4168a887786",
   "pass_implementable": "22/22",
   "rubric_rows": 27,
   "pending": ["R09 NO_APLICA", "L01 BLOCKED_HITL", "L02 BLOCKED_HITL", "D01 HITL_ENVIO_MIGUEL", "D02 HITL_MIGUEL"]
