@@ -11,6 +11,18 @@ Las rutas de este entregable son las del enunciado, no un prefijo distinto:
 - `POST /api/incidents/analyze` — CSV en `multipart/form-data`, campo `file`.
 - `GET /api/incidents/results/export` — último análisis correcto, `results.csv`.
 
+El gestor centralizado vive en el mismo prefijo y no sustituye al análisis del CSV:
+
+- `POST /api/incidents` — alta. `201` y el objeto. `400` si falta un campo o el valor no está en el briefing, con `field`, `message` y `errors`.
+- `GET /api/incidents` — lista. Filtros opcionales `status`, `origin`, `branch` y `category`. Sin filas devuelve `[]`.
+- `GET /api/incidents/{id}` — detalle, o `404` con «No encontramos esa incidencia.»
+- `PATCH /api/incidents/{id}/status` — solo el estado. Desde `open` se pasa a `in_progress` o `discarded`. Desde `in_progress`, a `resolved` o `discarded`. `resolved` y `discarded` no cambian. Una transición inválida es `400` y el estado guardado no se toca.
+- `GET /api/incidents/summary` — totales por estado, categoría, origen y sede. Con la base vacía cada total es `0`.
+
+Esas rutas piden el mismo token que el análisis. Un fallo no controlado responde `500` con un mensaje genérico, sin traza. El formulario está en `/incidencias/nueva` y el panel en `/incidencias`.
+
+La carga histórica es `scripts/seed_incidents.py`. Lee `scripts/incidents-nexova.csv`, reutiliza las reglas de `packages/shared/nexova_incidents` y guarda en `INCIDENTS_DATA_DIR` (por defecto `services/api/.data`, ignorado por git). No hace falta volver a generar un CSV derivado.
+
 Con `Accept: application/json` el análisis responde JSON. Con `Accept: text/html` responde la página del backoffice. El navegador pide un fragmento con la cabecera `X-Report-Fragment: 1`.
 
 No llama a ningún servicio de IA. No guarda el CSV. Guarda el resumen agregado en `services/api/.data/` (ignorado por git) para que la descarga sobreviva a un refresco. Si ese resumen contuviera `@`, no se escribe.

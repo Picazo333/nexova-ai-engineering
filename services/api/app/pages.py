@@ -325,6 +325,8 @@ def _layout(*, title: str, description: str, main: str, current: str, page_scrip
         .replace("{{MAIN}}", main)
         .replace("{{PAGE_SCRIPT}}", page_script)
         .replace("{{CURRENT_ANALYSIS}}", ' aria-current="page"' if current == "analysis" else "")
+        .replace("{{CURRENT_REGISTER}}", ' aria-current="page"' if current == "register" else "")
+        .replace("{{CURRENT_PANEL}}", ' aria-current="page"' if current == "panel" else "")
         .replace("{{CURRENT_SUPPLIERS}}", ' aria-current="page"' if current == "suppliers" else "")
         .replace("{{CURRENT_PRIVACY}}", ' aria-current="page"' if current == "privacy" else "")
     )

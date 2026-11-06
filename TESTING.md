@@ -24,6 +24,8 @@ make test
 make test-cov
 ```
 
+El gestor de incidencias añade `services/api/tests/test_incident_seed.py` y `test_incident_manager.py` a esa misma batería: seeder idempotente y mapa CSV → modelo. `packages/shared` está en el `pythonpath` de pytest.
+
 Cobertura de los extras, también desde `services/api`:
 
 ```bash

@@ -78,7 +78,7 @@
   }
 
   function signedOutCopy() {
-    statusEl.textContent = "No hay una sesión en esta pestaña. El análisis y el directorio piden un token.";
+    statusEl.textContent = "No hay una sesión en esta pestaña. El análisis, el gestor de incidencias y el directorio piden un token.";
     logoutButton.hidden = true;
     showRegister.hidden = false;
   }

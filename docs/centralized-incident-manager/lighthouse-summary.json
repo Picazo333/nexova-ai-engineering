@@ -1,0 +1,234 @@
+{
+  "verified_config": true,
+  "inp_note": "Lighthouse de laboratorio no calculó interaction-to-next-paint. inp_ms queda null. TBT es la métrica de bloqueo medida.",
+  "surfaces": {
+    "form": {
+      "mobile": {
+        "url": "http://127.0.0.1:8000/incidencias/nueva",
+        "config_verified": true,
+        "config": {
+          "formFactor": "mobile",
+          "throttlingMethod": "simulate",
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "cpuSlowdownMultiplier": 4,
+          "screen": {
+            "mobile": true,
+            "width": 390,
+            "height": 844,
+            "deviceScaleFactor": 2,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "lcp_ms": 1057.8763,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 1055.5141,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 1056.1535,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          }
+        ],
+        "median": {
+          "lcp_ms": 1056.1535,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 1057.8763,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null,
+          "performance": 1,
+          "run": 1
+        },
+        "preset_matches_fase2": true
+      },
+      "desktop": {
+        "url": "http://127.0.0.1:8000/incidencias/nueva",
+        "config_verified": true,
+        "config": {
+          "formFactor": "desktop",
+          "throttlingMethod": "simulate",
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1,
+          "screen": {
+            "mobile": false,
+            "width": 1350,
+            "height": 940,
+            "deviceScaleFactor": 1,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "lcp_ms": 246.9491,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 248.00189999999998,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 248.3395,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          }
+        ],
+        "median": {
+          "lcp_ms": 248.00189999999998,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 248.3395,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null,
+          "performance": 1,
+          "run": 3
+        },
+        "preset_matches_fase2": true
+      }
+    },
+    "panel": {
+      "mobile": {
+        "url": "http://127.0.0.1:8000/incidencias",
+        "config_verified": true,
+        "config": {
+          "formFactor": "mobile",
+          "throttlingMethod": "simulate",
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "cpuSlowdownMultiplier": 4,
+          "screen": {
+            "mobile": true,
+            "width": 390,
+            "height": 844,
+            "deviceScaleFactor": 2,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "lcp_ms": 1057.1114,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 1058.2381,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 1057.806,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          }
+        ],
+        "median": {
+          "lcp_ms": 1057.806,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 1058.2381,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null,
+          "performance": 1,
+          "run": 2
+        },
+        "preset_matches_fase2": true
+      },
+      "desktop": {
+        "url": "http://127.0.0.1:8000/incidencias",
+        "config_verified": true,
+        "config": {
+          "formFactor": "desktop",
+          "throttlingMethod": "simulate",
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1,
+          "screen": {
+            "mobile": false,
+            "width": 1350,
+            "height": 940,
+            "deviceScaleFactor": 1,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "lcp_ms": 246.26369999999997,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 252.0811,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 246.9764,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          }
+        ],
+        "median": {
+          "lcp_ms": 246.9764,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 252.0811,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null,
+          "performance": 1,
+          "run": 2
+        },
+        "preset_matches_fase2": true
+      }
+    }
+  }
+}

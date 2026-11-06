@@ -1,6 +1,6 @@
 # `incident_analysis`
 
-Reglas de validación y métricas del CSV de tickets de soporte de Nexova. Las usan `scripts/analyze.py` y `services/api`. No hay una segunda copia de la lógica.
+Métricas del CSV de tickets de soporte de Nexova. Las reglas de cada fila viven en `packages/shared/nexova_incidents` y las usan este paquete, `scripts/analyze.py`, `scripts/seed_incidents.py` y la API. No hay una segunda copia de la lógica.
 
 La fuente de campos, categorías, estados y reglas es el briefing de la empresa en `scripts/nexova-BRIEFING.en.md` y `scripts/nexova-BRIEFING.es.md` (syllabus `content/contexts/incidents-file-analysis`, empresa Nexova). El fichero de prueba es `scripts/incidents-nexova.csv`.
 
