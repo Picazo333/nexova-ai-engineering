@@ -9,4 +9,4 @@ Cada subcarpeta dentro de `services/` debe corresponder a **un servicio concreto
 
 ## `api/`
 
-API FastAPI central. Incidencias: `POST /api/incidents/analyze` y `GET /api/incidents/results/export`. Proveedores: `/suppliers` y la página `/proveedores`. Auth: `/auth`, `/users` y `/profiles` (TinyDB, JWT). Esas rutas de incidencias y proveedores piden un token. Cómo arrancarla: [`api/README.md`](./api/README.md).
+API FastAPI central. Incidencias: `POST /api/incidents/analyze` y `GET /api/incidents/results/export`. Proveedores: `/suppliers` y la página `/proveedores`. Auth: `/auth`, `/users` y `/profiles` (TinyDB, JWT). Esas rutas de incidencias y proveedores piden un token. La consulta comercial es `POST /knowledge/query` y el agente LangGraph es `POST /agent/query`, en el mismo proceso. Cómo arrancarla: [`api/README.md`](./api/README.md).

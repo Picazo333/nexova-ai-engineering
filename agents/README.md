@@ -7,4 +7,8 @@ Each subfolder under `agents/` should represent **one concrete agent** (for exam
 - **Main purpose**: centralize reusable agent development for the company in one monorepo.
 - **Recommendation**: maintain a catalog of agents here as they are created and link to each agent’s README.
 
+## Catalog
+
+- [support-agent](./support-agent/README.md) — sales-support graph on the existing API. The implementation is `services/api/app/agent/`.
+
 > _Spanish version: [README.es.md](./README.es.md)._

@@ -15,7 +15,17 @@ def test_env_example_has_two_empty_model_ids():
 
 def test_python_code_does_not_read_the_forbidden_token_or_frameworks():
     banned = ("FOURGEEKS_API_TOKEN", "langchain", "llama_index", "LlamaIndex")
-    for path in list((ROOT / "data").rglob("*.py")) + list((ROOT / "services").rglob("*.py")):
+    # Installed trees are not project source. langgraph's own files live in
+    # services/api/.venv and mention another library by name.
+    skip = {".venv", "venv", "site-packages", "__pycache__", ".git"}
+    files = [
+        path
+        for root in (ROOT / "data", ROOT / "services")
+        for path in root.rglob("*.py")
+        if skip.isdisjoint(path.parts)
+    ]
+    assert files
+    for path in files:
         text = path.read_text(encoding="utf-8")
         for token in banned:
             assert token not in text, path

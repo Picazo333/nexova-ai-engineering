@@ -6,3 +6,7 @@ Cada subcarpeta dentro de `agents/` debería representar **un agente concreto** 
 
 - **Propósito principal**: centralizar el desarrollo de agentes reutilizables para la compañía dentro del monorepo.
 - **Recomendación**: documenta aquí el catálogo de agentes que se vaya creando y enlaza a los READMEs de cada agente.
+
+## Catálogo
+
+- [support-agent](./support-agent/README.es.md) — grafo de apoyo comercial sobre la API existente. La implementación está en `services/api/app/agent/`.

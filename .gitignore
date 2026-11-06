@@ -15,4 +15,5 @@ htmlcov/
 coverage.xml
 uis/portal/coverage/
 data/qdrant/
+data/agent_traces/
 data/eval/recall-report.json
