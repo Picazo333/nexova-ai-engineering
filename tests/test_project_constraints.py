@@ -15,7 +15,11 @@ def test_env_example_has_two_empty_model_ids():
 
 def test_python_code_does_not_read_the_forbidden_token_or_frameworks():
     banned = ("FOURGEEKS_API_TOKEN", "langchain", "llama_index", "LlamaIndex")
-    for path in list((ROOT / "data").rglob("*.py")) + list((ROOT / "services").rglob("*.py")):
+    skip = {".venv", "venv", "__pycache__", "site-packages"}
+    paths = list((ROOT / "data").rglob("*.py")) + list((ROOT / "services").rglob("*.py"))
+    for path in paths:
+        if any(part in skip for part in path.parts):
+            continue
         text = path.read_text(encoding="utf-8")
         for token in banned:
             assert token not in text, path

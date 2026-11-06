@@ -1,0 +1,13 @@
+2026-11-06 11:42:01 CST
+(JWT_SECRET efímero generado solo para este proceso; no se guarda)
+$ curl -s -X POST 127.0.0.1:8038/knowledge/query -H "Content-Type: application/json" -d {"question":"¿Cuánto tarda una búsqueda ejecutiva?"}
+{"answer":"Gra"}
+HTTP 200 8.551689s
+
+## Reintentos 2026-11-06 11:42:56 CST (el intento 1 de arriba devolvió una respuesta truncada «Gra» con HTTP 200)
+$ POST /knowledge/query {"question":"¿Cuánto tarda una búsqueda ejecutiva?"}
+{"answer":"En promedio, una búsqueda ejecutiva tarda entre 6 y 8 semanas desde el briefing hasta la entrega de la terna final. Si es un perfil C-level o VP, el tiempo promedio comprometido es de 8 semanas; para perfiles gerenciales, alrededor de 6 semanas; y para perfiles técnicos especializados, 5 semanas.\n\nUn punto importante: si a las 4 semanas no hemos presentado al menos un candidato calificado, el caso se escala internamente y te notificamos de forma proactiva con un plan de acción. Esto nos permite mantenerte informado y corregir el rumbo rápido si hace falta.\n\n¿Quieres que revisemos juntos el perfil y te confirmo un tiempo estimado para tu caso concreto?\n\nSources: service-lines — Headhunting ejecutivo y de mandos medios\nSources: hiring-process-sla — Tiempos de entrega comprometidos por tipo de búsqueda\nSources: hiring-process-sla — Si a las 4 semanas de una búsqueda ejecutiva no hay al menos un candidato"}
+HTTP 200 12.377963s
+$ POST /knowledge/query {"question":"¿Qué incluye el headhunting ejecutivo?"}
+{"answer":"El headhunting ejecutivo cubre todo el proceso de búsqueda y selección de perfiles gerenciales y directivos. Incluye búsqueda directa, evaluación por competencias y verificación de referencias. En promedio, entregamos la terna final en 6 a 8 semanas desde el briefing inicial.\n\nNuestro modelo es claro: tarifa estándar del 22% del salario anual bruto del cargo contratado, facturada en tres hitos: 30% al iniciar la búsqueda, 30% al presentar la terna final y 40% al momento de la contratación. Además, si el candidato deja el cargo antes de 6 meses por causas atribuibles al proceso de selección, ofrecemos reemplazo gratuito.\n\nEs un servicio integral, pensado para que tengas visibilidad y respaldo desde el arranque hasta que el perfil está consolidado en tu organización.\n\nSources: service-lines — Headhunting ejecutivo y de mandos medios  \npricing-model — Headhunting ejecutivo"}
+HTTP 200 4.042818s

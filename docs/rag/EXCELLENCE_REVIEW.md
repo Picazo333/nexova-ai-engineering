@@ -2,7 +2,7 @@
 
 Los extras no sustituyen requisitos. Ninguno contradice el enunciado.
 
-Conteo alineado con la rúbrica: **40 PASS**, **0 FAIL**, **4 BLOCKED_HITL** (R11, R20, R22, R35) por las keys de 4Geeks. R29 no aplica.
+Conteo alineado con la rúbrica: **44 PASS**, **0 FAIL**, **0 BLOCKED_HITL**. R11, R20, R22 y R35 pasan con la corrida live en `docs/rag/evidence/llm-live/` (Recall@3 24/24, generación con fuente, rechazo fuera del corpus, POST HTTP 200). R29 no aplica.
 
 ## S06 — PASS
 
@@ -39,6 +39,8 @@ Si la respuesta trae `Sources:` o `Fuentes:`, la UI las separa y ofrece copiarla
 
 Inventar una respuesta comercial para la captura o el PR. Un mock no cuenta como PASS de R11, R20, R22 ni R35.
 
-## Diferido
+## Reparación posterior a la corrida live
 
-Llamadas reales a los modelos de 4Geeks y el Recall@3 en ese espacio. Siguen BLOCKED_HITL.
+El primer `POST /knowledge/query` de esa evidencia devolvió HTTP 200 con `{"answer":"Gra"}`. `complete_chat` lo aceptaba porque el texto no estaba vacío. Ahora solo acepta `finish_reason == "stop"` y al menos 20 caracteres. Hay dos intentos. Si los dos fallan, lanza `GenerationCallFailed` y el endpoint responde 502, sin devolver el recorte.
+
+Tests: `test_complete_chat_retries_truncated_gra_and_does_not_return_it`, `test_complete_chat_rejects_finish_reason_length`, `test_complete_chat_does_not_accept_gra_after_the_bounded_retry`, `test_truncated_gra_is_not_a_200_answer`.

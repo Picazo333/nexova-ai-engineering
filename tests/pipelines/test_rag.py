@@ -1,5 +1,7 @@
 """Unit tests for retrieve() and query(). No live Qdrant and no live model."""
 
+import pytest
+
 from data.pipelines.rag import SYSTEM_PROMPT, query, retrieve
 from data.rag_errors import GenerationNotConfigured
 
@@ -126,6 +128,93 @@ def test_query_without_generation_config_does_not_invent_an_answer(monkeypatch):
         assert "6,200" not in str(exc)
     else:
         raise AssertionError("query() invented an answer without a generation model")
+
+
+_FULL_ANSWER = (
+    "En promedio, una búsqueda ejecutiva tarda entre 6 y 8 semanas desde el briefing "
+    "hasta la terna final.\n\nSources: hiring-process-sla — Tiempos de entrega"
+)
+
+
+class _ScriptedCompletions:
+    def __init__(self, script):
+        self.script = list(script)
+        self.calls = 0
+
+    def create(self, **kwargs):
+        self.calls += 1
+        content, finish_reason = self.script.pop(0)
+        message = type("Message", (), {"content": content})()
+        choice = type("Choice", (), {"message": message, "finish_reason": finish_reason})()
+        return type("Response", (), {"choices": [choice]})()
+
+
+def _scripted_openai(monkeypatch, script):
+    completions = _ScriptedCompletions(script)
+
+    class _Client:
+        def __init__(self, **kwargs):
+            self.kwargs = kwargs
+            self.chat = type("Chat", (), {"completions": completions})()
+
+    monkeypatch.setattr("openai.OpenAI", _Client)
+    return completions
+
+
+def _generation_env(monkeypatch):
+    monkeypatch.setenv("GENERATION_MODEL_ID", "gen-model")
+    monkeypatch.setenv("GENERATION_BASE_URL", "https://example.invalid/v1")
+    monkeypatch.setenv("GENERATION_API_KEY", "test-key")
+    monkeypatch.setenv("EMBEDDING_MODEL_ID", "embed-model")
+
+
+def test_complete_chat_retries_truncated_gra_and_does_not_return_it(monkeypatch):
+    from data.pipelines.rag import complete_chat
+    from data.rag_settings import load_settings
+
+    _generation_env(monkeypatch)
+    completions = _scripted_openai(
+        monkeypatch,
+        [("Gra", "stop"), (_FULL_ANSWER, "stop")],
+    )
+    result = complete_chat([{"role": "user", "content": "¿Cuánto tarda?"}], load_settings())
+    assert result == _FULL_ANSWER
+    assert result != "Gra"
+    assert "Gra" not in result
+    assert completions.calls == 2
+
+
+def test_complete_chat_rejects_finish_reason_length(monkeypatch):
+    from data.pipelines.rag import complete_chat
+    from data.rag_errors import GenerationCallFailed
+    from data.rag_settings import load_settings
+
+    _generation_env(monkeypatch)
+    cut = "En promedio, una búsqueda ejecutiva tarda " * 8
+    completions = _scripted_openai(
+        monkeypatch,
+        [(cut, "length"), (cut, "length")],
+    )
+    with pytest.raises(GenerationCallFailed) as caught:
+        complete_chat([{"role": "user", "content": "¿Cuánto tarda?"}], load_settings())
+    assert completions.calls == 2
+    assert "length" in str(caught.value)
+    assert cut not in str(caught.value)
+    assert "Gra" not in str(caught.value)
+
+
+def test_complete_chat_does_not_accept_gra_after_the_bounded_retry(monkeypatch):
+    from data.pipelines.rag import complete_chat
+    from data.rag_errors import GenerationCallFailed
+    from data.rag_settings import load_settings
+
+    _generation_env(monkeypatch)
+    completions = _scripted_openai(monkeypatch, [("Gra", "stop"), ("Gra", None)])
+    with pytest.raises(GenerationCallFailed) as caught:
+        complete_chat([{"role": "user", "content": "¿Cuánto tarda?"}], load_settings())
+    assert completions.calls == 2
+    assert "Gra" not in str(caught.value)
+    assert "too_short" in str(caught.value) or "missing_finish_reason" in str(caught.value)
 
 
 def test_prompt_carries_the_briefing_voice_and_commercial_rules():

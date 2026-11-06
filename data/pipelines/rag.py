@@ -14,6 +14,11 @@ from data.rag_settings import COLLECTION, load_settings
 
 logger = logging.getLogger(__name__)
 
+# A proxy can return HTTP 200 with a cut-off body ("Gra") or finish_reason
+# "length". Neither is an answer. Two attempts, then a hard failure.
+_MIN_ANSWER_CHARS = 20
+_GENERATION_ATTEMPTS = 2
+
 SYSTEM_PROMPT = """You answer as a Nexova salesperson. The audience is a prospect on a sales call. An SDR uses your answer before or during that call. Be confident and oriented toward closing. Write a natural answer, not a dump of database fragments.
 
 Use only the retrieved context. Do not invent company facts, fees, percentages, amounts, timeframes, or commercial conditions that are not in that context.
@@ -116,6 +121,24 @@ def generate_answer(question: str, context: list[dict]) -> str:
     return complete_chat(build_messages(cleaned, context), settings)
 
 
+def _usable_answer(choice) -> str | None:
+    """Accept only a finished answer. Truncation and stubs are not answers."""
+
+    if choice is None:
+        return None
+    finish = getattr(choice, "finish_reason", None)
+    message = getattr(choice, "message", None)
+    raw = getattr(message, "content", None) if message is not None else None
+    if not isinstance(raw, str):
+        return None
+    text = raw.strip()
+    if finish != "stop":
+        return None
+    if len(text) < _MIN_ANSWER_CHARS:
+        return None
+    return text
+
+
 def complete_chat(messages: list[dict], settings) -> str:
     from openai import OpenAI
 
@@ -123,22 +146,44 @@ def complete_chat(messages: list[dict], settings) -> str:
         api_key=settings.generation_api_key,
         base_url=settings.generation_base_url,
         timeout=45.0,
-        max_retries=1,
+        max_retries=0,
     )
-    try:
-        response = client.chat.completions.create(
-            model=settings.generation_model_id,
-            messages=messages,
-            temperature=0.2,
-            max_tokens=700,
+    last_reason = "empty"
+    for attempt in range(1, _GENERATION_ATTEMPTS + 1):
+        try:
+            response = client.chat.completions.create(
+                model=settings.generation_model_id,
+                messages=messages,
+                temperature=0.2,
+                max_tokens=700,
+            )
+        except Exception as exc:
+            last_reason = type(exc).__name__
+            logger.warning("generation request failed (%s) attempt %s", last_reason, attempt)
+            continue
+        choice = response.choices[0] if getattr(response, "choices", None) else None
+        text = _usable_answer(choice)
+        if text is not None:
+            return text
+        finish = getattr(choice, "finish_reason", None) if choice is not None else None
+        raw = getattr(getattr(choice, "message", None), "content", None) if choice is not None else None
+        length = len(raw.strip()) if isinstance(raw, str) else 0
+        if finish != "stop":
+            last_reason = finish or "missing_finish_reason"
+        elif length < _MIN_ANSWER_CHARS:
+            last_reason = "too_short"
+        else:
+            last_reason = "empty"
+        logger.warning(
+            "incomplete generation attempt %s finish_reason=%s chars=%s",
+            attempt,
+            finish,
+            length,
         )
-        content = response.choices[0].message.content if response.choices else None
-    except Exception as exc:
-        logger.warning("generation request failed (%s)", type(exc).__name__)
-        raise GenerationCallFailed("The generation endpoint rejected the request.") from exc
-    if not content or not str(content).strip():
-        raise GenerationCallFailed("The generation endpoint returned an empty answer.")
-    return str(content).strip()
+    raise GenerationCallFailed(
+        "The generation model returned an incomplete answer "
+        f"({last_reason}). The partial text was not accepted."
+    )
 
 
 def query(question: str) -> str:

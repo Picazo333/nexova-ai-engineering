@@ -1,0 +1,19 @@
+2026-11-06 11:34:12 CST
+{
+  "queries": 24,
+  "hits": 24,
+  "recall_at_3": 1.0,
+  "threshold": 0.8,
+  "meets_threshold_for_this_embedder": true,
+  "hits_above_configured_min_score": 24,
+  "min_score": 0.4,
+  "embedder": "remote",
+  "official_4geeks_criterion": "measured"
+}
+wrote /workspace/llm-run/nexova/data/eval/recall-report.json
+Exception ignored in: <function QdrantClient.__del__ at 0x7fca259baa20>
+Traceback (most recent call last):
+  File "/workspace/llm-run/nexova/.venv/lib/python3.13/site-packages/qdrant_client/qdrant_client.py", line 172, in __del__
+  File "/workspace/llm-run/nexova/.venv/lib/python3.13/site-packages/qdrant_client/qdrant_client.py", line 181, in close
+  File "/workspace/llm-run/nexova/.venv/lib/python3.13/site-packages/qdrant_client/local/qdrant_local.py", line 113, in close
+ImportError: sys.meta_path is None, Python is likely shutting down

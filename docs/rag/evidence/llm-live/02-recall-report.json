@@ -1,0 +1,253 @@
+{
+  "queries": 24,
+  "hits": 24,
+  "recall_at_3": 1.0,
+  "threshold": 0.8,
+  "meets_threshold_for_this_embedder": true,
+  "hits_above_configured_min_score": 24,
+  "min_score": 0.4,
+  "embedder": "remote",
+  "official_4geeks_criterion": "measured",
+  "rows": [
+    {
+      "id": "en-service-headhunting",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "service-lines",
+        "service-lines",
+        "pricing-model"
+      ]
+    },
+    {
+      "id": "en-service-outsourcing",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "service-lines",
+        "pricing-model",
+        "service-lines"
+      ]
+    },
+    {
+      "id": "en-service-training",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "service-lines",
+        "service-lines",
+        "pricing-model"
+      ]
+    },
+    {
+      "id": "en-pricing-fee",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "pricing-model",
+        "pricing-model",
+        "service-lines"
+      ]
+    },
+    {
+      "id": "en-pricing-agent",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "pricing-model",
+        "pricing-model",
+        "service-lines"
+      ]
+    },
+    {
+      "id": "en-pricing-training",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "pricing-model",
+        "pricing-model",
+        "service-lines"
+      ]
+    },
+    {
+      "id": "en-sla-executive",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "hiring-process-sla",
+        "service-lines",
+        "service-lines"
+      ]
+    },
+    {
+      "id": "en-sla-escalation",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "hiring-process-sla",
+        "hiring-process-sla",
+        "service-lines"
+      ]
+    },
+    {
+      "id": "en-sla-geography",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "hiring-process-sla",
+        "hiring-process-sla",
+        "hiring-process-sla"
+      ]
+    },
+    {
+      "id": "en-objection-price",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "objection-handling",
+        "objection-handling",
+        "pricing-model"
+      ]
+    },
+    {
+      "id": "en-objection-payment",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "objection-handling",
+        "objection-handling",
+        "pricing-model"
+      ]
+    },
+    {
+      "id": "en-objection-shortlist",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "objection-handling",
+        "objection-handling",
+        "hiring-process-sla"
+      ]
+    },
+    {
+      "id": "en-objection-competitors",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "objection-handling",
+        "objection-handling",
+        "objection-handling"
+      ]
+    },
+    {
+      "id": "es-service-headhunting",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "service-lines",
+        "service-lines",
+        "pricing-model"
+      ]
+    },
+    {
+      "id": "es-service-outsourcing",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "service-lines",
+        "service-lines",
+        "pricing-model"
+      ]
+    },
+    {
+      "id": "es-service-training",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "service-lines",
+        "pricing-model",
+        "service-lines"
+      ]
+    },
+    {
+      "id": "es-pricing-fee",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "pricing-model",
+        "pricing-model",
+        "service-lines"
+      ]
+    },
+    {
+      "id": "es-pricing-training",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "pricing-model",
+        "pricing-model",
+        "service-lines"
+      ]
+    },
+    {
+      "id": "es-sla-executive",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "hiring-process-sla",
+        "service-lines",
+        "hiring-process-sla"
+      ]
+    },
+    {
+      "id": "es-sla-escalation",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "hiring-process-sla",
+        "hiring-process-sla",
+        "hiring-process-sla"
+      ]
+    },
+    {
+      "id": "es-objection-price",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "objection-handling",
+        "objection-handling",
+        "pricing-model"
+      ]
+    },
+    {
+      "id": "es-objection-payment",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "objection-handling",
+        "objection-handling",
+        "pricing-model"
+      ]
+    },
+    {
+      "id": "es-objection-shortlist",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "objection-handling",
+        "objection-handling",
+        "objection-handling"
+      ]
+    },
+    {
+      "id": "es-objection-competitors",
+      "hit": true,
+      "above_min_score": true,
+      "top_sources": [
+        "objection-handling",
+        "objection-handling",
+        "hiring-process-sla"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+project: ai-eng-milestone-rag-knowledge-base
+branch: feature/rag-knowledge-base
+base: feature/error-handling-audit@97e7bb36
+pull_request: https://github.com/Picazo333/nexova-ai-engineering/pull/16
+evidence_head_note: "La corrida live se hizo sobre eafe56e. El fix de respuestas truncadas es un commit posterior; Miguel vuelve a medir Recall@3 y test_rag sobre ese head."
+items:
+  - id: EV-live-setup
+    type: runtime_output
+    supports: [R11]
+    freshness: CURRENT
+    captured_at: "2026-11-06T17:31:13Z"
+    source: setup() contra embeddings 4Geeks online/openrouter/perplexity/pplx-embed-v1-0.6b
+    location: docs/rag/evidence/llm-live/01-setup-embed.txt
+    verifier: "32 chunks, vector_size 1024, colección nexova_knowledge. Sin key en el archivo."
+  - id: EV-live-recall
+    type: runtime_output
+    supports: [R35]
+    freshness: CURRENT
+    captured_at: "2026-11-06T17:34:12Z"
+    source: python -m data.eval.recall_at_3 con embedder remote
+    location: docs/rag/evidence/llm-live/02-recall-at-3.txt
+    report: docs/rag/evidence/llm-live/02-recall-report.json
+    verifier: "24/24 recall_at_3 1.0, official_4geeks_criterion measured, min_score 0.4"
+  - id: EV-live-generation
+    type: runtime_output
+    supports: [R20, R22]
+    freshness: CURRENT
+    captured_at: "2026-11-06T17:38:56Z"
+    source: generate_answer live, modelo online/openrouter/deepseek/deepseek-v4-flash
+    location: docs/rag/evidence/llm-live/03-generation-live.json
+    verifier: "R22 cita Sources service-lines. R20 con 0 chunks dice que no tiene la información y no inventa Mongolia."
+  - id: EV-live-pytest-rag
+    type: test_output
+    supports: [R33]
+    freshness: CURRENT
+    captured_at: "2026-11-06T17:31:00Z"
+    source: python -m pytest tests/pipelines/test_rag.py
+    location: docs/rag/evidence/llm-live/04-pytest-rag.txt
+    verifier: "7 passed en eafe56e, antes del fix de truncado"
+  - id: EV-live-http
+    type: http_transcript
+    supports: [R22]
+    freshness: CURRENT
+    captured_at: "2026-11-06T17:42:56Z"
+    source: POST /knowledge/query
+    location: docs/rag/evidence/llm-live/05-api-knowledge-query.txt
+    verifier: "Reintentos HTTP 200 con respuesta completa y Sources. El primer cuerpo {answer: Gra} es el defecto, no el PASS."
+  - id: EV-lockup
+    type: sha256
+    supports: [S06]
+    freshness: CURRENT
+    location: uis/knowledge-query/brand/signal-horizontal.svg
+    verifier: "85459232bf51e7bf7c94225fd4f2cd6b71a681b6d701cb4ffd6d2a142cf57a81"
+    notes: "Footer claro. signal-reverse.svg del ZIP es 19f897e5427e2187fece9eca51e6f5eeb9f1b82405990bae42ba18057683f38e y no se usa."

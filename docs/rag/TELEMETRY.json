@@ -30,14 +30,23 @@
     "files_changed_two_rag_commits": 51,
     "duration": "2026-11-06T10:55:00Z a 2026-11-06T14:47:00Z, con la reparación de rebase al final"
   },
+  "live_evidence": {
+    "path": "docs/rag/evidence/llm-live/",
+    "freshness": "CURRENT",
+    "captured_on": "eafe56e",
+    "recall_at_3": "24/24 measured",
+    "r11_r20_r22_r35": "PASS"
+  },
   "rubric": {
-    "pass": 40,
+    "pass": 44,
     "fail": 0,
-    "blocked_hitl": ["R11", "R20", "R22", "R35"],
+    "blocked_hitl": [],
     "no_aplica": ["R29"],
     "s06": "PASS",
     "s06_lockup_sha256": "85459232bf51e7bf7c94225fd4f2cd6b71a681b6d701cb4ffd6d2a142cf57a81",
-    "line_33_clause": "PENDIENTE_CONFIRMACION_MIGUEL"
+    "line_33_clause": "PENDIENTE_CONFIRMACION_MIGUEL",
+    "line_33_quote": "That means you write the four minimum functions (`setup`, `embed`, `retrieve`, `query`) yourself, which forces you to understand what each piece does instead of delegating it to an abstraction."
   },
-  "status": "APROBADO_ORQUESTADOR_BLOCKED_HITL"
+  "status": "APROBADO_ORQUESTADOR",
+  "truncation_repair": "complete_chat rechaza finish_reason distinto de stop y textos de menos de 20 caracteres, con 2 intentos. tests: test_complete_chat_retries_truncated_gra_and_does_not_return_it, test_complete_chat_rejects_finish_reason_length, test_complete_chat_does_not_accept_gra_after_the_bounded_retry, test_truncated_gra_is_not_a_200_answer"
 }
