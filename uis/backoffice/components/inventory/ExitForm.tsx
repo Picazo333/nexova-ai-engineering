@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 
 import { EmptyState, ErrorBanner, LoadingState } from "@/components/AsyncStatus";
+import { useAssetCatalog } from "@/components/inventory/useAssetCatalog";
 import { StockBadge } from "@/components/inventory/StockBadge";
 import { ApiError, messageOf } from "@/lib/http";
 import {
   createAssetExit,
   getAsset,
-  listAssets,
   type Asset,
   type ExitType,
   type InventoryOrder,
@@ -24,10 +24,11 @@ type StockState =
   | { kind: "error"; message: string };
 
 export function ExitForm({ initialAsset }: { initialAsset: string }) {
-  const [assets, setAssets] = useState<Asset[]>([]);
-  const [loadPhase, setLoadPhase] = useState<"loading" | "ready" | "error">("loading");
-  const [loadError, setLoadError] = useState("");
   const [attempt, setAttempt] = useState(0);
+  const catalog = useAssetCatalog(attempt);
+  const assets = catalog.rows;
+  const loadPhase = catalog.phase;
+  const loadError = catalog.error;
   const [assetId, setAssetId] = useState(initialAsset);
   const [stock, setStock] = useState<StockState>({ kind: "idle" });
   const [quantity, setQuantity] = useState("");
@@ -50,26 +51,6 @@ export function ExitForm({ initialAsset }: { initialAsset: string }) {
   useEffect(() => {
     setAssetId(initialAsset);
   }, [initialAsset]);
-
-  useEffect(() => {
-    let cancelled = false;
-    setLoadPhase("loading");
-    listAssets()
-      .then((rows) => {
-        if (cancelled) return;
-        setAssets(rows);
-        setLoadError("");
-        setLoadPhase("ready");
-      })
-      .catch((reason: unknown) => {
-        if (cancelled) return;
-        setLoadError(messageOf(reason));
-        setLoadPhase("error");
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [attempt]);
 
   const selected = assets.find((asset) => String(asset.id) === assetId) ?? null;
 

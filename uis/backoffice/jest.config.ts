@@ -15,6 +15,7 @@ const config: Config = {
     "lib/http.ts",
     "lib/inventory.ts",
     "lib/labels.ts",
+    "lib/catalog.ts",
   ],
   coveragePathIgnorePatterns: ["/node_modules/"],
   transform: {

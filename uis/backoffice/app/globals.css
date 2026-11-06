@@ -168,6 +168,10 @@ caption {
   color: var(--color-danger);
 }
 
+.stack-status {
+  min-height: 3rem;
+}
+
 .field {
   display: flex;
   flex-direction: column;

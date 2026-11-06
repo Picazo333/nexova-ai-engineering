@@ -20,14 +20,11 @@ function upstream(raw: string): { origin: string; label: string } | { error: str
 export async function GET() {
   const raw = process.env.API_INTERNAL_URL?.trim() ?? "";
   if (!raw) {
-    return NextResponse.json(
-      { ok: false, message: "Falta API_INTERNAL_URL." },
-      { status: 500 },
-    );
+    return NextResponse.json({ ok: false, message: "Falta API_INTERNAL_URL." });
   }
   const target = upstream(raw);
   if ("error" in target) {
-    return NextResponse.json({ ok: false, message: target.error }, { status: 500 });
+    return NextResponse.json({ ok: false, message: target.error });
   }
   try {
     const response = await fetch(`${target.origin}/health`, { cache: "no-store" });
