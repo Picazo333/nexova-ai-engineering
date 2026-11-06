@@ -2,7 +2,7 @@
 
 Estado: **PENDIENTE_REVISION_ORQUESTADOR**. No es READY_TO_SUBMIT. No hubo merge. No se envió nada al LMS.
 
-Base del PR: `feature/milestone-backend-development` (`106083a`).
+PR: https://github.com/Picazo333/nexova-ai-engineering/pull/24 contra `feature/milestone-backend-development` (`106083a`).
 
 Implementación: `b9c199566576ca2613233ef049eb66397e0846ea`.
 
@@ -32,7 +32,7 @@ No cuentan:
 
 ## Checklist de Miguel
 
-1. Revisar el PR contra `feature/milestone-backend-development`. No hay merge automático.
+1. Revisar https://github.com/Picazo333/nexova-ai-engineering/pull/24 contra `feature/milestone-backend-development`. No hay merge automático.
 2. Para probar: API con `DATABASE_URL` de PostgreSQL y `INVENTORY_AUTOSEED=1`, y `cd uis/backoffice && npm run dev`. Entrar en `/login`. La clave del token es `nexova-access-token` en este origen.
 3. Entregar al instructor o al LMS, si toca. D01.
 4. Merge solo después de aprobar. D02.
