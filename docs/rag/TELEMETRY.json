@@ -34,7 +34,7 @@
     "path": "docs/rag/evidence/llm-live/",
     "freshness": "CURRENT",
     "captured_on": "eafe56e",
-    "recall_at_3": "24/24 measured",
+    "recall_at_3": "27/27 measured on 70dd6b4",
     "r11_r20_r22_r35": "PASS"
   },
   "rubric": {

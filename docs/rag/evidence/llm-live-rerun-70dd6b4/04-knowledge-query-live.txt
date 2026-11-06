@@ -1,0 +1,48 @@
+COMMAND: PYTHONPATH=.:packages:services/api JWT_SECRET=<ephemeral> ACCESS_TOKEN_EXPIRE_MINUTES=30 services/api/.venv/bin/uvicorn app.main:app --port 18038
+QUESTION ¿Cuál es la tarifa de Nexova y quién autoriza una rebaja?
+ATTEMPT 1
+HTTP 200
+{"answer":"La tarifa estándar de Nexova para headhunting ejecutivo es del 22% del salario anual bruto del cargo contratado, facturada en tres hitos: 30% al iniciar la búsqueda, 30% al presentar la terna final y 40% al momento de la contratación. Esta tarifa incluye la garantía de reemplazo gratuito durante los primeros 6 meses y un proceso riguroso de verificación de referencias, lo que reduce significativamente el riesgo de una mala contratación.\n\nSi considera que la tarifa es alta, tenga en cuenta que no podemos ofrecer un descuento sin la aprobación expresa de Marcos Ibáñez. Cualquier rebaja debe ser autorizada por él, y no está en mis manos modificarla directamente. ¿Le parece que agendemos una conversación con Marcos para evaluar su caso?\n\nSources: pricing-model — Headhunting ejecutivo\nSources: objection-handling — 22% me parece caro comparado con otras firmas."}
+QUESTION ¿Cuánto cuesta un programa de formación de 8 semanas y qué incluye esa formación?
+ATTEMPT 1
+HTTP 200
+{"answer":"El programa de formación corporativa de 8 semanas tiene un precio desde 6.200 USD para grupos de hasta 15 personas. Si su grupo es mayor, requerimos una cotización personalizada.\n\nEste programa incluye un diagnóstico inicial, sesiones en vivo y un certificado de finalización, y puede impartirse en modalidad presencial, virtual o híbrida. ¿Le parece que agendemos una breve llamada para detallar cómo podemos adaptarlo a las necesidades de su equipo?\n\nSources:\npricing-model — Formación corporativa\nservice-lines — Formación corporativa en habilidades blandas y liderazgo"}
+QUESTION ¿Cuánto tarda en promedio un perfil ejecutivo y qué debe hacer el consultor si a las 4 semanas no hay un candidato calificado?
+ATTEMPT 1
+HTTP 200
+{"answer":"Para un perfil ejecutivo (C-level o VP), el tiempo promedio de entrega es de 8 semanas, con una terna de 3 candidatos. Si a las 4 semanas no hemos presentado al menos un candidato calificado, el consultor asignado debe escalar el caso a Javier Almeida, Gerente de Operaciones, y notificarlo proactivamente al cliente con un plan de acción. Así garantizamos transparencia y agilidad en cada búsqueda.\n\nSources: hiring-process-sla — Tiempos de entrega comprometidos por tipo de búsqueda\nhiring-process-sla — Si a las 4 semanas de una búsqueda ejecutiva no hay al menos un candidato"}
+QUESTION ¿Quién ganó el mundial de fútbol de 2098?
+ATTEMPT 1
+HTTP 200
+{"answer":"No tengo información en mi base de conocimiento sobre el ganador del mundial de fútbol de 2098. No puedo ofrecer una respuesta basada en datos verificados."}
+QUESTION What is the smallest customer support team a client can contract?
+ATTEMPT 1
+HTTP 200
+{"answer":"The smallest customer support team we can contract is five agents. This ensures we can build a dedicated, branded unit with proper quality supervision and monthly SLA reporting.\n\nIf you need a team that size, we can set it up quickly—the monthly fee per agent ranges from $1,800 to $2,400 depending on specialization and language, and the minimum contract is six months. Would you like to discuss how that fits your current volume?\n\nSources: service-lines — Customer support team outsourcing\npricing-model — Customer support outsourcing"}
+API LOG
+INFO:     Started server process [490434]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:18038 (Press CTRL+C to quit)
+INFO:     127.0.0.1:56636 - "GET /conocimiento HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56638 - "POST /knowledge/query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54182 - "POST /knowledge/query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39116 - "POST /knowledge/query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60238 - "POST /knowledge/query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43626 - "POST /knowledge/query HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [490434]
+
+POST-API WORLD CUP RETRIEVAL DIAGNOSTIC
+COMMAND: uv run python -c 'import json; from data.pipelines.rag import retrieve; from data.rag_settings import load_settings; s=load_settings(); q="¿Quién ganó el mundial de fútbol de 2098?"; r=retrieve(q,k=s.top_k,min_score=s.min_score); print(json.dumps({"question":q,"retrieved_chunks":len(r),"results":r},ensure_ascii=False))'
+{"question": "¿Quién ganó el mundial de fútbol de 2098?", "retrieved_chunks": 0, "results": []}
+Exception ignored in: <function QdrantClient.__del__ at 0x7f0a160f1b20>
+Traceback (most recent call last):
+  File "/workspace/llm-run/wt-70dd6b4/.venv/lib/python3.13/site-packages/qdrant_client/qdrant_client.py", line 172, in __del__
+  File "/workspace/llm-run/wt-70dd6b4/.venv/lib/python3.13/site-packages/qdrant_client/qdrant_client.py", line 181, in close
+  File "/workspace/llm-run/wt-70dd6b4/.venv/lib/python3.13/site-packages/qdrant_client/local/qdrant_local.py", line 113, in close
+ImportError: sys.meta_path is None, Python is likely shutting down
+
+EXIT: 0

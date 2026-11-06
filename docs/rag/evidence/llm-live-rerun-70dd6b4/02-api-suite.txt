@@ -1,0 +1,38 @@
+COMMAND: uv run pytest
+   Building nexova-api @ file:///workspace/llm-run/wt-70dd6b4/services/api
+      Built nexova-api @ file:///workspace/llm-run/wt-70dd6b4/services/api
+Uninstalled 1 package in 0.68ms
+Installed 1 package in 0.59ms
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-9.2.0, pluggy-1.7.0
+rootdir: /workspace/llm-run/wt-70dd6b4/services/api
+configfile: pyproject.toml
+testpaths: tests, ../../packages/incident_analysis/tests
+plugins: cov-7.1.0, anyio-4.16.0
+collected 123 items
+
+tests/test_api.py .......                                                [  5%]
+tests/test_assets.py ..                                                  [  7%]
+tests/test_auth.py ..........                                            [ 15%]
+tests/test_backoffice_incidents.py ...                                   [ 17%]
+tests/test_backoffice_suppliers.py ...                                   [ 20%]
+tests/test_delete_user.py ...                                            [ 22%]
+tests/test_error_catalog.py ......                                       [ 27%]
+tests/test_incident_manager.py .....                                     [ 31%]
+tests/test_incident_seed.py ......                                       [ 36%]
+tests/test_knowledge.py ........                                         [ 43%]
+tests/test_list_users.py ....                                            [ 46%]
+tests/test_login.py .......                                              [ 52%]
+tests/test_read_profile.py ...                                           [ 54%]
+tests/test_read_user.py ...                                              [ 56%]
+tests/test_register.py ......                                            [ 61%]
+tests/test_suppliers.py ...........                                      [ 70%]
+tests/test_token.py ..........                                           [ 78%]
+tests/test_update_profile.py ....                                        [ 82%]
+tests/test_update_user.py .....                                          [ 86%]
+test_cli.py ......                                                       [ 91%]
+test_engine.py ...........                                               [100%]
+
+============================= 123 passed in 3.68s ==============================
+
+EXIT: 0

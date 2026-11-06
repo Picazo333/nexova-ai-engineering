@@ -2,7 +2,7 @@
 
 Los extras no sustituyen requisitos. Ninguno contradice el enunciado.
 
-Conteo alineado con la rúbrica: **44 PASS**, **0 FAIL**, **0 BLOCKED_HITL**. R11, R20, R22 y R35 pasan con la corrida live en `docs/rag/evidence/llm-live/` (Recall@3 24/24, generación con fuente, rechazo fuera del corpus, POST HTTP 200). R29 no aplica.
+Conteo alineado con la rúbrica: **46 PASS**, **0 FAIL**, **0 BLOCKED_HITL**. Recall@3 del set de 27 es 27/27 sobre `70dd6b4` (`docs/rag/evidence/llm-live-rerun-70dd6b4/`). La consulta de tarifa y rebaja cita el 22% y a Marcos Ibáñez. R29 no aplica. El 24/24 de `docs/rag/evidence/llm-live/` queda histórico.
 
 ## S06 — PASS
 
