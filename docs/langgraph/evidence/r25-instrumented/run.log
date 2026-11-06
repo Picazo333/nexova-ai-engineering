@@ -1,0 +1,56 @@
+{
+  "date_CST": "2026-11-06T12:09:40.276246-06:00",
+  "head": "c63c26f08cac9330263f4fdbb1c1f31a3f7e36bb",
+  "runs": [
+    {
+      "run_id": "8d1bc6df-340e-4f11-920e-dc8ff9d109c4",
+      "status": "answered",
+      "error": "",
+      "latencia_s": 4.513577233003161,
+      "checkpoint_count": 5,
+      "tokens": {
+        "completion_tokens": 293,
+        "prompt_tokens": 661,
+        "total_tokens": 954,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 170,
+          "rejected_prediction_tokens": null,
+          "text_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "image_tokens": null,
+          "text_tokens": null,
+          "video_tokens": 0
+        },
+        "cost": 0.00017458,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.00017458,
+          "upstream_inference_prompt_cost": 9.254e-05,
+          "upstream_inference_completions_cost": 8.204e-05
+        }
+      },
+      "correctness": {
+        "fee_22_percent": true,
+        "discount_escalates_to_Marcos_Ibanez": true
+      }
+    },
+    {
+      "run_id": "58100d65-a9a4-46e9-9adf-bfbe3deebc7f",
+      "status": "insufficient_context",
+      "error": "",
+      "latencia_s": 0.5789275550050661,
+      "checkpoint_count": 5,
+      "tokens": null,
+      "correctness": {
+        "honest_refusal": true
+      }
+    }
+  ]
+}

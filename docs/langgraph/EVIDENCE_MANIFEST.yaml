@@ -26,16 +26,42 @@ items:
   - id: R25
     status: PASS
     currency: CURRENT
+    verified_head: c63c26f08cac9330263f4fdbb1c1f31a3f7e36bb
+    captured_at: "2026-11-06 12:09 CST"
     summary: >
-      El export publicado sale de 02-run-agent-live.json.
-      Modelo online/openrouter/deepseek/deepseek-v4-flash en
-      https://llm.4geeks.ai/v1. Tokens y checkpoints null:
-      la captura no los trae. Los dobles siguen solo en tests de routing.
+      Traza instrumentada del grafo compilado con MemorySaver.
+      Corrida 8d1bc6df-340e-4f11-920e-dc8ff9d109c4:
+      receive_question, retrieve_context, generate_answer,
+      5 checkpoints, 661+293=954 tokens de generación,
+      respuesta con 22% y rebaja a Marcos Ibáñez.
+      Corrida 58100d65-a9a4-46e9-9adf-bfbe3deebc7f:
+      receive_question, retrieve_context, insufficient_context,
+      5 checkpoints, tokens de generación null porque no hubo generación.
+      El uso de embeddings queda null: el harness no lo recoge.
+      docs/langgraph/trace-full-run.json se deriva de
+      trace-full-run.instrumented.json.
     evidence:
+      - docs/langgraph/evidence/r25-instrumented/README.md
+      - docs/langgraph/evidence/r25-instrumented/run_trace.py
+      - docs/langgraph/evidence/r25-instrumented/trace-instrumented.json
+      - docs/langgraph/evidence/r25-instrumented/trace-full-run.instrumented.json
+      - docs/langgraph/evidence/r25-instrumented/run.log
+      - docs/langgraph/evidence/r25-instrumented/secret-scan.json
       - docs/langgraph/trace-full-run.json
-      - services/api/app/agent/export_trace.py
+    sha256:
+      README.md: 415e17dff327534f44d58abf9797e66fc7c8ebad37f8f94f648a235b24d8f948
+      run_trace.py: da9845e031b8294879d2f30c8fc232f2c47e1b22e527b1a700a9c878ed3d08ec
+      trace-instrumented.json: ffecb7c440354555fd75c762f84273c58200cb8c39dcaa7898b2a41ede116883
+      trace-full-run.instrumented.json: c8e9fdca0a07a2bb82ea812cde8517582d2f1b8d7d455b04105d82ce584ff020
+      run.log: 91170d89db2fc80ace65f6cded77c8728c77db13545206444cee6faf3e366a88
+      secret-scan.json: 794541283c534de29c5ddd7ddc72499e67eb7a057bd3acd1872f8b3523a15097
     model: online/openrouter/deepseek/deepseek-v4-flash
     generation_base_url: https://llm.4geeks.ai/v1
-    tokens: null
-    tokens_reason: 02-run-agent-live.json no incluye tokens
-    latencia_s: [8.08, 0.63]
+    fee_run_id: 8d1bc6df-340e-4f11-920e-dc8ff9d109c4
+    outside_run_id: 58100d65-a9a4-46e9-9adf-bfbe3deebc7f
+    generation_tokens:
+      prompt: 661
+      completion: 293
+      total: 954
+    embedding_usage: null
+    embedding_usage_reason: The harness does not collect embedding usage.

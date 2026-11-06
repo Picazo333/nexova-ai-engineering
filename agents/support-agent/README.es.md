@@ -23,6 +23,6 @@ uv run python -m pytest tests/pipelines/test_agent_graph.py
 PYTHONPATH=services/api uv run python -m app.agent.export_trace
 ```
 
-La traza publicada es la corrida live de 4Geeks en `docs/langgraph/evidence/llm-live/`. Modelo de generación: `online/openrouter/deepseek/deepseek-v4-flash` en `https://llm.4geeks.ai/v1`. La respuesta de la tarifa mantiene el 22% y nombra a Marcos Ibáñez. Se rehace el export con `PYTHONPATH=services/api uv run python -m app.agent.export_trace`. Los tests de routing pueden sustituir las dos funciones del pipeline. Esos sustitutos no son la traza publicada.
+La traza publicada se deriva de la corrida instrumentada en `docs/langgraph/evidence/r25-instrumented/`. Modelo de generación: `online/openrouter/deepseek/deepseek-v4-flash` en `https://llm.4geeks.ai/v1`. La corrida de tarifa `8d1bc6df-340e-4f11-920e-dc8ff9d109c4` mantiene el 22% y nombra a Marcos Ibáñez (661+293=954 tokens de generación, 5 checkpoints). Se rehace con `PYTHONPATH=services/api uv run python -m app.agent.export_trace`. Los tests de routing pueden sustituir las dos funciones del pipeline. Esos sustitutos no son la traza publicada.
 
 > _English version: [README.md](./README.md)._

@@ -11,6 +11,8 @@ commit_sha_note: "b861391 contiene el código, los tests y la evidencia. El tip 
 status: PENDIENTE_REVISION_ORQUESTADOR
 pytest: docs/user-authentication/evidence/pytest.txt
 http: docs/user-authentication/evidence/http-transcript.txt
+http_sha256: 2031e034657997d177b5f358b2af31c4b6ab5c11e2a72b3db3ebd22dbb73088e
+http_redaction: "El manifiesto previo no registraba sha256 de este archivo. En la línea 17 el access_token caducado de la corrida 017 se sustituyó por <JWT redactado: caducado, emitido en la corrida de 017>. El resto del transcript no cambia."
 items:
   - id: R02
     path: services/api/pyproject.toml
@@ -41,7 +43,7 @@ items:
     note: "403 GET y PUT de otro usuario"
   - id: R14
     path: docs/user-authentication/evidence/http-transcript.txt
-    note: "200 login"
+    note: "200 login. access_token de la línea 17 redactado; ver http_redaction."
   - id: R28
     path: docs/user-authentication/evidence/swagger-guide-1280.png
   - id: R28

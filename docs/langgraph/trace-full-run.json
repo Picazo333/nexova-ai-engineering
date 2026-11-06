@@ -1,69 +1,336 @@
 {
-  "note": "Export de la corrida live registrada en docs/langgraph/evidence/llm-live/02-run-agent-live.json. La respuesta de la tarifa sale del modelo de generación indicado. Los campos que esa captura no trae están en null con su razón. No se añadieron tiempos ni tokens distintos de latencia_s.",
+  "note": "Derivado de docs/langgraph/evidence/r25-instrumented/trace-full-run.instrumented.json. Nodos, run_id, checkpoints y tokens de generación son los medidos con el grafo compilado y MemorySaver. La ruta de evidencia apunta al repo. El uso de embeddings sigue en null porque el harness no lo recoge.",
   "live_generation": "measured",
   "currency": "CURRENT",
-  "evidence": "docs/langgraph/evidence/llm-live/02-run-agent-live.json",
-  "hora": "2026-11-06 11:44:25 CST",
+  "evidence": "docs/langgraph/evidence/r25-instrumented/trace-instrumented.json",
+  "hora": "2026-11-06T12:09:40.275710-06:00",
   "modelo_generacion": "online/openrouter/deepseek/deepseek-v4-flash",
   "modelo_embeddings": "online/openrouter/perplexity/pplx-embed-v1-0.6b",
   "generation_base_url": "https://llm.4geeks.ai/v1",
   "generation_base_url_source": "docs/langgraph/evidence/llm-live/README.md",
-  "tokens": null,
-  "tokens_reason": "02-run-agent-live.json no incluye tokens.",
+  "tokens": [
+    {
+      "completion_tokens": 293,
+      "prompt_tokens": 661,
+      "total_tokens": 954,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": 0,
+        "reasoning_tokens": 170,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null,
+        "image_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cache_write_tokens": 0,
+        "cached_tokens": 0,
+        "image_tokens": null,
+        "text_tokens": null,
+        "video_tokens": 0
+      },
+      "cost": 0.00017458,
+      "is_byok": false,
+      "cost_details": {
+        "upstream_inference_cost": 0.00017458,
+        "upstream_inference_prompt_cost": 9.254e-05,
+        "upstream_inference_completions_cost": 8.204e-05
+      }
+    },
+    null
+  ],
   "runs": [
     {
       "label": "live_fee_grounding",
       "question": "Can you drop the executive-search fee from 22% to 15%?",
       "status": "answered",
-      "answer": "I appreciate you bringing that up. Our standard executive-search fee is 22% of the role's gross annual salary, and that includes a 6‑month replacement guarantee and thorough reference verification—both of which reduce your risk of a bad hire. A reduction to 15% would be a discount below our standard fee, and per our policy, that kind of adjustment requires approval from our Managing Partner, Marcos Ibáñez. I can flag that request with him, but I can't confirm the lower rate without his sign‑off.\n\nIn the meantime, would you like me to walk through the full value behind our 22% fee, including how we protect your investment?\n\nSources: pricing-model — Executive headhunting\nobjection-handling — 22% seems expensive compared to other firms.",
+      "answer": "I understand you're looking for a more competitive rate, but our standard executive-search fee is 22% of the hired role's gross annual salary. That fee includes our 6-month replacement guarantee and thorough reference verification, which significantly reduce the risk of a bad hire. Dropping to 15% would require approval from our director, Marcos Ibáñez — I'm not authorized to offer that discount directly. Would you like me to check with him on a possible exception?\n\nSources: pricing-model — Executive headhunting  \nSources: objection-handling — 22% seems expensive compared to other firms.",
       "error": "",
-      "latencia_s": 8.08,
+      "latencia_s": 4.513577233003161,
       "generation_mode": "live",
       "model": "online/openrouter/deepseek/deepseek-v4-flash",
-      "model_reason": null,
       "configured_generation_model": "online/openrouter/deepseek/deepseek-v4-flash",
       "embedding_model": "online/openrouter/perplexity/pplx-embed-v1-0.6b",
       "generation_base_url": "https://llm.4geeks.ai/v1",
       "sources": [
         {
+          "company": "nexova",
           "source_document": "pricing-model",
-          "section": "Executive headhunting"
+          "section": "Executive headhunting",
+          "language": "en",
+          "chunk_index": 0,
+          "text": "# Pricing Model\n\nExecutive headhunting:\n- Standard fee: 22% of the hired role's gross annual salary.\n- Billed in three installments: 30% when the search begins, 30% when the\n  final shortlist is presented, 40% upon hire.\n- Free replacement guarantee if the candidate leaves the role within 6\n  months for causes attributable to the selection process."
         },
         {
+          "company": "nexova",
           "source_document": "objection-handling",
-          "section": "22% seems expensive compared to other firms."
+          "section": "22% seems expensive compared to other firms.",
+          "language": "en",
+          "chunk_index": 0,
+          "text": "# Handling Common Prospect Objections\n\n\"22% seems expensive compared to other firms.\"\nSuggested response: explain that the fee includes the 6-month replacement\nguarantee and the reference verification process, which reduces the risk of\na bad hire. A discount below 22% must never be offered without Marcos\nIbáñez's approval."
+        },
+        {
+          "company": "nexova",
+          "source_document": "pricing-model",
+          "section": "Headhunting ejecutivo",
+          "language": "es",
+          "chunk_index": 0,
+          "text": "# Modelo de Tarifas\n\nHeadhunting ejecutivo:\n- Tarifa estándar: 22% del salario anual bruto del cargo contratado.\n- Se factura en tres momentos: 30% al iniciar la búsqueda, 30% al presentar\n  la terna final, 40% al momento de la contratación.\n- Garantía de reemplazo gratuito si el candidato deja el cargo antes de 6\n  meses por causas atribuibles al proceso de selección."
         }
       ],
       "nodes": [
         {
           "order": 1,
           "node": "receive_question",
-          "output": null,
-          "output_reason": "02-run-agent-live.json no incluye la salida de este nodo."
+          "start_timestamp": "2026-11-06T18:09:35.179961+00:00",
+          "end_timestamp": "2026-11-06T18:09:35.180293+00:00",
+          "latency_s": 0.000908367001102306,
+          "latency_basis": "debug event observation monotonic clock",
+          "error": null,
+          "output": {
+            "question": "Can you drop the executive-search fee from 22% to 15%?",
+            "context": [],
+            "answer": "",
+            "error": "",
+            "status": "received"
+          },
+          "state_keys_written": [
+            "question",
+            "context",
+            "answer",
+            "error",
+            "status"
+          ],
+          "state_keys_changed": [
+            "context",
+            "answer",
+            "error",
+            "status"
+          ],
+          "sources_retrieved": []
         },
         {
           "order": 2,
           "node": "retrieve_context",
-          "output": null,
-          "output_reason": "02-run-agent-live.json no incluye la salida de este nodo."
+          "start_timestamp": "2026-11-06T18:09:35.180870+00:00",
+          "end_timestamp": "2026-11-06T18:09:37.366909+00:00",
+          "latency_s": 2.186414411997248,
+          "latency_basis": "debug event observation monotonic clock",
+          "error": null,
+          "output": {
+            "context": [
+              {
+                "company": "nexova",
+                "source_document": "pricing-model",
+                "section": "Executive headhunting",
+                "language": "en",
+                "chunk_index": 0,
+                "text": "# Pricing Model\n\nExecutive headhunting:\n- Standard fee: 22% of the hired role's gross annual salary.\n- Billed in three installments: 30% when the search begins, 30% when the\n  final shortlist is presented, 40% upon hire.\n- Free replacement guarantee if the candidate leaves the role within 6\n  months for causes attributable to the selection process."
+              },
+              {
+                "company": "nexova",
+                "source_document": "objection-handling",
+                "section": "22% seems expensive compared to other firms.",
+                "language": "en",
+                "chunk_index": 0,
+                "text": "# Handling Common Prospect Objections\n\n\"22% seems expensive compared to other firms.\"\nSuggested response: explain that the fee includes the 6-month replacement\nguarantee and the reference verification process, which reduces the risk of\na bad hire. A discount below 22% must never be offered without Marcos\nIbáñez's approval."
+              },
+              {
+                "company": "nexova",
+                "source_document": "pricing-model",
+                "section": "Headhunting ejecutivo",
+                "language": "es",
+                "chunk_index": 0,
+                "text": "# Modelo de Tarifas\n\nHeadhunting ejecutivo:\n- Tarifa estándar: 22% del salario anual bruto del cargo contratado.\n- Se factura en tres momentos: 30% al iniciar la búsqueda, 30% al presentar\n  la terna final, 40% al momento de la contratación.\n- Garantía de reemplazo gratuito si el candidato deja el cargo antes de 6\n  meses por causas atribuibles al proceso de selección."
+              }
+            ],
+            "status": "retrieved",
+            "error": ""
+          },
+          "state_keys_written": [
+            "context",
+            "status",
+            "error"
+          ],
+          "state_keys_changed": [
+            "context",
+            "status"
+          ],
+          "sources_retrieved": [
+            {
+              "company": "nexova",
+              "source_document": "pricing-model",
+              "section": "Executive headhunting",
+              "language": "en",
+              "chunk_index": 0,
+              "text": "# Pricing Model\n\nExecutive headhunting:\n- Standard fee: 22% of the hired role's gross annual salary.\n- Billed in three installments: 30% when the search begins, 30% when the\n  final shortlist is presented, 40% upon hire.\n- Free replacement guarantee if the candidate leaves the role within 6\n  months for causes attributable to the selection process."
+            },
+            {
+              "company": "nexova",
+              "source_document": "objection-handling",
+              "section": "22% seems expensive compared to other firms.",
+              "language": "en",
+              "chunk_index": 0,
+              "text": "# Handling Common Prospect Objections\n\n\"22% seems expensive compared to other firms.\"\nSuggested response: explain that the fee includes the 6-month replacement\nguarantee and the reference verification process, which reduces the risk of\na bad hire. A discount below 22% must never be offered without Marcos\nIbáñez's approval."
+            },
+            {
+              "company": "nexova",
+              "source_document": "pricing-model",
+              "section": "Headhunting ejecutivo",
+              "language": "es",
+              "chunk_index": 0,
+              "text": "# Modelo de Tarifas\n\nHeadhunting ejecutivo:\n- Tarifa estándar: 22% del salario anual bruto del cargo contratado.\n- Se factura en tres momentos: 30% al iniciar la búsqueda, 30% al presentar\n  la terna final, 40% al momento de la contratación.\n- Garantía de reemplazo gratuito si el candidato deja el cargo antes de 6\n  meses por causas atribuibles al proceso de selección."
+            }
+          ]
         },
         {
           "order": 3,
           "node": "generate_answer",
+          "start_timestamp": "2026-11-06T18:09:37.367272+00:00",
+          "end_timestamp": "2026-11-06T18:09:39.689397+00:00",
+          "latency_s": 2.3232819129989366,
+          "latency_basis": "debug event observation monotonic clock",
+          "error": null,
           "output": {
-            "answer": "I appreciate you bringing that up. Our standard executive-search fee is 22% of the role's gross annual salary, and that includes a 6‑month replacement guarantee and thorough reference verification—both of which reduce your risk of a bad hire. A reduction to 15% would be a discount below our standard fee, and per our policy, that kind of adjustment requires approval from our Managing Partner, Marcos Ibáñez. I can flag that request with him, but I can't confirm the lower rate without his sign‑off.\n\nIn the meantime, would you like me to walk through the full value behind our 22% fee, including how we protect your investment?\n\nSources: pricing-model — Executive headhunting\nobjection-handling — 22% seems expensive compared to other firms.",
+            "answer": "I understand you're looking for a more competitive rate, but our standard executive-search fee is 22% of the hired role's gross annual salary. That fee includes our 6-month replacement guarantee and thorough reference verification, which significantly reduce the risk of a bad hire. Dropping to 15% would require approval from our director, Marcos Ibáñez — I'm not authorized to offer that discount directly. Would you like me to check with him on a possible exception?\n\nSources: pricing-model — Executive headhunting  \nSources: objection-handling — 22% seems expensive compared to other firms.",
+            "error": "",
             "status": "answered"
           },
-          "output_reason": null
+          "state_keys_written": [
+            "answer",
+            "error",
+            "status"
+          ],
+          "state_keys_changed": [
+            "answer",
+            "status"
+          ],
+          "sources_retrieved": []
         }
       ],
-      "nodes_basis": "status answered solo lo escribe generate_answer, después de receive_question y retrieve_context.",
-      "checkpoints": null,
-      "checkpoints_reason": "02-run-agent-live.json no incluye checkpoints.",
-      "tokens": null,
-      "tokens_reason": "02-run-agent-live.json no incluye tokens.",
-      "run_id": null,
-      "run_id_reason": "02-run-agent-live.json no incluye run_id."
+      "nodes_basis": "Observed LangGraph debug task/task_result and updates events",
+      "checkpoints": [
+        {
+          "checkpoint_id": "1f1da0d3-90d0-6846-bfff-29476379b9d6",
+          "created_at": "2026-11-06T18:09:35.178137+00:00",
+          "step": -1,
+          "source": "input",
+          "next": [
+            "__start__"
+          ],
+          "status": null
+        },
+        {
+          "checkpoint_id": "1f1da0d3-90d3-66cd-8000-6fa2d1eb35ab",
+          "created_at": "2026-11-06T18:09:35.179327+00:00",
+          "step": 0,
+          "source": "loop",
+          "next": [
+            "receive_question"
+          ],
+          "status": null
+        },
+        {
+          "checkpoint_id": "1f1da0d3-90d5-6e37-8001-c56634cca327",
+          "created_at": "2026-11-06T18:09:35.180338+00:00",
+          "step": 1,
+          "source": "loop",
+          "next": [
+            "retrieve_context"
+          ],
+          "status": "received"
+        },
+        {
+          "checkpoint_id": "1f1da0d3-a5b0-6663-8002-e23a3e409889",
+          "created_at": "2026-11-06T18:09:37.366989+00:00",
+          "step": 2,
+          "source": "loop",
+          "next": [
+            "generate_answer"
+          ],
+          "status": "retrieved"
+        },
+        {
+          "checkpoint_id": "1f1da0d3-bbd6-6906-8003-29f29af13271",
+          "created_at": "2026-11-06T18:09:39.689488+00:00",
+          "step": 3,
+          "source": "loop",
+          "next": [],
+          "status": "answered"
+        }
+      ],
+      "tokens": {
+        "completion_tokens": 293,
+        "prompt_tokens": 661,
+        "total_tokens": 954,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 170,
+          "rejected_prediction_tokens": null,
+          "text_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "image_tokens": null,
+          "text_tokens": null,
+          "video_tokens": 0
+        },
+        "cost": 0.00017458,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.00017458,
+          "upstream_inference_prompt_cost": 9.254e-05,
+          "upstream_inference_completions_cost": 8.204e-05
+        }
+      },
+      "run_id": "8d1bc6df-340e-4f11-920e-dc8ff9d109c4",
+      "thread_id": "a6b64583-1def-458b-a553-3f6873dd13ef",
+      "started_at": "2026-11-06T12:09:35.177030-06:00",
+      "ended_at": "2026-11-06T12:09:39.690658-06:00",
+      "checkpoint_count": 5,
+      "response_metadata": [
+        {
+          "model": "online/openrouter/deepseek/deepseek-v4-flash",
+          "usage": {
+            "completion_tokens": 293,
+            "prompt_tokens": 661,
+            "total_tokens": 954,
+            "completion_tokens_details": {
+              "accepted_prediction_tokens": null,
+              "audio_tokens": 0,
+              "reasoning_tokens": 170,
+              "rejected_prediction_tokens": null,
+              "text_tokens": null,
+              "image_tokens": 0
+            },
+            "prompt_tokens_details": {
+              "audio_tokens": 0,
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "image_tokens": null,
+              "text_tokens": null,
+              "video_tokens": 0
+            },
+            "cost": 0.00017458,
+            "is_byok": false,
+            "cost_details": {
+              "upstream_inference_cost": 0.00017458,
+              "upstream_inference_prompt_cost": 9.254e-05,
+              "upstream_inference_completions_cost": 8.204e-05
+            }
+          }
+        }
+      ],
+      "correctness": {
+        "fee_22_percent": true,
+        "discount_escalates_to_Marcos_Ibanez": true
+      },
+      "embedding_usage": null,
+      "embedding_usage_reason": "The harness does not collect embedding usage. Generation usage is not a whole-pipeline token total."
     },
     {
       "label": "live_outside_corpus",
@@ -71,44 +338,159 @@
       "status": "insufficient_context",
       "answer": "No tengo información sobre eso. La base de conocimiento no devolvió contexto por encima del umbral, así que no invento una respuesta.",
       "error": "",
-      "latencia_s": 0.63,
+      "latencia_s": 0.5789275550050661,
       "generation_mode": "not_called",
       "model": null,
-      "model_reason": "Esta corrida no llamó al modelo de generación. El id configurado en la captura es modelo_generacion.",
+      "model_reason": "Generation not called.",
       "configured_generation_model": "online/openrouter/deepseek/deepseek-v4-flash",
       "embedding_model": "online/openrouter/perplexity/pplx-embed-v1-0.6b",
-      "generation_base_url": null,
+      "generation_base_url": "https://llm.4geeks.ai/v1",
       "sources": [],
       "nodes": [
         {
           "order": 1,
           "node": "receive_question",
-          "output": null,
-          "output_reason": "02-run-agent-live.json no incluye la salida de este nodo."
+          "start_timestamp": "2026-11-06T18:09:39.695899+00:00",
+          "end_timestamp": "2026-11-06T18:09:39.696120+00:00",
+          "latency_s": 0.000376117997802794,
+          "latency_basis": "debug event observation monotonic clock",
+          "error": null,
+          "output": {
+            "question": "¿Cuál es la capital de Mongolia?",
+            "context": [],
+            "answer": "",
+            "error": "",
+            "status": "received"
+          },
+          "state_keys_written": [
+            "question",
+            "context",
+            "answer",
+            "error",
+            "status"
+          ],
+          "state_keys_changed": [
+            "context",
+            "answer",
+            "error",
+            "status"
+          ],
+          "sources_retrieved": []
         },
         {
           "order": 2,
           "node": "retrieve_context",
-          "output": null,
-          "output_reason": "02-run-agent-live.json no incluye la salida de este nodo."
+          "start_timestamp": "2026-11-06T18:09:39.696278+00:00",
+          "end_timestamp": "2026-11-06T18:09:40.270576+00:00",
+          "latency_s": 0.5746532529956312,
+          "latency_basis": "debug event observation monotonic clock",
+          "error": null,
+          "output": {
+            "context": [],
+            "status": "retrieved",
+            "error": ""
+          },
+          "state_keys_written": [
+            "context",
+            "status",
+            "error"
+          ],
+          "state_keys_changed": [
+            "status"
+          ],
+          "sources_retrieved": []
         },
         {
           "order": 3,
           "node": "insufficient_context",
+          "start_timestamp": "2026-11-06T18:09:40.270913+00:00",
+          "end_timestamp": "2026-11-06T18:09:40.271574+00:00",
+          "latency_s": 0.0020581889984896407,
+          "latency_basis": "debug event observation monotonic clock",
+          "error": null,
           "output": {
             "answer": "No tengo información sobre eso. La base de conocimiento no devolvió contexto por encima del umbral, así que no invento una respuesta.",
+            "error": "",
             "status": "insufficient_context"
           },
-          "output_reason": null
+          "state_keys_written": [
+            "answer",
+            "error",
+            "status"
+          ],
+          "state_keys_changed": [
+            "answer",
+            "status"
+          ],
+          "sources_retrieved": []
         }
       ],
-      "nodes_basis": "status insufficient_context solo lo escribe ese nodo, después de receive_question y retrieve_context, y no llama al modelo.",
-      "checkpoints": null,
-      "checkpoints_reason": "02-run-agent-live.json no incluye checkpoints.",
+      "nodes_basis": "Observed LangGraph debug task/task_result and updates events",
+      "checkpoints": [
+        {
+          "checkpoint_id": "1f1da0d3-bbe2-6df3-bfff-315674ad6a2a",
+          "created_at": "2026-11-06T18:09:39.694533+00:00",
+          "step": -1,
+          "source": "input",
+          "next": [
+            "__start__"
+          ],
+          "status": null
+        },
+        {
+          "checkpoint_id": "1f1da0d3-bbe5-61b8-8000-ca5d175dea38",
+          "created_at": "2026-11-06T18:09:39.695446+00:00",
+          "step": 0,
+          "source": "loop",
+          "next": [
+            "receive_question"
+          ],
+          "status": null
+        },
+        {
+          "checkpoint_id": "1f1da0d3-bbe6-6d70-8001-0a87851aebbb",
+          "created_at": "2026-11-06T18:09:39.696159+00:00",
+          "step": 1,
+          "source": "loop",
+          "next": [
+            "retrieve_context"
+          ],
+          "status": "received"
+        },
+        {
+          "checkpoint_id": "1f1da0d3-c161-6737-8002-1cc2703771bc",
+          "created_at": "2026-11-06T18:09:40.270663+00:00",
+          "step": 2,
+          "source": "loop",
+          "next": [
+            "insufficient_context"
+          ],
+          "status": "retrieved"
+        },
+        {
+          "checkpoint_id": "1f1da0d3-c163-6d73-8003-ecbba088492e",
+          "created_at": "2026-11-06T18:09:40.271645+00:00",
+          "step": 3,
+          "source": "loop",
+          "next": [],
+          "status": "insufficient_context"
+        }
+      ],
       "tokens": null,
-      "tokens_reason": "02-run-agent-live.json no incluye tokens.",
-      "run_id": null,
-      "run_id_reason": "02-run-agent-live.json no incluye run_id."
+      "tokens_reason": "No generation call on insufficient_context route.",
+      "run_id": "58100d65-a9a4-46e9-9adf-bfbe3deebc7f",
+      "thread_id": "dd531cd9-2b0a-4ba6-9655-7c49171ff312",
+      "started_at": "2026-11-06T12:09:39.694126-06:00",
+      "ended_at": "2026-11-06T12:09:40.273071-06:00",
+      "checkpoint_count": 5,
+      "response_metadata": [],
+      "correctness": {
+        "honest_refusal": true
+      },
+      "embedding_usage": null,
+      "embedding_usage_reason": "The harness does not collect embedding usage. Generation usage is not a whole-pipeline token total."
     }
-  ]
+  ],
+  "embedding_usage": null,
+  "embedding_usage_reason": "The harness does not collect embedding usage. Generation usage is not a whole-pipeline token total."
 }

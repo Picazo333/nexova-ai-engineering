@@ -242,49 +242,65 @@ def test_graph_source_reuses_pipeline_functions():
     assert "def query(" in rag
 
 
-def test_committed_trace_export_shows_the_live_run():
+def test_committed_trace_export_shows_the_instrumented_run():
     import json
 
     document_path = ROOT / "docs" / "langgraph" / "trace-full-run.json"
-    live_path = ROOT / "docs" / "langgraph" / "evidence" / "llm-live" / "02-run-agent-live.json"
+    instrumented_path = (
+        ROOT
+        / "docs"
+        / "langgraph"
+        / "evidence"
+        / "r25-instrumented"
+        / "trace-full-run.instrumented.json"
+    )
     document = json.loads(document_path.read_text(encoding="utf-8"))
-    live = json.loads(live_path.read_text(encoding="utf-8"))
+    instrumented = json.loads(instrumented_path.read_text(encoding="utf-8"))
     assert document["live_generation"] == "measured"
     assert document["currency"] == "CURRENT"
-    assert document["modelo_generacion"] == "online/openrouter/deepseek/deepseek-v4-flash"
-    assert document["modelo_generacion"] == live["modelo_generacion"]
-    assert document["generation_base_url"] == "https://llm.4geeks.ai/v1"
-    assert document["tokens"] is None
+    assert document["evidence"] == "docs/langgraph/evidence/r25-instrumented/trace-instrumented.json"
+    assert "infer" not in document["note"].lower()
+    assert document["embedding_usage"] is None
+    assert document["embedding_usage_reason"]
     by_label = {item["label"]: item for item in document["runs"]}
     full = by_label["live_fee_grounding"]
+    assert full["run_id"] == "8d1bc6df-340e-4f11-920e-dc8ff9d109c4"
+    assert "run_id_reason" not in full
     assert [item["node"] for item in full["nodes"]] == [
         "receive_question",
         "retrieve_context",
         "generate_answer",
     ]
+    assert full["nodes_basis"] == instrumented["runs"][0]["nodes_basis"]
+    assert "infer" not in full["nodes_basis"].lower()
     assert full["generation_mode"] == "live"
-    assert full["latencia_s"] == 8.08
-    assert full["answer"] == live["resultados"][0]["answer"]
+    assert full["checkpoint_count"] == 5
+    assert len(full["checkpoints"]) == 5
+    assert "checkpoints_reason" not in full
+    assert full["tokens"]["prompt_tokens"] == 661
+    assert full["tokens"]["completion_tokens"] == 293
+    assert full["tokens"]["total_tokens"] == 954
+    assert "tokens_reason" not in full
     assert "22%" in full["answer"] and "Marcos Ibáñez" in full["answer"]
-    assert full["sources"] == [
-        {"source_document": "pricing-model", "section": "Executive headhunting"},
-        {
-            "source_document": "objection-handling",
-            "section": "22% seems expensive compared to other firms.",
-        },
-    ]
-    assert full["checkpoints"] is None
-    assert full["tokens"] is None
+    assert {item["source_document"] for item in full["sources"]} >= {
+        "pricing-model",
+        "objection-handling",
+    }
+    assert full["embedding_usage"] is None
+    assert full["embedding_usage_reason"]
     gap = by_label["live_outside_corpus"]
+    assert gap["run_id"] == "58100d65-a9a4-46e9-9adf-bfbe3deebc7f"
     assert [item["node"] for item in gap["nodes"]] == [
         "receive_question",
         "retrieve_context",
         "insufficient_context",
     ]
+    assert gap["checkpoint_count"] == 5
     assert gap["generation_mode"] == "not_called"
-    assert gap["model"] is None
+    assert gap["tokens"] is None
+    assert gap["tokens_reason"]
+    assert gap["embedding_usage"] is None
     assert gap["answer"].startswith("No tengo información sobre eso.")
-    assert gap["latencia_s"] == 0.63
 
 
 def test_eval_live_answer_is_grounded_in_the_briefing(tmp_path):

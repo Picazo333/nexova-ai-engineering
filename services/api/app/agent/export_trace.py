@@ -1,8 +1,10 @@
-"""Publish the trace export from the recorded 4Geeks run.
+"""Publish docs/langgraph/trace-full-run.json from the instrumented capture.
 
-The file `docs/langgraph/evidence/llm-live/02-run-agent-live.json` is the
-capture. This module does not call the model and does not fill timings or
-token counts that are absent from that file.
+The measured file is
+docs/langgraph/evidence/r25-instrumented/trace-full-run.instrumented.json.
+This module does not call a model. It rewrites the evidence path to the
+repo, drops reason fields that are null because the value is now present,
+and records that embedding usage was not collected.
 """
 
 from __future__ import annotations
@@ -13,126 +15,45 @@ from pathlib import Path
 
 from data.rag_settings import ROOT
 
-LIVE_PATH = ROOT / "docs" / "langgraph" / "evidence" / "llm-live" / "02-run-agent-live.json"
-README_PATH = ROOT / "docs" / "langgraph" / "evidence" / "llm-live" / "README.md"
+INSTRUMENTED = (
+    ROOT / "docs" / "langgraph" / "evidence" / "r25-instrumented" / "trace-full-run.instrumented.json"
+)
 DEFAULT_OUT = ROOT / "docs" / "langgraph" / "trace-full-run.json"
-BASE_URL = "https://llm.4geeks.ai/v1"
+EVIDENCE = "docs/langgraph/evidence/r25-instrumented/trace-instrumented.json"
+EMBEDDING_USAGE_REASON = (
+    "The harness does not collect embedding usage. "
+    "Generation usage is not a whole-pipeline token total."
+)
+NOTE = (
+    "Derivado de docs/langgraph/evidence/r25-instrumented/"
+    "trace-full-run.instrumented.json. Nodos, run_id, checkpoints y "
+    "tokens de generación son los medidos con el grafo compilado y "
+    "MemorySaver. La ruta de evidencia apunta al repo. El uso de "
+    "embeddings sigue en null porque el harness no lo recoge."
+)
 
 
-def _sources(answer: str) -> list[dict]:
-    found: list[dict] = []
-    for raw in answer.splitlines():
-        line = raw.strip()
-        if line.startswith("Sources:"):
-            line = line.split(":", 1)[1].strip()
-        if " — " not in line:
-            continue
-        document, section = line.split(" — ", 1)
-        document = document.strip()
-        section = section.strip()
-        if not document or not section or " " in document:
-            continue
-        found.append({"source_document": document, "section": section})
-    return found
+def _drop_null_reason(payload: dict, value_key: str, reason_key: str) -> None:
+    if payload.get(value_key) is not None and payload.get(reason_key) is None:
+        payload.pop(reason_key, None)
 
 
-def _nodes(status: str, answer: str) -> tuple[list[dict] | None, str | None]:
-    """Node names follow the compiled graph for this status.
-
-    The capture does not include each node's payload. Outputs we do not have
-    stay null.
-    """
-
-    if status == "answered":
-        names = ["receive_question", "retrieve_context", "generate_answer"]
-        basis = (
-            "status answered solo lo escribe generate_answer, "
-            "después de receive_question y retrieve_context."
-        )
-    elif status == "insufficient_context":
-        names = ["receive_question", "retrieve_context", "insufficient_context"]
-        basis = (
-            "status insufficient_context solo lo escribe ese nodo, "
-            "después de receive_question y retrieve_context, y no llama al modelo."
-        )
-    else:
-        return None, f"02-run-agent-live.json no define un camino de nodos para status {status}."
-    nodes = []
-    for order, name in enumerate(names, start=1):
-        carries_answer = name in {"generate_answer", "insufficient_context"}
-        nodes.append(
-            {
-                "order": order,
-                "node": name,
-                "output": {"answer": answer, "status": status} if carries_answer else None,
-                "output_reason": None
-                if carries_answer
-                else "02-run-agent-live.json no incluye la salida de este nodo.",
-            }
-        )
-    return nodes, basis
-
-
-def build_export(live_path: Path = LIVE_PATH, readme_path: Path = README_PATH) -> dict:
-    live = json.loads(live_path.read_text(encoding="utf-8"))
-    readme = readme_path.read_text(encoding="utf-8")
-    if BASE_URL not in readme:
-        raise ValueError("El README de la evidencia no declara la base del modelo.")
-    model = live.get("modelo_generacion")
-    embedder = live.get("modelo_embeddings")
-    runs = []
-    for item in live["resultados"]:
-        answer = item.get("answer") or ""
-        status = item.get("status")
-        nodes, basis = _nodes(status, answer)
-        called = status == "answered"
-        runs.append(
-            {
-                "label": "live_fee_grounding" if called else "live_outside_corpus",
-                "question": item.get("pregunta"),
-                "status": status,
-                "answer": answer,
-                "error": item.get("error", ""),
-                "latencia_s": item.get("latencia_s"),
-                "generation_mode": "live" if called else "not_called",
-                "model": model if called else None,
-                "model_reason": None
-                if called
-                else "Esta corrida no llamó al modelo de generación. El id configurado en la captura es modelo_generacion.",
-                "configured_generation_model": model,
-                "embedding_model": embedder,
-                "generation_base_url": BASE_URL if called else None,
-                "sources": _sources(answer),
-                "nodes": nodes,
-                "nodes_basis": basis,
-                "checkpoints": None,
-                "checkpoints_reason": "02-run-agent-live.json no incluye checkpoints.",
-                "tokens": None,
-                "tokens_reason": "02-run-agent-live.json no incluye tokens.",
-                "run_id": None,
-                "run_id_reason": "02-run-agent-live.json no incluye run_id.",
-            }
-        )
-    return {
-        "note": (
-            "Export de la corrida live registrada en "
-            "docs/langgraph/evidence/llm-live/02-run-agent-live.json. "
-            "La respuesta de la tarifa sale del modelo de generación indicado. "
-            "Los campos que esa captura no trae están en null con su razón. "
-            "No se añadieron tiempos ni tokens distintos de latencia_s."
-        ),
-        "live_generation": "measured",
-        "currency": "CURRENT",
-        "evidence": "docs/langgraph/evidence/llm-live/02-run-agent-live.json",
-        "hora": live.get("hora"),
-        "modelo_generacion": model,
-        "modelo_embeddings": embedder,
-        "generation_base_url": BASE_URL,
-        "generation_base_url_source": "docs/langgraph/evidence/llm-live/README.md",
-        "tokens": None,
-        "tokens_reason": "02-run-agent-live.json no incluye tokens.",
-        "runs": runs,
-    }
+def build_export(instrumented_path: Path = INSTRUMENTED) -> dict:
+    document = json.loads(instrumented_path.read_text(encoding="utf-8"))
+    document["note"] = NOTE
+    document["evidence"] = EVIDENCE
+    document["currency"] = "CURRENT"
+    document["embedding_usage"] = None
+    document["embedding_usage_reason"] = EMBEDDING_USAGE_REASON
+    _drop_null_reason(document, "tokens", "tokens_reason")
+    for run in document["runs"]:
+        _drop_null_reason(run, "run_id", "run_id_reason")
+        _drop_null_reason(run, "checkpoints", "checkpoints_reason")
+        _drop_null_reason(run, "tokens", "tokens_reason")
+        _drop_null_reason(run, "model", "model_reason")
+        run["embedding_usage"] = None
+        run["embedding_usage_reason"] = EMBEDDING_USAGE_REASON
+    return document
 
 
 def write_export(destination: Path, document: dict | None = None) -> dict:
@@ -143,13 +64,13 @@ def write_export(destination: Path, document: dict | None = None) -> dict:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Write the live trace export.")
+    parser = argparse.ArgumentParser(description="Publish the instrumented trace export.")
     parser.add_argument("--out", default=str(DEFAULT_OUT))
     args = parser.parse_args()
     destination = Path(args.out)
     document = write_export(destination)
     labels = [item["label"] for item in document["runs"]]
-    print(f"wrote {destination} runs={','.join(labels)} model={document['modelo_generacion']}")
+    print(f"wrote {destination} from {INSTRUMENTED.name} runs={','.join(labels)}")
 
 
 if __name__ == "__main__":

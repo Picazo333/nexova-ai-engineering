@@ -23,6 +23,6 @@ uv run python -m pytest tests/pipelines/test_agent_graph.py
 PYTHONPATH=services/api uv run python -m app.agent.export_trace
 ```
 
-The published trace is the live 4Geeks run in `docs/langgraph/evidence/llm-live/`. Generation model: `online/openrouter/deepseek/deepseek-v4-flash` at `https://llm.4geeks.ai/v1`. The fee answer keeps 22% and names Marcos Ibáñez. Rebuild the export with `PYTHONPATH=services/api uv run python -m app.agent.export_trace`. Routing tests may stub the two pipeline functions. Those stubs are not the published trace.
+The published trace is derived from the instrumented run in `docs/langgraph/evidence/r25-instrumented/`. Generation model: `online/openrouter/deepseek/deepseek-v4-flash` at `https://llm.4geeks.ai/v1`. Fee run `8d1bc6df-340e-4f11-920e-dc8ff9d109c4` keeps 22% and names Marcos Ibáñez (661+293=954 generation tokens, 5 checkpoints). Rebuild with `PYTHONPATH=services/api uv run python -m app.agent.export_trace`. Routing tests may stub the two pipeline functions. Those stubs are not the published trace.
 
 > _Spanish version: [README.es.md](./README.es.md)._
