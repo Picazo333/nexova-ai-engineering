@@ -24,7 +24,7 @@ Criterios: R01–R21, U01–U03, E01–E02. La justificación está en `RUBRIC_J
 
 ## Documentación posterior a la medición
 
-Nota de almacén del token, sin cambio de código. SHA de esa nota: pendiente de registrar en el commit siguiente.
+Nota de almacén del token, sin cambio de código. SHA: `dd810efd397c0dd66ef51d7b12ea99021323854c`.
 
 ## Estado
 
