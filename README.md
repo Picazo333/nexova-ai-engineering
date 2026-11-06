@@ -314,7 +314,7 @@ pip install -r services/api/requirements.txt
 PYTHONPATH=packages:services/api uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
-Open `http://127.0.0.1:8000`. Details: `services/api/README.md` and `uis/backoffice/README.md`.
+Open `http://127.0.0.1:8000`. The supplier directory is at `http://127.0.0.1:8000/proveedores`. `cd services/api && uv run seed` loads the 15 Nexova contracts from `scripts/nexova-supplier-BRIEFING.es.md`. Details: `services/api/README.md` and `uis/backoffice/README.md`.
 
 ## Contributors
 

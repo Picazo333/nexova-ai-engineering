@@ -9,4 +9,4 @@ Cada subcarpeta dentro de `services/` debe corresponder a **un servicio concreto
 
 ## `api/`
 
-API FastAPI central. El router de incidencias expone `POST /api/incidents/analyze` y `GET /api/incidents/results/export`. Cómo arrancarla: [`api/README.md`](./api/README.md).
+API FastAPI central. Incidencias: `POST /api/incidents/analyze` y `GET /api/incidents/results/export`. Proveedores: `/suppliers` y la página `/proveedores`. Cómo arrancarla: [`api/README.md`](./api/README.md).

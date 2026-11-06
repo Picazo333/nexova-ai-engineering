@@ -16,4 +16,4 @@ Organize `uis/` by **different concerns** — each subfolder covers a distinct a
 
 ## `backoffice/`
 
-Internal incident-analysis screen, served by `services/api` at `/`. It does not replace the public website at the repository root. See [`backoffice/README.md`](./backoffice/README.md).
+Internal screens for incident analysis (`/`) and the supplier directory (`/proveedores`), served by `services/api`. They do not replace the public website at the repository root. See [`backoffice/README.md`](./backoffice/README.md).

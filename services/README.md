@@ -11,4 +11,4 @@ Each subfolder inside `services/` must correspond to **one specific service** (f
 
 ## `api/`
 
-Central FastAPI app. The incidents router is `POST /api/incidents/analyze` and `GET /api/incidents/results/export`. Run instructions: [`api/README.md`](./api/README.md).
+Central FastAPI app. Incidents: `POST /api/incidents/analyze` and `GET /api/incidents/results/export`. Suppliers: `/suppliers` plus the directory page `/proveedores`. Run instructions: [`api/README.md`](./api/README.md).

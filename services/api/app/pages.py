@@ -277,13 +277,32 @@ def _num(index: int, numeric: set[int]) -> str:
     return ' class="num"' if index in numeric else ""
 
 
-def _layout(*, title: str, description: str, main: str, current: str) -> str:
+def render_page(
+    *,
+    title: str,
+    description: str,
+    main: str,
+    current: str,
+    page_script: str = "",
+) -> str:
+    return _layout(
+        title=title,
+        description=description,
+        main=main,
+        current=current,
+        page_script=page_script,
+    )
+
+
+def _layout(*, title: str, description: str, main: str, current: str, page_script: str = "") -> str:
     template = _read("layout.html")
     return (
         template.replace("{{TITLE}}", html.escape(title))
         .replace("{{DESCRIPTION}}", html.escape(description))
         .replace("{{MAIN}}", main)
+        .replace("{{PAGE_SCRIPT}}", page_script)
         .replace("{{CURRENT_ANALYSIS}}", ' aria-current="page"' if current == "analysis" else "")
+        .replace("{{CURRENT_SUPPLIERS}}", ' aria-current="page"' if current == "suppliers" else "")
         .replace("{{CURRENT_PRIVACY}}", ' aria-current="page"' if current == "privacy" else "")
     )
 

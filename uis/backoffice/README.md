@@ -1,6 +1,10 @@
-# Backoffice — análisis de incidencias
+# Backoffice — incidencias y proveedores
 
-Pantalla interna para subir el CSV de tickets de soporte de Nexova, ver el resumen y descargar `results.csv`. La sirve la API (`services/api`) en `/`. No es el sitio público de la raíz del repositorio: aquel tiene su propio sistema visual y este entregable no pide reutilizarlo.
+La API (`services/api`) sirve estas pantallas. No sustituyen al sitio público de la raíz del repositorio.
+
+- `/` sube el CSV de tickets de soporte, muestra el resumen y descarga `results.csv`.
+- `/proveedores` es el directorio de contratos externos: filtros por país, categoría y estado, alta, cambio de tarifa mensual y activar o suspender.
+- `/privacidad` describe qué se guarda de cada herramienta.
 
 ## Qué hay en pantalla
 
@@ -24,4 +28,6 @@ Tokens, motion y lockups se copiaron byte a byte desde el paquete SIGNAL v1.1.0:
 
 La prueba `services/api/tests/test_assets.py` compara esos SHA-256 con el manifiesto. Tipografía Arial/Helvetica. No hay fuentes remotas. El lockup del pie es el crédito visual del encargo; el texto dice que no es una asociación oficial.
 
-La única animación es un fondo de 180 ms al aparecer el resultado (`--motion-state`). No corre con `prefers-reduced-motion` ni cuando `html[data-motion=reduced]`.
+Hay dos animaciones de 180 ms (`--motion-state`): el fondo del resultado de incidencias y el fondo de la fila cuya tarifa o estado acaba de cambiar. No corren con `prefers-reduced-motion` ni cuando `html[data-motion=reduced]`. El directorio sigue mostrando el dato nuevo sin esa animación.
+
+En el directorio, el país, la categoría y el estado del filtro se guardan en `sessionStorage` de la pestaña. Al volver desde otra sección, el listado se recupera sin recargar a mano.

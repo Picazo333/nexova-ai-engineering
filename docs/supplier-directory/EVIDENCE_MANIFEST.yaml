@@ -1,0 +1,98 @@
+project: ai-eng-supplier-directory
+company: Nexova
+branch: feature/supplier-directory
+base: feature/incidents-analysis
+status: PENDIENTE_REVISION_ORQUESTADOR
+commit: HEAD
+pytest: "35 passed"
+briefing:
+  searched:
+    - BRIEFING.md
+    - CONTEXT.md
+    - scripts/nexova-BRIEFING.en.md
+    - data/
+  found: scripts/nexova-supplier-BRIEFING.es.md
+  syllabus: content/contexts/supplier-directory/nexova-BRIEFING.es.md
+  notes_language: es
+  structured_fields_match_english: true
+criteria:
+  - {id: R01, result: PASS, evidence: services/api/models.py:91}
+  - {id: R02, result: PASS, evidence: services/api/tests/test_suppliers.py:171}
+  - {id: R03, result: PASS, evidence: services/api/tests/test_suppliers.py:171}
+  - {id: R04, result: PASS, evidence: services/api/models.py:91}
+  - {id: R05, result: PASS, evidence: services/api/tests/test_suppliers.py:302}
+  - {id: R06, result: PASS, evidence: services/api/models.py:31}
+  - {id: R07, result: PASS, evidence: services/api/models.py:91}
+  - {id: R08, result: PASS, evidence: services/api/tests/test_suppliers.py:52}
+  - {id: R09, result: PASS, evidence: /opt/cursor/artifacts/supplier-directory/seed-output.txt}
+  - {id: R10, result: PASS, evidence: services/api/tests/test_suppliers.py:68}
+  - {id: R11, result: PASS, evidence: services/api/seed.py:28}
+  - {id: R12, result: PASS, evidence: services/api/app/main.py:30}
+  - {id: R13, result: PASS, evidence: services/api/tests/test_suppliers.py:197}
+  - {id: R14, result: PASS, evidence: services/api/tests/test_suppliers.py:132}
+  - {id: R15, result: PASS, evidence: services/api/tests/test_suppliers.py:132}
+  - {id: R16, result: PASS, evidence: /opt/cursor/artifacts/supplier-directory/api-filter-category-ats.png}
+  - {id: R17, result: PASS, evidence: services/api/routes/suppliers.py:150}
+  - {id: R18, result: PASS, evidence: services/api/tests/test_suppliers.py:210}
+  - {id: R19, result: PASS, evidence: services/api/tests/test_suppliers.py:210}
+  - {id: R20, result: PASS, evidence: services/api/routes/suppliers.py:272}
+  - {id: R21, result: PASS, evidence: services/api/tests/test_suppliers.py}
+  - {id: R22, result: PASS, evidence: uis/backoffice/partials/layout.html}
+  - {id: R23, result: PASS, evidence: /opt/cursor/artifacts/supplier-directory/ui-filter-ats-1280.png}
+  - {id: R24, result: PASS, evidence: /opt/cursor/artifacts/supplier-directory/supplier-walkthrough.mp4}
+  - {id: R25, result: PASS, evidence: /opt/cursor/artifacts/supplier-directory/ui-api-error-1280.png}
+  - {id: R26, result: PASS, evidence: /opt/cursor/artifacts/supplier-directory/ui-reduced-motion-1280.png}
+  - {id: R27, result: PASS, evidence: services/api/app/directory_page.py:227}
+  - {id: R28, result: PASS, evidence: /opt/cursor/artifacts/supplier-directory/ui-filter-ats-1280.png}
+  - {id: R29, result: PASS, evidence: services/api/tests/test_suppliers.py:290}
+  - {id: R30, result: PASS, evidence: services/api/tests/test_api.py}
+  - {id: R31, result: PASS, evidence: services/api/README.md}
+  - {id: R32, result: PASS, evidence: services/api/tests/test_suppliers.py:321}
+  - {id: R33, result: PASS, evidence: services/api/tests/test_assets.py:23}
+  - {id: R34, result: PASS, evidence: /opt/cursor/artifacts/supplier-directory/ui-loading-1280.png}
+  - {id: R35, result: PASS, evidence: /opt/cursor/artifacts/supplier-directory/axe-proveedores.json}
+  - {id: R36, result: PASS, evidence: /opt/cursor/artifacts/supplier-directory/ui-filter-ats-390.png}
+  - {id: R37, result: PASS, evidence: /opt/cursor/artifacts/supplier-directory/supplier-walkthrough.mp4}
+  - {id: R38, result: PASS, evidence: docs/supplier-directory/lighthouse-summary.json}
+  - {id: R39, result: PASS, evidence: /opt/cursor/artifacts/supplier-directory/ui-reduced-motion-1280.png}
+  - {id: R40, result: PASS, evidence: uis/backoffice/partials/layout.html}
+  - {id: E01, result: PASS, evidence: /opt/cursor/artifacts/supplier-directory/ui-filters-restored-1280.png}
+  - {id: E02, result: PASS, evidence: services/api/tests/test_suppliers.py:68}
+  - {id: R41, result: PASS, evidence: /opt/cursor/artifacts/supplier-directory/seed-terminal.png}
+  - {id: R42, result: PASS, evidence: services/api/README.md}
+artifacts:
+  screenshots:
+    - /opt/cursor/artifacts/supplier-directory/ui-filter-ats-390.png
+    - /opt/cursor/artifacts/supplier-directory/ui-filter-ats-768.png
+    - /opt/cursor/artifacts/supplier-directory/ui-filter-ats-1280.png
+    - /opt/cursor/artifacts/supplier-directory/ui-filter-ats-390-scrolled.png
+    - /opt/cursor/artifacts/supplier-directory/ui-empty-390.png
+    - /opt/cursor/artifacts/supplier-directory/ui-empty-768.png
+    - /opt/cursor/artifacts/supplier-directory/ui-empty-1280.png
+    - /opt/cursor/artifacts/supplier-directory/ui-loading-390.png
+    - /opt/cursor/artifacts/supplier-directory/ui-loading-768.png
+    - /opt/cursor/artifacts/supplier-directory/ui-loading-1280.png
+    - /opt/cursor/artifacts/supplier-directory/ui-error-390.png
+    - /opt/cursor/artifacts/supplier-directory/ui-error-768.png
+    - /opt/cursor/artifacts/supplier-directory/ui-error-1280.png
+    - /opt/cursor/artifacts/supplier-directory/ui-client-error-1280.png
+    - /opt/cursor/artifacts/supplier-directory/ui-api-error-1280.png
+    - /opt/cursor/artifacts/supplier-directory/ui-reduced-motion-1280.png
+    - /opt/cursor/artifacts/supplier-directory/ui-filters-restored-1280.png
+    - /opt/cursor/artifacts/supplier-directory/ui-incidents-1280.png
+    - /opt/cursor/artifacts/supplier-directory/api-filter-category-ats.png
+    - /opt/cursor/artifacts/supplier-directory/seed-terminal.png
+  video:
+    - /opt/cursor/artifacts/supplier-directory/supplier-walkthrough.mp4
+    - /opt/cursor/artifacts/supplier-directory/supplier-walkthrough.webm
+  lighthouse:
+    - /opt/cursor/artifacts/supplier-directory/lighthouse/mobile-1.json
+    - /opt/cursor/artifacts/supplier-directory/lighthouse/mobile-2.json
+    - /opt/cursor/artifacts/supplier-directory/lighthouse/mobile-3.json
+    - /opt/cursor/artifacts/supplier-directory/lighthouse/desktop-1.json
+    - /opt/cursor/artifacts/supplier-directory/lighthouse/desktop-2.json
+    - /opt/cursor/artifacts/supplier-directory/lighthouse/desktop-3.json
+    - docs/supplier-directory/lighthouse-summary.json
+  other:
+    - /opt/cursor/artifacts/supplier-directory/seed-output.txt
+    - /opt/cursor/artifacts/supplier-directory/axe-proveedores.json
