@@ -6,25 +6,25 @@ Las contraseñas y el secreto de firma que aparecen en los tests son fixtures lo
 
 ## Cómo ejecutarlas
 
-Desde la raíz de este repositorio, que es donde está `pytest.ini`:
+La raíz del proyecto FastAPI es `services/api`. El enunciado pide `uv run pytest` desde esa raíz («All tests must pass when running `uv run pytest` from the project root», en el apartado FastAPI, justo después de «at the root of your FastAPI project»). No hay un `pyproject.toml` en la raíz del monorepo.
 
 ```bash
+cd services/api
 uv sync --group dev
 uv run pytest
 uv run pytest --cov
 ```
 
-`uv run pytest` tiene que terminar en verde. `uv run pytest --cov` mide el paquete `app.auth` y falla si baja de 70% (`.coveragerc`).
+`uv run pytest` tiene que terminar en verde. Recoge `services/api/tests` y `packages/incident_analysis/tests`. `uv run pytest --cov` mide `app.auth` y falla si baja del 70% (configuración en `services/api/pyproject.toml`).
 
-El mismo intérprete, sin pasar por `uv run`:
+Desde la raíz del monorepo, sin otro proyecto uv:
 
 ```bash
-services/api/.venv/bin/python -m pytest -q
+make test
+make test-cov
 ```
 
-`cd services/api && uv run pytest` ejecuta las pruebas de `services/api/tests`. No incluye `packages/incident_analysis/tests`: pytest, lanzado desde un subdirectorio, recoge ese directorio. La batería completa del monorepo es la de la raíz.
-
-Cobertura de los extras, también desde la raíz:
+Cobertura de los extras, también desde `services/api`:
 
 ```bash
 uv run pytest --cov=directory --cov=routes.suppliers --cov=app.routers.incidents --cov=incident_analysis.engine --cov-report=term-missing --cov-fail-under=60
@@ -64,9 +64,9 @@ El registro y el login son públicos. El resto exige un token y, sobre otra pers
 
 ## Resultado medido
 
-`uv run pytest` en la raíz: 96 passed. De esas, 45 ya estaban (incidencias, directorio y autenticación de las entregas anteriores) y siguen en verde.
+`cd services/api && uv run pytest`: 96 passed. De esas, 45 ya estaban (incidencias, directorio y autenticación de las entregas anteriores) y siguen en verde.
 
-`uv run pytest --cov` sobre `app.auth`:
+`cd services/api && uv run pytest --cov` sobre `app.auth`:
 
 | Módulo | Cobertura |
 | --- | --- |
