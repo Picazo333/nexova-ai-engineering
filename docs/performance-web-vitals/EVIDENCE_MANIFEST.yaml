@@ -44,4 +44,5 @@ items:
   - id: lockup-test
     path: uis/portal/__tests__/lockup.test.ts
     rubric: [X02, R14]
-commit_sha: PENDING
+content_sha: bc8e3bbf7435fe0f4fa980779c8fb1ae94d10f64
+commit_sha_note: "bc8e3bb es el commit de AUDIT, REPORT y las capturas. El commit siguiente solo escribe este SHA."

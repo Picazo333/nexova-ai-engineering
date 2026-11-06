@@ -1,7 +1,7 @@
 {
   "project": "023-ai-eng-performance-web-vitals",
   "started_at": "2026-11-06T17:57:49Z",
-  "finished_at": "2026-11-06T18:27:19Z",
+  "finished_at": "2026-11-06T18:28:30Z",
   "timezone": "UTC",
   "eval_repair_iterations": 2,
   "repairs": [
@@ -43,6 +43,6 @@
     "method": "diff de la rama, capturas de Lighthouse en audit/ y JSON completos fuera del repo",
     "tracked_diff_stat": "13 files, 40 insertions, 170 deletions, más ficheros nuevos (CSS, audit, docs, hook, tests)",
     "started_at": "2026-11-06T17:57:49Z",
-    "finished_at": "2026-11-06T18:27:19Z"
+    "finished_at": "2026-11-06T18:28:30Z"
   }
 }
