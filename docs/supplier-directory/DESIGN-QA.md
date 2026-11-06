@@ -20,7 +20,7 @@ App interna. No es una landing. SIGNAL se aplica a la UI del backoffice. El enun
 | QA-14 | axe | axe-core 4.10.3 en la página filtrada a 1280. | PASS | `axe-proveedores.json` es `[]`. |
 | QA-15 | Motion | Fondo de fila 180 ms solo si no hay reduced-motion. El dato nuevo está en el HTML desde el primer pintado tras la respuesta. | PASS | `ui-reduced-motion-1280.png` (`data-motion=reduced`). |
 | QA-16 | Vídeo | Recorrido real de filtros, 6,48 s, sin botón de repetir. | PASS | `supplier-walkthrough.mp4` |
-| QA-17 | Lighthouse | Producción = uvicorn sin reload. Simulate, RTT 150, 1638,4 kbps, CPU ×4. Tres corridas. | PASS | Mediana móvil LCP 1657,3 ms, CLS 0, TBT 0. Mediana escritorio LCP 1660,4 ms, CLS 0, TBT 0. |
+| QA-17 | Lighthouse | Producción = uvicorn sin reload. Simulate, RTT 150, 1638,4 kbps, CPU ×4. Tres corridas. | PASS | Mediana móvil LCP 1657,3 ms, CLS 0, TBT 0. Mediana viewport escritorio con throttling móvil (más estricto) LCP 1660,4 ms, CLS 0, TBT 0. |
 | QA-18 | Presupuesto | CSS gzip ≤ 40 KiB y JS gzip ≤ 170 KiB, incluidos tokens y `suppliers.js`. | PASS | `test_front_end_transfer_budgets` |
 | QA-19 | SEO | `noindex`. Sin canonical, sitemap ni schema. | NO APLICA el SEO de landing. PASS lo que aplica. | `layout.html` |
 | QA-20 | Incidencias | La portada de 009 sigue en `/` con su formulario. | PASS | `ui-incidents-1280.png` y `test_api.py` |

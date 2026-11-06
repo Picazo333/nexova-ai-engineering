@@ -86,6 +86,8 @@ artifacts:
     - /opt/cursor/artifacts/supplier-directory/supplier-walkthrough.mp4
     - /opt/cursor/artifacts/supplier-directory/supplier-walkthrough.webm
   lighthouse:
+    desktop_label: "viewport escritorio con throttling móvil (más estricto)"
+    reports:
     - /opt/cursor/artifacts/supplier-directory/lighthouse/mobile-1.json
     - /opt/cursor/artifacts/supplier-directory/lighthouse/mobile-2.json
     - /opt/cursor/artifacts/supplier-directory/lighthouse/mobile-3.json

@@ -31,6 +31,7 @@
       "tbt": 0
     }
   ],
+  "desktop_label": "viewport escritorio con throttling móvil (más estricto)",
   "desktop": [
     {
       "form": "desktop",

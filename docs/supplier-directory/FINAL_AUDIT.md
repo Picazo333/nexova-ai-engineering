@@ -11,7 +11,7 @@ El briefing no faltaba. No está dentro del monorepo (se buscó en `BRIEFING.md`
 - API FastAPI + TinyDB + Pydantic en el mismo proceso que las incidencias.
 - `uv run seed` idempotente, con el recuento en consola, y seeder al arrancar.
 - Página `/proveedores` en el backoffice, con filtros, alta, tarifa, estado, carga, vacío y error.
-- SIGNAL: tokens, lockup verificado, capturas 390/768/1280, vídeo de 6,48 s, Lighthouse móvil y escritorio.
+- SIGNAL: tokens, lockup verificado, capturas 390/768/1280, vídeo de 6,48 s, Lighthouse móvil y viewport escritorio con throttling móvil (más estricto).
 - Extras E01 y E02 con evidencia.
 - 35 tests pytest, incluidos los de incidencias.
 
