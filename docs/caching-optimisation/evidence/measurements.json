@@ -1,0 +1,56 @@
+{
+  "postgres": "PostgreSQL 16.15 local",
+  "method": "services/api/scripts/measure_reads.py contra postgresql:///nexova_audit. El antes es la función sin caché. El después es TestClient, misma proceso, cabecera X-Nexova-Cache.",
+  "volume_rows": { "assets": 480, "entries": 5760, "exits": 1920, "suppliers": 1500 },
+  "briefing_rows": { "assets": 6, "entries": 6, "exits": 3, "suppliers": 15 },
+  "uncached_volume_median_ms": {
+    "list_orders": 110.5,
+    "list_orders_p95": 125.95,
+    "list_assets": 5.94,
+    "list_assets_valencia": 4.14,
+    "get_asset": 1.33,
+    "list_suppliers": 12.89,
+    "list_suppliers_spain": 9.43,
+    "get_supplier": 2.42
+  },
+  "uncached_briefing_median_ms": {
+    "list_orders": 1.33,
+    "list_assets": 1.08
+  },
+  "http": {
+    "orders": { "miss_ms": 256.82, "hit_median_ms": 2.06, "marks": ["MISS", "HIT"] },
+    "orders_valencia": { "miss_ms": 61.75, "hit_median_ms": 2.03 },
+    "products_not_cached": { "first_ms": 12.45, "later_median_ms": 9.49, "cache_header": null },
+    "suppliers": { "miss_ms": 22.66, "hit_median_ms": 2.43 },
+    "suppliers_spain": { "miss_ms": 15.09, "hit_median_ms": 1.87 },
+    "profile_not_cached": { "first_ms": 2.29, "later_median_ms": 1.9, "cache_header": null }
+  },
+  "frontend_prepare_7680_rows": {
+    "intl_constructed_per_row_median_ms": 361.19,
+    "shared_formatter_median_ms": 8.13,
+    "twenty_reuse_reads_ms": 0.009,
+    "rollup_only_median_ms": 0.086,
+    "note": "Node 22, 7680 filas. El resumen sin fechas (rollupOrders) es 0,086 ms y no justifica useMemo. El coste es Intl.DateTimeFormat."
+  },
+  "next_build": {
+    "before": {
+      "portal_home_route": "3.65 kB",
+      "portal_home_first_load": "106 kB",
+      "inbound_route": "4.41 kB",
+      "inbound_first_load": "107 kB",
+      "outbound_route": "5.3 kB",
+      "outbound_first_load": "108 kB"
+    },
+    "after": {
+      "portal_home_route": "4.2 kB",
+      "portal_home_first_load": "107 kB",
+      "inbound_route": "1.64 kB",
+      "inbound_first_load": "104 kB",
+      "outbound_route": "1.64 kB",
+      "outbound_first_load": "104 kB",
+      "incident_result_chunk_gzip": 707,
+      "entry_form_chunk_gzip": 4283,
+      "exit_form_chunk_gzip": 5167
+    }
+  }
+}

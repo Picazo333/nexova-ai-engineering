@@ -24,13 +24,14 @@ export function orderTypeLabel(code: string): string {
   return code;
 }
 
+const timestampFormatter = new Intl.DateTimeFormat("es-ES", {
+  dateStyle: "medium",
+  timeStyle: "short",
+  timeZone: "UTC",
+});
+
 export function formatTimestamp(value: string): string {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
-  const formatted = new Intl.DateTimeFormat("es-ES", {
-    dateStyle: "medium",
-    timeStyle: "short",
-    timeZone: "UTC",
-  }).format(date);
-  return `${formatted} UTC`;
+  return `${timestampFormatter.format(date)} UTC`;
 }

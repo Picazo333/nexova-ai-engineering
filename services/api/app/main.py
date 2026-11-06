@@ -5,6 +5,7 @@ from __future__ import annotations
 import html
 import logging
 import os
+import time
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -16,6 +17,7 @@ from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.auth.guide import API_DESCRIPTION, OPENAPI_TAGS
+from app.cache import begin_request, finish_request
 from app.auth.security import AuthConfigError, expire_minutes, jwt_secret, load_local_env
 from app.auth.store import reset_auth_db
 from app.config import BACKOFFICE_DIR, cors_origins
@@ -44,6 +46,7 @@ KNOWLEDGE_UI = Path(__file__).resolve().parents[3] / "uis" / "knowledge-query"
 AGENT_UI = Path(__file__).resolve().parents[3] / "uis" / "agent-compare"
 
 logger = logging.getLogger("nexova.api")
+timing_logger = logging.getLogger("api.timing")
 
 API_ROOTS = ("/api/", "/users", "/auth", "/profiles", "/agent", "/inventory")
 
@@ -99,7 +102,32 @@ def create_app() -> FastAPI:
             "X-Report-Fragment",
             "X-Directory-Fragment",
         ],
+        expose_headers=["X-Nexova-Cache"],
     )
+
+    @app.middleware("http")
+    async def cache_middleware(request: Request, call_next):
+        token = begin_request()
+        try:
+            response = await call_next(request)
+        except Exception:
+            finish_request(token, 500)
+            raise
+        mark = finish_request(token, response.status_code)
+        if mark:
+            response.headers["X-Nexova-Cache"] = mark
+        return response
+
+    @app.middleware("http")
+    async def timing_middleware(request: Request, call_next):
+        start = time.perf_counter()
+        response = await call_next(request)
+        duration = (time.perf_counter() - start) * 1000
+        path = request.url.path
+        if request.url.query:
+            path = f"{path}?{request.url.query}"
+        timing_logger.info("%s %s → %s | %.1fms", request.method, path, response.status_code, duration)
+        return response
     app.include_router(auth_router)
     app.include_router(users_router)
     app.include_router(profiles_router)

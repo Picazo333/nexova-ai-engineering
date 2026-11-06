@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { EntryForm } from "@/components/inventory/EntryForm";
+import { LazyEntryForm } from "@/components/inventory/LazyEntryForm";
 
 export const metadata: Metadata = {
   title: "Entrada de activos · Inventario",
@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ asset?: string }> }) {
   const params = await searchParams;
-  return <EntryForm initialAsset={params.asset ?? ""} />;
+  return <LazyEntryForm initialAsset={params.asset ?? ""} />;
 }
