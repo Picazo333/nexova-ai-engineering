@@ -1,6 +1,7 @@
 project: ai-eng-user-authentication-api
 branch: feature/auth-api
 base: feature/supplier-directory
+pull_request: https://github.com/Picazo333/nexova-ai-engineering/pull/11
 merge_order:
   - "PR #9 feature/incidents-analysis"
   - "PR #10 feature/supplier-directory"

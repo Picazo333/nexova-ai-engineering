@@ -32,7 +32,7 @@ Todos los criterios required quedan en PASS. La evidencia es de esta rama (`feat
 | R26 | PASS | Con token, el directorio y las incidencias conservan sus códigos (200, 404, 422, 400). La suite anterior sigue en verde: 45 passed. | `docs/user-authentication/evidence/pytest.txt`; test de regresión. |
 | R27 | PASS | Prefijos `/auth`, `/users`, `/profiles`. | OpenAPI: esas claves están en `paths`. Captura `swagger-guide-1280.png`. |
 | R28 | PASS | `/docs` está activo. La descripción es la guía y el botón Authorize habla con `POST /auth/login`. | `services/api/app/main.py` (`docs_url="/docs"`); `app/auth/guide.py`; capturas `swagger-guide-1280.png` y `swagger-guide-390.png`. |
-| R29 | PASS | Pull request con base `feature/supplier-directory`, sin merge. La descripción lista las rutas protegidas, la verificación y el orden de merge: #9, luego #10, luego este. | URL del PR en el informe final y en `EVIDENCE_MANIFEST.yaml`. |
+| R29 | PASS | Pull request #11 con base `feature/supplier-directory`, sin merge. La descripción lista las rutas protegidas, la verificación y el orden de merge: #9, luego #10, luego este. | https://github.com/Picazo333/nexova-ai-engineering/pull/11 |
 | R30 | PASS | `services/api/README.md` explica `uv`, `.env`, las variables y las diez rutas protegidas. | Ese README. |
 | E01 | PASS | Extra visible: la guía de cinco pasos está en la cabecera de Swagger y cada operación lleva el número de paso. | `guide.py`; capturas de `/docs`. |
 | E02 | PASS | Extra técnico: tests de caducidad, de ownership (403) y de regresión de las diez rutas. | `services/api/tests/test_auth.py`. |
