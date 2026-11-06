@@ -8,3 +8,7 @@ Each subfolder under `packages/` should represent **one versionable package** (f
 - **Recommendation**: document packages as you add them—their public API and how they are consumed from `apps/`, `agents/`, and `workflows/`.
 
 > _Spanish version: [README.es.md](./README.es.md)._
+
+## `incident_analysis/`
+
+Python rules for the Nexova support CSV, shared by `scripts/analyze.py` and `services/api`. See [`incident_analysis/README.md`](./incident_analysis/README.md).

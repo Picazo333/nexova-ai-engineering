@@ -1,0 +1,26 @@
+<h1>Análisis de incidencias de soporte</h1>
+<p class="lead">Sube el CSV del helpdesk legado del equipo de soporte. La API de esta aplicación calcula cuántos tickets son válidos, cuántos quedan fuera y por qué, el reparto por categoría y estado, y la media de satisfacción de los CLOSED. El fichero no se envía a ningún servicio de IA.</p>
+<section class="panel" aria-labelledby="carga-titulo">
+  <h2 id="carga-titulo">Cargar el fichero</h2>
+  <form id="analyze-form" action="/api/incidents/analyze" method="post" enctype="multipart/form-data">
+    <div class="drop" id="drop">
+      <label for="csv-file">Fichero CSV</label>
+      <input id="csv-file" name="file" type="file" accept=".csv,text/csv" required aria-describedby="file-hint chosen-file">
+      <p id="file-hint">Columnas de Nexova: ticket_id, date, client_company, category, description, agent_id, status, customer_email, satisfaction_score. Codificación UTF-8 y separador coma.</p>
+      <p id="chosen-file">Ningún fichero elegido.</p>
+      <p>Puedes usar el selector del campo o soltar el CSV en esta zona. El teclado no depende de arrastrar.</p>
+    </div>
+    <p class="actions"><button class="button" id="submit" type="submit">Analizar fichero</button></p>
+    <noscript><p>Sin JavaScript el formulario abre a continuación la página con el resultado.</p></noscript>
+  </form>
+  <p><a href="/privacidad">Qué ocurre con los correos y con el fichero</a></p>
+</section>
+<p id="status" role="status"></p>
+<div id="error" role="alert" tabindex="-1" <!--ERROR_HIDDEN-->>
+  <h2>No se pudo analizar</h2>
+  <p id="error-text"><!--ERROR_MESSAGE--></p>
+  <p id="error-next">Corrige el problema y pulsa Analizar fichero. Si el campo quedó vacío, elige el CSV otra vez.</p>
+</div>
+<div id="results" data-state="<!--RESULTS_STATE-->" tabindex="-1">
+<!--RESULTS_HTML-->
+</div>

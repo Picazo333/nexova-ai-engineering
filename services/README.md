@@ -8,3 +8,7 @@ Each subfolder inside `services/` must correspond to **one specific service** (f
 - **Recommendation**: document in this file (or in sub-READMEs) the services you add, their objective, the technology used, and how to run them.
 
 > _Spanish version: [README.es.md](./README.es.md)._
+
+## `api/`
+
+Central FastAPI app. The incidents router is `POST /api/incidents/analyze` and `GET /api/incidents/results/export`. Run instructions: [`api/README.md`](./api/README.md).
