@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from urllib.parse import urlencode
 
 from fastapi import APIRouter, Depends, Request
@@ -38,7 +39,8 @@ def _json_error(status: int, message: str, *, detail: object | None = None) -> J
 
 
 def _validation_error(exc: ValidationError) -> JSONResponse:
-    return _json_error(422, validation_message(exc), detail=exc.errors())
+    # The Spanish sentence is enough. exc.errors() repeats the submitted input.
+    return _json_error(422, validation_message(exc))
 
 
 async def _object_body(request: Request) -> tuple[dict | JSONResponse, bool]:
@@ -46,7 +48,7 @@ async def _object_body(request: Request) -> tuple[dict | JSONResponse, bool]:
     if "application/json" in content_type:
         try:
             payload = await request.json()
-        except Exception:
+        except (json.JSONDecodeError, UnicodeDecodeError, ValueError):
             return _json_error(422, "El cuerpo tiene que ser un objeto JSON."), False
         if not isinstance(payload, dict):
             return _json_error(422, "El cuerpo tiene que ser un objeto JSON."), False

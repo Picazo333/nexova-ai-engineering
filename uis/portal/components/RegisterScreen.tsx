@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { ErrorBanner, LoadingState } from "@/components/AsyncStatus";
 import { ApiError, apiFetch } from "@/lib/api";
 import { emailError, passwordError, textLimit } from "@/lib/forms";
 import { safeNext, viewLabel } from "@/lib/paths";
@@ -68,44 +69,55 @@ export function RegisterScreen({ nextRaw }: { nextRaw: string | null }) {
       address: values.address.trim() || null,
     };
     try {
-      await apiFetch(
-        "/users",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        },
-        { auth: false },
-      );
-      if (id !== request.current) return;
-      setStatus("Entrando con la cuenta nueva…");
-      const token = await apiFetch<TokenResponse>(
-        "/auth/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password: values.password }),
-        },
-        { auth: false },
-      );
-      if (id !== request.current) return;
-      if (!token.access_token || !writeToken(token.access_token)) {
-        setFormError("La cuenta se creó, pero este navegador no guardó el token.");
+      try {
+        await apiFetch(
+          "/users",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          },
+          { auth: false },
+        );
+      } catch (error: unknown) {
+        if (id !== request.current) return;
+        if (error instanceof ApiError) {
+          setFields(error.fields ?? {});
+          setFormError(error.message);
+        } else {
+          setFormError("No se pudo crear la cuenta. Los datos escritos se conservan.");
+        }
         setStatus("");
         alertRef.current?.focus();
         return;
       }
-      router.push(next);
-    } catch (error: unknown) {
       if (id !== request.current) return;
-      if (error instanceof ApiError) {
-        setFields(error.fields);
-        setFormError(error.message);
-      } else {
-        setFormError("No se pudo crear la cuenta. Los datos escritos se conservan.");
+      setStatus("Entrando con la cuenta nueva…");
+      try {
+        const token = await apiFetch<TokenResponse>(
+          "/auth/login",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password: values.password }),
+          },
+          { auth: false },
+        );
+        if (id !== request.current) return;
+        if (!token?.access_token || !writeToken(token.access_token)) {
+          setFormError("La cuenta se creó, pero este navegador no guardó el token.");
+          setStatus("");
+          alertRef.current?.focus();
+          return;
+        }
+        router.push(next);
+      } catch (error: unknown) {
+        if (id !== request.current) return;
+        const message = error instanceof ApiError ? error.message : "No se pudo iniciar sesión.";
+        setFormError(`La cuenta se creó, pero no se pudo entrar. ${message}`);
+        setStatus("");
+        alertRef.current?.focus();
       }
-      setStatus("");
-      alertRef.current?.focus();
     } finally {
       if (id === request.current) setPending(false);
     }
@@ -131,10 +143,12 @@ export function RegisterScreen({ nextRaw }: { nextRaw: string | null }) {
             <p className="note">Después de crear la cuenta volverás a {viewLabel(next)}.</p>
           ) : null}
           {formError ? (
-            <div className="alert" role="alert" tabIndex={-1} ref={alertRef}>
-              <h2>No se pudo crear la cuenta</h2>
-              <p>{formError}</p>
-            </div>
+            <ErrorBanner
+              title="No se pudo crear la cuenta"
+              message={formError}
+              alertRef={alertRef}
+              onRetry={() => document.getElementById("register-email")?.focus()}
+            />
           ) : null}
           <form className="panel stack" onSubmit={onSubmit} noValidate>
             <Field
@@ -184,7 +198,7 @@ export function RegisterScreen({ nextRaw }: { nextRaw: string | null }) {
                 Crear cuenta
               </button>
             </p>
-            <p role="status">{status}</p>
+            {pending ? <LoadingState label={status || "Creando la cuenta…"} /> : <p role="status">{status}</p>}
             <p>
               <a href={`/login?next=${encodeURIComponent(next)}`}>Ya tengo cuenta</a>
             </p>

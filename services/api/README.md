@@ -29,6 +29,8 @@ No llama a ningún servicio de IA. No guarda el CSV. Guarda el resumen agregado 
 
 Errores de entrada: fichero ausente, vacío, sin filas, codificación o columnas incorrectas → `400` con `error` y `message`. Por encima de `INCIDENTS_MAX_UPLOAD_BYTES` (32 MiB por defecto) → `413`. Export sin análisis previo → `404`. Un fallo interno no incluye la excepción en la respuesta.
 
+El catálogo de frases públicas está en `app/http_catalog.py`. Un 4xx escrito por un router se conserva si es una frase corta y no contiene traza, ruta ni secreto: el 409 del correo repetido y el 422 de la contraseña vacía siguen siendo esas frases. Un 500, una validación de FastAPI y cualquier texto con `Traceback`, `JWT_SECRET` o una ruta interna se sustituyen por la frase del catálogo. El cuerpo de un 422 no repite el valor enviado (ni la contraseña).
+
 ## Arranque
 
 Desde la raíz del repositorio, con Python 3.12. Las dependencias de autenticación se instalan con `uv`, no con `pip install` ni con `pipenv`:

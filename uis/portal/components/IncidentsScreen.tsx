@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 
+import { ErrorBanner, LoadingState } from "@/components/AsyncStatus";
 import { ApiError, apiDownload, apiFetch } from "@/lib/api";
 import type { IncidentReport } from "@/lib/types";
 
@@ -70,10 +71,20 @@ export function IncidentsScreen() {
         máquina y el portal no pinta correos.
       </p>
       {error ? (
-        <div className="alert" role="alert" tabIndex={-1} ref={alertRef}>
-          <h2>No se pudo analizar</h2>
-          <p>{error}</p>
-        </div>
+        <ErrorBanner
+          title="No se pudo analizar"
+          message={error}
+          alertRef={alertRef}
+          onRetry={() => {
+            const selected = fileRef.current?.files?.[0];
+            if (!selected) {
+              fileRef.current?.focus();
+              return;
+            }
+            const form = fileRef.current?.form;
+            form?.requestSubmit();
+          }}
+        />
       ) : null}
       <form className="panel stack" onSubmit={onSubmit}>
         <div className="field">
@@ -96,7 +107,7 @@ export function IncidentsScreen() {
             Analizar fichero
           </button>
         </p>
-        <p role="status">{status}</p>
+        {pending ? <LoadingState label={status || "Analizando el fichero…"} /> : <p role="status">{status}</p>}
       </form>
       {!report ? (
         <p className="note">Aún no hay un análisis en esta visita. Elige el CSV de tickets.</p>

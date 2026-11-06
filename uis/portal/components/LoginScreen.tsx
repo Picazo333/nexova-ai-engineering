@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { ErrorBanner, LoadingState } from "@/components/AsyncStatus";
 import { ApiError, apiFetch } from "@/lib/api";
 import { emailError } from "@/lib/forms";
 import { safeNext, viewLabel } from "@/lib/paths";
@@ -21,6 +22,7 @@ export function LoginScreen({ nextRaw, reason }: { nextRaw: string | null; reaso
   const [status, setStatus] = useState("");
   const request = useRef(0);
   const alertRef = useRef<HTMLDivElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -91,16 +93,19 @@ export function LoginScreen({ nextRaw, reason }: { nextRaw: string | null; reaso
             </div>
           ) : null}
           {formError ? (
-            <div className="alert" role="alert" tabIndex={-1} ref={alertRef}>
-              <h2>No se pudo entrar</h2>
-              <p>{formError}</p>
-            </div>
+            <ErrorBanner
+              title="No se pudo entrar"
+              message={formError}
+              alertRef={alertRef}
+              onRetry={() => emailRef.current?.focus()}
+            />
           ) : null}
           <form className="panel stack" onSubmit={onSubmit} noValidate>
             <div className="field">
               <label htmlFor="login-email">Correo</label>
               <input
                 id="login-email"
+                ref={emailRef}
                 name="email"
                 type="email"
                 autoComplete="email"
@@ -131,7 +136,7 @@ export function LoginScreen({ nextRaw, reason }: { nextRaw: string | null; reaso
                 Entrar
               </button>
             </p>
-            <p role="status">{status}</p>
+            {pending ? <LoadingState label={status || "Comprobando la sesión…"} /> : <p role="status">{status}</p>}
             <p>
               <a href={`/register?next=${encodeURIComponent(next)}`}>Crear una cuenta</a>
             </p>

@@ -45,6 +45,9 @@ def render_register(
         "<p class=\"lead\">Registra un problema de un cliente, de una sede o del equipo interno. "
         "El identificador y las fechas los asigna el sistema al guardar.</p>",
         _banner("incident-form-error", form_error, "alert"),
+        '<p id="incident-form-cta" class="actions"' + ("" if form_error else " hidden") + ">"
+        '<a class="button button-secondary" href="/incidencias">Ir al panel</a> '
+        '<a class="button button-secondary" href="/">Ir al inicio</a></p>',
         _banner("incident-confirmation", confirmation, "status"),
         "<form id=\"incident-form\" method=\"post\" action=\"/incidencias/nueva\">",
         _field("title", "Título", "text", values.get("title", ""), by_field.get("title"), maxlength="180"),
@@ -90,9 +93,11 @@ def render_panel(
         "<h2 id=\"list-title\">Incidencias</h2>",
         _filters(filters),
         '<p id="incident-list-status" role="status"></p>',
-        '<div id="incident-list-error" role="alert" tabindex="-1" hidden>',
+        '<div id="incident-list-error" class="error-banner" role="alert" tabindex="-1" hidden>',
         '<p id="incident-list-error-text"></p>',
-        '<button class="button button-secondary" id="incident-retry" type="button">Reintentar</button>',
+        '<p class="actions"><button class="button button-secondary" id="incident-retry" type="button">Reintentar</button>'
+        '<a class="button button-secondary" href="/">Ir al inicio</a></p>',
+        "<p>Si se repite, contacta con el soporte interno de Nexova.</p>",
         "</div>",
         f'<div id="incident-list" data-state="{html.escape(list_state)}">',
         _list_body(items, list_state, list_message, filters),
@@ -113,11 +118,14 @@ def _summary_body(summary: dict | None, state: str, message: str | None) -> str:
         return "<p>Entra con tu sesión para ver los totales.</p>"
     if state == "error":
         return (
+            "<div class=\"error-banner\">"
             "<p id=\"incident-summary-error\">No se pudo cargar el resumen. El listado de abajo sigue disponible.</p>"
-            "<p><button class=\"button button-secondary\" id=\"incident-summary-retry\" type=\"button\">Reintentar el resumen</button></p>"
+            "<p class=\"actions\"><button class=\"button button-secondary\" id=\"incident-summary-retry\" type=\"button\">Reintentar el resumen</button>"
+            "<a class=\"button button-secondary\" href=\"/\">Ir al inicio</a></p>"
+            "<p>Si se repite, contacta con el soporte interno de Nexova.</p></div>"
         )
     if summary is None:
-        return "<p>Cargando el resumen…</p>"
+        return '<p class="loading-state">Cargando el resumen…</p>'
     groups = (
         ("Por estado", "by_status", STATUSES),
         ("Por categoría", "by_category", CATEGORIES),
@@ -312,10 +320,13 @@ def _select(
 
 
 def _banner(element_id: str, message: str | None, role: str) -> str:
+    kind = "confirmation" if role == "status" else "form-error error-banner"
     if not message:
-        return f'<p id="{element_id}" role="{role}" hidden></p>'
-    kind = "confirmation" if role == "status" else "form-error"
-    return f'<p id="{element_id}" class="{kind}" role="{role}" tabindex="-1" data-just-saved="1">{html.escape(message)}</p>'
+        return f'<p id="{element_id}" class="{kind}" role="{role}" hidden></p>'
+    return (
+        f'<p id="{element_id}" class="{kind}" role="{role}" tabindex="-1" '
+        f'data-just-saved="1">{html.escape(message)}</p>'
+    )
 
 
 def _table(caption: str, headers: list[str], rows: list[list[str]], *, numeric: set[int], scroll: str) -> str:

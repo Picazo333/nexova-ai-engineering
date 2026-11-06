@@ -1,0 +1,234 @@
+{
+  "verified_config": true,
+  "inp_note": "Lighthouse de laboratorio no calcul\u00f3 interaction-to-next-paint. inp_ms queda null. TBT es la m\u00e9trica de bloqueo medida.",
+  "surfaces": {
+    "portal-login": {
+      "mobile": {
+        "url": "http://127.0.0.1:3000/login",
+        "config_verified": true,
+        "config": {
+          "formFactor": "mobile",
+          "throttlingMethod": "simulate",
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "cpuSlowdownMultiplier": 4,
+          "screen": {
+            "mobile": true,
+            "width": 390,
+            "height": 844,
+            "deviceScaleFactor": 2,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "lcp_ms": 760.0247999999999,
+            "cls": 0,
+            "tbt_ms": 24.5,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 759.7143000000001,
+            "cls": 0,
+            "tbt_ms": 21,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 758.1932999999999,
+            "cls": 0,
+            "tbt_ms": 20,
+            "inp_ms": null,
+            "performance": 1
+          }
+        ],
+        "median": {
+          "lcp_ms": 759.7143000000001,
+          "cls": 0,
+          "tbt_ms": 21,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 760.0247999999999,
+          "cls": 0,
+          "tbt_ms": 24.5,
+          "inp_ms": null,
+          "performance": 1,
+          "run": 1
+        },
+        "preset_matches_fase2": true
+      },
+      "desktop": {
+        "url": "http://127.0.0.1:3000/login",
+        "config_verified": true,
+        "config": {
+          "formFactor": "desktop",
+          "throttlingMethod": "simulate",
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1,
+          "screen": {
+            "mobile": false,
+            "width": 1350,
+            "height": 940,
+            "deviceScaleFactor": 1,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "lcp_ms": 212.97860000000003,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 211.22039999999998,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 211.07709999999997,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          }
+        ],
+        "median": {
+          "lcp_ms": 211.22039999999998,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 212.97860000000003,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null,
+          "performance": 1,
+          "run": 1
+        },
+        "preset_matches_fase2": true
+      }
+    },
+    "backoffice-home": {
+      "mobile": {
+        "url": "http://127.0.0.1:8000/",
+        "config_verified": true,
+        "config": {
+          "formFactor": "mobile",
+          "throttlingMethod": "simulate",
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "cpuSlowdownMultiplier": 4,
+          "screen": {
+            "mobile": true,
+            "width": 390,
+            "height": 844,
+            "deviceScaleFactor": 2,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "lcp_ms": 1055.6126,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 1059.1447,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 1054.7341,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          }
+        ],
+        "median": {
+          "lcp_ms": 1055.6126,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 1059.1447,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null,
+          "performance": 1,
+          "run": 2
+        },
+        "preset_matches_fase2": true
+      },
+      "desktop": {
+        "url": "http://127.0.0.1:8000/",
+        "config_verified": true,
+        "config": {
+          "formFactor": "desktop",
+          "throttlingMethod": "simulate",
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1,
+          "screen": {
+            "mobile": false,
+            "width": 1350,
+            "height": 940,
+            "deviceScaleFactor": 1,
+            "disabled": false
+          }
+        },
+        "runs": [
+          {
+            "lcp_ms": 287.4539,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 290.403,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          },
+          {
+            "lcp_ms": 286.3627,
+            "cls": 0,
+            "tbt_ms": 0,
+            "inp_ms": null,
+            "performance": 1
+          }
+        ],
+        "median": {
+          "lcp_ms": 287.4539,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null
+        },
+        "worst": {
+          "lcp_ms": 290.403,
+          "cls": 0,
+          "tbt_ms": 0,
+          "inp_ms": null,
+          "performance": 1,
+          "run": 2
+        },
+        "preset_matches_fase2": true
+      }
+    }
+  }
+}

@@ -18,7 +18,7 @@ El enunciado exige ese almacén. En `content/projects/ai-eng-user-authentication
 
 Nota. El portal Next.js de `uis/portal` (puerto 3000) guarda el token en `localStorage`. El backoffice del puerto 8000 sigue con el `sessionStorage` de 012: aquel contrato pedía el almacén de la pestaña, y cambiarlo rompería esa entrega. Son orígenes distintos, así que uno no ve la clave del otro.
 
-`lib/api.ts` añade `Authorization: Bearer` en las llamadas protegidas (`/auth/me`, `/profiles/me`, `/suppliers`, `/api/incidents/*`). Login y registro no adjuntan un token viejo: un `401` de credenciales incorrectas no se trata como sesión vencida.
+`lib/api.ts` añade `Authorization: Bearer` en las llamadas protegidas (`/auth/me`, `/profiles/me`, `/suppliers`, `/api/incidents/*`). Login y registro no adjuntan un token viejo: un `401` de credenciales incorrectas no se trata como sesión vencida. Un `401` con token sí redirige a login y la promesa se rechaza, para que el estado de carga no se quede colgado. Las frases salen de `lib/http-messages.ts`: se conserva el texto de la API si es legible y se sustituye una traza, un secreto o un `Unexpected token`. El aviso de error es el mismo en las pantallas (`ErrorBanner`: reintentar, ir al inicio y una línea de soporte) y la espera usa `LoadingState`.
 
 El logout está en la cabecera. Borra la clave y abre `/login`.
 

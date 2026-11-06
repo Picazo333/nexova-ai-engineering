@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { ErrorBanner, LoadingState } from "@/components/AsyncStatus";
 import { ApiError, apiFetch } from "@/lib/api";
 import { categoryLabel, countryLabel, statusLabel } from "@/lib/labels";
 import type { Supplier } from "@/lib/types";
@@ -23,13 +24,14 @@ export function SuppliersScreen() {
       .then((list) => {
         if (id !== request.current) return;
         setRows(Array.isArray(list) ? list : []);
-        setLoading(false);
       })
       .catch((caught: unknown) => {
         if (id !== request.current) return;
         if (caught instanceof ApiError && caught.status === 401) return;
         setError(caught instanceof ApiError ? caught.message : "No se pudo leer el directorio.");
-        setLoading(false);
+      })
+      .finally(() => {
+        if (id === request.current) setLoading(false);
       });
   }, [country, attempt]);
 
@@ -57,17 +59,13 @@ export function SuppliersScreen() {
           </button>
         ) : null}
       </div>
-      {loading ? <p role="status">Cargando contratos…</p> : null}
+      {loading ? <LoadingState label="Cargando contratos…" /> : null}
       {error ? (
-        <div className="alert" role="alert">
-          <h2>No se pudo cargar el directorio</h2>
-          <p>{error}</p>
-          <p className="actions">
-            <button className="button" type="button" onClick={() => setAttempt((value) => value + 1)}>
-              Reintentar
-            </button>
-          </p>
-        </div>
+        <ErrorBanner
+          title="No se pudo cargar el directorio"
+          message={error}
+          onRetry={() => setAttempt((value) => value + 1)}
+        />
       ) : null}
       {!loading && rows && rows.length === 0 ? (
         <div className="banner" role="status">
@@ -106,13 +104,13 @@ export function SuppliersScreen() {
             </thead>
             <tbody>
               {rows.map((row) => (
-                <tr key={row.id}>
-                  <th scope="row">{row.name}</th>
-                  <td>{countryLabel(row.country)}</td>
-                  <td>{row.categories.map(categoryLabel).join(", ")}</td>
-                  <td>{statusLabel(row.status)}</td>
+                <tr key={row.id ?? row.name}>
+                  <th scope="row">{row.name ?? "Sin nombre"}</th>
+                  <td>{countryLabel(row.country ?? "") || "Sin país"}</td>
+                  <td>{(row.categories ?? []).map((code) => categoryLabel(code)).join(", ") || "Sin categoría"}</td>
+                  <td>{statusLabel(row.status ?? "") || "Sin estado"}</td>
                   <td className="num">
-                    {money.format(row.monthly_rate)} {row.currency}
+                    {Number.isFinite(row.monthly_rate) ? money.format(row.monthly_rate) : "—"} {row.currency ?? ""}
                   </td>
                 </tr>
               ))}

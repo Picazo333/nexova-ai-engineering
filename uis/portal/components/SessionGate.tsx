@@ -4,6 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import { usePathname, useRouter } from "next/navigation";
 
 import { AppHeader } from "@/components/AppHeader";
+import { ErrorBanner, LoadingState } from "@/components/AsyncStatus";
 import { ApiError, apiFetch } from "@/lib/api";
 import { readToken } from "@/lib/session";
 import type { AuthMe } from "@/lib/types";
@@ -66,8 +67,18 @@ export function SessionGate({ children }: { children: React.ReactNode }) {
   }, [attempt, router]);
 
   const refresh = useCallback(async () => {
-    const me = await apiFetch<AuthMe>("/auth/me");
-    setPhase({ kind: "in", me });
+    try {
+      const me = await apiFetch<AuthMe>("/auth/me");
+      setPhase({ kind: "in", me });
+    } catch (error: unknown) {
+      if (error instanceof ApiError && error.status === 401) return;
+      const message =
+        error instanceof ApiError
+          ? error.message
+          : "No hay conexión con la API para comprobar la sesión.";
+      setPhase({ kind: "offline", message });
+      throw error;
+    }
   }, []);
 
   const value = useMemo(() => ({ phase, retry, refresh }), [phase, retry, refresh]);
@@ -87,17 +98,14 @@ export function SessionGate({ children }: { children: React.ReactNode }) {
       )}
       <main id="contenido" className="session-main">
         <div className="wrap">
-          {phase.kind === "checking" ? <p role="status">Comprobando la sesión…</p> : null}
+          {phase.kind === "checking" ? <LoadingState label="Comprobando la sesión…" /> : null}
           {phase.kind === "offline" ? (
-            <div role="alert" className="alert" tabIndex={-1}>
-              <h1>No se pudo comprobar la sesión</h1>
-              <p>{phase.message}</p>
-              <p className="actions">
-                <button className="button" type="button" onClick={retry}>
-                  Reintentar
-                </button>
-              </p>
-            </div>
+            <ErrorBanner
+              heading="h1"
+              title="No se pudo comprobar la sesión"
+              message={phase.message}
+              onRetry={retry}
+            />
           ) : null}
           {phase.kind === "in" ? children : null}
         </div>
