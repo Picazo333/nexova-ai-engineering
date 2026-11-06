@@ -1,0 +1,4 @@
+NAME                   IMAGE                   COMMAND                  SERVICE    CREATED          STATUS                    PORTS
+workspace-qdrant-1     qdrant/qdrant:v1.13.4   "./entrypoint.sh"        qdrant     22 seconds ago   Up 21 seconds             0.0.0.0:6333-6334->6333-6334/tcp, [::]:6333-6334->6333-6334/tcp
+workspace-services-1   workspace-services      "sh /app/services/en…"   services   22 seconds ago   Up 21 seconds (healthy)   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+workspace-uis-1        workspace-uis           "docker-entrypoint.s…"   uis        22 seconds ago   Up 15 seconds (healthy)   0.0.0.0:3000-3001->3000-3001/tcp, [::]:3000-3001->3000-3001/tcp

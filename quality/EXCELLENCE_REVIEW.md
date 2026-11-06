@@ -1,33 +1,29 @@
-# Revisión de excelencia — 014
+# Revisión de excelencia — 015
 
-Los extras no sustituyen la rúbrica. El correo real sigue en BLOCKED_HITL.
+Los extras no sustituyen la rúbrica. El despliegue al VPS sigue en BLOCKED_HITL.
 
 ## Extra visible — IMPLEMENTADO
 
-Tres estados distintos cuando el enlace no se puede usar:
+`make up` anuncia las tres URLs antes de levantar Compose: portal en el puerto 3000, backoffice en el 3001 y `GET /health` de la API.
 
-- Sin `token`: «Falta el enlace de recuperación» y «Pedir un enlace».
-- Caducado: «El enlace ha caducado» y «Pedir otro enlace».
-- Ya usado: «Este enlace ya se usó» y el mismo camino de vuelta.
+El panel del puerto 3001 muestra, en una tabla, el destino interno al que llegó. En la corrida real esa celda dice `services:8000` y el estado «En marcha». No es un texto fijo de adorno: sale de `GET /api/stack`, que en el servidor llama a `API_INTERNAL_URL`.
 
-El enunciado pide un error claro y un enlace. Separar el motivo es lo que se ve al abrir la página. No cambia el contrato de la API: el `400` y el `code` ya existían.
-
-Evidencia: `evidence/restore-reset-empty-390.png`, `evidence/restore-reset-expired-768.png`, `evidence/restore-reset-used-1280.png`. El vídeo `evidence/restore-recorrido.webm` pasa por el estado vacío y termina en el aviso de contraseña actualizada.
+Evidencia: `Makefile`, `README.es.md`, `evidence/container-success-1280.png`, `evidence/stack-internal.json`.
 
 ## Extra técnico — IMPLEMENTADO
 
-1. **Un solo ganador.** `reset_password` comprueba la fila y escribe el hash dentro de `auth_lock`. `test_concurrent_reset_commits_only_one_password` lanza dos hilos con contraseñas distintas: uno responde bien, el otro recibe `used`, y solo la contraseña ganadora entra.
-2. **Tope por hora.** `PASSWORD_RESET_MAX_PER_HOUR` (defecto 5) cuenta intentos por correo, también si la cuenta no existe, y sigue respondiendo el mismo `200`. Por encima del tope no se crea otro enlace. Test `test_rate_limit_keeps_the_same_body_and_stops_sending`.
-3. **Auditoría mínima del enlace.** La fila guarda `created_at` y `remote_addr` (el par del socket, no una cabecera que el cliente pueda inventar). Esos campos no van en la respuesta HTTP.
+1. **Contrato ejecutable.** `tests/infra/test_compose_contract.py` comprueba la red con nombre, los `.dockerignore`, la ausencia de literales de secreto, que `.env` está ignorado y que no hay historial de ese fichero, y que el rellenado del `.env` no pisa un `JWT_SECRET` ya puesto.
+2. **Healthchecks y usuario no root.** La UI comprueba 3000 y 3001. La API comprueba `/health`. Los procesos corren como uid 1000 (`node` y `app`).
+3. **Recarga sin rebuild.** Un cambio en el host apareció en el puerto 3001 a los 3 s y en `/health` al segundo, sin `docker compose build`. El marcador se retiró después.
 
-El HTML del correo (una columna, 16 px, enlace en botón y en texto) cubre la frase del enunciado «legible en móvil». No se cuenta como un tercer extra.
+Evidencia: `evidence/compose-ps.txt`, `evidence/hot-reload.txt`, `evidence/pytest-root.txt` (7 pruebas de contrato dentro de las 64).
 
 ## Rechazado
 
-No se añadió un segundo producto visual (hero, métricas, testimonios). El portal ya es una herramienta interna.
+No se convirtió `uis/backoffice` en un clon del portal. El HTML de incidencias y proveedores ya lo sirve la API y los tests de assets comparan bytes. Duplicarlo rompería esa entrega.
 
-No se invalidan los JWT de sesión al cambiar la contraseña. El enunciado no lo pide y el token de acceso sigue siendo de corta duración. Hacerlo ahora cambiaría el contrato de 012.
+No se añadió un sitio público Next nuevo. El sitio público sigue en la raíz del repositorio.
 
 ## Diferido
 
-Medir el tiempo de respuesta de `forgot-password` para cerrar el canal de enumeración cuando Resend responde de verdad. Con el proveedor apagado la respuesta es la misma y no hay ida de red. Cuando haya clave, la llamada solo ocurre si la cuenta está activa: el cuerpo sigue siendo idéntico, el tiempo no. Dejarlo escrito evita fingir que el canal de tiempo está cerrado.
+Medir el tiempo de arranque en frío de `next dev` dentro del contenedor en un portátil con Docker Desktop. Aquí el healthcheck esperó y pasó; no hay una cifra de un Mac que se pueda citar.

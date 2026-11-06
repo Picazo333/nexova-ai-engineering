@@ -1,0 +1,132 @@
+{
+  "url": "http://127.0.0.1:3011/",
+  "build": "next start production",
+  "tool": "lighthouse@12.6.0",
+  "note": "INP is not reported by Lighthouse lab runs; TBT is the blocking-time figure.",
+  "runs": [
+    {
+      "form": "mobile",
+      "run": 1,
+      "finalUrl": "http://127.0.0.1:3011/",
+      "throttlingMethod": "simulate",
+      "formFactor": "mobile",
+      "screen": {
+        "width": 390,
+        "height": 844,
+        "mobile": true
+      },
+      "rttMs": 150,
+      "throughputKbps": 1638.4,
+      "cpuSlowdownMultiplier": 4,
+      "lcp_ms": 1887,
+      "cls": 0.00242659542975686,
+      "tbt_ms": 13
+    },
+    {
+      "form": "mobile",
+      "run": 2,
+      "finalUrl": "http://127.0.0.1:3011/",
+      "throttlingMethod": "simulate",
+      "formFactor": "mobile",
+      "screen": {
+        "width": 390,
+        "height": 844,
+        "mobile": true
+      },
+      "rttMs": 150,
+      "throughputKbps": 1638.4,
+      "cpuSlowdownMultiplier": 4,
+      "lcp_ms": 1890,
+      "cls": 0.00242659542975686,
+      "tbt_ms": 14
+    },
+    {
+      "form": "mobile",
+      "run": 3,
+      "finalUrl": "http://127.0.0.1:3011/",
+      "throttlingMethod": "simulate",
+      "formFactor": "mobile",
+      "screen": {
+        "width": 390,
+        "height": 844,
+        "mobile": true
+      },
+      "rttMs": 150,
+      "throughputKbps": 1638.4,
+      "cpuSlowdownMultiplier": 4,
+      "lcp_ms": 1889,
+      "cls": 0.00242659542975686,
+      "tbt_ms": 14
+    },
+    {
+      "form": "desktop",
+      "run": 1,
+      "finalUrl": "http://127.0.0.1:3011/",
+      "throttlingMethod": "simulate",
+      "formFactor": "desktop",
+      "screen": {
+        "width": 1350,
+        "height": 940,
+        "mobile": false
+      },
+      "rttMs": 40,
+      "throughputKbps": 10240,
+      "cpuSlowdownMultiplier": 1,
+      "lcp_ms": 481,
+      "cls": 0.005012861381138746,
+      "tbt_ms": 0
+    },
+    {
+      "form": "desktop",
+      "run": 2,
+      "finalUrl": "http://127.0.0.1:3011/",
+      "throttlingMethod": "simulate",
+      "formFactor": "desktop",
+      "screen": {
+        "width": 1350,
+        "height": 940,
+        "mobile": false
+      },
+      "rttMs": 40,
+      "throughputKbps": 10240,
+      "cpuSlowdownMultiplier": 1,
+      "lcp_ms": 459,
+      "cls": 0.005012861381138746,
+      "tbt_ms": 0
+    },
+    {
+      "form": "desktop",
+      "run": 3,
+      "finalUrl": "http://127.0.0.1:3011/",
+      "throttlingMethod": "simulate",
+      "formFactor": "desktop",
+      "screen": {
+        "width": 1350,
+        "height": 940,
+        "mobile": false
+      },
+      "rttMs": 40,
+      "throughputKbps": 10240,
+      "cpuSlowdownMultiplier": 1,
+      "lcp_ms": 451,
+      "cls": 0.005012861381138746,
+      "tbt_ms": 0
+    }
+  ],
+  "mobile": {
+    "median_lcp_ms": 1889,
+    "worst_lcp_ms": 1890,
+    "median_cls": 0.00242659542975686,
+    "worst_cls": 0.00242659542975686,
+    "median_tbt_ms": 14,
+    "worst_tbt_ms": 14
+  },
+  "desktop": {
+    "median_lcp_ms": 459,
+    "worst_lcp_ms": 481,
+    "median_cls": 0.005012861381138746,
+    "worst_cls": 0.005012861381138746,
+    "median_tbt_ms": 0,
+    "worst_tbt_ms": 0
+  }
+}
