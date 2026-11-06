@@ -72,6 +72,19 @@ Están en `output/metrics.md`. Definiciones:
 
 Como referencia, no como segundo modelo, se incluye el RMSE de pronosticar cada mes de prueba con el ingreso del mes anterior.
 
+## Resultados y limitaciones
+
+El PSI de nivel es 6.3753. Eso indica que el ingreso de 2024–2025 está por encima del rango de entrenamiento, y un Random Forest no extrapola la tendencia. En el test, el máximo predicho es 987,295.59 USD y el máximo real es 1,145,988.88 USD.
+
+Sobre los mismos 24 meses, el bosque se compara con un baseline estacional ingenuo: la predicción de cada mes es el ingreso de hace doce meses, y(t−12). El modelo y sus hiperparámetros no cambian.
+
+| Modelo | MSE (USD²) | RMSE (USD) |
+| --- | --- | --- |
+| Random Forest | 4,612,858,070.60 | 67,918.02 |
+| Baseline estacional y(t−12) | 3,190,168,976.25 | 56,481.58 |
+
+El Random Forest pierde contra ese baseline en MSE y en RMSE.
+
 ## Descomposición
 
 `statsmodels.tsa.seasonal.seasonal_decompose` con `model="multiplicative"` y `period=12`. El briefing describe agosto y enero–febrero como porcentajes sobre el promedio, en una serie que crece. Una oscilación aditiva en dólares mezclaría la tendencia con la amplitud estacional. `extrapolate_trend="period"` solo rellena los extremos de la tendencia diagnóstica. La descomposición no es el pronosticador.
@@ -98,6 +111,7 @@ uv run pytest
 | `tests/pipelines/test_features.py` | El lag es el valor crudo pasado; el rolling excluye la fila actual; se tiran nulos y celdas vacías; el bosque se ajusta con esas features |
 | `tests/pipelines/test_metrics.py` | El Gini de un ranking perfecto es 1; el PSI reacciona a un desplazamiento; K² devuelve un estadístico finito |
 | `tests/pipelines/test_reproducibility.py` | Dos ajustes con semilla 42 coinciden; la media del escalador es la del entrenamiento, no la de train+test |
+| `tests/pipelines/test_seasonal_baseline.py` | En 2024–2025 el baseline estacional es y(t−12) y su MSE/RMSE salen de ese vector |
 
 ## Dónde está el código
 

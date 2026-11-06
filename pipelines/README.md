@@ -72,6 +72,19 @@ Reported in `output/metrics.md`. Definitions:
 
 A lag-1 naive forecast (predict each test month with the previous month's actual revenue) is included as a reference, not as a second model.
 
+## Results and limitations
+
+The level PSI is 6.3753. That means 2024–2025 revenue sits above the training range, and a random forest does not extrapolate the trend. On the test set the highest prediction is 987,295.59 USD and the highest actual value is 1,145,988.88 USD.
+
+On the same 24 months the forest is compared with a naive seasonal baseline: each month is predicted as revenue twelve months earlier, y(t−12). The model and its hyperparameters are unchanged.
+
+| Model | MSE (USD²) | RMSE (USD) |
+| --- | --- | --- |
+| Random Forest | 4,612,858,070.60 | 67,918.02 |
+| Seasonal baseline y(t−12) | 3,190,168,976.25 | 56,481.58 |
+
+The random forest loses to that baseline on MSE and on RMSE.
+
 ## Decomposition
 
 `statsmodels.tsa.seasonal.seasonal_decompose` with `model="multiplicative"` and `period=12`. The briefing describes August and January–February as percentages of the average, on a series that grows, so an additive swing in dollars would mix trend into the seasonal amplitude. `extrapolate_trend="period"` only fills the ends of the diagnostic trend line. The decomposition is not the forecaster.
@@ -98,6 +111,7 @@ uv run pytest
 | `tests/pipelines/test_features.py` | Lag equals the past raw value; rolling window excludes the current row; nulls and blanks are dropped; the forest is fit on those features |
 | `tests/pipelines/test_metrics.py` | Gini of a perfect ranking is 1; PSI reacts to a shift; K² returns a finite statistic |
 | `tests/pipelines/test_reproducibility.py` | Two fits with seed 42 match; scaler mean equals the training mean, not the combined mean |
+| `tests/pipelines/test_seasonal_baseline.py` | On 2024–2025 the seasonal baseline is y(t−12), and its MSE/RMSE are computed from that vector |
 
 ## Layout
 

@@ -15,12 +15,25 @@ Métricas del conjunto de prueba (2024-01-01 a 2025-12-01). No son métricas de 
 | Gini | 0.8639 | Capacidad de ordenar meses de más ingreso a menos. 1 sería un orden perfecto |
 | K² | 2.0454 (p = 0.3596) | D'Agostino–Pearson sobre los residuos de prueba |
 
-Referencia, no es el modelo: repetir el ingreso del mes anterior da un RMSE de 94,696.72 USD en los mismos 24 meses.
+Referencia de un mes atrás, no es el modelo: repetir el ingreso del mes anterior da un RMSE de 94,696.72 USD en los mismos 24 meses.
+
+## Limitación de extrapolación y baseline estacional
+
+El PSI de nivel es 6.3753. Eso indica que el ingreso de 2024–2025 está por encima del rango de entrenamiento, y un Random Forest no extrapola la tendencia. En el test, el máximo predicho es 987,295.59 USD y el máximo real es 1,145,988.88 USD.
+
+La tabla compara el bosque, sin cambiar hiperparámetros, con un baseline estacional ingenuo: la predicción es y(t−12) en los mismos 24 meses.
+
+| Modelo | MSE (USD²) | RMSE (USD) |
+| --- | --- | --- |
+| Random Forest | 4,612,858,070.60 | 67,918.02 |
+| Baseline estacional y(t−12) | 3,190,168,976.25 | 56,481.58 |
+
+El Random Forest pierde contra ese baseline en MSE y en RMSE.
 
 ## Qué mide cada métrica, y por qué un MSE bajo no basta
 
 - **MSE** es el error cuadrático medio en USD². Castiga más un mes muy desviado que muchos meses casi acertados. Un valor bajo en entrenamiento puede ser memoria del pasado. Por eso el MSE que vale es el de 2024–2025, que el ajuste no vio.
-- **PSI** (Population Stability Index) compara dos distribuciones. No dice si el pronóstico acertó el mes. Dice si el periodo de prueba se parece al de entrenamiento. El CSV oficial solo trae `business_line=consolidated`, así que no hay un PSI del mix headhunting / outsourcing / formación: inventar esas series falsearía el briefing. El PSI de nivel sube si el ingreso creció. El PSI de forma mira el perfil dentro del año, sin el nivel. En esta serie el PSI de nivel queda por encima de 0.25 porque el ingreso de 2024–2025 sale del rango de los años de entrenamiento: es el crecimiento, no un fallo del pronóstico. La lectura de estabilidad estacional es el PSI de forma.
+- **PSI** (Population Stability Index) compara dos distribuciones. No dice si el pronóstico acertó el mes. Dice si el periodo de prueba se parece al de entrenamiento. El CSV oficial solo trae `business_line=consolidated`, así que no hay un PSI del mix headhunting / outsourcing / formación: inventar esas series falsearía el briefing. El PSI de nivel sube si el ingreso creció. El PSI de forma mira el perfil dentro del año, sin el nivel. En esta serie el PSI de nivel es 6.3753 porque el ingreso de 2024–2025 sale del rango de los años de entrenamiento. El PSI de forma es la lectura del perfil dentro del año. La consecuencia para el bosque está en la sección de limitación de arriba.
 - **Gini** normalizado mide si el pronóstico ordena bien los meses. Un MSE moderado puede convivir con un modelo que no distingue un agosto flojo de una caída anormal. El Gini es esa distinción, que es la que el briefing pide para Laura.
 - **K²** es el estadístico de D'Agostino y Pearson (`scipy.stats.normaltest`) sobre los residuos de la prueba. Un p pequeño rechaza que esos residuos sean normales: el error no es una nube simétrica alrededor de cero. Con 24 meses el contraste es débil; se publica el número y el p-valor.
 
