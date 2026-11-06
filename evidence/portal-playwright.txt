@@ -1,0 +1,6 @@
+npx playwright test
+14 passed (9.1s)
+e2e/auth.spec.ts 7
+e2e/incidents-manager.spec.ts 1
+e2e/password.spec.ts 4
+e2e/public.spec.ts 2

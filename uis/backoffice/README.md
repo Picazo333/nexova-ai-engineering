@@ -1,6 +1,8 @@
 # Backoffice — incidencias y proveedores
 
-La API (`services/api`) sirve estas pantallas. No sustituyen al sitio público de la raíz del repositorio.
+La API (`services/api`) sirve las pantallas HTML de esta carpeta (`css/`, `js/`, `partials/`, `tokens/`, `brand/`). No sustituyen al sitio público de la raíz del repositorio.
+
+Además, el mismo directorio arranca como aplicación Next.js en el puerto 3001 cuando se usa Docker. Ese proceso no reemplaza el HTML de la API: comprueba que la API responde y enlaza al portal y al gestor. Los ficheros estáticos y sus hashes no cambian.
 
 - `/` sube el CSV de tickets de soporte, muestra el resumen y descarga `results.csv`.
 - `/incidencias/nueva` registra una incidencia: título, descripción, categoría, estado, origen y sede.

@@ -20,6 +20,10 @@ Internal screens for incident analysis (`/`) and the supplier directory (`/prove
 
 The 012 session form on those pages keeps the JWT in `sessionStorage` for that delivery. It is not the Next.js guard of 013.
 
+## Contenedor de interfaces
+
+`Dockerfile` y `start.sh` arrancan dos procesos Next.js en un solo contenedor: el portal en el puerto 3000 (el ticket lo llama website; el paquete está en `website/`) y el panel Next de `backoffice/` en el puerto 3001. El HTML que sirve la API sigue en `backoffice/css` y `backoffice/js`.
+
 ## `portal/`
 
 Next.js app for login, registration, password reset, profile, and the protected internal views. It calls the same API with `Authorization: Bearer` and stores the JWT in `localStorage`. See [`portal/README.md`](./portal/README.md).

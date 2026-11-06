@@ -118,6 +118,10 @@ def create_app() -> FastAPI:
     def favicon_ico() -> FileResponse:
         return FileResponse(BACKOFFICE_DIR / "favicon.svg", media_type="image/svg+xml")
 
+    @app.get("/health", include_in_schema=False)
+    def health() -> JSONResponse:
+        return JSONResponse({"status": "ok"})
+
     @app.get("/", response_class=HTMLResponse)
     def home() -> HTMLResponse:
         return HTMLResponse(render_home(), headers={"Cache-Control": "no-store"})
