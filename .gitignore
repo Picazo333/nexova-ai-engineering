@@ -9,3 +9,7 @@ services/api/.data/
 services/api/.env
 .env
 results.csv
+.coverage
+htmlcov/
+coverage.xml
+uis/portal/coverage/
