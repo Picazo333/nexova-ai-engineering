@@ -14,7 +14,7 @@ response headers: {"content-type": "application/json"}
 POST http://127.0.0.1:8000/auth/login
 HTTP 200
 response headers: {"content-type": "application/json"}
-{"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3YmQzMDhmOC0yZmMyLTQ0NzYtYjhjZS03NDdlMmU2MmY5NDkiLCJ1c2VyX3V1aWQiOiI3YmQzMDhmOC0yZmMyLTQ0NzYtYjhjZS03NDdlMmU2MmY5NDkiLCJpYXQiOjE3OTM5NTc5OTEsImV4cCI6MTc5Mzk1OTc5MX0.V7Ysx7XPGDFThFwNwpr-m1r0Qgl4XyhOxFkczlMwDcM","token_type":"bearer","expires_in":1800,"user_uuid":"7bd308f8-2fc2-4476-b8ce-747e2e62f949"}
+{"access_token":"<REDACTED_EXPIRED_DEV_JWT>","token_type":"bearer","expires_in":1800,"user_uuid":"7bd308f8-2fc2-4476-b8ce-747e2e62f949"}
 
 ===== 200 GET /auth/me =====
 GET http://127.0.0.1:8000/auth/me
