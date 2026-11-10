@@ -19,6 +19,8 @@ from app.config import BACKOFFICE_DIR, cors_origins
 from app.pages import render_auth_required, render_home, render_not_found, render_privacy, render_server_error
 from app.routers.auth import router as auth_router
 from app.routers.directory_ui import router as directory_router
+from app.routers.incident_records import router as incident_records_router
+from app.routers.incident_ui import router as incident_ui_router
 from app.routers.incidents import router as incidents_router
 from app.routers.profiles import router as profiles_router
 from app.routers.users import router as users_router
@@ -55,6 +57,9 @@ async def _lifespan(_app: FastAPI):
 
     reset_db()
     reset_auth_db()
+    from incident_store import reset_incidents_db
+
+    reset_incidents_db()
 
 
 def create_app() -> FastAPI:
@@ -83,7 +88,9 @@ def create_app() -> FastAPI:
     app.include_router(auth_router)
     app.include_router(users_router)
     app.include_router(profiles_router)
+    app.include_router(incident_records_router)
     app.include_router(incidents_router)
+    app.include_router(incident_ui_router)
     app.include_router(suppliers_router)
     app.include_router(directory_router)
     app.mount("/css", StaticFiles(directory=BACKOFFICE_DIR / "css"), name="css")

@@ -1,0 +1,23 @@
+# cmd: bash -c git rev-parse HEAD; echo "== imports nexova_incidents"; git grep -n "nexova_incidents" 6d0c5789b47fc28c5371970f0ccbed3b677b567a -- scripts services/api/app services/api/incident_store.py | cut -c42-; echo "== dirs"; git ls-tree -d --name-only 6d0c5789b47fc28c5371970f0ccbed3b677b567a scripts services uis packages packages/shared | cat; echo "== UI html in services"; git ls-tree --name-only 6d0c5789b47fc28c5371970f0ccbed3b677b567a services/api/app/incident_pages.py uis/backoffice/js/incidents-manager.js
+# cwd: <repo>
+# start: 2026-11-10T15:45:57-06:00
+# HEAD: 6d0c5789b47fc28c5371970f0ccbed3b677b567a
+6d0c5789b47fc28c5371970f0ccbed3b677b567a
+== imports nexova_incidents
+scripts/seed_incidents.py:30:from nexova_incidents.csv_rules import AnalysisError  # noqa: E402
+scripts/seed_incidents.py:31:from nexova_incidents.transform import SeedPlan, prepare_csv  # noqa: E402
+services/api/app/incident_pages.py:15:from nexova_incidents.model import (  # noqa: E402
+services/api/app/routers/incident_records.py:24:from nexova_incidents.model import validate_create, validate_filters, validate_transition  # noqa: E402
+services/api/app/routers/incident_ui.py:18:from nexova_incidents.model import validate_create, validate_filters  # noqa: E402
+services/api/incident_store.py:57:    from nexova_incidents.model import public_incident
+services/api/incident_store.py:151:    from nexova_incidents.model import empty_summary
+== dirs
+packages/incident_analysis
+packages/shared
+scripts
+services
+uis
+== UI html in services
+services/api/app/incident_pages.py
+uis/backoffice/js/incidents-manager.js
+# exit: 0 end: 2026-11-10T15:45:57-06:00

@@ -1,0 +1,63 @@
+{
+  "case": "016",
+  "slug": "ai-eng-centralized-incident-manager",
+  "source_of_times": "CLOUD_AGENTS.md / TRACKER wall-clock (America/Mexico_City); cierre exacto no instrumentado",
+  "started_at": "2026-11-06T11:20:00Z",
+  "finished_at": null,
+  "finished_at_unmeasurable_reason": "CLOUD_AGENTS.md registra el cierre de 016 entre el lanzamiento de 039 (05:38 CST) y el de 017 (05:45 CST), sin minuto exacto. No se inventa finished_at.",
+  "finished_at_proxy_window": {
+    "earliest_cst": "2026-11-06 05:38",
+    "latest_cst": "2026-11-06 05:45",
+    "zone": "America/Mexico_City",
+    "basis": "Orden de líneas en CLOUD_AGENTS.md (039 lanzado → 016 cerrado → 017 lanzado); aprobación Orq 05:45 CST en TRACKER"
+  },
+  "duration_seconds": null,
+  "duration_proxy_note": "Ventana ~05:20–05:45 CST (~25 min) desde lanzamiento hasta aprobación Orq; no es duración de proceso medida.",
+  "eval_repair_iterations": 2,
+  "failures_and_repairs": [
+    {
+      "id": "repair-1",
+      "what": "En el resumen, el total quedaba fuera de la tarjeta estrecha.",
+      "repair": "La columna Total pasó a ir junto al código; el significado hace salto de línea. Se volvieron a tomar las capturas.",
+      "evidence": "quality/EXCELLENCE_REVIEW.md «Reparaciones tras la evidencia» #1"
+    },
+    {
+      "id": "repair-2",
+      "what": "El e2e chocaba con una fila anterior del mismo título en el directorio temporal del portal.",
+      "repair": "Título de la prueba único. Playwright: 10 passed.",
+      "evidence": "quality/EXCELLENCE_REVIEW.md «Reparaciones tras la evidencia» #2; FINAL_AUDIT.md"
+    }
+  ],
+  "verification_commands_reported": [
+    "cd services/api && uv run pytest → 107 passed (evidence/pytest.txt; FINAL_AUDIT)",
+    "cd services/api && uv run pytest --cov → app.auth 95,38 % (FINAL_AUDIT)",
+    "npx jest --coverage en uis/portal → 15 passed (evidence/jest.txt)",
+    "npx playwright test → 10 passed (FINAL_AUDIT / EXCELLENCE_REVIEW)",
+    "Lighthouse 12 JSON; configSettings fase 2 (FINAL_AUDIT); móvil LCP 1056 ms (TRACKER)"
+  ],
+  "excellence_present_locally": {
+    "path": "016-ai-eng-centralized-incident-manager/quality/EXCELLENCE_REVIEW.md",
+    "visible": "Filtros combinables + contadores en opciones (annotateFilters)",
+    "technical": "services/api/tests/test_incident_seed.py (96 filas, idempotencia)",
+    "commit": "677f9da959f8502988605d6957664bd35b60cdf0"
+  },
+  "tokens_used": null,
+  "tokens_unmeasurable_reason": "Sin contador de tokens en artefactos locales ni CLOUD_AGENTS.md.",
+  "tokens_proxy": {
+    "method": "Volumen de evidencia local + conteos de suite reportados (no tokens de modelo)",
+    "commit": "677f9da959f8502988605d6957664bd35b60cdf0",
+    "base": "79802be1e003de6897f155557e9bac0b8ad94ca0",
+    "pytest_passed": 107,
+    "jest_passed": 15,
+    "playwright_passed": 10,
+    "local_evidence_bytes_sum": 3618244,
+    "launch_to_orq_approval_window_minutes_approx": 25
+  },
+  "publication": {
+    "published_at": "2026-11-06T14:40:00Z",
+    "destination": "docs/centralized-incident-manager/TELEMETRY.json",
+    "pr": "https://github.com/Picazo333/nexova-ai-engineering/pull/17",
+    "authorized_by": "Miguel 2026-11-06 08:36 CST"
+  },
+  "status": "READY_TO_SUBMIT"
+}

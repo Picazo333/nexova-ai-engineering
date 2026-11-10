@@ -1,0 +1,46 @@
+# cmd: bash <academic>/work/seed_summary.sh
+# cwd: <repo>
+# start: 2026-11-10T15:40:44-06:00
+# HEAD: 6d0c5789b47fc28c5371970f0ccbed3b677b567a
+register 201
+== summary EMPTY DB
+{"total":0,"by_status":{"open":0,"in_progress":0,"resolved":0,"discarded":0},"by_category":{"technical_failure":0,"process_error":0,"client_complaint":0,"candidate_issue":0,"staff_issue":0,"sla_breach":0,"data_quality":0,"other":0},"by_origin":{"customer":0,"branch":0,"internal":0},"by_branch":{"central":0,"valencia_operations":0,"miami_office":0,"remote":0}}
+HTTP 200
+== list EMPTY DB
+[]
+HTTP 200
+== seed run 1
+NEXOVA — CARGA DE INCIDENCIAS HISTÓRICAS
+Fichero: incidents-nexova.csv
+Insertadas: 96
+Ya estaban: 0
+Rechazadas: 4
+
+Registros no insertados:
+  línea 18  NXV-000017  Falta client_company
+  línea 44  NXV-000043  Categoría ausente o no permitida
+  línea 87  NXV-000086  Correo ausente o inválido
+  línea 91  NXV-000090  Estado CLOSED sin satisfaction_score
+seed1 exit=0
+== seed run 2
+NEXOVA — CARGA DE INCIDENCIAS HISTÓRICAS
+Fichero: incidents-nexova.csv
+Insertadas: 0
+Ya estaban: 96
+Rechazadas: 4
+
+Registros no insertados:
+  línea 18  NXV-000017  Falta client_company
+  línea 44  NXV-000043  Categoría ausente o no permitida
+  línea 87  NXV-000086  Correo ausente o inválido
+  línea 91  NXV-000090  Estado CLOSED sin satisfaction_score
+seed2 exit=0
+== summary AFTER SEED x2
+{"total":96,"by_status":{"open":27,"in_progress":0,"resolved":56,"discarded":13},"by_category":{"technical_failure":49,"process_error":35,"client_complaint":12,"candidate_issue":0,"staff_issue":0,"sla_breach":0,"data_quality":0,"other":0},"by_origin":{"customer":96,"branch":0,"internal":0},"by_branch":{"central":96,"valencia_operations":0,"miami_office":0,"remote":0}}
+== list count
+96
+{"total": 96, "by_status": {"open": 27, "in_progress": 0, "resolved": 56, "discarded": 13}, "by_category": {"technical_failure": 49, "process_error": 35, "client_complaint": 12, "candidate_issue": 0, "staff_issue": 0, "sla_breach": 0, "data_quality": 0, "other": 0}, "by_origin": {"customer": 96, "branch": 0, "internal": 0}, "by_branch": {"central": 96, "valencia_operations": 0, "miami_office": 0, "remote": 0}}
+status_match True {'open': 27, 'resolved': 56, 'discarded': 13}
+category_match True {'technical_failure': 49, 'process_error': 35, 'client_complaint': 12}
+total 96
+# exit: 0 end: 2026-11-10T15:40:45-06:00

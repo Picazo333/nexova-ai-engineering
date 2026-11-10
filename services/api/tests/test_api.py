@@ -168,7 +168,7 @@ def test_pages_statuses_and_static_lockup(client: TestClient) -> None:
     assert escaped.status_code == 404
     assert "<script>" not in escaped.text
     assert "&lt;script&gt;" in escaped.text
-    api_missing = client.get("/api/incidents/no-existe", headers={"Accept": "application/json"})
+    api_missing = client.get("/api/no-existe", headers={"Accept": "application/json"})
     assert api_missing.status_code == 404
     assert api_missing.json()["message"] == "No encontrado."
     lockup = client.get("/brand/lockups/signal-horizontal.svg")
