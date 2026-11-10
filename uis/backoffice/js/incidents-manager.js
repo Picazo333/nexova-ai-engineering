@@ -279,7 +279,8 @@
         listStatus.textContent = "Sin resultados para los filtros actuales.";
         return;
       }
-      var html = '<div data-list-state="ready"><p>Mostrando ' + items.length + ' incidencias con los filtros actuales.</p><div class="table-scroll" tabindex="0" aria-label="Desplazamiento horizontal del listado de incidencias"><table><caption>Incidencias registradas</caption><thead><tr><th scope="col">Título</th><th scope="col">Categoría</th><th scope="col">Origen</th><th scope="col">Sede</th><th scope="col">Estado</th><th scope="col">Alta</th></tr></thead><tbody>';
+      // The count lives only in #incident-list-status (role=status), not twice.
+      var html = '<div data-list-state="ready"><div class="table-scroll" tabindex="0" aria-label="Desplazamiento horizontal del listado de incidencias"><table><caption>Incidencias registradas</caption><thead><tr><th scope="col">Título</th><th scope="col">Categoría</th><th scope="col">Origen</th><th scope="col">Sede</th><th scope="col">Estado</th><th scope="col">Alta</th></tr></thead><tbody>';
       items.forEach(function (item) {
         var next = [item.status].concat(labels.transitions[item.status] || []);
         var options = "";
