@@ -1,57 +1,77 @@
-project: ai-eng-user-authentication-restore
-branch: feature/user-authentication-restore
-base: feature/langgraph-external-tools
-base_sha: 54b86218ad5bb752cb23463b313f5214a3dbf689
-commit_sha: 0c13f665b3a28e142520c75054a7c5881484d49a
-implementation_commit: 0c13f665b3a28e142520c75054a7c5881484d49a
-pull_request: https://github.com/Picazo333/nexova-ai-engineering/pull/21
+project: ai-eng-company-monorepo-container
+branch: feature/company-monorepo-container
+base: feature/user-authentication-restore
+base_sha: d69a3b954c6c642729858c7faac1a2e55aa21bd1
+implementation_commit: 4402d3c005f8bcb0151198f183232b12669150fc
+commit_sha: 4402d3c005f8bcb0151198f183232b12669150fc
+pull_request: https://github.com/Picazo333/nexova-ai-engineering/pull/22
 status: PENDIENTE_REVISION_ORQUESTADOR
 items:
+  - id: compose-ps
+    path: evidence/compose-ps.txt
+    rubric: [R11, R17, R19, R20, D01, X02]
+    note: "uis y services healthy. qdrant en marcha. Puertos 3000, 3001, 8000, 6333."
+  - id: stack-internal
+    path: evidence/stack-internal.json
+    rubric: [R13, X01]
+    note: "Desde el panel, upstream services:8000 y status ok. wget interno devolvió el health de la API."
+  - id: hot-reload
+    path: evidence/hot-reload.txt
+    rubric: [R18, X02]
+    note: "API en 1 s, UI en 3 s, sin reconstruir. Marcadores retirados."
   - id: pytest-api
     path: evidence/pytest-api.txt
-    rubric: [R02, R03, R04, R05, R06, R07, R08, R13, X02]
-    note: "156 passed. Línea de partida 138. Dieciocho pruebas en test_password_recovery.py."
+    rubric: [R01]
+    note: "157 passed. Línea de partida 156. La prueba nueva es test_health.py."
+  - id: pytest-container
+    path: evidence/pytest-container.txt
+    rubric: [R08, R17]
+    note: "157 passed dentro del contenedor services."
   - id: pytest-root
     path: evidence/pytest-root.txt
+    rubric: [R12, R14, R16, X02]
+    note: "64 passed, 1 skipped. Siete pruebas nuevas del contrato de Compose. El skip ya existía."
+  - id: portal-jest
+    path: evidence/portal-jest.txt
     rubric: [R01]
-    note: "57 passed, 1 skipped. El skip es la generación en vivo ya bloqueada. No se rompió la suite anterior."
-  - id: portal-e2e
-    path: uis/portal/e2e/password.spec.ts
-    rubric: [R09, R10, R11, R12, U04]
-    note: "Playwright 14 passed. Cuatro pruebas nuevas de contraseña y las diez anteriores."
+    note: "20 passed."
+  - id: portal-playwright
+    path: evidence/portal-playwright.txt
+    rubric: [R01]
+    note: "14 passed. El fichero recoge el recuento de esa corrida."
   - id: shots-390
-    path: evidence/restore-login-390.png
-    rubric: [U01, U02, U05, U08, R12]
-    note: "Serie restore-*-390.png: login, éxito, forgot idle/loading/error/success, reset empty/expired/used, change idle/error."
+    path: evidence/container-success-390.png
+    rubric: [U01, U02, U05, U08]
+    note: "Serie container-*-390.png: carga, éxito, vacío y error."
   - id: shots-768
-    path: evidence/restore-forgot-success-768.png
-    rubric: [U01, U02, R03, R09]
-    note: "Misma serie a 768 px. Confirmación anti-enumeración y formulario desactivado."
+    path: evidence/container-loading-768.png
+    rubric: [U01, U02]
+    note: "Misma serie a 768 px."
   - id: shots-1280
-    path: evidence/restore-reset-expired-1280.png
-    rubric: [U01, U02, R10, X01]
-    note: "Misma serie a 1280 px, incluido el enlace caducado con vuelta a /forgot-password."
+    path: evidence/container-success-1280.png
+    rubric: [U01, U02, R13, X01]
+    note: "Éxito a 1280 px con el destino services:8000 y el lockup horizontal."
   - id: video
-    path: evidence/restore-recorrido.webm
-    rubric: [U03, R10, R12]
-    note: "Duración 5,52 s. Login, recuperación, enlace ausente y aviso de contraseña actualizada."
+    path: evidence/container-recorrido.webm
+    rubric: [U03]
+    note: "Duración 6,60 s."
   - id: reduced
-    path: evidence/restore-reduced-1280.png
+    path: evidence/container-reduced-motion.txt
     rubric: [U04]
-    note: "evidence/restore-reduced-motion.txt: animationName none, data-motion reduced."
+    note: "transition-duration 0s. Captura container-reduced-1280.png."
   - id: axe
-    path: evidence/axe.json
+    path: evidence/container-axe.json
     rubric: [U07]
-    note: "Seis estados. Cero violaciones serious o critical."
-  - id: lighthouse
-    path: evidence/lighthouse-summary.json
-    rubric: [U06]
-    note: "18 corridas. JSON completos solo en /opt/cursor/artifacts/lighthouse/. INP de laboratorio null."
+    note: "Sin violaciones serious o critical en éxito, error y 404."
   - id: lockup
-    path: evidence/lockup-hashes.txt
+    path: evidence/container-lockup-hashes.txt
     rubric: [U05]
-    note: "Horizontal 85459232bf51e7bf7c94225fd4f2cd6b71a681b6d701cb4ffd6d2a142cf57a81. Igual al paquete SIGNAL."
-  - id: mailer-blocked
-    path: services/api/app/auth/mailer.py
-    rubric: [R07, R08, V01]
-    note: "Integración Resend y SendGrid por entorno. V01 BLOCKED_HITL: no hubo envío real."
+    note: "Horizontal 85459232bf51e7bf7c94225fd4f2cd6b71a681b6d701cb4ffd6d2a142cf57a81."
+  - id: lighthouse
+    path: evidence/container-lighthouse-summary.json
+    rubric: [U06]
+    note: "Seis corridas. JSON completos fuera del repo, en /opt/cursor/artifacts/lighthouse/."
+  - id: runbook
+    path: docs/container/RUNBOOK.md
+    rubric: [P01, D02, H01]
+    note: "Comandos de VPS. P01 y D02 quedan BLOCKED_HITL. Sin URL inventada."

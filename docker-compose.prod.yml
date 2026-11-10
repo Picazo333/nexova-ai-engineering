@@ -1,0 +1,20 @@
+# Production override. Use it only on the VPS, with the gitignored .env that lives there.
+# docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+# There is no public URL in this file. The host publishes 3000, 3001 and 8000.
+
+services:
+  uis:
+    build:
+      target: prod
+    volumes: !reset []
+    restart: unless-stopped
+
+  services:
+    command: ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    restart: unless-stopped
+
+  qdrant:
+    # No host port in production. The API reaches it as qdrant:6333 inside monorepo-dev.
+    # `!reset` needs Docker Compose v2.24.0 or newer.
+    ports: !reset []
+    restart: unless-stopped

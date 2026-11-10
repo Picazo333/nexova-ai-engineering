@@ -1,64 +1,67 @@
 {
-  "project": "ai-eng-user-authentication-restore",
-  "started_at": "2026-11-06T15:18:30+00:00",
-  "finished_at": "2026-11-06T15:44:30+00:00",
+  "project": "ai-eng-company-monorepo-container",
+  "started_at": "2026-11-06T15:46:00+00:00",
+  "finished_at": "2026-11-06T16:53:00+00:00",
   "timezone": "UTC",
-  "eval_repair_iterations": 4,
+  "eval_repair_iterations": 3,
   "failures": [
     {
-      "what": "Dos POST /auth/forgot-password en el mismo segundo firmaban el mismo JWT.",
-      "repair": "El payload incluye jti. El test de enlace nuevo contra el anterior pasa."
+      "what": "typescript.js del backoffice dentro de la imagen pesaba 3,3 MB y Next no arrancaba. Borrar el volumen fallaba porque el punto de montaje está ocupado.",
+      "repair": "El build aborta si el fichero no llega a 8 MB. start.sh vacía el contenido del volumen y copia /opt/modules cuando el montaje está corto."
     },
     {
-      "what": "La captura de loading cumplía la ruta tarde y Playwright lanzaba 'Route is already handled'.",
-      "repair": "La espera de la captura termina cuando el fulfill acaba, y un duplicado tardío no tumba el proceso."
+      "what": "CLS móvil 0,114: la tabla aparecía después de la carga y empujaba el resto.",
+      "repair": "La tabla está en el DOM también durante la carga. Segunda medición: CLS móvil 0,0024."
     },
     {
-      "what": "El vídeo no se grabó: faltaba el ffmpeg de Playwright.",
-      "repair": "npx playwright install ffmpeg. Duración medida 5,52 s."
-    },
-    {
-      "what": "La captura de enlace caducado repetía el título en el cuerpo.",
-      "repair": "El cuerpo de esa toma usa la frase de la API: 'El enlace ha caducado. Pide otro.'"
+      "what": "La captura de error usaba getByRole('alert') y coincidía también con el anunciador de Next.",
+      "repair": "La espera usa el texto «No hay conexión con la API.»"
     }
   ],
+  "verification_environment": {
+    "what": "Con iptables-legacy en FORWARD DROP, el puente de Compose no entregaba paquetes entre contenedores. El proxy del host sí publicaba los puertos.",
+    "repair": "sysctl net.bridge.bridge-nf-call-iptables=0 en esta VM. No es un cambio del repositorio."
+  },
   "verification_commands": [
+    "docker compose build",
+    "docker compose up -d --wait",
+    "docker compose exec uis wget -q -O - http://services:8000/health",
+    "docker compose exec services python -c urllib qdrant:6333/readyz",
     "cd services/api && uv run pytest",
+    "docker compose exec -w /app/services/api services python -m pytest",
     "uv run python -m pytest tests packages/incident_analysis/tests",
     "cd uis/portal && npx tsc --noEmit && npm test",
     "cd uis/portal && npm run build && npx playwright test",
-    "cd uis/portal && node scripts/capture-restore.mjs",
-    "ffprobe evidence/restore-recorrido.webm",
-    "npx lighthouse@12.6.0 con CI=1, tres móvil y tres escritorio, en /forgot-password, /reset-password y /login"
+    "cd uis/backoffice && npm run build && npx next start --port 3011",
+    "npx lighthouse@12.6.0 tres móvil y tres escritorio",
+    "node uis/portal/scripts/capture-container.mjs",
+    "ffprobe evidence/container-recorrido.webm"
   ],
   "tokens_used": null,
   "tokens_unmeasurable_reason": "Este runtime no expone un contador de tokens de la sesión. No hay cifra que reportar sin inventarla.",
   "tokens_proxy": {
-    "method": "duración de la sesión, bytes de evidencia y líneas del diff git al cerrar",
-    "started_at": "2026-11-06T15:18:30+00:00",
-    "finished_at": "2026-11-06T15:44:30+00:00",
-    "duration_minutes": 26,
-    "feature_commit_insertions": 2942,
-    "feature_commit_deletions": 358,
-    "api_tests": "156 passed",
-    "api_baseline": "138 passed",
-    "root_tests": "57 passed, 1 skipped",
-    "portal_jest": "20 passed",
-    "portal_playwright": "14 passed"
+    "method": "duración de la sesión, archivos de evidencia y líneas del diff al cerrar",
+    "started_at": "2026-11-06T15:46:00+00:00",
+    "finished_at": "2026-11-06T16:53:00+00:00",
+    "duration_minutes": 67
   },
-  "api_tests": "156 passed",
-  "api_baseline": "138 passed",
-  "root_tests": "57 passed, 1 skipped",
-  "implementation_commit": "0c13f665b3a28e142520c75054a7c5881484d49a",
-  "pass_implementable": "22/22",
-  "rubric_rows": 29,
+  "api_tests": "157 passed",
+  "api_baseline": "156 passed",
+  "api_tests_in_container": "157 passed",
+  "root_tests": "64 passed, 1 skipped",
+  "portal_jest": "20 passed",
+  "portal_playwright": "14 passed",
+  "pass_implementable": "30/30",
+  "rubric_rows": 36,
   "pending": [
-    "V01 BLOCKED_HITL",
-    "D01 HITL_ENVIO_MIGUEL",
-    "D02 HITL_MIGUEL",
+    "P01 BLOCKED_HITL",
+    "D02 BLOCKED_HITL",
+    "D03 HITL_ENVIO_MIGUEL",
+    "D04 HITL_MIGUEL",
     "H01 HITL_MIGUEL",
     "U09 NO_APLICA"
   ],
-  "pull_request": "https://github.com/Picazo333/nexova-ai-engineering/pull/21",
+  "pull_request": "https://github.com/Picazo333/nexova-ai-engineering/pull/22",
+  "implementation_commit": "4402d3c005f8bcb0151198f183232b12669150fc",
   "status": "PENDIENTE_REVISION_ORQUESTADOR"
 }

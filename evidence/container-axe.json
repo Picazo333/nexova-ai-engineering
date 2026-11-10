@@ -1,0 +1,14 @@
+[
+  {
+    "name": "success-filter",
+    "violations": []
+  },
+  {
+    "name": "error",
+    "violations": []
+  },
+  {
+    "name": "404",
+    "violations": []
+  }
+]

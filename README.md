@@ -63,6 +63,24 @@ PYTHONPATH=services/api:. uv run python -m app.agent.export_compare
 
 ---
 
+## Containers
+
+Development runs from the repository root:
+
+```bash
+make up
+```
+
+`make up` fills the gitignored `.env` (it does not print secrets) and runs `docker compose up --build`. Three processes come up on the network `monorepo-dev`:
+
+| URL | Process |
+| --- | --- |
+| http://127.0.0.1:3000 | Next.js portal. The ticket calls this app `website`. In this fork the app is `uis/portal`, started by `uis/website`. |
+| http://127.0.0.1:3001 | Next.js backoffice. It calls the API at `http://services:8000`. |
+| http://127.0.0.1:8000/health | FastAPI. `GET /health` returns `{"status":"ok"}`. |
+
+`docker compose ps` shows the health of each service. Inside the network the API is `services` and Qdrant is `qdrant`. The browser uses the published ports, because a browser on the host cannot resolve Docker DNS. The production runbook is [docs/container/RUNBOOK.md](docs/container/RUNBOOK.md). This checkout has not been deployed to a VPS.
+
 ## Purpose
 
 This repository is the **starter template** for transversal projects. You will work on real company scenarios (Brasaland, TrackFlow, Nexova), building deliverables that map to course milestones (Web, Programming, Backend, Telemetry, RAG, Agents, Workflows, Real-time).
