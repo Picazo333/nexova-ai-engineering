@@ -1,0 +1,55 @@
+commit: dd810efd397c0dd66ef51d7b12ea99021323854c
+project: ai-eng-user-authentication-flows
+branch: feature/auth-frontend
+base: feature/auth-api
+items:
+  - id: rubric
+    path: docs/auth-frontend/RUBRIC.md
+    criteria: [R01, R02, R03, R04, R05, R06, R07, R08, R09, R10, R11, R12, R13, R14, R15, R16, R17, R18, R19, R20, R21, U01, U02, U03, E01, E02]
+  - id: portal-login
+    path: uis/portal/components/LoginScreen.tsx
+    criteria: [R03, R04, R05, R14, E01]
+  - id: portal-register
+    path: uis/portal/components/RegisterScreen.tsx
+    criteria: [R06, R07, R08, R14]
+  - id: portal-profile
+    path: uis/portal/components/ProfileScreen.tsx
+    criteria: [R09, R10]
+  - id: portal-guard
+    path: uis/portal/components/SessionGate.tsx
+    criteria: [R11, R12]
+  - id: portal-api
+    path: uis/portal/lib/api.ts
+    criteria: [R15, R17, E01]
+  - id: portal-session
+    path: uis/portal/lib/session.ts
+    criteria: [R14, R16]
+  - id: e2e-auth
+    path: uis/portal/e2e/auth.spec.ts
+    criteria: [R04, R05, R07, R08, R09, R10, R12, R16, R17, E01, E02]
+  - id: e2e-public
+    path: uis/portal/e2e/public.spec.ts
+    criteria: [R13, R20, E02]
+  - id: readme
+    path: uis/portal/README.md
+    criteria: [R02, R11, R21]
+  - id: env-example
+    path: uis/portal/.env.example
+    criteria: [R19]
+  - id: lighthouse-summary
+    path: docs/auth-frontend/lighthouse-summary.json
+    criteria: [U03]
+  - id: lighthouse-full
+    path: /opt/cursor/artifacts/lighthouse/
+    note: 30 JSON completos, fuera del repositorio
+    criteria: [U03]
+  - id: screenshots
+    path: docs/auth-frontend/evidence/
+    criteria: [U01, U02, E01]
+  - id: video
+    path: docs/auth-frontend/evidence/recorrido.webm
+    note: 6.44 s
+    criteria: [U02]
+  - id: signal-hashes
+    note: tokens y lockups PASS contra MANIFEST.json del paquete SIGNAL
+    criteria: [U01]
