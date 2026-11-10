@@ -14,4 +14,7 @@ services:
     restart: unless-stopped
 
   qdrant:
+    # No host port in production. The API reaches it as qdrant:6333 inside monorepo-dev.
+    # `!reset` needs Docker Compose v2.24.0 or newer.
+    ports: !reset []
     restart: unless-stopped

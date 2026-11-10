@@ -63,6 +63,7 @@ La última línea tiene que responder `{"status":"ok"}`. Si el host de esa URL e
 - No commitear `.env`.
 - No publicar una URL de producción en el README hasta que el servidor responda de verdad y Miguel confirme el nombre.
 - No abrir el puerto 6333 a internet. Qdrant se queda en la red Docker. Si el firewall del VPS publica 6333, ciérralo.
+- `docker-compose.prod.yml` quita los puertos de Qdrant (`ports: !reset []`, Compose v2.24 o posterior). En local, `docker-compose.yml` los publica solo en `127.0.0.1`. Compruébalo antes de desplegar: `docker compose -f docker-compose.yml -f docker-compose.prod.yml config --format json` no debe listar `ports` en `qdrant`, y `python3 scripts/check_qdrant_ports.py` debe terminar en 0.
 - No usar `EMAIL_TRANSPORT=mock` como prueba de entrega del correo.
 
 ## 6. Parada

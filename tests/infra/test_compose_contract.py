@@ -114,3 +114,34 @@ def test_internal_url_helper_rejects_localhost() -> None:
     again = fill(filled, secret="y" * 24)
     assert "JWT_SECRET=" + ("x" * 24) in again
     assert "y" * 24 not in again
+
+
+def test_qdrant_is_not_published_outside_loopback() -> None:
+    """Local Compose binds Qdrant to 127.0.0.1; production publishes no Qdrant port."""
+    base = _read("docker-compose.yml")
+    prod = _read("docker-compose.prod.yml")
+    assert '"127.0.0.1:6333:6333"' in base
+    assert '"127.0.0.1:6334:6334"' in base
+    assert '"6333:6333"' not in base.replace('"127.0.0.1:6333:6333"', "")
+    qdrant_prod = prod.split("  qdrant:", 1)[1]
+    assert "ports: !reset []" in qdrant_prod
+
+
+def test_rendered_compose_keeps_qdrant_off_public_interfaces() -> None:
+    import importlib.util
+
+    script = ROOT / "scripts" / "check_qdrant_ports.py"
+    spec = importlib.util.spec_from_file_location("check_qdrant_ports", script)
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    cmd = module.compose_cmd()
+    if cmd is None:
+        import pytest
+
+        pytest.skip("docker compose CLI no disponible; el test estático de arriba sigue aplicando")
+    local = module.rendered(cmd, ["docker-compose.yml"])
+    prod = module.rendered(cmd, ["docker-compose.yml", "docker-compose.prod.yml"])
+    assert module.problems(local, allow_loopback=True) == []
+    assert module.problems(prod, allow_loopback=False) == []
+    assert not prod["services"]["qdrant"].get("ports")
