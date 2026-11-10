@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 
 import { useSession } from "@/components/SessionGate";
+import { ErrorBanner, LoadingState } from "@/components/AsyncStatus";
 import { ApiError, apiFetch } from "@/lib/api";
 import { textLimit } from "@/lib/forms";
 import type { Profile } from "@/lib/types";
@@ -10,7 +11,22 @@ import type { Profile } from "@/lib/types";
 export function ProfileScreen() {
   const { phase, refresh } = useSession();
   if (phase.kind !== "in") return null;
-  return <ProfileForm key={phase.me.id} email={phase.me.email} role={phase.me.role} profile={phase.me.profile} refresh={refresh} />;
+  const profile = phase.me.profile ?? {
+    id: "",
+    user_id: phase.me.id ?? "",
+    name: null,
+    phone: null,
+    address: null,
+  };
+  return (
+    <ProfileForm
+      key={phase.me.id ?? "session"}
+      email={phase.me.email ?? ""}
+      role={phase.me.role ?? ""}
+      profile={profile}
+      refresh={refresh}
+    />
+  );
 }
 
 function ProfileForm({
@@ -100,10 +116,12 @@ function ProfileForm({
         </p>
       ) : null}
       {error ? (
-        <div className="alert" role="alert" tabIndex={-1} ref={alertRef}>
-          <h2>No se pudo guardar</h2>
-          <p>{error}</p>
-        </div>
+        <ErrorBanner
+          title="No se pudo guardar"
+          message={error}
+          alertRef={alertRef}
+          onRetry={() => document.getElementById("profile-name")?.focus()}
+        />
       ) : null}
       <form className="panel stack" onSubmit={onSubmit} noValidate>
         <div className="field">
@@ -159,7 +177,7 @@ function ProfileForm({
             Guardar perfil
           </button>
         </p>
-        {pending ? <p role="status">Guardando el perfil…</p> : null}
+        {pending ? <LoadingState label="Guardando el perfil…" /> : null}
       </form>
     </>
   );

@@ -88,14 +88,28 @@
   }
 
   function messageFrom(text, fallback) {
+    if (window.nexovaErrors) return window.nexovaErrors.human(400, text, fallback);
     try {
       var data = JSON.parse(text);
-      if (data && typeof data.message === "string" && data.message) return data.message;
-      if (data && typeof data.detail === "string" && data.detail) return data.detail;
+      if (data && typeof data.message === "string" && data.message && data.message.indexOf("Traceback") === -1) {
+        return data.message;
+      }
+      if (data && typeof data.detail === "string" && data.detail && data.detail.indexOf("Traceback") === -1) {
+        return data.detail;
+      }
     } catch (err) {
       /* The fallback stays readable when the body is HTML. */
     }
     return fallback;
+  }
+
+  function readJson(text) {
+    if (window.nexovaErrors) return window.nexovaErrors.parseJson(text);
+    try {
+      return JSON.parse(text);
+    } catch (err) {
+      return null;
+    }
   }
 
   function readMe() {
@@ -112,6 +126,7 @@
   function login(email, password) {
     setBusy(true);
     clearError();
+    statusEl.className = "loading-state";
     statusEl.textContent = "Comprobando la sesión…";
     return fetch("/auth/login", {
       method: "POST",
@@ -125,29 +140,44 @@
     }).then(function (response) {
       if (!response.ok) {
         setBusy(false);
+        statusEl.className = "";
         statusEl.textContent = "";
         showError(messageFrom(response.text, "No se pudo iniciar sesión."));
         return;
       }
-      var data = JSON.parse(response.text);
-      if (!data.access_token || !remember(data.access_token)) {
+      var data = readJson(response.text);
+      if (!data || !data.access_token || !remember(data.access_token)) {
         setBusy(false);
+        statusEl.className = "";
+        statusEl.textContent = "";
+        showError("No se pudo leer la respuesta de acceso. Inténtalo de nuevo.");
         return;
       }
       return readMe().then(function (me) {
         setBusy(false);
+        statusEl.className = "";
         if (!me.ok) {
           showError(messageFrom(me.text, "El token no se pudo comprobar."));
           return;
         }
+        var who = readJson(me.text);
+        if (!who) {
+          showError("No se pudo leer la sesión. Inténtalo de nuevo.");
+          return;
+        }
         clearError();
-        announce(JSON.parse(me.text));
+        statusEl.className = "";
+        announce(who);
         publish();
       });
     }).catch(function () {
       setBusy(false);
+      statusEl.className = "";
       statusEl.textContent = "";
       showError("No hay conexión con la API. Los datos del formulario se conservan.");
+    }).finally(function () {
+      // Buttons never stay disabled after the request settles.
+      setBusy(false);
     });
   }
 
@@ -177,6 +207,7 @@
     }
     setBusy(true);
     clearError();
+    statusEl.className = "loading-state";
     statusEl.textContent = "Creando la cuenta…";
     var body = {
       email: email,
@@ -197,6 +228,7 @@
     }).then(function (response) {
       if (!response.ok) {
         setBusy(false);
+        statusEl.className = "";
         statusEl.textContent = "";
         showError(messageFrom(response.text, "No se pudo crear la cuenta. Los datos se conservan."));
         return;
@@ -206,8 +238,12 @@
       return login(email, password);
     }).catch(function () {
       setBusy(false);
+      statusEl.className = "";
       statusEl.textContent = "";
       showError("No hay conexión con la API. Los datos del formulario se conservan.");
+    }).finally(function () {
+      // Buttons never stay disabled after the request settles.
+      setBusy(false);
     });
   });
 
@@ -221,8 +257,10 @@
   });
 
   if (token()) {
+    statusEl.className = "loading-state";
     statusEl.textContent = "Comprobando la sesión…";
     readMe().then(function (me) {
+      statusEl.className = "";
       if (!me.ok) {
         try {
           sessionStorage.removeItem(KEY);
@@ -233,9 +271,16 @@
         showError(messageFrom(me.text, "La sesión guardada ya no es válida."));
         return;
       }
-      announce(JSON.parse(me.text));
+      var who = readJson(me.text);
+      if (!who) {
+        signedOutCopy();
+        showError("No se pudo leer la sesión guardada. Entra de nuevo.");
+        return;
+      }
+      announce(who);
       publish();
     }).catch(function () {
+      statusEl.className = "";
       signedOutCopy();
       showError("No hay conexión con la API para comprobar la sesión.");
     });

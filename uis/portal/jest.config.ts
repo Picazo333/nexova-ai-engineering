@@ -7,7 +7,7 @@ const config: Config = {
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/$1",
   },
-  collectCoverageFrom: ["lib/session.ts", "lib/forms.ts", "lib/paths.ts"],
+  collectCoverageFrom: ["lib/session.ts", "lib/forms.ts", "lib/paths.ts", "lib/http-messages.ts"],
   coveragePathIgnorePatterns: ["/node_modules/"],
   transform: {
     "^.+\\.tsx?$": [

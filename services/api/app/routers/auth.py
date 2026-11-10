@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import json
+import logging
+
 from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import ValidationError
 
@@ -9,6 +12,9 @@ from app.auth.deps import get_current_user
 from app.auth.models import AuthMe, LoginBody, TokenResponse, validation_message
 from app.auth.security import AuthConfigError, create_access_token, expire_minutes
 from app.auth.service import ServiceError, authenticate, get_profile_by_user_id, public_profile
+from app.http_catalog import catalog_message
+
+logger = logging.getLogger("nexova.api")
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -57,7 +63,7 @@ async def _credentials(request: Request) -> LoginBody:
     if "application/json" in content_type:
         try:
             payload = await request.json()
-        except Exception as exc:
+        except (json.JSONDecodeError, UnicodeDecodeError, ValueError) as exc:
             raise HTTPException(status_code=422, detail="El cuerpo tiene que ser un objeto JSON.") from exc
         if not isinstance(payload, dict):
             raise HTTPException(status_code=422, detail="El cuerpo tiene que ser un objeto JSON.")
@@ -83,12 +89,14 @@ async def login(request: Request) -> dict:
     body = await _credentials(request)
     try:
         record = authenticate(body.email, body.password)
-        minutes = expire_minutes()
-        token = create_access_token(record["id"])
     except ServiceError as exc:
         raise _fail(exc) from exc
-    except AuthConfigError as exc:
-        raise HTTPException(status_code=500, detail=str(exc)) from exc
+    try:
+        minutes = expire_minutes()
+        token = create_access_token(record["id"])
+    except AuthConfigError:
+        logger.error("auth config unavailable during login")
+        raise HTTPException(status_code=500, detail=catalog_message(500)) from None
     payload = {
         "access_token": token,
         "token_type": "bearer",

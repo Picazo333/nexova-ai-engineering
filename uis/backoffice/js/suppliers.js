@@ -76,10 +76,15 @@
   }
 
   function messageFrom(text, fallback) {
+    if (window.nexovaErrors) return window.nexovaErrors.human(422, text, fallback);
     try {
       var data = JSON.parse(text);
-      if (data && typeof data.message === "string" && data.message) return data.message;
-      if (data && typeof data.detail === "string" && data.detail) return data.detail;
+      if (data && typeof data.message === "string" && data.message && data.message.indexOf("Traceback") === -1) {
+        return data.message;
+      }
+      if (data && typeof data.detail === "string" && data.detail && data.detail.indexOf("Traceback") === -1) {
+        return data.detail;
+      }
     } catch (err) {
       /* HTML responses use the fallback sentence. */
     }
@@ -100,6 +105,7 @@
     list.setAttribute("data-state", "loading");
     var pending = document.createElement("p");
     pending.id = "directory-loading";
+    pending.className = "loading-state";
     pending.textContent = "Cargando proveedores…";
     list.prepend(pending);
     statusEl.textContent = "Cargando proveedores…";
@@ -149,6 +155,11 @@
       list.setAttribute("data-state", "error");
       statusEl.textContent = "";
       showError("No se pudo actualizar el listado. El directorio anterior sigue en pantalla.");
+    }).finally(function () {
+      if (seq !== requestSeq) return;
+      var loading = document.getElementById("directory-loading");
+      if (loading) loading.remove();
+      list.setAttribute("aria-busy", "false");
     });
   }
 
@@ -292,6 +303,10 @@
       createError.hidden = false;
       createError.textContent = "No se pudo registrar el proveedor. Los datos del formulario se conservan.";
       createError.focus();
+    }).finally(function () {
+      createForm.setAttribute("data-busy", "0");
+      createButton.disabled = false;
+      createButton.setAttribute("aria-busy", "false");
     });
   });
 
@@ -348,6 +363,9 @@
       rateForm.setAttribute("data-busy", "0");
       button.disabled = false;
       showError("No se pudo actualizar la tarifa. El valor anterior sigue en el listado.");
+    }).finally(function () {
+      rateForm.setAttribute("data-busy", "0");
+      button.disabled = false;
     });
   }
 
@@ -381,6 +399,9 @@
       statusForm.setAttribute("data-busy", "0");
       button.disabled = false;
       showError("No se pudo cambiar el estado. El listado anterior sigue en pantalla.");
+    }).finally(function () {
+      statusForm.setAttribute("data-busy", "0");
+      button.disabled = false;
     });
   }
 })();

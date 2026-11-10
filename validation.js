@@ -61,8 +61,9 @@
   const valueOf = (name) => {
     if (GROUPS.includes(name)) return boxes(name).filter((b) => b.checked).map((b) => b.value);
     const el = form.elements[name];
-    if (el.type === 'checkbox') return el.checked;
-    return el.value.trim();
+    if (!el) return '';
+    if (el.type === 'checkbox') return Boolean(el.checked);
+    return typeof el.value === 'string' ? el.value.trim() : '';
   };
   const isActive = (name) => { const c = control(name); return c && !c.disabled && !c.closest('fieldset[disabled]'); };
   const firstError = (name) => (isActive(name) ? RULES[name](valueOf(name)) : '');
@@ -74,14 +75,16 @@
     const c = control(name), e = errorEl(name);
     if (!c || !e) return;
     const targets = GROUPS.includes(name) ? boxes(name) : [c];
+    const msg = e.querySelector('[data-msg]');
+    if (!msg) return;
     if (message) {
-      targets.forEach((t) => t.setAttribute('aria-invalid', 'true'));
-      e.querySelector('[data-msg]').textContent = `Error: ${message}`;
+      targets.forEach((t) => t?.setAttribute('aria-invalid', 'true'));
+      msg.textContent = `Error: ${message}`;
       e.hidden = false;
     } else {
-      targets.forEach((t) => t.removeAttribute('aria-invalid'));
+      targets.forEach((t) => t?.removeAttribute('aria-invalid'));
       e.hidden = true;
-      e.querySelector('[data-msg]').textContent = '';
+      msg.textContent = '';
     }
   }
   const validateField = (name) => { const m = firstError(name); setFieldState(name, m); return !m; };
@@ -99,7 +102,11 @@
 
   // Contador de caracteres
   const counter = document.getElementById('necesidad-counter');
-  const updateCounter = () => { counter.textContent = `${form.elements.necesidad.value.trim().length} / 1000 caracteres`; };
+  const updateCounter = () => {
+    const field = form.elements.necesidad;
+    const length = field && typeof field.value === 'string' ? field.value.trim().length : 0;
+    if (counter) counter.textContent = `${length} / 1000 caracteres`;
+  };
 
   // 4. ESTADO Y ÉXITO -----------------------------------------------------------------
   const status = document.getElementById('form-status');
@@ -114,13 +121,18 @@
     const list = document.createElement('ul');
     list.className = 'mt-3 flex flex-col gap-1 list-disc pl-5';
     invalid.forEach((n) => {
+      const target = focusTarget(n);
+      const msgNode = errorEl(n)?.querySelector('[data-msg]');
+      if (!target || !msgNode) return;
       const li = document.createElement('li'); const a = document.createElement('a');
-      a.href = `#${focusTarget(n).id}`; a.className = 'text-error underline underline-offset-4';
-      a.textContent = errorEl(n).querySelector('[data-msg]').textContent.replace(/^Error: /, '');
-      a.addEventListener('click', (ev) => { ev.preventDefault(); focusTarget(n).focus(); });
+      a.href = `#${target.id}`; a.className = 'text-error underline underline-offset-4';
+      a.textContent = msgNode.textContent.replace(/^Error: /, '');
+      a.addEventListener('click', (ev) => { ev.preventDefault(); target.focus(); });
       li.append(a); list.append(li);
     });
-    status.append(title, list);
+    const next = document.createElement('p');
+    next.textContent = 'Corrige los campos de la lista y vuelve a enviar la solicitud.';
+    status.append(title, list, next);
   }
   function clearAll() {
     Object.keys(RULES).forEach((n) => setFieldState(n, ''));
@@ -162,8 +174,10 @@
   form.addEventListener('reset', () => {
     requestAnimationFrame(() => { clearAll(); syncSubs(); updateCounter(); focusTarget('nombre').focus(); });
   });
-  document.getElementById('form-new').addEventListener('click', () => {
-    success.hidden = true; form.hidden = false; form.reset();
+  document.getElementById('form-new')?.addEventListener('click', () => {
+    if (success) success.hidden = true;
+    form.hidden = false;
+    form.reset();
   });
 
   // Deep link ?tipo=seleccion|soporte|formacion

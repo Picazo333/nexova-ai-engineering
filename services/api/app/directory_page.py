@@ -74,10 +74,11 @@ def _page(
 <p class="lead">Contratos externos de Nexova que Patricia Solís mantenía en una hoja de cálculo. Cada fila muestra el proveedor, el país del contrato, la categoría, la tarifa mensual y si está activo o suspendido.</p>
 <p id="filter-memory">El país, la categoría y el estado elegidos se conservan en esta pestaña al ir a otra sección y volver.</p>
 <p id="directory-status" role="status"></p>
-<div id="directory-error" role="alert" tabindex="-1" {error_hidden}>
+<div id="directory-error" class="error-banner" role="alert" tabindex="-1" {error_hidden}>
   <h2>No se pudo guardar</h2>
   <p id="directory-error-text">{html.escape(error or "")}</p>
-  <p><button class="button button-secondary" id="directory-retry" type="button">Reintentar la carga del listado</button></p>
+  <p class="actions"><button class="button button-secondary" id="directory-retry" type="button">Reintentar la carga del listado</button><a class="button button-secondary" href="/">Ir al inicio</a></p>
+  <p>Si se repite, contacta con el soporte interno de Nexova.</p>
 </div>
 <p id="directory-notice" role="status" {notice_hidden}>{html.escape(notice or "")}</p>
 <section class="panel" aria-labelledby="filtros-titulo">

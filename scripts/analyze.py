@@ -37,21 +37,27 @@ def main(argv: list[str] | None = None) -> int:
 
     path = Path(args.csv_path)
     if not path.is_file():
-        print(f"error: file not found: {path}", file=sys.stderr)
+        print(f"error: file not found: {path.name}", file=sys.stderr)
         return 1
     try:
-        report = analyze_bytes(path.read_bytes(), path.name)
-    except AnalysisError as exc:
-        print(f"error: {exc.message_en}", file=sys.stderr)
-        return 1
+        raw = path.read_bytes()
     except OSError:
         print("error: the file could not be read.", file=sys.stderr)
+        return 1
+    try:
+        report = analyze_bytes(raw, path.name)
+    except AnalysisError as exc:
+        print(f"error: {exc.message_en}", file=sys.stderr)
         return 1
 
     sys.stdout.write(report.console())
     if _wants_export(args):
         destination = Path.cwd() / "results.csv"
-        destination.write_text(report.csv_text(), encoding="utf-8", newline="\n")
+        try:
+            destination.write_text(report.csv_text(), encoding="utf-8", newline="\n")
+        except OSError:
+            print("error: results.csv could not be written.", file=sys.stderr)
+            return 1
         print(f"Results saved to {destination.name}")
     else:
         print("Results were not exported.")

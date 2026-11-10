@@ -21,20 +21,29 @@
     return window.nexovaAuth && window.nexovaAuth.token ? window.nexovaAuth.token() : "";
   }
 
-  function messageFrom(text, fallback) {
+  var SUMMARY_ERROR = '<div class="error-banner"><p id="incident-summary-error">No se pudo cargar el resumen. El listado de abajo sigue disponible.</p><p class="actions"><button class="button button-secondary" id="incident-summary-retry" type="button">Reintentar el resumen</button><a class="button button-secondary" href="/">Ir al inicio</a></p><p>Si se repite, contacta con el soporte interno de Nexova.</p></div>';
+
+  function readJson(text) {
+    if (window.nexovaErrors) return window.nexovaErrors.parseJson(text);
     try {
-      var data = JSON.parse(text);
-      if (data && typeof data.message === "string" && data.message && data.message.indexOf("Traceback") === -1) {
-        return data.message;
-      }
+      return JSON.parse(text);
     } catch (err) {
-      /* Keep the readable fallback. */
+      return null;
+    }
+  }
+
+  function messageFrom(text, fallback) {
+    if (window.nexovaErrors) return window.nexovaErrors.human(0, text, fallback);
+    var data = readJson(text);
+    if (data && typeof data.message === "string" && data.message && data.message.indexOf("Traceback") === -1) {
+      return data.message;
     }
     return fallback;
   }
 
   function friendly(status, text, fallback) {
     if (status === 401) return "Hace falta una sesión. Entra y vuelve a intentarlo. Los datos se conservan.";
+    if (window.nexovaErrors) return window.nexovaErrors.human(status, text, fallback);
     if (status >= 500) return fallback;
     return messageFrom(text, fallback);
   }
@@ -68,10 +77,13 @@
       else input.removeAttribute("aria-invalid");
     }
 
+    var formCta = document.getElementById("incident-form-cta");
+
     function clearFields() {
       fields.forEach(function (name) { showFieldError(name, ""); });
       banner.hidden = true;
       banner.textContent = "";
+      if (formCta) formCta.hidden = true;
     }
 
     function syncBranch() {
@@ -84,6 +96,7 @@
       submit.disabled = busy;
       submit.setAttribute("aria-busy", busy ? "true" : "false");
       submit.textContent = busy ? "Guardando…" : "Registrar incidencia";
+      statusEl.className = busy ? "loading-state" : "";
       statusEl.textContent = busy ? "Enviando la incidencia…" : "";
     }
 
@@ -102,6 +115,7 @@
       errors.forEach(function (item) { showFieldError(item.field, item.message); });
       banner.hidden = false;
       banner.textContent = summary;
+      if (formCta) formCta.hidden = false;
       var first = errors[0] && fieldNode(errors[0].field);
       if (first) first.focus();
       else banner.focus();
@@ -136,8 +150,7 @@
       }).then(function (response) {
         setBusy(false);
         if (response.status === 400) {
-          var parsed = {};
-          try { parsed = JSON.parse(response.text); } catch (err) { parsed = {}; }
+          var parsed = readJson(response.text) || {};
           var list = parsed.errors && parsed.errors.length ? parsed.errors : [{ field: parsed.field || "title", message: friendly(400, response.text, "Revisa los datos e inténtalo de nuevo.") }];
           showErrors(list, "Revisa los campos marcados.");
           return;
@@ -146,10 +159,19 @@
           showErrors([], "");
           banner.hidden = false;
           banner.textContent = friendly(response.status, response.text, "No se pudo registrar la incidencia. Inténtalo de nuevo.");
+          if (formCta) formCta.hidden = false;
           banner.focus();
           return;
         }
-        var created = JSON.parse(response.text);
+        var created = readJson(response.text);
+        if (!created || !created.id) {
+          setBusy(false);
+          banner.hidden = false;
+          banner.textContent = "La respuesta no se pudo leer. Revisa el panel antes de repetir el alta.";
+          if (formCta) formCta.hidden = false;
+          banner.focus();
+          return;
+        }
         fields.forEach(function (name) {
           var input = fieldNode(name);
           if (!input) return;
@@ -164,7 +186,13 @@
         setBusy(false);
         banner.hidden = false;
         banner.textContent = "No hay conexión con la API. Los datos del formulario se conservan.";
+        if (formCta) formCta.hidden = false;
         banner.focus();
+      }).finally(function () {
+        // Only the button flags: confirmation and error text are kept.
+        submit.disabled = false;
+        submit.setAttribute("aria-busy", "false");
+        submit.textContent = "Registrar incidencia";
       });
     });
   }
@@ -178,7 +206,15 @@
     var listErrorText = document.getElementById("incident-list-error-text");
     var retry = document.getElementById("incident-retry");
     var filterForm = document.getElementById("incident-filters");
-    var labels = JSON.parse(document.getElementById("incident-labels").textContent);
+    var labelsNode = document.getElementById("incident-labels");
+    var labels = labelsNode ? readJson(labelsNode.textContent || "") : null;
+    if (!labels) {
+      summary.setAttribute("data-state", "error");
+      summaryBody.innerHTML = SUMMARY_ERROR;
+      listError.hidden = false;
+      listErrorText.textContent = "No se pudieron leer las etiquetas de esta página. Recarga e inténtalo de nuevo.";
+      return;
+    }
     var listSeq = 0;
     var summarySeq = 0;
     var listController = null;
@@ -317,7 +353,7 @@
       var seq = ++summarySeq;
       summary.setAttribute("data-state", "loading");
       summary.setAttribute("aria-busy", "true");
-      summaryBody.innerHTML = "<p>Cargando el resumen…</p>";
+      summaryBody.innerHTML = '<p class="loading-state">Cargando el resumen…</p>';
       return fetch("/api/incidents/summary", {
         headers: authHeaders({ Accept: "application/json" }),
         cache: "no-store"
@@ -330,15 +366,23 @@
         summary.setAttribute("aria-busy", "false");
         if (!response.ok) {
           summary.setAttribute("data-state", "error");
-          summaryBody.innerHTML = '<p id="incident-summary-error">No se pudo cargar el resumen. El listado de abajo sigue disponible.</p><p><button class="button button-secondary" id="incident-summary-retry" type="button">Reintentar el resumen</button></p>';
+          summaryBody.innerHTML = SUMMARY_ERROR;
           return;
         }
-        renderSummary(JSON.parse(response.text));
+        var summaryData = readJson(response.text);
+        if (!summaryData) {
+          summary.setAttribute("data-state", "error");
+          summaryBody.innerHTML = SUMMARY_ERROR;
+          return;
+        }
+        renderSummary(summaryData);
       }).catch(function () {
         if (seq !== summarySeq) return;
         summary.setAttribute("aria-busy", "false");
         summary.setAttribute("data-state", "error");
-        summaryBody.innerHTML = '<p id="incident-summary-error">No se pudo cargar el resumen. El listado de abajo sigue disponible.</p><p><button class="button button-secondary" id="incident-summary-retry" type="button">Reintentar el resumen</button></p>';
+        summaryBody.innerHTML = SUMMARY_ERROR;
+      }).finally(function () {
+        if (seq === summarySeq) summary.setAttribute("aria-busy", "false");
       });
     }
 
@@ -352,6 +396,7 @@
       }
       list.setAttribute("data-state", "loading");
       list.setAttribute("aria-busy", "true");
+      listStatus.className = "loading-state";
       listStatus.textContent = "Cargando incidencias…";
       clearListError();
       return fetch("/api/incidents" + query(values), {
@@ -367,6 +412,7 @@
         list.setAttribute("aria-busy", "false");
         if (!response.ok) {
           list.setAttribute("data-state", "error");
+          listStatus.className = "";
           listStatus.textContent = "";
           showListError(friendly(response.status, response.text, "No se pudo cargar el listado. Inténtalo de nuevo."));
           if (!list.querySelector("[data-list-state='ready']")) {
@@ -374,15 +420,27 @@
           }
           return;
         }
+        var rows = readJson(response.text);
+        if (!Array.isArray(rows)) {
+          list.setAttribute("data-state", "error");
+          listStatus.className = "";
+          listStatus.textContent = "";
+          showListError("No se pudo leer el listado. Inténtalo de nuevo.");
+          return;
+        }
         clearListError();
-        renderRows(JSON.parse(response.text));
+        listStatus.className = "";
+        renderRows(rows);
       }).catch(function (err) {
         if (err && err.name === "AbortError") return;
         if (seq !== listSeq) return;
         list.setAttribute("aria-busy", "false");
         list.setAttribute("data-state", "error");
+        listStatus.className = "";
         listStatus.textContent = "";
         showListError("No hay conexión con la API. Inténtalo de nuevo.");
+      }).finally(function () {
+        if (seq === listSeq) list.setAttribute("aria-busy", "false");
       });
     }
 

@@ -3,6 +3,7 @@
   if (!form) {
     return;
   }
+  form.noValidate = true;
   var fileInput = document.getElementById("csv-file");
   var submit = document.getElementById("submit");
   var statusEl = document.getElementById("status");
@@ -93,6 +94,7 @@
     resultsEl.setAttribute("data-state", "loading");
     resultsEl.replaceChildren();
     var loading = document.createElement("p");
+    loading.className = "loading-state";
     loading.textContent = "Analizando el fichero. El cálculo sigue en la API interna.";
     resultsEl.appendChild(loading);
     statusEl.textContent = loading.textContent;
@@ -113,17 +115,8 @@
       }
       if (!response.ok || response.text.indexOf("@") !== -1) {
         var message = "No se pudo analizar el fichero.";
-        if (response.text.indexOf("@") === -1) {
-          try {
-            var data = JSON.parse(response.text);
-            if (data && data.message) {
-              message = data.message;
-            }
-          } catch (err) {
-            if (response.text && response.text.indexOf("<") === -1) {
-              message = response.text;
-            }
-          }
+        if (response.text.indexOf("@") === -1 && window.nexovaErrors) {
+          message = window.nexovaErrors.human(400, response.text, message);
         }
         if (previousHtml && previousHtml.indexOf("@") === -1) {
           resultsEl.innerHTML = previousHtml;
@@ -163,7 +156,8 @@
         statusEl.textContent = "";
       }
       showError("No hay conexión con la API. Comprueba que el servicio sigue en marcha y pulsa Analizar fichero.");
-    }).then(function () {
+    }).finally(function () {
+      // Loading state is always cleared, whatever the outcome.
       if (seq === requestSeq) {
         setBusy(false);
       }

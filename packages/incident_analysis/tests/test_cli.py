@@ -52,6 +52,28 @@ def test_export_flag_does_not_need_stdin(tmp_path: Path) -> None:
     assert "Export results to CSV? [y / n]: y" in completed.stdout
 
 
+def test_pandas_snippet_missing_file_exits_without_a_traceback(tmp_path: Path) -> None:
+    script = ROOT / "skills" / "data-analysis" / "scripts" / "pandas_clean.py"
+    completed = subprocess.run(
+        [sys.executable, str(script)],
+        cwd=tmp_path,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert completed.returncode == 1
+    assert "data.csv" in completed.stderr
+    assert "Traceback" not in completed.stderr
+
+
+def test_export_write_failure_exits_without_a_traceback(tmp_path: Path) -> None:
+    (tmp_path / "results.csv").mkdir()
+    completed = _run(str(OFFICIAL), "--export", cwd=tmp_path)
+    assert completed.returncode == 1
+    assert "could not be written" in completed.stderr
+    assert "Traceback" not in completed.stderr
+
+
 def test_missing_file_and_usage(tmp_path: Path) -> None:
     missing = _run(str(tmp_path / "absent.csv"), cwd=tmp_path)
     assert missing.returncode == 1
