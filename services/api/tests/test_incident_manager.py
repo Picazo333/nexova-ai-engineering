@@ -185,7 +185,9 @@ def test_internal_error_does_not_return_the_exception(
     def boom(*_args, **_kwargs):
         raise RuntimeError("secret-sentinel Traceback line")
 
-    records.list_incidents = boom
+    # monkeypatch undoes the replacement after this test; a plain assignment
+    # leaked into every later test that calls GET /api/incidents.
+    monkeypatch.setattr(records, "list_incidents", boom)
     with TestClient(application, raise_server_exceptions=False) as test_client:
         attach_operator(test_client)
         response = test_client.get("/api/incidents", headers={"Accept": "application/json"})

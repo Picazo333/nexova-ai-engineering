@@ -16,10 +16,7 @@ from tests.http_auth import attach_operator
 
 def test_summary_is_all_zeros_with_every_briefing_key_when_there_are_no_incidents(client: TestClient) -> None:
     attach_operator(client)
-    # No incident is created in this test: the client fixture gives a fresh,
-    # empty INCIDENTS_DATA_DIR. (GET /api/incidents is not called here on
-    # purpose: test_incident_manager.py replaces records.list_incidents at
-    # module level without monkeypatch, and that leaks into later tests.)
+    assert client.get("/api/incidents").json() == []  # the store really is empty
 
     response = client.get("/api/incidents/summary")
 
