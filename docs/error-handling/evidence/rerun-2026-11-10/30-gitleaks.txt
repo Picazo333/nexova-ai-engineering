@@ -1,0 +1,12 @@
+# cmd: bash <academic>/work/scan.sh error-handling 97e7bb36c5abec60f8c81202fd67e6063c853c3f
+# cwd: <repo>
+# start: 2026-11-10T15:41:13-06:00
+# HEAD: 97e7bb36c5abec60f8c81202fd67e6063c853c3f
+3:41PM INF scanned ~14490074 bytes (14.49 MB) in 221ms
+3:41PM WRN leaks found: 3
+findings: 3
+  services/api/tests/test_assets.py 13 generic-api-key
+  services/api/tests/test_assets.py 14 generic-api-key
+  docs/user-authentication/evidence/http-transcript.txt 17 jwt
+gitleaks_exit=3 (0=clean,3=findings)
+# exit: 3 end: 2026-11-10T15:41:14-06:00

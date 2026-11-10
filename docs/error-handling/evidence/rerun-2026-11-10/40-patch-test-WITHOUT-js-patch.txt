@@ -1,0 +1,107 @@
+# cmd: services/api/.venv/bin/python -m pytest -q services/api/tests/test_backoffice_finally.py
+# cwd: <repo>
+# start: 2026-11-10T15:42:51-06:00
+# HEAD: 97e7bb36c5abec60f8c81202fd67e6063c853c3f
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+_________________ test_loading_chains_end_in_finally[app.js-1] _________________
+
+name = 'app.js', minimum = 1
+
+    @pytest.mark.parametrize(("name", "minimum"), sorted(EXPECTED_FINALLY.items()))
+    def test_loading_chains_end_in_finally(name: str, minimum: int) -> None:
+        source = (JS / name).read_text(encoding="utf-8")
+>       assert len(re.findall(r"\}\)\.finally\(function \(\)", source)) >= minimum
+E       assert 0 >= 1
+E        +  where 0 = len([])
+E        +    where [] = <function findall at 0x7f2a67313240>('\\}\\)\\.finally\\(function \\(\\)', '(function () {\n  var form = document.getElementById("analyze-form");\n  if (!form) {\n    return;\n  }\n  form.noVal...n      showError("No hay un análisis guardado para descargar. Analiza el fichero de nuevo.");\n    });\n  });\n})();\n')
+E        +      where <function findall at 0x7f2a67313240> = re.findall
+
+services/api/tests/test_backoffice_finally.py:29: AssertionError
+________________ test_loading_chains_end_in_finally[auth.js-2] _________________
+
+name = 'auth.js', minimum = 2
+
+    @pytest.mark.parametrize(("name", "minimum"), sorted(EXPECTED_FINALLY.items()))
+    def test_loading_chains_end_in_finally(name: str, minimum: int) -> None:
+        source = (JS / name).read_text(encoding="utf-8")
+>       assert len(re.findall(r"\}\)\.finally\(function \(\)", source)) >= minimum
+E       assert 0 >= 2
+E        +  where 0 = len([])
+E        +    where [] = <function findall at 0x7f2a67313240>('\\}\\)\\.finally\\(function \\(\\)', '(function () {\n  var KEY = "nexova-access-token";\n  var loginForm = document.getElementById("session-login");\n  va...     signedOutCopy();\n      showError("No hay conexión con la API para comprobar la sesión.");\n    });\n  }\n})();\n')
+E        +      where <function findall at 0x7f2a67313240> = re.findall
+
+services/api/tests/test_backoffice_finally.py:29: AssertionError
+__________ test_loading_chains_end_in_finally[incidents-manager.js-3] __________
+
+name = 'incidents-manager.js', minimum = 3
+
+    @pytest.mark.parametrize(("name", "minimum"), sorted(EXPECTED_FINALLY.items()))
+    def test_loading_chains_end_in_finally(name: str, minimum: int) -> None:
+        source = (JS / name).read_text(encoding="utf-8")
+>       assert len(re.findall(r"\}\)\.finally\(function \(\)", source)) >= minimum
+E       assert 0 >= 3
+E        +  where 0 = len([])
+E        +    where [] = <function findall at 0x7f2a67313240>('\\}\\)\\.finally\\(function \\(\\)', '(function () {\n  var form = document.getElementById("incident-form");\n  var panel = document.getElementById("incide...;\n    if (token()) loadAll();\n    else if (list.getAttribute("data-state") === "locked") lockedList();\n  }\n})();\n')
+E        +      where <function findall at 0x7f2a67313240> = re.findall
+
+services/api/tests/test_backoffice_finally.py:29: AssertionError
+______________ test_loading_chains_end_in_finally[suppliers.js-4] ______________
+
+name = 'suppliers.js', minimum = 4
+
+    @pytest.mark.parametrize(("name", "minimum"), sorted(EXPECTED_FINALLY.items()))
+    def test_loading_chains_end_in_finally(name: str, minimum: int) -> None:
+        source = (JS / name).read_text(encoding="utf-8")
+>       assert len(re.findall(r"\}\)\.finally\(function \(\)", source)) >= minimum
+E       assert 0 >= 4
+E        +  where 0 = len([])
+E        +    where [] = <function findall at 0x7f2a67313240>('\\}\\)\\.finally\\(function \\(\\)', '(function () {\n  var form = document.getElementById("directory-filters");\n  var createForm = document.getElementByI...alse;\n      showError("No se pudo cambiar el estado. El listado anterior sigue en pantalla.");\n    });\n  }\n})();\n')
+E        +      where <function findall at 0x7f2a67313240> = re.findall
+
+services/api/tests/test_backoffice_finally.py:29: AssertionError
+______________ test_no_then_after_catch_is_used_as_a_fake_finally ______________
+
+    def test_no_then_after_catch_is_used_as_a_fake_finally() -> None:
+        # `.catch(...).then(function () {` was the old pattern in app.js; it skips
+        # the cleanup if the catch handler itself throws.
+        source = (JS / "app.js").read_text(encoding="utf-8")
+>       assert "}).then(function () {\n      if (seq === requestSeq) {\n        setBusy(false);" not in source
+E       assert '}).then(fun...Busy(false);' not in '(function (...});\n})();\n'
+E         
+E         '}).then(function (...    setBusy(false);' is contained here:
+E           o.");
+E               }).then(function () {
+E                 if (seq === requestSeq) {
+E                   setBusy(false);
+E                 }...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+services/api/tests/test_backoffice_finally.py:36: AssertionError
+_____________ test_finally_does_not_wipe_the_incident_confirmation _____________
+
+    def test_finally_does_not_wipe_the_incident_confirmation() -> None:
+        # setBusy(false) empties the status text; the finally block must only reset
+        # the button so the confirmation and error banners stay visible.
+        source = (JS / "incidents-manager.js").read_text(encoding="utf-8")
+>       block = source.split("}).finally(function () {", 1)[1].split("});", 1)[0]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+services/api/tests/test_backoffice_finally.py:43: IndexError
+=============================== warnings summary ===============================
+services/api/.venv/lib/python3.13/site-packages/fastapi/testclient.py:1
+  <repo>/services/api/.venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED services/api/tests/test_backoffice_finally.py::test_loading_chains_end_in_finally[app.js-1]
+FAILED services/api/tests/test_backoffice_finally.py::test_loading_chains_end_in_finally[auth.js-2]
+FAILED services/api/tests/test_backoffice_finally.py::test_loading_chains_end_in_finally[incidents-manager.js-3]
+FAILED services/api/tests/test_backoffice_finally.py::test_loading_chains_end_in_finally[suppliers.js-4]
+FAILED services/api/tests/test_backoffice_finally.py::test_no_then_after_catch_is_used_as_a_fake_finally
+FAILED services/api/tests/test_backoffice_finally.py::test_finally_does_not_wipe_the_incident_confirmation
+6 failed, 1 warning in 0.07s
+# exit: 1 end: 2026-11-10T15:42:52-06:00

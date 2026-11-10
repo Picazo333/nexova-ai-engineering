@@ -188,6 +188,11 @@
         banner.textContent = "No hay conexión con la API. Los datos del formulario se conservan.";
         if (formCta) formCta.hidden = false;
         banner.focus();
+      }).finally(function () {
+        // Only the button flags: confirmation and error text are kept.
+        submit.disabled = false;
+        submit.setAttribute("aria-busy", "false");
+        submit.textContent = "Registrar incidencia";
       });
     });
   }
@@ -375,6 +380,8 @@
         summary.setAttribute("aria-busy", "false");
         summary.setAttribute("data-state", "error");
         summaryBody.innerHTML = SUMMARY_ERROR;
+      }).finally(function () {
+        if (seq === summarySeq) summary.setAttribute("aria-busy", "false");
       });
     }
 
@@ -431,6 +438,8 @@
         listStatus.className = "";
         listStatus.textContent = "";
         showListError("No hay conexión con la API. Inténtalo de nuevo.");
+      }).finally(function () {
+        if (seq === listSeq) list.setAttribute("aria-busy", "false");
       });
     }
 

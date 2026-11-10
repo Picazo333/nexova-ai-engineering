@@ -156,7 +156,8 @@
         statusEl.textContent = "";
       }
       showError("No hay conexión con la API. Comprueba que el servicio sigue en marcha y pulsa Analizar fichero.");
-    }).then(function () {
+    }).finally(function () {
+      // Loading state is always cleared, whatever the outcome.
       if (seq === requestSeq) {
         setBusy(false);
       }

@@ -155,6 +155,11 @@
       list.setAttribute("data-state", "error");
       statusEl.textContent = "";
       showError("No se pudo actualizar el listado. El directorio anterior sigue en pantalla.");
+    }).finally(function () {
+      if (seq !== requestSeq) return;
+      var loading = document.getElementById("directory-loading");
+      if (loading) loading.remove();
+      list.setAttribute("aria-busy", "false");
     });
   }
 
@@ -298,6 +303,10 @@
       createError.hidden = false;
       createError.textContent = "No se pudo registrar el proveedor. Los datos del formulario se conservan.";
       createError.focus();
+    }).finally(function () {
+      createForm.setAttribute("data-busy", "0");
+      createButton.disabled = false;
+      createButton.setAttribute("aria-busy", "false");
     });
   });
 
@@ -354,6 +363,9 @@
       rateForm.setAttribute("data-busy", "0");
       button.disabled = false;
       showError("No se pudo actualizar la tarifa. El valor anterior sigue en el listado.");
+    }).finally(function () {
+      rateForm.setAttribute("data-busy", "0");
+      button.disabled = false;
     });
   }
 
@@ -387,6 +399,9 @@
       statusForm.setAttribute("data-busy", "0");
       button.disabled = false;
       showError("No se pudo cambiar el estado. El listado anterior sigue en pantalla.");
+    }).finally(function () {
+      statusForm.setAttribute("data-busy", "0");
+      button.disabled = false;
     });
   }
 })();

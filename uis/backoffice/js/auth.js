@@ -175,6 +175,9 @@
       statusEl.className = "";
       statusEl.textContent = "";
       showError("No hay conexión con la API. Los datos del formulario se conservan.");
+    }).finally(function () {
+      // Buttons never stay disabled after the request settles.
+      setBusy(false);
     });
   }
 
@@ -238,6 +241,9 @@
       statusEl.className = "";
       statusEl.textContent = "";
       showError("No hay conexión con la API. Los datos del formulario se conservan.");
+    }).finally(function () {
+      // Buttons never stay disabled after the request settles.
+      setBusy(false);
     });
   });
 
