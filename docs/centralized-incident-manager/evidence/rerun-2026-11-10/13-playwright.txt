@@ -1,0 +1,38 @@
+# cmd: npx playwright test -c playwright.rerun.config.ts --reporter=list
+# cwd: <repo>/uis/portal
+# start: 2026-11-10T15:40:08-06:00
+# HEAD: 6d0c5789b47fc28c5371970f0ccbed3b677b567a
+[WebServer] INFO:     Started server process [64122]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+[WebServer] 127.0.0.1 - - [10/Nov/2026 15:40:11] "GET /index.html HTTP/1.1" 200 -
+
+Running 10 tests using 1 worker
+
+(node:64199) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:64199) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chrome] › e2e/auth.spec.ts:33:5 › no hay middleware de Next para leer localStorage (5ms)
+  ✓   2 [chrome] › e2e/auth.spec.ts:38:5 › el registro guarda el token y el perfil muestra los datos de la API (673ms)
+  ✓   3 [chrome] › e2e/auth.spec.ts:61:5 › el login fallido conserva la contraseña y el registro muestra errores de campo (406ms)
+  ✓   4 [chrome] › e2e/auth.spec.ts:79:5 › un correo repetido marca el campo (571ms)
+  ✓   5 [chrome] › e2e/auth.spec.ts:90:5 › sin token la vista protegida va a login y no muestra contratos (285ms)
+  ✓   6 [chrome] › e2e/auth.spec.ts:97:5 › un 401 limpia la sesión y al entrar se vuelve a la vista protegida (557ms)
+  ✓   7 [chrome] › e2e/auth.spec.ts:114:5 › el logout borra el token y la vista protegida vuelve a pedir login (571ms)
+  ✓   8 [chrome] › e2e/incidents-manager.spec.ts:5:5 › el formulario valida, resalta la sede y el panel sobrevive a un resumen fallido (508ms)
+[WebServer] 127.0.0.1 - - [10/Nov/2026 15:40:16] "GET /index.html HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [10/Nov/2026 15:40:16] "GET /application.html HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [10/Nov/2026 15:40:16] "GET /index.html HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [10/Nov/2026 15:40:16] "GET /assets/fonts/newsreader-latin-wght.woff2 HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [10/Nov/2026 15:40:16] "GET /assets/img/hero-p1-1440.avif HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [10/Nov/2026 15:40:16] "GET /assets/js/experience.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [10/Nov/2026 15:40:16] "GET /assets/fonts/inter-latin-400-normal.woff2 HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [10/Nov/2026 15:40:16] "GET /assets/fonts/inter-latin-600-normal.woff2 HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [10/Nov/2026 15:40:16] "GET /assets/favicon.svg HTTP/1.1" 200 -
+  ✓   9 [chrome] › e2e/public.spec.ts:7:5 › el website público no redirige a login ni guarda el token (276ms)
+  ✓  10 [chrome] › e2e/public.spec.ts:27:5 › las rutas HTML de la API siguen públicas y no saltan al portal (17ms)
+
+  10 passed (6.5s)
+# exit: 0 end: 2026-11-10T15:40:16-06:00

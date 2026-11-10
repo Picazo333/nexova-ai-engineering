@@ -1,0 +1,19 @@
+# cmd: npx jest --coverage
+# cwd: <repo>/uis/portal
+# start: 2026-11-10T15:39:25-06:00
+# HEAD: 6d0c5789b47fc28c5371970f0ccbed3b677b567a
+------------|---------|----------|---------|---------|-------------------
+File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+------------|---------|----------|---------|---------|-------------------
+All files   |     100 |    97.36 |     100 |     100 |                   
+ forms.ts   |     100 |      100 |     100 |     100 |                   
+ paths.ts   |     100 |    93.33 |     100 |     100 | 14                
+ session.ts |     100 |      100 |     100 |     100 |                   
+------------|---------|----------|---------|---------|-------------------
+
+Test Suites: 4 passed, 4 total
+Tests:       15 passed, 15 total
+Snapshots:   0 total
+Time:        3.532 s
+Ran all test suites.
+# exit: 0 end: 2026-11-10T15:39:29-06:00

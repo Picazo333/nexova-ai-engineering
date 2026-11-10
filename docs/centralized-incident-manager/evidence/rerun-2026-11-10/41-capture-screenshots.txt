@@ -1,0 +1,7 @@
+# cmd: bash <academic>/work/capture_im.sh
+# cwd: <repo>
+# start: 2026-11-10T15:44:40-06:00
+# HEAD: 6d0c5789b47fc28c5371970f0ccbed3b677b567a
+seed exit=0
+capturas en <repo>/docs/centralized-incident-manager/evidence
+# exit: 0 end: 2026-11-10T15:44:42-06:00
