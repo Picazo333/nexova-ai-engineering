@@ -2,15 +2,20 @@
 
 from __future__ import annotations
 
-from fastapi import APIRouter, File, Request, UploadFile
+from fastapi import APIRouter, Depends, File, Request, UploadFile
 from fastapi.responses import HTMLResponse, JSONResponse, Response
 
+from app.auth.deps import get_current_user
 from app.config import max_upload_bytes
 from app.infrastructure.analysis_store import get_store
 from app.pages import render_home, render_results_fragment_with_csv
 from incident_analysis.engine import AnalysisError, analyze_bytes
 
-router = APIRouter(prefix="/api/incidents", tags=["incidents"])
+router = APIRouter(
+    prefix="/api/incidents",
+    tags=["incidents"],
+    dependencies=[Depends(get_current_user)],
+)
 
 
 @router.post("/analyze")

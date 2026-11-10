@@ -45,6 +45,9 @@ def client(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> TestClient:
     reset_db()
     application = create_app()
     with TestClient(application) as test_client:
+        from tests.http_auth import attach_operator
+
+        attach_operator(test_client)
         yield test_client
     reset_db()
 
@@ -326,7 +329,10 @@ def test_records_survive_a_new_process(tmp_path: Path, monkeypatch: pytest.Monke
     from app.main import create_app
 
     reset_db()
+    from tests.http_auth import attach_operator
+
     with TestClient(create_app()) as first:
+        attach_operator(first)
         empty = first.get("/proveedores")
         assert "El directorio está vacío" in empty.text
         created = first.post("/suppliers", json=_payload(name="Persistente"))
@@ -334,6 +340,7 @@ def test_records_survive_a_new_process(tmp_path: Path, monkeypatch: pytest.Monke
         supplier_id = created.json()["id"]
     reset_db()
     with TestClient(create_app()) as second:
+        attach_operator(second)
         again = second.get(f"/suppliers/{supplier_id}")
         assert again.status_code == 200
         assert again.json()["name"] == "Persistente"

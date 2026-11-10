@@ -1,0 +1,89 @@
+project: ai-eng-user-authentication-api
+branch: feature/auth-api
+base: feature/supplier-directory
+pull_request: https://github.com/Picazo333/nexova-ai-engineering/pull/11
+merge_order:
+  - "PR #9 feature/incidents-analysis"
+  - "PR #10 feature/supplier-directory"
+  - "este PR, feature/auth-api"
+content_commit: b861391a28d34b28599c6b171e22bb765f624bfd
+commit_sha_note: "b861391 contiene el código, los tests y la evidencia. El tip de feature/auth-api añade este SHA al manifiesto."
+status: PENDIENTE_REVISION_ORQUESTADOR
+pytest: docs/user-authentication/evidence/pytest.txt
+http: docs/user-authentication/evidence/http-transcript.txt
+items:
+  - id: R02
+    path: services/api/pyproject.toml
+    note: "python-jose==3.5.0 y libpass[bcrypt]==1.9.4 vía uv"
+  - id: R03
+    path: services/api/app/auth/service.py
+    note: "USER_FIELDS"
+  - id: R16
+    path: services/api/app/auth/deps.py
+    note: "get_current_user"
+  - id: R19
+    path: services/api/.env.example
+    note: "JWT_SECRET vacío; el fichero .env real no se versiona"
+  - id: R23
+    path: services/api/routes/suppliers.py
+    note: "dependencies get_current_user en las rutas ya existentes"
+  - id: R23
+    path: services/api/app/routers/incidents.py
+    note: "analyze y export protegidos"
+  - id: R26
+    path: docs/user-authentication/evidence/pytest.txt
+    note: "45 passed"
+  - id: R24
+    path: docs/user-authentication/evidence/http-transcript.txt
+    note: "401 sin token, mal formado y caducado"
+  - id: R25
+    path: docs/user-authentication/evidence/http-transcript.txt
+    note: "403 GET y PUT de otro usuario"
+  - id: R14
+    path: docs/user-authentication/evidence/http-transcript.txt
+    note: "200 login"
+  - id: R28
+    path: docs/user-authentication/evidence/swagger-guide-1280.png
+  - id: R28
+    path: docs/user-authentication/evidence/swagger-guide-390.png
+  - id: E01
+    path: services/api/app/auth/guide.py
+  - id: E02
+    path: services/api/tests/test_auth.py
+  - id: U02
+    path: docs/user-authentication/evidence/home-signed-out-390.png
+  - id: U02
+    path: docs/user-authentication/evidence/home-signed-out-768.png
+  - id: U02
+    path: docs/user-authentication/evidence/home-signed-out-1280.png
+  - id: U02
+    path: docs/user-authentication/evidence/home-signed-in-390.png
+  - id: U02
+    path: docs/user-authentication/evidence/home-signed-in-768.png
+  - id: U02
+    path: docs/user-authentication/evidence/home-signed-in-1280.png
+  - id: U02
+    path: docs/user-authentication/evidence/directory-locked-390.png
+  - id: U02
+    path: docs/user-authentication/evidence/directory-locked-768.png
+  - id: U02
+    path: docs/user-authentication/evidence/directory-locked-1280.png
+  - id: U02
+    path: docs/user-authentication/evidence/directory-open-390.png
+  - id: U02
+    path: docs/user-authentication/evidence/directory-open-768.png
+  - id: U02
+    path: docs/user-authentication/evidence/directory-open-1280.png
+  - id: U04
+    path: docs/user-authentication/evidence/session-error-390.png
+  - id: U04
+    path: docs/user-authentication/evidence/session-loading-390.png
+  - id: U03
+    path: docs/user-authentication/evidence/lighthouse-summary.json
+    note: "Tres corridas, mediana y peor. Móvil con RTT 150 ms, 1638.4 kbps y CPU ×4. Escritorio con RTT 40 ms y CPU ×1."
+  - id: U03
+    path: /opt/cursor/artifacts/lighthouse/
+    note: "JSON completo de las doce corridas. No está en el repositorio."
+  - id: U01
+    path: /opt/cursor/artifacts/auth-directorio-con-sesion.mp4
+    note: "Recorrido grabado: directorio sin filas, registro, directorio con LinkedIn Talent Solutions e InfoJobs, Swagger con la guía."

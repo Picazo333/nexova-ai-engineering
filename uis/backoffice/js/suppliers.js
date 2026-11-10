@@ -103,19 +103,27 @@
     pending.textContent = "Cargando proveedores…";
     list.prepend(pending);
     statusEl.textContent = "Cargando proveedores…";
+    var listHeaders = { Accept: "text/html", "X-Directory-Fragment": "1" };
     return fetch(nextUrl, {
-      headers: { Accept: "text/html", "X-Directory-Fragment": "1" },
+      headers: window.nexovaAuth ? window.nexovaAuth.headers(listHeaders) : listHeaders,
       signal: controller.signal,
       cache: "no-store"
     }).then(function (response) {
       return response.text().then(function (text) {
-        return { ok: response.ok, text: text };
+        return { ok: response.ok, status: response.status, text: text };
       });
     }).then(function (response) {
       if (seq !== requestSeq) return;
       var loading = document.getElementById("directory-loading");
       if (loading) loading.remove();
       list.setAttribute("aria-busy", "false");
+      if (response.status === 401) {
+        list.setAttribute("data-state", "locked");
+        list.innerHTML = '<div data-list-state="locked"><h3>Hace falta una sesión</h3><p>Entra de nuevo para ver el directorio.</p></div>';
+        statusEl.textContent = "";
+        showError("La sesión no es válida o falta. Entra de nuevo para ver el directorio.");
+        return;
+      }
       if (!response.ok) {
         list.setAttribute("data-state", "error");
         statusEl.textContent = "";
@@ -146,6 +154,7 @@
 
   var params = new URLSearchParams(window.location.search);
   var fromUrl = params.has("country") || params.has("category") || params.has("status");
+  var locked = !!list.querySelector("[data-list-state='locked']");
   if (!fromUrl) {
     var saved = readFilters();
     if (saved && (saved.country || saved.category || saved.status)) {
@@ -153,11 +162,15 @@
       if (memory) {
         memory.textContent = "Se mantienen el país, la categoría y el estado de tu visita anterior.";
       }
-      loadList();
+      if (!locked) loadList();
     }
   } else {
     saveFilters(filtersFromForm());
   }
+
+  window.addEventListener("nexova-session", function () {
+    if (window.nexovaAuth && window.nexovaAuth.token()) loadList();
+  });
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -247,9 +260,10 @@
     createButton.disabled = true;
     createButton.setAttribute("aria-busy", "true");
     statusEl.textContent = "Registrando proveedor…";
+    var createHeaders = { Accept: "application/json", "Content-Type": "application/json" };
     fetch("/suppliers", {
       method: "POST",
-      headers: { Accept: "application/json", "Content-Type": "application/json" },
+      headers: window.nexovaAuth ? window.nexovaAuth.headers(createHeaders) : createHeaders,
       body: JSON.stringify(payload),
       cache: "no-store"
     }).then(function (response) {
@@ -311,9 +325,10 @@
     var id = supplierId(rateForm.getAttribute("action") || rateForm.action);
     rateForm.setAttribute("data-busy", "1");
     button.disabled = true;
+    var rateHeaders = { Accept: "application/json", "Content-Type": "application/json" };
     fetch("/suppliers/" + id + "/rate", {
       method: "PATCH",
-      headers: { Accept: "application/json", "Content-Type": "application/json" },
+      headers: window.nexovaAuth ? window.nexovaAuth.headers(rateHeaders) : rateHeaders,
       body: JSON.stringify({ monthly_rate: rate }),
       cache: "no-store"
     }).then(function (response) {
@@ -343,9 +358,10 @@
     var id = supplierId(statusForm.getAttribute("action") || statusForm.action);
     statusForm.setAttribute("data-busy", "1");
     button.disabled = true;
+    var statusHeaders = { Accept: "application/json", "Content-Type": "application/json" };
     fetch("/suppliers/" + id + "/status", {
       method: "PATCH",
-      headers: { Accept: "application/json", "Content-Type": "application/json" },
+      headers: window.nexovaAuth ? window.nexovaAuth.headers(statusHeaders) : statusHeaders,
       body: JSON.stringify({ status: input.value }),
       cache: "no-store"
     }).then(function (response) {

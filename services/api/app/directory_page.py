@@ -26,8 +26,9 @@ def render_directory(
     error: str | None,
     notice: str | None,
     form_values: dict | None,
+    locked: bool = False,
 ) -> str:
-    main = _page(suppliers, total, filters, error, notice, form_values)
+    main = _page(suppliers, total, filters, error, notice, form_values, locked=locked)
     return render_page(
         title="Directorio de proveedores · Nexova",
         description=(
@@ -56,6 +57,8 @@ def _page(
     error: str | None,
     notice: str | None,
     form_values: dict | None,
+    *,
+    locked: bool = False,
 ) -> str:
     values = _form_defaults(form_values)
     error_hidden = "" if error else "hidden"
@@ -103,8 +106,8 @@ def _page(
 </section>
 <section aria-labelledby="listado-titulo">
   <h2 id="listado-titulo">Proveedores</h2>
-  <div id="directory-list" data-state="success" aria-busy="false" tabindex="-1">
-    {_list(suppliers, total, filters)}
+  <div id="directory-list" data-state="{'locked' if locked else 'success'}" aria-busy="false" tabindex="-1">
+    {_locked_list() if locked else _list(suppliers, total, filters)}
   </div>
 </section>
 <section class="panel" aria-labelledby="alta-titulo">
@@ -164,6 +167,16 @@ def _page(
 </section>
 <script type="application/json" id="directory-state">{blob}</script>
 """
+
+
+def _locked_list() -> str:
+    return (
+        '<div data-list-state="locked">'
+        "<h3>Hace falta una sesión</h3>"
+        "<p>Entra con tu correo para ver tarifas, contactos y estados. "
+        "Sin token esta página no incluye esos datos.</p>"
+        "</div>"
+    )
 
 
 def _list(suppliers: list[dict], total: int, filters: SupplierQuery) -> str:

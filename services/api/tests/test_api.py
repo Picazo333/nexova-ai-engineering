@@ -24,6 +24,9 @@ def client(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> TestClient:
     reset_store(tmp_path)
     application = create_app()
     with TestClient(application) as test_client:
+        from tests.http_auth import attach_operator
+
+        attach_operator(test_client)
         yield test_client
 
 

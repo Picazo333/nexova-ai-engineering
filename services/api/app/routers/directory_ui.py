@@ -4,11 +4,12 @@ from __future__ import annotations
 
 import html
 
-from fastapi import APIRouter, Request
-from fastapi.responses import HTMLResponse
+from fastapi import APIRouter, Depends, Request
+from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import ValidationError
 
 import directory
+from app.auth.deps import get_optional_user
 from app.directory_page import notice_for, render_directory, render_fragment
 from models import SupplierQuery, validation_message
 
@@ -33,9 +34,30 @@ def _rows(filters: SupplierQuery) -> list[dict]:
     )
 
 
-@router.get("/proveedores", response_class=HTMLResponse)
-def directory_page(request: Request) -> HTMLResponse:
+@router.get("/proveedores", response_class=HTMLResponse, response_model=None)
+def directory_page(request: Request, user: dict | None = Depends(get_optional_user)) -> HTMLResponse | JSONResponse:
     fragment = request.headers.get("x-directory-fragment") == "1"
+    if user is None:
+        if fragment:
+            return JSONResponse(
+                status_code=401,
+                content={
+                    "error": "unauthorized",
+                    "message": "Falta el token de acceso.",
+                    "detail": "Falta el token de acceso.",
+                },
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        page = render_directory(
+            suppliers=[],
+            total=0,
+            filters=SupplierQuery(),
+            error=None,
+            notice=None,
+            form_values=None,
+            locked=True,
+        )
+        return HTMLResponse(page, headers={"Cache-Control": "no-store"})
     try:
         filters = _filters(request)
     except ValidationError as exc:
