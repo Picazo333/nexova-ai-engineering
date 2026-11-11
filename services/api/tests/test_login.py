@@ -68,6 +68,7 @@ def test_failure_unknown_email_and_wrong_password_share_one_message(client: Test
 
 def test_failure_inactive_account_is_rejected_with_the_same_sentence(client: TestClient) -> None:
     record = create_user(email="baja@nexova.test", password=PASSWORD, name="Baja")
+    # Deactivated in the store: the login must refuse it with the same sentence as a wrong password.
     update_user(record["id"], {"is_active": False})
     refused = client.post(
         "/auth/login",

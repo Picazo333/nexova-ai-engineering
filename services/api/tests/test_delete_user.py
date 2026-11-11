@@ -17,6 +17,7 @@ def test_happy_path_removes_the_account_and_the_profile(client: TestClient) -> N
     assert "hashed_password" not in removed.json()
     assert get_user_by_email("ana@nexova.test") is None
     assert get_profile_by_user_id(created["id"]) is None
+    # The account is gone, so its credentials no longer open a session.
     refused = client.post(
         "/auth/login",
         json={"email": "ana@nexova.test", "password": PASSWORD},
@@ -34,6 +35,7 @@ def test_edge_an_admin_can_remove_someone_else_and_keep_their_own_session(
     assert removed.status_code == 200
     assert removed.json()["id"] == other["id"]
     assert get_profile_by_user_id(other["id"]) is None
+    # Deleting someone else must not end the admin's own session.
     still = client.get("/auth/me", headers=bearer(admin_token))
     assert still.status_code == 200
     assert still.json()["email"] == "admin@nexova.test"
@@ -47,6 +49,7 @@ def test_failure_another_user_cannot_delete_the_account_and_an_unknown_id_is_abs
     headers = bearer(token_for(client, "ana@nexova.test"))
     forbidden = client.delete(f"/users/{luis['id']}", headers=headers)
     assert forbidden.status_code == 403
+    # The 403 is a refusal, not a partial delete: Luis is still stored.
     assert get_user_by_email("luis@nexova.test") is not None
     missing = client.delete(
         "/users/00000000-0000-0000-0000-000000000000",

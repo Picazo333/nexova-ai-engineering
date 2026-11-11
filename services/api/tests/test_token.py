@@ -108,6 +108,7 @@ def test_failure_malformed_forged_and_mismatched_tokens_are_rejected(client: Tes
 def test_failure_deleted_and_inactive_subjects_lose_the_session(client: TestClient) -> None:
     created = register(client, "ana@nexova.test")
     token = token_for(client, "ana@nexova.test")
+    # The token stays well signed. Only the stored state decides whether it is still a session.
     update_user(created["id"], {"is_active": False})
     inactive = client.get("/auth/me", headers=bearer(token))
     assert inactive.status_code == 401
@@ -123,12 +124,15 @@ def test_edge_a_user_without_a_profile_is_not_returned_as_me(client: TestClient)
     created = register(client, "ana@nexova.test")
     token = token_for(client, "ana@nexova.test")
     with auth_lock():
+        # Remove only the profile: a valid token without a profile must not resolve as /auth/me.
         profiles_table().remove(Query().user_id == created["id"])
     response = client.get("/auth/me", headers=bearer(token))
     assert response.status_code == 404
     assert response.json()["message"] == "Este usuario no tiene perfil."
 
 
+# Unit tests of the functions behind the endpoints (deps and security). They test helpers,
+# not a route, so they do not carry the happy/edge/failure prefix.
 def test_optional_user_fails_closed_on_a_bad_token(client: TestClient) -> None:
     created = register(client, "ana@nexova.test")
     token = token_for(client, "ana@nexova.test")

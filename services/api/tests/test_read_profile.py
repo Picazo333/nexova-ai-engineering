@@ -43,6 +43,7 @@ def test_failure_missing_and_malformed_tokens_do_not_reveal_a_profile(client: Te
     missing = client.get("/profiles/me")
     assert missing.status_code == 401
     assert missing.json()["message"] == "Falta el token de acceso."
+    # A refused request must not leak the profile, not even in the error body.
     assert "600111222" not in missing.text
     malformed = client.get("/profiles/me", headers={"Authorization": "Bearer no-es-jwt"})
     assert malformed.status_code == 401

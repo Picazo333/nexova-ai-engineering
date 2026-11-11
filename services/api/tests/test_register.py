@@ -26,10 +26,12 @@ def test_happy_path_stores_a_user_role_and_keeps_the_password_out_of_the_respons
     assert created["profile"]["user_id"] == created["id"]
     assert created["profile"]["phone"] == "+34 600 000 001"
     assert "hashed_password" not in created
+    # The plain password must not appear anywhere in the response, not even nested.
     assert PASSWORD not in str(created)
 
     stored = get_user_by_email("ana@nexova.test")
     assert stored is not None
+    # What is stored is a bcrypt hash ($2...), never the password itself.
     assert stored["hashed_password"] != PASSWORD
     assert stored["hashed_password"].startswith("$2")
     assert "name" not in stored
@@ -66,6 +68,7 @@ def test_edge_password_of_eight_characters_is_the_shortest_accepted(client: Test
     )
     assert seven.status_code == 422
     assert "8 caracteres" in seven.text
+    # A refused registration must not leave a half-created account behind.
     assert get_user_by_email("siete@nexova.test") is None
 
 
@@ -95,6 +98,7 @@ def test_failure_malformed_email_and_edged_password_are_refused(client: TestClie
     )
     assert spaced.status_code == 422
     assert "sin espacios al borde" in spaced.text
+    # The 422 is not enough: the account must not exist after the refusal.
     assert get_user_by_email("borde@nexova.test") is None
     empty = client.post("/users", json={"email": "vacio@nexova.test", "password": ""})
     assert empty.status_code == 422
@@ -107,6 +111,7 @@ def test_failure_registration_cannot_choose_a_role(client: TestClient) -> None:
         json={"email": "admin-hope@nexova.test", "password": PASSWORD, "role": "admin"},
     )
     assert rejected.status_code == 422
+    # The role field is refused and nothing is stored. The service enforces the same list below.
     assert get_user_by_email("admin-hope@nexova.test") is None
     with pytest.raises(ValidationError):
         UserCreate.model_validate(

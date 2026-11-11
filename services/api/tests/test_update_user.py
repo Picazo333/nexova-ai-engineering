@@ -19,7 +19,9 @@ def test_happy_path_replaces_the_email_and_the_password(client: TestClient) -> N
     assert updated.status_code == 200
     assert updated.json()["email"] == "ana.soler@nexova.test"
     assert "hashed_password" not in updated.json()
+    # The new password is never echoed back in the response body.
     assert "clave-nueva-2" not in updated.text
+    # Proof that the password changed: the old one no longer opens a session.
     old = client.post(
         "/auth/login",
         json={"email": "ana.soler@nexova.test", "password": PASSWORD},
@@ -32,6 +34,7 @@ def test_happy_path_replaces_the_email_and_the_password(client: TestClient) -> N
     assert new.status_code == 200
     stored = get_user_by_email("ana.soler@nexova.test")
     assert stored is not None
+    # What is stored is a hash, not the new plain password.
     assert stored["hashed_password"] != "clave-nueva-2"
 
 
@@ -61,6 +64,7 @@ def test_edge_eight_character_password_replaces_the_previous_one(client: TestCli
         headers=headers,
     )
     assert updated.status_code == 200
+    # Eight characters is the minimum, so the new password must open a session.
     logged = client.post(
         "/auth/login",
         json={"email": "ana@nexova.test", "password": "12345678"},
@@ -84,6 +88,7 @@ def test_failure_role_active_flag_and_other_people_are_blocked(client: TestClien
         headers=headers,
     )
     assert other.status_code == 403
+    # The 403 wrote nothing: Luis keeps his email and no account took the new one.
     assert get_user_by_email("luis@nexova.test") is not None
     assert get_user_by_email("otro@nexova.test") is None
     short = client.put(
@@ -92,6 +97,7 @@ def test_failure_role_active_flag_and_other_people_are_blocked(client: TestClien
         headers=headers,
     )
     assert short.status_code == 422
+    # The short password was refused, so the original one still logs in.
     still = client.post(
         "/auth/login",
         json={"email": "ana@nexova.test", "password": PASSWORD},

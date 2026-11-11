@@ -64,7 +64,9 @@ def test_failure_an_empty_change_and_a_missing_token_do_not_write(client: TestCl
         headers=headers,
     )
     assert extra.status_code == 422
+    # One unknown field makes the whole change invalid: nothing is written.
     assert get_profile_by_user_id(created["id"])["name"] == "Ana Soler"
+    # Without a token the write is refused before it reaches the store.
     missing = client.put("/profiles/me", json={"name": "Intruso"})
     assert missing.status_code == 401
     assert get_profile_by_user_id(created["id"])["name"] == "Ana Soler"
