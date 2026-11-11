@@ -13,3 +13,7 @@ Organiza `uis/` por **distintas áreas de la compañía** — cada subcarpeta ag
 - **Recomendación**: documenta en este archivo (o en sub-READMEs) las aplicaciones que vayas añadiendo, su objetivo, tecnología usada y cómo ejecutarlas.
 
 > _These instructions are also available in [English](./README.md)._
+
+## `backoffice/`
+
+Pantallas internas de análisis de incidencias (`/`) y del directorio de proveedores (`/proveedores`). Las sirve `services/api`. No sustituyen al sitio público de la raíz del repositorio. Ver [`backoffice/README.md`](./backoffice/README.md).

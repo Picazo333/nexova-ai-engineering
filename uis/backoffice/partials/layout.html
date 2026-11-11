@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>{{TITLE}}</title>
+  <meta name="description" content="{{DESCRIPTION}}">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/tokens/tokens.css">
+  <link rel="stylesheet" href="/tokens/motion.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <script src="/js/motion-pref.js"></script>
+</head>
+<body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/">Nexova <span>Backoffice</span></a>
+      <nav aria-label="Secciones">
+        <a href="/"{{CURRENT_ANALYSIS}}>Análisis de incidencias</a>
+        <a href="/proveedores"{{CURRENT_SUPPLIERS}}>Directorio de proveedores</a>
+        <a href="/privacidad"{{CURRENT_PRIVACY}}>Privacidad de los datos</a>
+      </nav>
+    </div>
+  </header>
+  <main id="contenido" class="wrap">
+    {{MAIN}}
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <nav aria-label="Pie">
+        <a href="/">Análisis de incidencias</a>
+        <a href="/proveedores">Directorio de proveedores</a>
+        <a href="/privacidad">Privacidad de los datos</a>
+      </nav>
+      <p>Herramienta interna de Nexova: análisis del CSV de tickets de soporte y directorio de proveedores. Proyecto académico.</p>
+      <p class="credit">Crédito visual del encargo académico. No indica una asociación oficial.</p>
+      <div class="footer-lockup">
+        <picture>
+          <source media="(max-width: 639px)" srcset="/brand/lockups/signal-stacked.svg">
+          <img src="/brand/lockups/signal-horizontal.svg" alt="4Geeks por Divinivid">
+        </picture>
+      </div>
+    </div>
+  </footer>
+  <script src="/js/auth.js"></script>
+  {{PAGE_SCRIPT}}
+  <script src="/js/app.js"></script>
+</body>
+</html>

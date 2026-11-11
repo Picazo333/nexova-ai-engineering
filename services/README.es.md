@@ -6,3 +6,7 @@ Cada subcarpeta dentro de `services/` debe corresponder a **un servicio concreto
 
 - **Propósito principal**: centralizar toda la lógica backend, APIs y consumidores de colas que dan soporte a los casos de uso de la compañía.
 - **Recomendación**: documenta en este archivo (o en sub-READMEs) los servicios que vayas añadiendo, su objetivo, tecnología usada y cómo ejecutarlos.
+
+## `api/`
+
+API FastAPI central. Incidencias: `POST /api/incidents/analyze` y `GET /api/incidents/results/export`. Proveedores: `/suppliers` y la página `/proveedores`. Auth: `/auth`, `/users` y `/profiles` (TinyDB, JWT). Esas rutas de incidencias y proveedores piden un token. Cómo arrancarla: [`api/README.md`](./api/README.md).

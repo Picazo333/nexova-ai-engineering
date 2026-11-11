@@ -13,3 +13,7 @@ Organize `uis/` by **different concerns** — each subfolder covers a distinct a
 - **Recommendation**: document in this file (or in sub-READMEs) the applications you add, their objective, the technology used, and how to run them.
 
 > _Estas instrucciones también están disponibles en [español](./README.es.md)._
+
+## `backoffice/`
+
+Internal screens for incident analysis (`/`) and the supplier directory (`/proveedores`), served by `services/api`. They do not replace the public website at the repository root. See [`backoffice/README.md`](./backoffice/README.md).

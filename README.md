@@ -299,6 +299,23 @@ ai-engineering-company-project-monorepo/
 
 ---
 
+## Incident analysis
+
+Internal tool for the Nexova support CSV. The rules live in `packages/incident_analysis` and are shared by the script and the API. Customer emails are never printed, returned, or stored.
+
+```bash
+python scripts/analyze.py scripts/incidents-nexova.csv
+```
+
+```bash
+python -m venv .venv
+. .venv/bin/activate
+pip install -r services/api/requirements.txt
+PYTHONPATH=packages:services/api uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
+
+Open `http://127.0.0.1:8000`. The supplier directory is at `http://127.0.0.1:8000/proveedores`. `cd services/api && uv run seed` loads the 15 Nexova contracts from `scripts/nexova-supplier-BRIEFING.es.md`. Details: `services/api/README.md` and `uis/backoffice/README.md`.
+
 ## Contributors
 
 This template was built as part of the 4Geeks Academy AI Engineering Career Program by [@marcogonzalo](https://www.linkedin.com/in/marcogonzalo) and [@alesanchezr](https://x.com/alesanchezr) and many other contributors. Find out more about our [AI Engineering Course](https://4geeksacademy.com/en/career-programs/ai-engineering), and [other courses](https://4geeksacademy.com/en/program-comparison).
