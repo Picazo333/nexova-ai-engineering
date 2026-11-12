@@ -1,0 +1,26 @@
+{
+  "eventId": "00000000-0000-4000-8000-00000000000e",
+  "timestamp": "2026-11-12T20:21:59Z",
+  "sessionId": "11111111-1111-4111-8111-111111111111",
+  "userId": "00000000-0000-4000-8000-000000000201",
+  "event_type": "kit_cost_variance_detected",
+  "schemaVersion": "1.0.0",
+  "requestId": "22222222-2222-4222-8222-222222222222",
+  "properties": {
+    "office": "valencia",
+    "product_id": "6",
+    "product_category": "training_kit",
+    "programme_id": "unassigned",
+    "quantity": 15,
+    "currency": "EUR",
+    "order_id": 15,
+    "product_sku": "NXV-TRN-001",
+    "supplier": "TechDistrib Valencia S.L.",
+    "unit_cost_minor": 1250,
+    "historical_unit_cost_minor": 1000,
+    "variance_ratio": 0.25,
+    "threshold_ratio": 0.1,
+    "category_map_version": "proposed-2026-11-12",
+    "occurred_at": "2026-11-12T09:04:00Z"
+  }
+}

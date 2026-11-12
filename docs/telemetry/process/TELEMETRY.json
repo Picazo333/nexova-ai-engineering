@@ -1,0 +1,39 @@
+{
+  "project": "025-ai-eng-telemetry-plan",
+  "started_at": "2026-11-12T20:16:00Z",
+  "finished_at": "2026-11-12T20:33:30Z",
+  "timezone": "UTC",
+  "eval_repair_iterations": 2,
+  "repairs": [
+    "El format date-time no rechazaba '12/11/2026': este jsonschema no trae el checker de fechas. Se añadió el patrón ISO 8601 al timestamp y a occurred_at. El ejemplo bad-timestamp pasó a fallar.",
+    "blocked_event se renombró a affected_event. Con missing_programme el evento obligatorio sí se emite; el nombre anterior decía que quedaba bloqueado.",
+    "credential_rejected ganó dropped_count. missing_token se capa a 60 por minuto y proceso; login_failed y la edición directa de stock no se capan."
+  ],
+  "not_repaired_on_purpose": [
+    "kit_cost_variance_detected no puede emitirse hasta que exista unit_cost_minor. El enunciado prohíbe instrumentar ahora. No se inventa un costo de la semilla.",
+    "office_supplies queda fuera de las cinco métricas. El briefing no tiene categoría para el papel.",
+    "No se asigna b2b-sales, basic-leadership, ventas-b2b ni liderazgo-basico a un SKU. Las dos lenguas del briefing no coinciden y la semilla no trae programa."
+  ],
+  "commands": [
+    "python3 docs/telemetry/validate_event_schemas.py",
+    "cd services/api && NEXOVA_TEST_DATABASE_URL=postgresql:///nexova_audit .venv/bin/pytest -q",
+    "cd uis/portal && npx jest --coverage --watchman=false",
+    "cd uis/backoffice && npx jest --coverage --watchman=false",
+    "cd uis/portal && npm run build && npx playwright test"
+  ],
+  "results": {
+    "schema_validator": "287 pass, 0 fail, exit 0",
+    "api_pytest_postgres": "179 passed",
+    "portal_jest": "23 passed",
+    "backoffice_jest": "20 passed",
+    "portal_playwright": "14 passed"
+  },
+  "estimate_comparison": "No hubo estimación previa de duración. El intervalo real es started_at a finished_at.",
+  "tokens_used": null,
+  "tokens_unmeasurable_reason": "Este runtime no expone un contador de tokens de la sesión.",
+  "tokens_proxy": {
+    "method": "diff de la rama en docs/telemetry y el log del validador",
+    "started_at": "2026-11-12T20:16:00Z",
+    "finished_at": "2026-11-12T20:33:30Z"
+  }
+}

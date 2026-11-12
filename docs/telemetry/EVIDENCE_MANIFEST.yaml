@@ -1,0 +1,72 @@
+project: ai-eng-telemetry-plan
+branch: feature/telemetry-plan
+base: feature/caching-optimisation
+base_sha: 3be83a02252f2de46e57e67b52194bd70eff9d7d
+ui: false
+lockup: not_applicable
+items:
+  - id: plan
+    path: docs/telemetry/telemetry-plan.md
+    sha256: 8a29439dd76a607619620b360784d219f4a44b460399675247771172dcf14368
+    rubric: [R01, R02, R03, R04, R05, R06, R07, R08, R09, R10, R11, R12, R13, R14, R20, R23, R24, R25, R26, R27, R28, R30, X01]
+  - id: schema
+    path: docs/telemetry/event-schemas.json
+    sha256: 9a6158c837fd7dd2eb63ffd322c2671d2beec4a7c027aded004e7cf157b81753
+    rubric: [R13, R15, R18, R21, R22, R30]
+  - id: validator
+    path: docs/telemetry/validate_event_schemas.py
+    sha256: b4bd53c99aa48ee26607f896e2cda4470ac975a6016b04384fc5f323c4eb9094
+    rubric: [R21, R22, X02, R29]
+    note: "Lee el esquema, el plan y los ejemplos. No emite eventos y no importa la API."
+  - id: validator-log
+    path: docs/telemetry/evidence/validate-schemas.txt
+    sha256: 542223863bacbc55d09532e226d9093bca312f44916ab88a5dcbf4fdf3eb36bb
+    rubric: [R11, R15, R17, R19, R21, R22, X02]
+    note: "287 PASS, 0 FAIL, exit 0."
+  - id: examples-valid
+    path: docs/telemetry/examples/valid/
+    rubric: [R21, X02]
+    note: "20 JSON, uno por evento más la salida con assignee_redacted."
+  - id: examples-invalid
+    path: docs/telemetry/examples/invalid/
+    rubric: [R18, R20, R21]
+    note: "8 rechazos: clave de más, programa ausente, fecha, tipo, correo, nombre, moneda cruzada, ref con redacción."
+  - id: briefing
+    path: docs/telemetry/source/nexova-BRIEFING.md
+    sha256: b9aee8a9dfde725d75d695f08f1027e14d635edeb6782f23d884987c0b72e097
+    rubric: [R01, R02]
+  - id: pytest
+    path: docs/telemetry/evidence/pytest-api.txt
+    sha256: 0e79c5f3d9ece7e7f03e273467bb07636723d77e5540f5d98313722705cfe79e
+    rubric: [R32]
+    note: "179 passed con NEXOVA_TEST_DATABASE_URL=postgresql:///nexova_audit."
+  - id: jest-portal
+    path: docs/telemetry/evidence/jest-portal.txt
+    sha256: cd949fda6867ed7213e31f4913363286c427a7ccd5d46cdf29fb21d33eed03a2
+    rubric: [R32]
+    note: "23 passed."
+  - id: jest-backoffice
+    path: docs/telemetry/evidence/jest-backoffice.txt
+    sha256: 7b7903a9c432267bd7a0c829f4175b952e85c8d6c08b52e86f9e0d571c3a1fd4
+    rubric: [R32]
+    note: "20 passed."
+  - id: playwright
+    path: docs/telemetry/evidence/playwright-portal.txt
+    sha256: e3518af0cf02973ec7089584d0ff227cb1a8c64041672676e6e54467506f4d5f
+    rubric: [R32]
+    note: "14 passed."
+  - id: rubric
+    path: docs/telemetry/rubric/RUBRIC.md
+    sha256: 622de82ad2be850f5a155169e16dbf97b7147c1aff2329cdfe907d64d7cfa476
+    rubric: []
+  - id: justification
+    path: docs/telemetry/rubric/RUBRIC_JUSTIFICATION.md
+    sha256: 3d40a7cc181c2c1783f899e805f0af73104691cbfff4a224817735a3047a6545
+    rubric: []
+  - id: telemetry
+    path: docs/telemetry/process/TELEMETRY.json
+    sha256: c2c4858ec57dd81267191d5ff982cf13d925b8990ea2669e3d03e24243186b68
+    rubric: []
+    note: "tokens_used null. El runtime no expone el contador."
+suite_logs_are_cli: true
+commit_sha_note: "Los SHA256 de arriba son de los ficheros en el commit que los añade. El manifiesto no se hashea a sí mismo."

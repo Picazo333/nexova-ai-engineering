@@ -1,0 +1,2116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://nexova.local/schemas/telemetry/event-envelope-1.0.0.json",
+  "title": "Nexova telemetry event envelope",
+  "description": "Envelope común de telemetría de Nexova. properties solo admite la allowlist del event_type.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "timestamp",
+    "sessionId",
+    "userId",
+    "event_type",
+    "schemaVersion",
+    "requestId",
+    "properties"
+  ],
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "description": "UUID v4 generado al construir el evento."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?(?:Z|[+-][0-9]{2}:[0-9]{2})$",
+      "description": "Momento de emisión en ISO 8601, UTC."
+    },
+    "sessionId": {
+      "type": "string",
+      "pattern": "^(missing|[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})$",
+      "description": "UUID v4 de sessionStorage, o missing si el cliente no envió X-Nexova-Session."
+    },
+    "userId": {
+      "type": "string",
+      "pattern": "^(anonymous|[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})$",
+      "description": "UUID de la cuenta TinyDB, el mismo user_uuid de las órdenes, o anonymous."
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "inbound_order_created",
+        "outbound_order_created",
+        "stock_threshold_triggered",
+        "direct_stock_edit_rejected",
+        "kit_cost_variance_detected",
+        "login_failed",
+        "login_succeeded",
+        "session_expired",
+        "credential_rejected",
+        "password_reset_requested",
+        "api_latency_recorded",
+        "page_load_recorded",
+        "frontend_exception_recorded",
+        "api_response_failed",
+        "section_viewed",
+        "flow_abandoned",
+        "order_validation_failed",
+        "asset_created",
+        "catalogue_gap_recorded"
+      ],
+      "description": "Taxonomía entidad_accion."
+    },
+    "schemaVersion": {
+      "const": "1.0.0",
+      "description": "Versión de este envelope."
+    },
+    "requestId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "description": "UUID de X-Request-Id. Une pantalla, API y log."
+    },
+    "properties": {
+      "type": "object",
+      "description": "Payload. La rama del event_type fija su allowlist."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "inbound_order_created"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/inbound_order_created"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "outbound_order_created"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/outbound_order_created"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "stock_threshold_triggered"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/stock_threshold_triggered"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "direct_stock_edit_rejected"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/direct_stock_edit_rejected"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "kit_cost_variance_detected"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/kit_cost_variance_detected"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "login_failed"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/login_failed"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "login_succeeded"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/login_succeeded"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "session_expired"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/session_expired"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "credential_rejected"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/credential_rejected"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "password_reset_requested"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/password_reset_requested"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "api_latency_recorded"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/api_latency_recorded"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "page_load_recorded"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/page_load_recorded"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "frontend_exception_recorded"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/frontend_exception_recorded"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "api_response_failed"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/api_response_failed"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "section_viewed"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/section_viewed"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "flow_abandoned"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/flow_abandoned"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "order_validation_failed"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/order_validation_failed"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "asset_created"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/asset_created"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "catalogue_gap_recorded"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/catalogue_gap_recorded"
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "inbound_order_created": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "office",
+        "product_id",
+        "product_category",
+        "programme_id",
+        "quantity",
+        "currency",
+        "order_id",
+        "product_sku",
+        "category_map_version"
+      ],
+      "properties": {
+        "office": {
+          "type": "string",
+          "enum": [
+            "valencia",
+            "miami"
+          ],
+          "description": "Oficina normalizada: valencia o miami."
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "description": "Asset.id en decimal si la fila existe."
+        },
+        "product_category": {
+          "type": "string",
+          "enum": [
+            "training_kit",
+            "certification",
+            "onboarding_equipment"
+          ],
+          "description": "Categoría del briefing tras la tabla de correspondencia."
+        },
+        "programme_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "description": "Programa del material, o unassigned si la columna está vacía."
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000,
+          "description": "Unidades recibidas en la orden de entrada."
+        },
+        "currency": {
+          "type": "string",
+          "enum": [
+            "EUR",
+            "USD"
+          ],
+          "description": "Moneda de la oficina. Valencia EUR, Miami USD."
+        },
+        "order_id": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "AssetEntry.id."
+        },
+        "product_sku": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "description": "SKU del activo, por ejemplo NXV-IT-001."
+        },
+        "category_map_version": {
+          "type": "string",
+          "const": "proposed-2026-11-12",
+          "description": "Versión de la tabla de correspondencia de categorías."
+        },
+        "supplier": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "pattern": "^[^@\\r\\n]+$",
+          "description": "Nombre de la organización proveedora. Sin correos."
+        },
+        "occurred_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?(?:Z|[+-][0-9]{2}:[0-9]{2})$",
+          "description": "created_at de la fila, en ISO 8601."
+        }
+      },
+      "allOf": [
+        {
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "office": {
+                    "const": "valencia"
+                  }
+                },
+                "required": [
+                  "office"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "currency": {
+                    "const": "EUR"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "office": {
+                    "const": "miami"
+                  }
+                },
+                "required": [
+                  "office"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "currency": {
+                    "const": "USD"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "x-nexova": {
+        "origin": "mandatory",
+        "category": "business",
+        "delivery": "batch",
+        "cadence": "hourly"
+      }
+    },
+    "outbound_order_created": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "office",
+        "product_id",
+        "product_category",
+        "programme_id",
+        "quantity",
+        "currency",
+        "order_id",
+        "product_sku",
+        "exit_type",
+        "category_map_version"
+      ],
+      "properties": {
+        "office": {
+          "type": "string",
+          "enum": [
+            "valencia",
+            "miami"
+          ],
+          "description": "Oficina normalizada."
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "description": "Asset.id en decimal."
+        },
+        "product_category": {
+          "type": "string",
+          "enum": [
+            "training_kit",
+            "certification",
+            "onboarding_equipment"
+          ],
+          "description": "Categoría del briefing."
+        },
+        "programme_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "description": "Programa, o unassigned."
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000,
+          "description": "Unidades entregadas."
+        },
+        "currency": {
+          "type": "string",
+          "enum": [
+            "EUR",
+            "USD"
+          ],
+          "description": "Moneda de la oficina."
+        },
+        "order_id": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "AssetExit.id."
+        },
+        "product_sku": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "description": "SKU del activo."
+        },
+        "exit_type": {
+          "type": "string",
+          "enum": [
+            "allocation",
+            "consumption"
+          ],
+          "description": "allocation o consumption, el valor de la columna."
+        },
+        "category_map_version": {
+          "type": "string",
+          "const": "proposed-2026-11-12",
+          "description": "Versión de la tabla de correspondencia."
+        },
+        "assignee_ref": {
+          "type": "string",
+          "pattern": "^NXV-EMP-[0-9]+$",
+          "description": "Identificador de empleado ya usado en la semilla. Solo si assigned_to coincide con ese patrón."
+        },
+        "assignee_redacted": {
+          "type": "boolean",
+          "description": "Verdadero cuando assigned_to traía texto que no es un id NXV-EMP."
+        },
+        "occurred_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?(?:Z|[+-][0-9]{2}:[0-9]{2})$",
+          "description": "created_at de la fila."
+        }
+      },
+      "allOf": [
+        {
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "office": {
+                    "const": "valencia"
+                  }
+                },
+                "required": [
+                  "office"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "currency": {
+                    "const": "EUR"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "office": {
+                    "const": "miami"
+                  }
+                },
+                "required": [
+                  "office"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "currency": {
+                    "const": "USD"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "if": {
+            "properties": {
+              "assignee_redacted": {
+                "const": true
+              }
+            },
+            "required": [
+              "assignee_redacted"
+            ]
+          },
+          "then": {
+            "properties": {
+              "assignee_ref": false
+            }
+          }
+        }
+      ],
+      "x-nexova": {
+        "origin": "mandatory",
+        "category": "business",
+        "delivery": "batch",
+        "cadence": "hourly"
+      }
+    },
+    "stock_threshold_triggered": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "office",
+        "product_id",
+        "product_category",
+        "programme_id",
+        "quantity",
+        "currency",
+        "product_sku",
+        "current_stock",
+        "previous_stock",
+        "threshold",
+        "direction",
+        "order_type",
+        "category_map_version"
+      ],
+      "properties": {
+        "office": {
+          "type": "string",
+          "enum": [
+            "valencia",
+            "miami"
+          ],
+          "description": "Oficina del activo."
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "description": "Asset.id en decimal."
+        },
+        "product_category": {
+          "type": "string",
+          "enum": [
+            "training_kit",
+            "certification",
+            "onboarding_equipment"
+          ],
+          "description": "Categoría del briefing."
+        },
+        "programme_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "description": "Programa, o unassigned."
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000,
+          "description": "Unidades de la salida que cruzó el umbral."
+        },
+        "currency": {
+          "type": "string",
+          "enum": [
+            "EUR",
+            "USD"
+          ],
+          "description": "Moneda de la oficina."
+        },
+        "product_sku": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "description": "SKU del activo."
+        },
+        "current_stock": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000,
+          "description": "Stock calculado después de la salida."
+        },
+        "previous_stock": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000,
+          "description": "Stock calculado antes de la salida. Es el available de create_exit."
+        },
+        "threshold": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000,
+          "description": "Mínimo configurado. Hoy es 10, el LOW_STOCK_BELOW del panel, hasta que exista asset.min_stock."
+        },
+        "direction": {
+          "const": "fell_below",
+          "description": "Solo el cruce hacia abajo. Una lectura por debajo no dispara."
+        },
+        "order_type": {
+          "const": "outbound",
+          "description": "La salida es el único movimiento que reduce stock."
+        },
+        "category_map_version": {
+          "type": "string",
+          "const": "proposed-2026-11-12",
+          "description": "Versión de la tabla de correspondencia."
+        },
+        "order_id": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "AssetExit.id de la salida que cruzó el umbral."
+        }
+      },
+      "allOf": [
+        {
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "office": {
+                    "const": "valencia"
+                  }
+                },
+                "required": [
+                  "office"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "currency": {
+                    "const": "EUR"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "office": {
+                    "const": "miami"
+                  }
+                },
+                "required": [
+                  "office"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "currency": {
+                    "const": "USD"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "x-nexova": {
+        "origin": "mandatory",
+        "category": "business",
+        "delivery": "stream",
+        "cadence": "immediate"
+      }
+    },
+    "direct_stock_edit_rejected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "office",
+        "product_id",
+        "product_category",
+        "programme_id",
+        "quantity",
+        "currency",
+        "product_sku",
+        "http_status",
+        "rejected_field",
+        "route_template",
+        "category_map_version"
+      ],
+      "properties": {
+        "office": {
+          "type": "string",
+          "enum": [
+            "valencia",
+            "miami"
+          ],
+          "description": "Oficina enviada en el cuerpo, normalizada."
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "description": "Asset.id en decimal si la fila existe. Si el alta se rechazó antes de insertar, el SKU enviado."
+        },
+        "product_category": {
+          "type": "string",
+          "enum": [
+            "training_kit",
+            "certification",
+            "onboarding_equipment"
+          ],
+          "description": "Categoría del briefing. Sin correspondencia, este evento no se emite."
+        },
+        "programme_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "description": "Programa de la fila, o unassigned si no hay fila o la columna está vacía."
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": -1000000,
+          "maximum": 1000000,
+          "description": "El entero que intentaron imponer: current_stock o quantity del cuerpo."
+        },
+        "currency": {
+          "type": "string",
+          "enum": [
+            "EUR",
+            "USD"
+          ],
+          "description": "Moneda derivada de la oficina."
+        },
+        "product_sku": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "description": "SKU enviado o leído de la fila."
+        },
+        "http_status": {
+          "type": "integer",
+          "enum": [
+            405,
+            422
+          ],
+          "description": "422 si el cuerpo trae current_stock. 405 si el método no existe."
+        },
+        "rejected_field": {
+          "type": "string",
+          "enum": [
+            "current_stock",
+            "method"
+          ],
+          "description": "current_stock en un 422. method en un 405."
+        },
+        "route_template": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^/[A-Za-z0-9_./{}-]{0,119}$",
+          "description": "Ruta de FastAPI, sin query."
+        },
+        "category_map_version": {
+          "type": "string",
+          "const": "proposed-2026-11-12",
+          "description": "Versión de la tabla de correspondencia."
+        }
+      },
+      "allOf": [
+        {
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "office": {
+                    "const": "valencia"
+                  }
+                },
+                "required": [
+                  "office"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "currency": {
+                    "const": "EUR"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "office": {
+                    "const": "miami"
+                  }
+                },
+                "required": [
+                  "office"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "currency": {
+                    "const": "USD"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "if": {
+            "properties": {
+              "rejected_field": {
+                "const": "current_stock"
+              }
+            },
+            "required": [
+              "rejected_field"
+            ]
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 422
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rejected_field": {
+                "const": "method"
+              }
+            },
+            "required": [
+              "rejected_field"
+            ]
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 405
+              }
+            }
+          }
+        }
+      ],
+      "x-nexova": {
+        "origin": "mandatory",
+        "category": "business",
+        "delivery": "stream",
+        "cadence": "immediate"
+      }
+    },
+    "kit_cost_variance_detected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "office",
+        "product_id",
+        "product_category",
+        "programme_id",
+        "quantity",
+        "currency",
+        "order_id",
+        "product_sku",
+        "supplier",
+        "unit_cost_minor",
+        "historical_unit_cost_minor",
+        "variance_ratio",
+        "threshold_ratio",
+        "category_map_version"
+      ],
+      "properties": {
+        "office": {
+          "type": "string",
+          "enum": [
+            "valencia",
+            "miami"
+          ],
+          "description": "Oficina de la entrada."
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "description": "Asset.id en decimal."
+        },
+        "product_category": {
+          "type": "string",
+          "enum": [
+            "training_kit",
+            "certification",
+            "onboarding_equipment"
+          ],
+          "description": "Categoría del briefing."
+        },
+        "programme_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "description": "Programa, o unassigned."
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000,
+          "description": "Unidades de la entrada cuyo costo se compara."
+        },
+        "currency": {
+          "type": "string",
+          "enum": [
+            "EUR",
+            "USD"
+          ],
+          "description": "Moneda de la oficina. No se convierte."
+        },
+        "order_id": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "AssetEntry.id."
+        },
+        "product_sku": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "description": "SKU del activo."
+        },
+        "supplier": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "pattern": "^[^@\\r\\n]+$",
+          "description": "Misma organización que la entrada. El histórico se agrupa por producto, proveedor y moneda."
+        },
+        "unit_cost_minor": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000000000,
+          "description": "Costo unitario en céntimos de la moneda de la oficina. Hoy la columna no existe."
+        },
+        "historical_unit_cost_minor": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000000000,
+          "description": "Mediana de costos unitarios previos del mismo producto, proveedor y moneda. Cero no sirve de base."
+        },
+        "variance_ratio": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1000,
+          "description": "Valor absoluto de (nuevo − histórico) / histórico."
+        },
+        "threshold_ratio": {
+          "type": "number",
+          "const": 0.1,
+          "description": "Umbral inicial del briefing: 10 por ciento."
+        },
+        "category_map_version": {
+          "type": "string",
+          "const": "proposed-2026-11-12",
+          "description": "Versión de la tabla de correspondencia."
+        },
+        "occurred_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?(?:Z|[+-][0-9]{2}:[0-9]{2})$",
+          "description": "created_at de la entrada."
+        }
+      },
+      "allOf": [
+        {
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "office": {
+                    "const": "valencia"
+                  }
+                },
+                "required": [
+                  "office"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "currency": {
+                    "const": "EUR"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "office": {
+                    "const": "miami"
+                  }
+                },
+                "required": [
+                  "office"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "currency": {
+                    "const": "USD"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "x-nexova": {
+        "origin": "mandatory",
+        "category": "business",
+        "delivery": "stream",
+        "cadence": "immediate"
+      }
+    },
+    "login_failed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "failure_code"
+      ],
+      "properties": {
+        "failure_code": {
+          "const": "invalid_credentials",
+          "description": "POST /auth/login respondió 401. El mensaje público no distingue correo y contraseña."
+        }
+      },
+      "x-nexova": {
+        "origin": "identified",
+        "category": "authentication",
+        "delivery": "stream",
+        "cadence": "immediate"
+      }
+    },
+    "login_succeeded": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expires_in_seconds"
+      ],
+      "properties": {
+        "expires_in_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400,
+          "description": "Vida del token en segundos, el expires_in de la respuesta. El token no viaja."
+        }
+      },
+      "x-nexova": {
+        "origin": "identified",
+        "category": "authentication",
+        "delivery": "batch",
+        "cadence": "hourly"
+      }
+    },
+    "session_expired": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surface",
+        "reason"
+      ],
+      "properties": {
+        "surface": {
+          "type": "string",
+          "enum": [
+            "api",
+            "backoffice",
+            "portal"
+          ],
+          "description": "Dónde se vio el token caducado."
+        },
+        "reason": {
+          "const": "exp_claim",
+          "description": "La firma es válida y el claim exp ya pasó. No vale el query reason=expired."
+        }
+      },
+      "x-nexova": {
+        "origin": "identified",
+        "category": "authentication",
+        "delivery": "batch",
+        "cadence": "hourly"
+      }
+    },
+    "credential_rejected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "failure_code",
+        "surface"
+      ],
+      "properties": {
+        "failure_code": {
+          "type": "string",
+          "enum": [
+            "bad_signature",
+            "missing_token",
+            "inactive_or_unknown",
+            "subject_mismatch",
+            "foreign_credentials"
+          ],
+          "description": "Motivo del rechazo de credencial, distinto de una contraseña incorrecta en el login."
+        },
+        "surface": {
+          "type": "string",
+          "enum": [
+            "api",
+            "backoffice",
+            "portal"
+          ],
+          "description": "API, backoffice o portal."
+        },
+        "dropped_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000,
+          "description": "Rechazos missing_token del mismo proceso por encima de 60 en un minuto."
+        }
+      },
+      "x-nexova": {
+        "origin": "identified",
+        "category": "authentication",
+        "delivery": "stream",
+        "cadence": "immediate"
+      }
+    },
+    "password_reset_requested": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outcome"
+      ],
+      "properties": {
+        "outcome": {
+          "const": "accepted",
+          "description": "POST /auth/forgot-password respondió 200. El evento no dice si el correo tiene cuenta."
+        }
+      },
+      "x-nexova": {
+        "origin": "identified",
+        "category": "authentication",
+        "delivery": "batch",
+        "cadence": "hourly"
+      }
+    },
+    "api_latency_recorded": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "http_method",
+        "route_template",
+        "status_code",
+        "duration_ms"
+      ],
+      "properties": {
+        "http_method": {
+          "type": "string",
+          "enum": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE"
+          ],
+          "description": "Método HTTP."
+        },
+        "route_template": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^/[A-Za-z0-9_./{}-]{0,119}$",
+          "description": "request.scope['route'].path. Sin query."
+        },
+        "status_code": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 599,
+          "description": "Estado HTTP."
+        },
+        "duration_ms": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 600000,
+          "description": "Milisegundos del middleware de timing. Solo se emite desde 1000 ms o con estado 500 o mayor."
+        },
+        "dropped_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000,
+          "description": "Eventos del mismo route_template descartados por el tope de 30 por minuto."
+        },
+        "cache_mark": {
+          "type": "string",
+          "enum": [
+            "HIT",
+            "MISS",
+            "none"
+          ],
+          "description": "Valor de X-Nexova-Cache, o none si la ruta no usa caché."
+        }
+      },
+      "x-nexova": {
+        "origin": "identified",
+        "category": "performance",
+        "delivery": "stream",
+        "cadence": "immediate"
+      }
+    },
+    "page_load_recorded": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "app",
+        "path_template",
+        "duration_ms",
+        "nav_type"
+      ],
+      "properties": {
+        "app": {
+          "type": "string",
+          "enum": [
+            "backoffice",
+            "portal"
+          ],
+          "description": "Backoffice o portal."
+        },
+        "path_template": {
+          "type": "string",
+          "enum": [
+            "/",
+            "/login",
+            "/register",
+            "/forgot-password",
+            "/reset-password",
+            "/proveedores",
+            "/account/profile",
+            "/account/change-password",
+            "/backoffice/inventory/products",
+            "/backoffice/inventory/orders",
+            "/backoffice/inventory/orders/inbound",
+            "/backoffice/inventory/orders/outbound"
+          ],
+          "description": "Ruta de la lista cerrada. Una redirección con token no entra."
+        },
+        "duration_ms": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 600000,
+          "description": "PerformanceNavigationTiming.loadEventEnd menos startTime, en milisegundos."
+        },
+        "nav_type": {
+          "type": "string",
+          "enum": [
+            "navigate",
+            "reload",
+            "back_forward"
+          ],
+          "description": "Tipo de navegación del documento. Un cambio de ruta del cliente no es otra carga."
+        }
+      },
+      "x-nexova": {
+        "origin": "identified",
+        "category": "performance",
+        "delivery": "batch",
+        "cadence": "nightly"
+      }
+    },
+    "frontend_exception_recorded": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "app",
+        "path_template",
+        "error_name",
+        "message_sha256"
+      ],
+      "properties": {
+        "app": {
+          "type": "string",
+          "enum": [
+            "backoffice",
+            "portal"
+          ],
+          "description": "Backoffice o portal."
+        },
+        "path_template": {
+          "type": "string",
+          "enum": [
+            "/",
+            "/login",
+            "/register",
+            "/forgot-password",
+            "/reset-password",
+            "/proveedores",
+            "/account/profile",
+            "/account/change-password",
+            "/backoffice/inventory/products",
+            "/backoffice/inventory/orders",
+            "/backoffice/inventory/orders/inbound",
+            "/backoffice/inventory/orders/outbound"
+          ],
+          "description": "Ruta de la lista cerrada en el momento del error."
+        },
+        "error_name": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]{0,79}$",
+          "description": "error.name. Sin el mensaje."
+        },
+        "message_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "SHA-256 del nombre, un salto de línea y el mensaje ya saneado."
+        },
+        "dropped_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000,
+          "description": "Errores de la misma sesión por encima de 5 en un minuto."
+        }
+      },
+      "x-nexova": {
+        "origin": "identified",
+        "category": "errors",
+        "delivery": "stream",
+        "cadence": "immediate"
+      }
+    },
+    "api_response_failed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "app",
+        "http_method",
+        "route_template",
+        "status_code"
+      ],
+      "properties": {
+        "app": {
+          "type": "string",
+          "enum": [
+            "backoffice",
+            "portal"
+          ],
+          "description": "Cliente que vio el fallo."
+        },
+        "http_method": {
+          "type": "string",
+          "enum": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE"
+          ],
+          "description": "Método de la llamada."
+        },
+        "route_template": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^/[A-Za-z0-9_./{}-]{0,119}$",
+          "description": "Plantilla de la ruta, sin query y sin cuerpo."
+        },
+        "status_code": {
+          "type": "integer",
+          "enum": [
+            0,
+            500,
+            501,
+            502,
+            503,
+            504
+          ],
+          "description": "0 si fetch lanzó por red. 500–504 si el servidor respondió así."
+        },
+        "duration_ms": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 600000,
+          "description": "Milisegundos hasta el fallo, cuando el navegador los tiene."
+        }
+      },
+      "x-nexova": {
+        "origin": "identified",
+        "category": "errors",
+        "delivery": "stream",
+        "cadence": "immediate"
+      }
+    },
+    "section_viewed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "app",
+        "section"
+      ],
+      "properties": {
+        "app": {
+          "type": "string",
+          "enum": [
+            "backoffice",
+            "portal"
+          ],
+          "description": "Backoffice o portal."
+        },
+        "section": {
+          "type": "string",
+          "enum": [
+            "backoffice_home",
+            "backoffice_inventory_products",
+            "backoffice_inventory_inbound",
+            "backoffice_inventory_outbound",
+            "backoffice_inventory_orders",
+            "backoffice_login",
+            "portal_incidents",
+            "portal_suppliers",
+            "portal_profile",
+            "portal_change_password",
+            "portal_login",
+            "portal_register",
+            "portal_forgot_password",
+            "portal_reset_password"
+          ],
+          "description": "Sección de la lista cerrada."
+        }
+      },
+      "x-nexova": {
+        "origin": "identified",
+        "category": "navigation",
+        "delivery": "batch",
+        "cadence": "hourly"
+      }
+    },
+    "flow_abandoned": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "app",
+        "flow",
+        "elapsed_ms"
+      ],
+      "properties": {
+        "app": {
+          "type": "string",
+          "enum": [
+            "backoffice",
+            "portal"
+          ],
+          "description": "Backoffice o portal."
+        },
+        "flow": {
+          "type": "string",
+          "enum": [
+            "inventory_inbound",
+            "inventory_outbound",
+            "login",
+            "register",
+            "forgot_password",
+            "reset_password",
+            "change_password",
+            "incident_create"
+          ],
+          "description": "Formulario que quedó a medias."
+        },
+        "elapsed_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 86400000,
+          "description": "Milisegundos desde el primer campo con texto hasta el abandono."
+        },
+        "last_field": {
+          "type": "string",
+          "enum": [
+            "asset_id",
+            "quantity",
+            "supplier",
+            "office",
+            "exit_type",
+            "email",
+            "password",
+            "current_password",
+            "new_password",
+            "confirmation"
+          ],
+          "description": "Nombre del último campo con texto. El valor no se guarda."
+        }
+      },
+      "x-nexova": {
+        "origin": "identified",
+        "category": "navigation",
+        "delivery": "batch",
+        "cadence": "hourly"
+      }
+    },
+    "order_validation_failed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "failure_code",
+        "route_template",
+        "http_status"
+      ],
+      "properties": {
+        "failure_code": {
+          "type": "string",
+          "enum": [
+            "insufficient_stock",
+            "assigned_to_rule",
+            "empty_supplier",
+            "bad_office",
+            "unknown_asset",
+            "forbidden_user_uuid",
+            "quantity_rule",
+            "currency_office_mismatch"
+          ],
+          "description": "Regla que rechazó la orden."
+        },
+        "route_template": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^/[A-Za-z0-9_./{}-]{0,119}$",
+          "description": "Ruta de la orden."
+        },
+        "http_status": {
+          "type": "integer",
+          "enum": [
+            400,
+            404,
+            422
+          ],
+          "description": "Estado que ya devuelve la API."
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "description": "Asset.id en decimal cuando el cuerpo trae asset_id."
+        },
+        "product_sku": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "description": "SKU si la fila se pudo leer."
+        },
+        "office": {
+          "type": "string",
+          "enum": [
+            "valencia",
+            "miami"
+          ],
+          "description": "Oficina normalizada, si el cuerpo la traía y era válida."
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": -1000000,
+          "maximum": 1000000,
+          "description": "Cantidad enviada, si era un entero."
+        },
+        "exit_type": {
+          "type": "string",
+          "enum": [
+            "allocation",
+            "consumption"
+          ],
+          "description": "Tipo de salida, si el cuerpo lo traía."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "failure_code": {
+                "const": "insufficient_stock"
+              }
+            },
+            "required": [
+              "failure_code"
+            ]
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 400
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "failure_code": {
+                "const": "unknown_asset"
+              }
+            },
+            "required": [
+              "failure_code"
+            ]
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 404
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "failure_code": {
+                "enum": [
+                  "assigned_to_rule",
+                  "empty_supplier",
+                  "bad_office",
+                  "forbidden_user_uuid",
+                  "quantity_rule",
+                  "currency_office_mismatch"
+                ]
+              }
+            },
+            "required": [
+              "failure_code"
+            ]
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 422
+              }
+            }
+          }
+        }
+      ],
+      "x-nexova": {
+        "origin": "identified",
+        "category": "business",
+        "delivery": "batch",
+        "cadence": "hourly"
+      }
+    },
+    "asset_created": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "product_id",
+        "product_sku",
+        "office",
+        "currency",
+        "live_category"
+      ],
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "description": "Asset.id en decimal."
+        },
+        "product_sku": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "description": "SKU guardado."
+        },
+        "office": {
+          "type": "string",
+          "enum": [
+            "valencia",
+            "miami"
+          ],
+          "description": "Oficina normalizada."
+        },
+        "currency": {
+          "type": "string",
+          "enum": [
+            "EUR",
+            "USD"
+          ],
+          "description": "Moneda derivada de la oficina."
+        },
+        "live_category": {
+          "type": "string",
+          "enum": [
+            "hardware",
+            "peripherals",
+            "office_supplies",
+            "training_materials"
+          ],
+          "description": "Categoría tal como está en la columna asset.category."
+        },
+        "product_category": {
+          "type": "string",
+          "enum": [
+            "training_kit",
+            "certification",
+            "onboarding_equipment"
+          ],
+          "description": "Categoría del briefing, solo si la tabla de correspondencia tiene fila."
+        },
+        "programme_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "description": "Programa, si la columna ya tiene valor. Sin unassigned aquí: la ausencia se omite."
+        },
+        "category_map_version": {
+          "type": "string",
+          "const": "proposed-2026-11-12",
+          "description": "Presente cuando product_category también lo está."
+        }
+      },
+      "allOf": [
+        {
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "office": {
+                    "const": "valencia"
+                  }
+                },
+                "required": [
+                  "office"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "currency": {
+                    "const": "EUR"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "office": {
+                    "const": "miami"
+                  }
+                },
+                "required": [
+                  "office"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "currency": {
+                    "const": "USD"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "if": {
+            "required": [
+              "product_category"
+            ]
+          },
+          "then": {
+            "required": [
+              "category_map_version"
+            ]
+          }
+        }
+      ],
+      "x-nexova": {
+        "origin": "identified",
+        "category": "business",
+        "delivery": "batch",
+        "cadence": "hourly"
+      }
+    },
+    "catalogue_gap_recorded": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gap",
+        "affected_event",
+        "product_id",
+        "product_sku"
+      ],
+      "properties": {
+        "gap": {
+          "type": "string",
+          "enum": [
+            "missing_programme",
+            "unmapped_category"
+          ],
+          "description": "missing_programme acompaña al evento obligatorio. unmapped_category lo sustituye."
+        },
+        "affected_event": {
+          "type": "string",
+          "enum": [
+            "inbound_order_created",
+            "outbound_order_created",
+            "stock_threshold_triggered",
+            "direct_stock_edit_rejected",
+            "kit_cost_variance_detected"
+          ],
+          "description": "Evento obligatorio afectado."
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "description": "Id en decimal o SKU, con la misma regla que el evento bloqueado."
+        },
+        "product_sku": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+          "description": "SKU del activo."
+        },
+        "live_category": {
+          "type": "string",
+          "enum": [
+            "hardware",
+            "peripherals",
+            "office_supplies",
+            "training_materials"
+          ],
+          "description": "Categoría de la columna, cuando se conoce."
+        },
+        "office": {
+          "type": "string",
+          "enum": [
+            "valencia",
+            "miami"
+          ],
+          "description": "Oficina normalizada, cuando se conoce."
+        }
+      },
+      "x-nexova": {
+        "origin": "identified",
+        "category": "business",
+        "delivery": "stream",
+        "cadence": "immediate"
+      }
+    }
+  },
+  "x-nexova": {
+    "company": "Nexova",
+    "schemaVersion": "1.0.0",
+    "briefing_path": "content/contexts/06-telemetry-data-pipelines/telemetry/nexova-BRIEFING.md",
+    "briefing_sha256": "b9aee8a9dfde725d75d695f08f1027e14d635edeb6782f23d884987c0b72e097",
+    "category_map_version": "proposed-2026-11-12",
+    "low_stock_below": 10,
+    "cost_variance_threshold_ratio": 0.1
+  }
+}
