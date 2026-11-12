@@ -1,0 +1,13 @@
+2026-11-06 11:59:53 CST
+# Intento real desde la caja: la API de 021 (106083a) con DATABASE_URL del Transaction pooler, construida desde la env sin imprimirla
+  File "/workspace/llm-run/nexova/services/api/.venv/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/workspace/llm-run/nexova/services/api/.venv/lib/python3.13/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "aws-0-us-east-2.pooler.supabase.com" (198.18.0.1), port 6543 failed: timeout expired
+(Background on this error at: https://sqlalche.me/e/21/e3q8)
+ERROR:    Application startup failed. Exiting.
+---
+FALLO ConnectionTimeout: connection timeout expired
+exit=1

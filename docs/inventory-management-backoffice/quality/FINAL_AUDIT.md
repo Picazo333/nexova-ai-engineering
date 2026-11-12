@@ -16,7 +16,7 @@ No cuentan:
 | --- | --- | --- |
 | D01 | HITL_ENVIO_MIGUEL | Subir la URL del fork o del PR a la plataforma del estudiante. |
 | D02 | HITL_MIGUEL | Revisar este PR y decidir el merge. |
-| B01 | BLOCKED_HITL | URI de Supabase. PostgreSQL 16.15 local no lo sustituye. |
+| B01 | PASS | Chequeo SELECT vía MCP, 2026-11-12 15:48 CST. Evidencia: `evidence/supabase-live/03-mcp-check.json`. La conexión TCP al pooler 6543 no se ejecutó desde la caja y queda declarada como límite. |
 
 ## Qué se ejecutó
 
@@ -36,7 +36,7 @@ No cuentan:
 2. Para probar: API con `DATABASE_URL` de PostgreSQL y `INVENTORY_AUTOSEED=1`, y `cd uis/backoffice && npm run dev`. Entrar en `/login`. La clave del token es `nexova-access-token` en este origen.
 3. Entregar al instructor o al LMS, si toca. D01.
 4. Merge solo después de aprobar. D02.
-5. Supabase sigue en el runbook del hito 021. B01.
+5. B01 está en PASS por el chequeo SELECT vía MCP del 2026-11-12 15:48 CST (`evidence/supabase-live/03-mcp-check.json`). La conexión TCP al pooler 6543 no se ejecutó desde la caja y queda declarada como límite.
 
 ## Límites
 

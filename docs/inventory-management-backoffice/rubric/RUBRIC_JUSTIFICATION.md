@@ -44,4 +44,4 @@ Integración real: API de 021 sobre PostgreSQL 16.15, semilla con NXV-IT-001 = 1
 | E02 | PASS | Jest del backoffice: 14 pruebas del guard, los umbrales, el Bearer, el 400, el 422, el 500 y la ausencia de `fetch` en componentes. | `uis/backoffice/__tests__/inventory.test.ts`. |
 | D01 | HITL_ENVIO_MIGUEL | Falta que Miguel envíe la URL del fork o del PR a la plataforma del estudiante. | Enunciado, sección de entrega. |
 | D02 | HITL_MIGUEL | Falta la revisión humana y la decisión de merge. Este trabajo no mergea. | PR contra `feature/milestone-backend-development`. |
-| B01 | BLOCKED_HITL | No hay proyecto ni URI de Supabase. La verificación usa PostgreSQL 16.15 local. Eso no se declara como PASS de Supabase. | Mismo límite que el hito 021. |
+| B01 | PASS | Chequeo SELECT vía MCP el 2026-11-12 15:48 CST. El stock leído coincide con la semilla. La conexión TCP al pooler 6543 no se ejecutó desde la caja y queda declarada como límite. | `evidence/supabase-live/03-mcp-check.json`. |

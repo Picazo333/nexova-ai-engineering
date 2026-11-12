@@ -1,0 +1,86 @@
+{
+  "timestamp": "2026-11-12 15:48:57 CST (America/Mexico_City)",
+  "written_at": "2026-11-12 15:52:35 CST (America/Mexico_City)",
+  "project_id": "atraotgdztnrqystnujh",
+  "project_name": "4geeks-cohorte",
+  "region": "us-east-2",
+  "status": "ACTIVE_HEALTHY",
+  "method": "Supabase MCP connector, execute_sql, SELECT-only. This is not check_db.py's direct Postgres-protocol connection (the box blocks that protocol; see 02-box-connect-attempt.txt).",
+  "writes": false,
+  "identity": {
+    "current_user": "postgres",
+    "current_database": "postgres",
+    "server_version": "17.11",
+    "server_port_as_seen_by_mcp": 5432,
+    "now_cst": "2026-11-12 15:48:57"
+  },
+  "stock_query": "select a.sku, coalesce((select sum(quantity) from assetentry e where e.asset_id=a.id),0) - coalesce((select sum(quantity) from assetexit x where x.asset_id=a.id),0) from asset a order by a.sku",
+  "stock": [
+    {
+      "sku": "NXV-IT-001",
+      "current_stock": 12
+    },
+    {
+      "sku": "NXV-IT-002",
+      "current_stock": 6
+    },
+    {
+      "sku": "NXV-OFF-001",
+      "current_stock": 18
+    },
+    {
+      "sku": "NXV-PER-001",
+      "current_stock": 20
+    },
+    {
+      "sku": "NXV-PER-002",
+      "current_stock": 0
+    },
+    {
+      "sku": "NXV-TRN-001",
+      "current_stock": 15
+    }
+  ],
+  "expected": {
+    "NXV-IT-001": 12,
+    "NXV-IT-002": 6,
+    "NXV-PER-001": 20,
+    "NXV-PER-002": 0,
+    "NXV-OFF-001": 18,
+    "NXV-TRN-001": 15
+  },
+  "stock_matches_expected": true,
+  "counts": {
+    "asset": 6,
+    "assetentry": 6,
+    "assetexit": 3
+  },
+  "rls": [
+    {
+      "table": "asset",
+      "rls_enabled": true,
+      "rls_forced": false
+    },
+    {
+      "table": "assetentry",
+      "rls_enabled": true,
+      "rls_forced": false
+    },
+    {
+      "table": "assetexit",
+      "rls_enabled": true,
+      "rls_forced": false
+    }
+  ],
+  "pooler_host_port_check": {
+    "executed": false,
+    "reason": "The MCP SQL API is not a client session to the Transaction pooler. check_db.py also requires host ending in pooler.supabase.com and port 6543. The box still times out on that protocol.",
+    "check_db_py_requires": {
+      "host_suffix": "pooler.supabase.com",
+      "port": 6543,
+      "user_format": "postgres.<project_ref>"
+    }
+  },
+  "result": "PASS_DATA",
+  "result_reason": "Stock and row counts match EXPECTED exactly (same as 01-readback.json from 2026-11-06). The pooler TCP path of check_db.py was not executed from the box."
+}

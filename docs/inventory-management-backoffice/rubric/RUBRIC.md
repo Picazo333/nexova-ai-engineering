@@ -44,4 +44,4 @@ Required = sí cuenta para el cierre. HITL y BLOCKED_HITL no restan al 100%.
 | E02 | extra | Técnico: `lib/inventory.ts` con 4xx/5xx explícito, guard de ruta puro y pruebas Jest. |
 | D01 | no | HITL_ENVIO_MIGUEL. Subir la URL del fork o del PR a la plataforma del estudiante. |
 | D02 | no | HITL_MIGUEL. Revisar el PR y decidir el merge. |
-| B01 | no | BLOCKED_HITL. No hay URI de Supabase. PostgreSQL local no cierra ese criterio. |
+| B01 | no | PASS. Chequeo SELECT vía MCP, 2026-11-12 15:48 CST (`evidence/supabase-live/03-mcp-check.json`). La conexión TCP al pooler 6543 no se ejecutó desde la caja y queda declarada como límite. |
