@@ -61,12 +61,17 @@ items:
     rubric: []
   - id: justification
     path: docs/telemetry/rubric/RUBRIC_JUSTIFICATION.md
-    sha256: 3d40a7cc181c2c1783f899e805f0af73104691cbfff4a224817735a3047a6545
+    sha256: fa8df950578653fdece45c48c49b85f5b8d96501940ddc3b93c37ade6ae5b107
     rubric: []
   - id: telemetry
     path: docs/telemetry/process/TELEMETRY.json
     sha256: c2c4858ec57dd81267191d5ff982cf13d925b8990ea2669e3d03e24243186b68
     rubric: []
     note: "tokens_used null. El runtime no expone el contador."
+  - id: final-audit
+    path: docs/telemetry/quality/FINAL_AUDIT.md
+    sha256: 099ad7404f0a62f78e987019ba9631cbd5eb2dbae951e07577a9f008d92a106f
+    rubric: [H01]
+    note: "PR #29 abierto. Estado PENDIENTE_REVISION_ORQUESTADOR."
 suite_logs_are_cli: true
 commit_sha_note: "Los SHA256 de arriba son de los ficheros en el commit que los añade. El manifiesto no se hashea a sí mismo."

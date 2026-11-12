@@ -21,3 +21,5 @@ Límites explícitos: están en `quality/EXCELLENCE_REVIEW.md`. El principal es 
 Checklist de entrega para Miguel: el ítem de arriba.
 
 Rama `feature/telemetry-plan`. Base `feature/caching-optimisation` @ `3be83a0`. Sin force-push.
+
+PR: https://github.com/Picazo333/nexova-ai-engineering/pull/29 — título `docs: telemetry design plan`. Abierto, sin merge.

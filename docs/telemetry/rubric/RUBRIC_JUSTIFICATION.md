@@ -32,7 +32,7 @@
 | R28 | PASS | Cada ficha nombra archivo y función (`create_entry`, `create_exit`, `invalid_request`, `login`, `get_current_user`, `timing_middleware`, `apiFetch`, `error.tsx`). La sección 11 es la lista de trabajo. | Secciones 7 y 11. |
 | R29 | PASS | El diff de la rama no toca `services/` ni `uis/`. El script solo lee el esquema, el plan y los ejemplos. | `git diff --stat` contra `3be83a0`. |
 | R30 | PASS | `docs/telemetry/telemetry-plan.md` y `docs/telemetry/event-schemas.json`. | Esos dos paths. |
-| R31 | PASS | Título `docs: telemetry design plan`. El cuerpo lleva 19 eventos, 5 obligatorios, 14 identificados, las cinco categorías y la decisión de la tabla `proposed-2026-11-12` frente a `unassigned`. La base es `feature/caching-optimisation`, no `main`: lo pide esta ejecución. | Cuerpo del PR. Sección 12 del plan. |
+| R31 | PASS | Título `docs: telemetry design plan`. El cuerpo lleva 19 eventos, 5 obligatorios, 14 identificados, las cinco categorías y la decisión de la tabla `proposed-2026-11-12` frente a `unassigned`. La base es `feature/caching-optimisation`, no `main`: lo pide esta ejecución. | https://github.com/Picazo333/nexova-ai-engineering/pull/29. Sección 12 del plan. |
 | R32 | PASS | API 179 passed con Postgres. Jest portal 23. Jest backoffice 20. Playwright portal 14 passed. | `evidence/pytest-api.txt`, `jest-portal.txt`, `jest-backoffice.txt`, `playwright-portal.txt`. |
 | X01 | PASS | Figura mermaid «En el momento / Cada hora / Cada noche» y la tabla que la une a los `event_type`. | `telemetry-plan.md` sección 8. |
 | X02 | PASS | `validate_event_schemas.py` contra ejemplos válidos, inválidos y fichas. | `evidence/validate-schemas.txt`. |
