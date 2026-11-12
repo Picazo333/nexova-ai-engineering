@@ -1,0 +1,2 @@
+2026-11-12 21:30:11.811 UTC [7862] ubuntu@nexova_test LOG:  statement: INSERT INTO telemetry_events (timestamp, service, event_type, level, value, message, tags) VALUES (...)
+2026-11-12 21:30:11.868 UTC [7862] ubuntu@nexova_test LOG:  statement: INSERT INTO telemetry_events (timestamp, service, event_type, level, value, message, tags) VALUES (...)

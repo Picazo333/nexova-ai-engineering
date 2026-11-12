@@ -1,0 +1,4 @@
+insert_statements=2
+batches=2
+rows=7
+note=one INSERT per HTTP batch (mixed batch stored 6, beacon stored 1), not one INSERT per event

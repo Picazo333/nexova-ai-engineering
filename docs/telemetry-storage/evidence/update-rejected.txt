@@ -1,0 +1,3 @@
+SET
+ERROR:  telemetry_events es de solo escritura
+CONTEXT:  PL/pgSQL function telemetry_events_reject_mutation() line 3 at RAISE

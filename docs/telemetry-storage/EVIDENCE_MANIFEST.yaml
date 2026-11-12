@@ -1,0 +1,95 @@
+project: ai-eng-telemetry-storage
+branch: feature/telemetry-storage
+base: feature/telemetry-capture
+base_sha: 6cc066f7bf61f42dbb7b32941aa166799f29e770
+tested_sha: e6fb02fd43eb3723423063956979cfc13888c0d8
+ui: false
+lockup: not_applicable
+counts:
+  pass: 24
+  fail: 0
+  hitl: 5
+  required: 22
+  not_applicable: 2
+items:
+  - path: docs/telemetry-storage/evidence/bad-envelope.json
+    sha256: 57e6973ae10685bbf81196d0503ec9839290a9342f9f104fdc9ef6e68ec7d97e
+    bytes: 133
+  - path: docs/telemetry-storage/evidence/beacon-response.json
+    sha256: 7a159779563f84d0676fb613e8962a57924f5c3b3c63bda4bee7f92d7c155f6c
+    bytes: 38
+  - path: docs/telemetry-storage/evidence/delete-rejected.txt
+    sha256: bc4d68eb6ef6c0e335466057966260f9ffbcd6840101b25411766d019a4e2637
+    bytes: 129
+  - path: docs/telemetry-storage/evidence/http-status.txt
+    sha256: ac6d0c77dd603d4c520c2e6587722ba45e41ec8515f3525ceb6c73a8d84b680f
+    bytes: 182
+  - path: docs/telemetry-storage/evidence/insert-count.txt
+    sha256: 489041e5857f4dc3a4d2e04773362d4f31f0fd2e138211c4eb51950ab563486f
+    bytes: 134
+  - path: docs/telemetry-storage/evidence/insert-statements.txt
+    sha256: 5f083e2cb8ec4b107f54c0746c4900c75fcc18b17f538c5b383f40e80ea5749f
+    bytes: 350
+  - path: docs/telemetry-storage/evidence/jest-backoffice.txt
+    sha256: 9a823fdaf54d660cfe3e2c6c166d9c6b5564ea670cbbecbc6f7cb11bc69ef655
+    bytes: 379
+  - path: docs/telemetry-storage/evidence/jest-portal.txt
+    sha256: cac9ea4163a43d1509e93c70068ddb0f403ce6ec60c89d72ff283df892dec55f
+    bytes: 143
+  - path: docs/telemetry-storage/evidence/mixed-batch-response.json
+    sha256: 19a53b6a8e01a6c3a32bfb899df574a387c07751d0468afb33fe6fe0a6eb1e32
+    bytes: 38
+  - path: docs/telemetry-storage/evidence/playwright-portal.txt
+    sha256: 27c100b6bbf043f8521c16652ce1b36754ccb998e59b934560b02b55d8918570
+    bytes: 3477
+  - path: docs/telemetry-storage/evidence/psql-table.txt
+    sha256: ad1320295e56b2bf0181dab5cdb959f87c97db68d2d564a4a1841b7336af30c9
+    bytes: 4195
+  - path: docs/telemetry-storage/evidence/pytest-api-tests.txt
+    sha256: 3b1af3289191b4300e6646405b41f8c9a77fa0b382903df8ad12a755de712871
+    bytes: 260
+  - path: docs/telemetry-storage/evidence/pytest-api.txt
+    sha256: a489407015957ab2575a017732129b64135a3c7ae918287b988fe5d12758c064
+    bytes: 260
+  - path: docs/telemetry-storage/evidence/pytest-root.txt
+    sha256: c1cebbd3397935e3097cc24880be3a9eac70d71a37fc3a0f499656b16f2cfd2f
+    bytes: 110
+  - path: docs/telemetry-storage/evidence/schema-path.txt
+    sha256: 42f6c26424dfa8c828e6baf1578c8af2cbb00a3158a79f720a9580c8104e7754
+    bytes: 172
+  - path: docs/telemetry-storage/evidence/uis-diff.txt
+    sha256: e88048233ee231615d58f0098020e86de1a7c72e17a1d49af6a4b069e96a2c62
+    bytes: 105
+  - path: docs/telemetry-storage/evidence/uis-names.txt
+    sha256: eee9fa961ba48c56146d136105e6b6d14cc0e1d80e52536bd9391510ab6a0523
+    bytes: 51
+  - path: docs/telemetry-storage/evidence/update-rejected.txt
+    sha256: bc4d68eb6ef6c0e335466057966260f9ffbcd6840101b25411766d019a4e2637
+    bytes: 129
+  - path: docs/telemetry-storage/evidence/validate-schemas.txt
+    sha256: c1561762f27c792092e9fec912115de06c7fa4dddc0d6efddde5a74b74a91681
+    bytes: 14322
+  - path: docs/telemetry-storage/rubric/RUBRIC.md
+    sha256: 9b1b8d30292c6cf2122dfa3461e25e2b1b04cfc27b6aff9e0d012e2b2f77ed6c
+    bytes: 3785
+  - path: docs/telemetry-storage/rubric/RUBRIC_JUSTIFICATION.md
+    sha256: 1bc3b6d4bc17518ef9ddf9f9038146c83757619ccfe447144224fb733b983efb
+    bytes: 8477
+  - path: docs/telemetry-storage/process/SOURCE.md
+    sha256: 652afa3fac4e34d3f3ea5da46a5ae5f743c5dd1e5031855f151653213d9da4c6
+    bytes: 2075
+  - path: docs/telemetry-storage/process/TELEMETRY.json
+    sha256: cc8127a8a611c1152bfe5707d7568d72cf9e90074534b04b22ac8407129b2eba
+    bytes: 2538
+  - path: docs/telemetry-storage/process/UNDERSTAND.md
+    sha256: 4a81d85431eaf82886ae1d09503bc57ff5b8955e5046b0f582260d7caa43f518
+    bytes: 1904
+  - path: docs/telemetry-storage/quality/DESIGN-QA.md
+    sha256: 0ff229ad64732e07808d4e4b39f5c24a3692c6fdaffb6d913f185df9b910c077
+    bytes: 1156
+  - path: docs/telemetry-storage/quality/EXCELLENCE_REVIEW.md
+    sha256: 60a1075c27cf90ed729c2514102b597ee33f907abcec98fb37a068b0f3efb850
+    bytes: 2295
+  - path: docs/telemetry-storage/quality/FINAL_AUDIT.md
+    sha256: 464ebae8f9a3ddc0114c687d870d0a13bbf4d2c4b5a25de3e353a621c21b0664
+    bytes: 2555

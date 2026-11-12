@@ -1,0 +1,2 @@
+git diff --stat 6cc066f -- uis
+(sin salida: el frontend no cambia respecto de feature/telemetry-capture)
