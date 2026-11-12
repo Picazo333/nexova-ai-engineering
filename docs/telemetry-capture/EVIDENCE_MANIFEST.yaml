@@ -99,5 +99,5 @@ items:
     sha256: bb1f01a1ce77e589c2bfdebad55b1f59e32368f73b49fafcfecbb12023757283
     bytes: 2530
   - path: docs/telemetry-capture/quality/FINAL_AUDIT.md
-    sha256: ace9e517827c5fdc6a49869721d5eea7796215b6a2b7dd5626ee3927193b4bf7
-    bytes: 2082
+    sha256: aebae9ae00b256c8c8ae5ee3b55667fbd817ae82ee1da23ecf7334438e7ffbe9
+    bytes: 2077
