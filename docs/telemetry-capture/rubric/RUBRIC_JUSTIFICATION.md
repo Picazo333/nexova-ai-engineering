@@ -23,12 +23,12 @@
 | R19 | PASS | Chrome, vía Playwright, hizo `POST /telemetry/events`. uvicorn respondió 200. `evidence/stub-log.txt` y `evidence/telemetry-batches.json`. No es un mock del stub. No hay una foto del panel Network de Chrome; la petición y la respuesta son las de ese Chrome. |
 | R20 | PASS | El test recorre `uis/backoffice` y solo `lib/telemetry.ts` contiene `/telemetry/events`. No hay axios. |
 | R21 | PASS | El enum del modelo y el de `event-schemas.json` son los 19 del plan. `test_stub_rejects_an_unknown_event_type` rechaza `page_view`. |
-| R22 | FAIL | El enunciado pide Web Vitals como eventos con la ruta en `properties`. El mismo enunciado hace contrato el esquema de la fase 1, que no tiene ese `event_type` y rechaza claves de más. Emitirlos sería un 422. No se inventa el evento. La carga que el plan sí define es `page_load_recorded` (R15). |
+| R22 | PASS | `web_vital_recorded` entra en `event-schemas.json` como 1.1.0, sin cambiar los eventos de 1.0.0. `WebVitalsReporter` usa `useReportWebVitals` y llama a `track()`. `lib/web-vitals.ts` pone `metric_name`, `value`, `rating`, `path_template` y `app`. El validador termina en 300 PASS y 0 FAIL (`evidence/validate-schemas.txt`). La API acepta el ejemplo con 200 y rechaza con 422 la versión 1.0.0, `FID` y un correo. El test de Jest cubre los cortes. |
 | R23 | PASS | `LoginScreen` emite `login_failed` con `invalid_credentials` en el 401 y `login_succeeded` con `expires_in_seconds` tras guardar el token. `apiFetch` emite `session_expired` solo si el `exp` del token ya pasó, y `credential_rejected` / `missing_token` si la ruta protegida no tiene token. El valor del correo y de la contraseña no entra en `properties`. `session_expired` y el fallo de red no caben dentro de `login_failed`: el esquema fija `failure_code` en `invalid_credentials` y reparte la caducidad y la red en otros dos eventos. |
 | R24 | PASS | Título del PR: `feat: telemetry event capture`. |
 | R25 | PASS | El cuerpo del PR lleva la tabla de eventos de esta justificación. |
 | R26 | PASS | Rama `feature/telemetry-capture` desde `da3525b`. Base del PR: `feature/telemetry-plan`. Sin merge, sin force-push, sin LMS. El enunciado pedía `main` y merge; manda el encargo. |
-| R27 | PASS | pytest de `services/api` con PostgreSQL: 170 passed. pytest de la raíz: 47 passed, 1 skipped. Jest del portal: 23 passed. Jest del backoffice: 28 passed. Playwright del portal: 14 passed. Logs en `evidence/`. |
+| R27 | PASS | pytest de `services/api` con PostgreSQL: 171 passed. pytest de la raíz: 47 passed, 1 skipped. Jest del portal: 23 passed. Jest del backoffice: 29 passed. Playwright del portal: 14 passed. Logs en `evidence/`. |
 | R28 | PASS | Obligatorios: los cinco del plan. `programme_id` es `unassigned`. No se asigna `b2b-sales` ni `liderazgo-basico`. El papel no entra en las cinco métricas. El costo de la semilla no se inventa. |
 | R29 | PASS | `JWT_SECRET` y la contraseña del usuario de prueba viven en `/tmp` y en la sesión del navegador. No están en el diff. `TELEMETRY_ENDPOINT` es una URL local. |
 | R30 | PASS | No se añaden colaboradores ni firmas. Los README de origen se copian con su texto. El lockup no se reinterpreta como una asociación. |
@@ -71,4 +71,4 @@ No instrumentados, y no se finge que lo estén: `asset_created`, `password_reset
 
 ## Conteo
 
-Required con estado: 37 filas R y U. PASS 36. FAIL 1 (R22). HITL 1, fuera del porcentaje. 36/37 = 97 %.
+Required con estado: 37 filas R y U. PASS 37. FAIL 0. HITL 1, fuera del porcentaje. 37/37.

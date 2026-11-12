@@ -1,10 +1,11 @@
 {
   "project": "026-ai-eng-telemetry-capture",
   "started_at": "2026-11-12T20:41:00Z",
-  "finished_at": "2026-11-12T21:08:00Z",
+  "finished_at": "2026-11-12T21:20:00Z",
   "timezone": "UTC",
-  "eval_repair_iterations": 4,
+  "eval_repair_iterations": 5,
   "repairs": [
+    "R22: web_vital_recorded se añade en el esquema 1.1.0. Los eventos 1.0.0 no cambian. useReportWebVitals llama a track().",
     "El 422 del stub se renderizaba como HTML porque /telemetry no estaba en API_ROOTS. El error pasa a JSON.",
     "El estrechamiento de product category no compilaba. mappedLive devuelve null cuando la categoría no tiene fila en proposed-2026-11-12.",
     "La captura del listado vacío llegaba después de la petición real. La ruta del navegador se instala antes del login.",
@@ -24,14 +25,15 @@
     "cd uis/portal && npx playwright test"
   ],
   "results": {
-    "api_pytest_postgres": "170 passed",
+    "schema_validator": "300 pass, 0 fail",
+    "api_pytest_postgres": "171 passed",
     "root_pytest": "47 passed, 1 skipped",
     "portal_jest": "23 passed",
-    "backoffice_jest": "28 passed",
-    "backoffice_build": "EXIT 0",
+    "backoffice_jest": "29 passed",
+    "backoffice_build": "typecheck EXIT 0",
     "portal_playwright": "14 passed"
   },
   "tokens_used": null,
   "tokens_unmeasurable_reason": "Este runtime no expone un contador de tokens de la sesión.",
-  "comparison_to_estimate": "No hubo una estimación de tokens previa. El tiempo de la pasada va de 2026-11-12T20:41:00Z a 2026-11-12T21:08:00Z."
+  "comparison_to_estimate": "No hubo una estimación de tokens previa. La reparación de R22 cierra en 2026-11-12T21:20:00Z."
 }

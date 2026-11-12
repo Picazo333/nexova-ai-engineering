@@ -59,13 +59,18 @@
         "flow_abandoned",
         "order_validation_failed",
         "asset_created",
-        "catalogue_gap_recorded"
+        "catalogue_gap_recorded",
+        "web_vital_recorded"
       ],
       "description": "Taxonomía entidad_accion."
     },
     "schemaVersion": {
-      "const": "1.0.0",
-      "description": "Versión de este envelope."
+      "type": "string",
+      "enum": [
+        "1.0.0",
+        "1.1.0"
+      ],
+      "description": "1.0.0 es el catálogo de 025. 1.1.0 añade web_vital_recorded. Los eventos anteriores siguen en 1.0.0."
     },
     "requestId": {
       "type": "string",
@@ -436,6 +441,28 @@
         "properties": {
           "properties": {
             "$ref": "#/definitions/catalogue_gap_recorded"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "web_vital_recorded"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "schemaVersion": {
+            "const": "1.1.0"
+          },
+          "properties": {
+            "$ref": "#/definitions/web_vital_recorded"
           }
         }
       }
@@ -2102,11 +2129,82 @@
         "delivery": "stream",
         "cadence": "immediate"
       }
+    },
+    "web_vital_recorded": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "app",
+        "path_template",
+        "metric_name",
+        "value",
+        "rating"
+      ],
+      "properties": {
+        "app": {
+          "type": "string",
+          "enum": [
+            "backoffice",
+            "portal"
+          ],
+          "description": "Backoffice o portal. Esta captura emite backoffice."
+        },
+        "path_template": {
+          "type": "string",
+          "enum": [
+            "/",
+            "/login",
+            "/register",
+            "/forgot-password",
+            "/reset-password",
+            "/proveedores",
+            "/account/profile",
+            "/account/change-password",
+            "/backoffice/inventory/products",
+            "/backoffice/inventory/orders",
+            "/backoffice/inventory/orders/inbound",
+            "/backoffice/inventory/orders/outbound"
+          ],
+          "description": "Ruta de la lista cerrada, sin query. Una redirección con token no entra."
+        },
+        "metric_name": {
+          "type": "string",
+          "enum": [
+            "LCP",
+            "INP",
+            "CLS",
+            "FCP",
+            "TTFB"
+          ],
+          "description": "Métrica Web Vital. FID no entra."
+        },
+        "value": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 600000,
+          "description": "Valor que reporta el navegador. CLS es adimensional. El resto, milisegundos."
+        },
+        "rating": {
+          "type": "string",
+          "enum": [
+            "good",
+            "needs-improvement",
+            "poor"
+          ],
+          "description": "Umbral público de la métrica. good incluye el corte. poor queda por encima del segundo corte."
+        }
+      },
+      "x-nexova": {
+        "origin": "identified",
+        "category": "performance",
+        "delivery": "batch",
+        "cadence": "nightly"
+      }
     }
   },
   "x-nexova": {
     "company": "Nexova",
-    "schemaVersion": "1.0.0",
+    "schemaVersion": "1.1.0",
     "briefing_path": "content/contexts/06-telemetry-data-pipelines/telemetry/nexova-BRIEFING.md",
     "briefing_sha256": "b9aee8a9dfde725d75d695f08f1027e14d635edeb6782f23d884987c0b72e097",
     "category_map_version": "proposed-2026-11-12",

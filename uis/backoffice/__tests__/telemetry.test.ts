@@ -19,6 +19,7 @@ import {
   trackMaterialEvent,
   trackOrderValidation,
 } from "@/lib/telemetry-catalog";
+import { rateWebVital, trackWebVital, webVitalProperties } from "@/lib/web-vitals";
 
 const memory = new Map<string, string>();
 
@@ -142,6 +143,32 @@ describe("TelemetryService", () => {
     await jest.advanceTimersByTimeAsync(400);
     expect(global.fetch).toHaveBeenCalledTimes(3);
     expect(pendingEvents()).toHaveLength(0);
+  });
+
+  test("web vital mapea el corte y sale en schema 1.1.0", () => {
+    expect(rateWebVital("LCP", 2500)).toBe("good");
+    expect(rateWebVital("LCP", 4000)).toBe("needs-improvement");
+    expect(rateWebVital("LCP", 4000.1)).toBe("poor");
+    expect(rateWebVital("CLS", 0.1)).toBe("good");
+    expect(rateWebVital("CLS", 0.25)).toBe("needs-improvement");
+    expect(rateWebVital("INP", 500)).toBe("needs-improvement");
+    expect(rateWebVital("FCP", 1800)).toBe("good");
+    expect(rateWebVital("TTFB", 1800.1)).toBe("poor");
+    expect(webVitalProperties({ name: "FID", value: 10, pathname: "/login" })).toBeNull();
+    expect(webVitalProperties({ name: "LCP", value: -1, pathname: "/login" })).toBeNull();
+    expect(webVitalProperties({ name: "LCP", value: 10, pathname: "/no-existe" })).toBeNull();
+    trackWebVital({ name: "LCP", value: 3200, pathname: "/login" });
+    const event = pendingEvents().find((item) => item.event_type === "web_vital_recorded");
+    expect(event?.schemaVersion).toBe("1.1.0");
+    expect(event?.properties).toEqual({
+      app: "backoffice",
+      path_template: "/login",
+      metric_name: "LCP",
+      value: 3200,
+      rating: "needs-improvement",
+    });
+    expect(JSON.stringify(event)).not.toContain("@");
+    expectValid("web_vital_recorded");
   });
 
   test("no encola un evento con correo", () => {

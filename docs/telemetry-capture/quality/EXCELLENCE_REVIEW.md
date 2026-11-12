@@ -6,13 +6,15 @@ El indicador de desarrollo dice cuántos eventos hay en cola y cuántos se envia
 
 ## Qué se dejó fuera a propósito
 
-Web Vitals no tiene `event_type` en el contrato. Añadir `web_vital_recorded` haría que el propio stub respondiera 422. La carga del documento va en `page_load_recorded`, que es el evento de rendimiento del plan.
-
 El portal, el alta de producto y el restablecimiento de contraseña no tienen captura. El enunciado coloca el servicio en el backoffice y pide amplitud, no una pantalla nueva para cada evento del catálogo.
 
 `credential_rejected` con `bad_signature`, `inactive_or_unknown`, `subject_mismatch` o `foreign_credentials` lo puede clasificar el servidor, que tiene el secreto. El navegador no adivina el código. Sí emite `missing_token` y `session_expired` cuando puede comprobarlo.
 
-## Reparaciones de esta pasada
+## Reparación de R22
+
+`web_vital_recorded` se añade en el catálogo 1.1.0. Los 19 eventos de 1.0.0 conservan sus claves y su `schemaVersion`. El evento nuevo exige `1.1.0`. `useReportWebVitals` llama a `track()`. FID y las rutas fuera de la lista no se emiten. El validador sigue en 0 FAIL.
+
+## Reparaciones de la pasada anterior
 
 El 422 del stub salía en HTML porque `/telemetry` no estaba en las rutas de API. Se añadió y el cuerpo de error es JSON.
 

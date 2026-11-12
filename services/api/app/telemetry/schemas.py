@@ -5,9 +5,9 @@ frontend tests against event-schemas.json. This stub checks the envelope so a
 later phase can reuse the same model.
 """
 
-from typing import Any, Literal
+from typing import Any, Literal, Self
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 EventType = Literal[
     "inbound_order_created",
@@ -29,7 +29,33 @@ EventType = Literal[
     "order_validation_failed",
     "asset_created",
     "catalogue_gap_recorded",
+    "web_vital_recorded",
 ]
+
+_PATHS = Literal[
+    "/",
+    "/login",
+    "/register",
+    "/forgot-password",
+    "/reset-password",
+    "/proveedores",
+    "/account/profile",
+    "/account/change-password",
+    "/backoffice/inventory/products",
+    "/backoffice/inventory/orders",
+    "/backoffice/inventory/orders/inbound",
+    "/backoffice/inventory/orders/outbound",
+]
+
+
+class WebVitalProperties(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    app: Literal["backoffice", "portal"]
+    path_template: _PATHS
+    metric_name: Literal["LCP", "INP", "CLS", "FCP", "TTFB"]
+    value: float = Field(ge=0, le=600_000)
+    rating: Literal["good", "needs-improvement", "poor"]
 
 _UUID = r"^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
 _TIMESTAMP = (
@@ -46,9 +72,18 @@ class TelemetryEvent(BaseModel):
     sessionId: str = Field(pattern=rf"^(missing|{_UUID[1:-1]})$")
     userId: str = Field(pattern=rf"^(anonymous|{_UUID[1:-1]})$")
     event_type: EventType
-    schemaVersion: Literal["1.0.0"]
+    schemaVersion: Literal["1.0.0", "1.1.0"]
     requestId: str = Field(pattern=_UUID)
     properties: dict[str, Any]
+
+    @model_validator(mode="after")
+    def web_vital_uses_the_minor_schema(self) -> Self:
+        if self.event_type != "web_vital_recorded":
+            return self
+        if self.schemaVersion != "1.1.0":
+            raise ValueError("web_vital_recorded usa schemaVersion 1.1.0")
+        WebVitalProperties.model_validate(self.properties)
+        return self
 
 
 class TelemetryBatch(BaseModel):

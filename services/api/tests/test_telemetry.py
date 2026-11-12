@@ -66,6 +66,27 @@ def test_empty_batch_is_received_as_zero(client: TestClient) -> None:
     assert response.json() == {"received": 0}
 
 
+def test_web_vital_recorded_is_accepted_and_a_bad_one_is_rejected(client: TestClient) -> None:
+    vital = json.loads((ROOT / "docs" / "telemetry" / "examples" / "valid" / "web_vital_recorded.json").read_text())
+    accepted = client.post("/telemetry/events", json={"events": [vital]})
+    assert accepted.status_code == 200, accepted.text
+    assert accepted.json() == {"received": 1}
+
+    wrong_version = json.loads(json.dumps(vital))
+    wrong_version["schemaVersion"] = "1.0.0"
+    assert client.post("/telemetry/events", json={"events": [wrong_version]}).status_code == 422
+
+    unknown_metric = json.loads(json.dumps(vital))
+    unknown_metric["properties"]["metric_name"] = "FID"
+    assert client.post("/telemetry/events", json={"events": [unknown_metric]}).status_code == 422
+
+    with_email = json.loads(json.dumps(vital))
+    with_email["properties"]["email"] = "person@example.com"
+    rejected = client.post("/telemetry/events", json={"events": [with_email]})
+    assert rejected.status_code == 422
+    assert "person@example.com" not in rejected.text
+
+
 def test_cost_variance_stays_silent_without_history_or_under_the_line() -> None:
     assert median_unit_cost([]) is None
     assert median_unit_cost([0]) is None

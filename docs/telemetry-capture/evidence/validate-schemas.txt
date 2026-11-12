@@ -1,0 +1,19 @@
+PASS web_vital_recorded tiene allowlist cerrada
+PASS web_vital_recorded origen identified
+PASS web_vital_recorded categoría performance
+PASS web_vital_recorded entrega batch
+PASS web_vital_recorded obligatorias
+PASS web_vital_recorded allowlist
+PASS web_vital_recorded tabla de propiedades
+PASS web_vital_recorded.app marcado sí
+PASS web_vital_recorded.path_template marcado sí
+PASS web_vital_recorded.metric_name marcado sí
+PASS web_vital_recorded.value marcado sí
+PASS web_vital_recorded.rating marcado sí
+PASS web_vital_recorded tiene hipótesis y decisión
+PASS están las cinco métricas obligatorias
+PASS hay 15 eventos identificados
+PASS los identificados cubren ['authentication', 'business', 'errors', 'navigation', 'performance']
+PASS 21 ejemplos válidos cubren los 20 eventos
+PASS 8 ejemplos inválidos se rechazan
+summary pass=300 fail=0

@@ -6,6 +6,7 @@
 import { readToken } from "@/lib/session";
 
 export const SCHEMA_VERSION = "1.0.0";
+export const WEB_VITAL_SCHEMA_VERSION = "1.1.0";
 export const SESSION_KEY = "nexova.telemetry.session";
 export const USER_KEY = "nexova.telemetry.user";
 
@@ -187,7 +188,7 @@ function seal(eventType: string, properties: Record<string, unknown>): Telemetry
     sessionId: currentSessionId(),
     userId: userFor(eventType, properties),
     event_type: eventType,
-    schemaVersion: SCHEMA_VERSION,
+    schemaVersion: eventType === "web_vital_recorded" ? WEB_VITAL_SCHEMA_VERSION : SCHEMA_VERSION,
     requestId,
     properties,
   };
