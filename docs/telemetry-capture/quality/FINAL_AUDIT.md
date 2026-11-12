@@ -11,7 +11,7 @@ No es `READY_TO_SUBMIT`. No hubo merge ni envío al LMS.
 - PR contra: `feature/telemetry-plan`
 - Título: `feat: telemetry event capture`
 - Head anterior a R22: `76e70b159b49783f2114b84a2b72d611bb14df4d`
-- Head de R22: se anota en el commit que cierra esta auditoría.
+- Commit de R22: `83604b7b7ccd95c72a9dde7a3fe8d2e2c5303282`
 
 ## Conteo
 
