@@ -32,6 +32,6 @@ PYTHONPATH=services/api:. uv run python -m app.agent.export_trace
 PYTHONPATH=services/api:. uv run python -m app.agent.export_compare
 ```
 
-La generación en vivo necesita `GENERATION_MODEL_ID`, `GENERATION_BASE_URL` y `GENERATION_API_KEY`. La recuperación con el embedder remoto necesita `EMBEDDING_*`. Mientras estén vacías, el eval de anclaje en vivo informa `BLOCKED_HITL`. Los exports versionados usan un doble explícito para la generación y lo dicen. La columna del ticket no: lee una incidencia que guardó el gestor.
+La generación en vivo necesita `GENERATION_MODEL_ID`, `GENERATION_BASE_URL` y `GENERATION_API_KEY`. La recuperación con el embedder remoto necesita `EMBEDDING_*`. La corrida live registrada está en `evidence/llm-live/`: 22 passed, 0 skipped, y `POST /agent/query` devolvió HTTP 200 con `receive_question` → `route_sources` → `retrieve_context` → `generate_answer`. Esa traza es la primera corrida de `docs/langgraph/trace-full-run.json`. Este checkout sigue saltando el eval en vivo si esas variables están vacías. Un doble no aprueba ese criterio. La columna del ticket lee una incidencia que guardó el gestor.
 
 > _English version: [README.md](./README.md)._

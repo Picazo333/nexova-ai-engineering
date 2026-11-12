@@ -59,7 +59,7 @@ PYTHONPATH=services/api:. uv run python -m app.agent.export_trace
 PYTHONPATH=services/api:. uv run python -m app.agent.export_compare
 ```
 
-[docs/langgraph/trace-full-run.json](docs/langgraph/trace-full-run.json) es una corrida con forma de RAG. La generación cita el documento oficial de objeciones porque `GENERATION_*` está vacío. [docs/langgraph/traces-side-by-side.json](docs/langgraph/traces-side-by-side.json) pone esa traza junto a una traza de ticket leída del gestor de incidentes. Ninguno de los dos ficheros es una respuesta del modelo en vivo. El eval de anclaje en vivo termina en `BLOCKED_HITL` hasta que existan `GENERATION_*` y `EMBEDDING_*`. Un doble no aprueba ese criterio.
+[docs/langgraph/trace-full-run.json](docs/langgraph/trace-full-run.json) empieza con la traza live de `POST /agent/query` copiada de [evidence/llm-live/02-api-agent-query.txt](evidence/llm-live/02-api-agent-query.txt). Esa respuesta mantiene la tarifa del 22% y nombra a Marcos Ibáñez. [docs/langgraph/traces-side-by-side.json](docs/langgraph/traces-side-by-side.json) pone esa misma traza junto a una traza de ticket leída del gestor de incidentes. El pytest de esa corrida live está en [evidence/llm-live/01-pytest-agent-live.txt](evidence/llm-live/01-pytest-agent-live.txt): 22 passed, 0 skipped. En esta VM el eval en vivo sigue en skip si `GENERATION_*` y `EMBEDDING_*` están vacíos. Un doble no aprueba ese criterio.
 
 ---
 
