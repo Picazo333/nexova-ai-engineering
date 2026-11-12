@@ -1,0 +1,30 @@
+{
+  "response": {
+    "received": 2,
+    "status": 200
+  },
+  "events": [
+    {
+      "event_type": "page_load_recorded",
+      "schemaVersion": "1.0.0",
+      "sessionId": "missing",
+      "userId": "anonymous",
+      "properties": {
+        "app": "backoffice",
+        "path_template": "/login",
+        "duration_ms": 476.4000000001397,
+        "nav_type": "navigate"
+      }
+    },
+    {
+      "event_type": "section_viewed",
+      "schemaVersion": "1.0.0",
+      "sessionId": "missing",
+      "userId": "anonymous",
+      "properties": {
+        "app": "backoffice",
+        "section": "backoffice_login"
+      }
+    }
+  ]
+}

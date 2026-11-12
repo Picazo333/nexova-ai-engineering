@@ -1,0 +1,90 @@
+project: ai-eng-telemetry-capture
+branch: feature/telemetry-capture
+base: feature/telemetry-plan
+base_sha: da3525b9cf1e6fedfd158f2200eb1371227261e1
+ui: true
+lockup: existing_backoffice_footer
+counts:
+  pass: 36
+  fail: 1
+  hitl: 1
+  required: 37
+items:
+  - path: docs/telemetry-capture/evidence/login-390.png
+    sha256: cacef60f4d819498381b63acd3b00c250980c7b1a2f65caeb2a706d56b89e418
+    bytes: 50409
+  - path: docs/telemetry-capture/evidence/login-768.png
+    sha256: a7976637f9f4416d8e862f1baacd6293cf2a00adc5876675bce79ce715f7987d
+    bytes: 54564
+  - path: docs/telemetry-capture/evidence/login-1280.png
+    sha256: d3759913aa320530be16fc9717ec4d2f061d202620b7b681b7fe78747bff9264
+    bytes: 55361
+  - path: docs/telemetry-capture/evidence/inbound-sent-390.png
+    sha256: b0b20db0ad240dbb910369563981133a9c95f36c15a864bbd65e923b818e63f6
+    bytes: 124860
+  - path: docs/telemetry-capture/evidence/inbound-sent-768.png
+    sha256: 356f4a775daeeb0e798e86d8088655b924330a51a4855838b58d0ed1abc2b486
+    bytes: 129569
+  - path: docs/telemetry-capture/evidence/inbound-sent-1280.png
+    sha256: 7126fefad2f4f7e0249083c424183d47809e88ae0056518cad4c546c28c61ba8
+    bytes: 135845
+  - path: docs/telemetry-capture/evidence/products-loading-390.png
+    sha256: 8db1b44cda6d4bbad5dcf64131cb0fba9ab2f5f31a608480e667e5370ddac2f6
+    bytes: 75650
+  - path: docs/telemetry-capture/evidence/products-empty-768.png
+    sha256: 9f69a8ebc532c9705a10e983bfb84a54705d043a291009e5878063a025115bf9
+    bytes: 91623
+  - path: docs/telemetry-capture/evidence/products-error-1280.png
+    sha256: 951f93295d007891a2da2451a6d2036277c2a1f89cd794cd85915ecaec1b7966
+    bytes: 91017
+  - path: docs/telemetry-capture/evidence/products-reduced-1280.png
+    sha256: ed04e715c824c304dcbc5af8e5cc966fd958b111a58044df2bd106cda96f1de4
+    bytes: 189126
+  - path: docs/telemetry-capture/evidence/recorrido-entrada.webm
+    sha256: d2d9c7b2948ec103f76af9fe16d4743f5ae278576f2e54c71baeed3d84d8af96
+    bytes: 688262
+  - path: docs/telemetry-capture/evidence/telemetry-batches.json
+    sha256: 908340ff3fa243e49baf145bb297b729eccf5b0337be633176de27fc536c3a8e
+    bytes: 630
+  - path: docs/telemetry-capture/evidence/stub-log.txt
+    sha256: 9302c5ab11aa5a8cfd2f92dc67856fb93acb67e7a3ba5a295f4949fbd68c62d3
+    bytes: 830
+  - path: docs/telemetry-capture/evidence/axe-login.json
+    sha256: e9e9cc024fd31c1fa72cd550579f9b055cbbedcd75d0c07b4cb36c9ea72522f9
+    bytes: 22
+  - path: docs/telemetry-capture/evidence/axe-products.json
+    sha256: e9e9cc024fd31c1fa72cd550579f9b055cbbedcd75d0c07b4cb36c9ea72522f9
+    bytes: 22
+  - path: docs/telemetry-capture/evidence/pytest-api.txt
+    sha256: 83a4144fbef0f829e70cd0ac99e8e6b16e7ed99597ff57d56ca543f5b8199244
+    bytes: 260
+  - path: docs/telemetry-capture/evidence/pytest-root.txt
+    sha256: c1cebbd3397935e3097cc24880be3a9eac70d71a37fc3a0f499656b16f2cfd2f
+    bytes: 110
+  - path: docs/telemetry-capture/evidence/jest-backoffice.txt
+    sha256: fbac2b54ca5d6152f582da4326cfd5ff0ecddd936d508b8773e9495abd387b0b
+    bytes: 282
+  - path: docs/telemetry-capture/evidence/jest-portal.txt
+    sha256: b8fe6bb8f446d7fe973bacd66adf35190da419db6ebed8843191af6b02522cbf
+    bytes: 282
+  - path: docs/telemetry-capture/evidence/playwright-portal.txt
+    sha256: 2aa2128d6b9cd8d9a4fc4699379e7239bd36923ab67db4ddb34ea4bbdcc4694a
+    bytes: 17
+  - path: docs/telemetry-capture/rubric/RUBRIC.md
+    sha256: 0139dde0965d02c2a7012b5f1cb1c7b4746fa9d32a66061c0394c02fc862ae07
+    bytes: 4259
+  - path: docs/telemetry-capture/rubric/RUBRIC_JUSTIFICATION.md
+    sha256: ed7fda91839b5369949fc108d5ce26543e3462bbf89d13129ae3a7944b8f3885
+    bytes: 8676
+  - path: docs/telemetry-capture/process/TELEMETRY.json
+    sha256: 77d6b4623ab3941386e66c5fdc53e7a5434e2388d73a1c1bed0fece94d7d23c4
+    bytes: 1970
+  - path: docs/telemetry-capture/quality/DESIGN-QA.md
+    sha256: 22c7c54d7ac02b8fdcd002eb378eafe93598c584b19f542296dd0f305e4e4bc7
+    bytes: 2538
+  - path: docs/telemetry-capture/quality/EXCELLENCE_REVIEW.md
+    sha256: e6d79487fcdb05c6323272e0032e28fde4506edb321cd1020530afe1101e5499
+    bytes: 2444
+  - path: docs/telemetry-capture/quality/FINAL_AUDIT.md
+    sha256: 23c64c0e95f86a8d2daa09f2cbb714d40ed302e6a53dceb392d0e3caf09d7282
+    bytes: 1918

@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { EmptyState, ErrorBanner, LoadingState } from "@/components/AsyncStatus";
 import { useAssetCatalog } from "@/components/inventory/useAssetCatalog";
 import { StockBadge } from "@/components/inventory/StockBadge";
+import { useFlowAbandon } from "@/components/telemetry/useFlowAbandon";
 import { ApiError, messageOf } from "@/lib/http";
 import {
   createAssetExit,
@@ -16,6 +17,7 @@ import {
 } from "@/lib/inventory";
 import { formatTimestamp } from "@/lib/labels";
 import { parseQuantity } from "@/lib/quantity";
+import { trackMaterialEvent, trackOrderValidation } from "@/lib/telemetry-catalog";
 
 type StockState =
   | { kind: "idle" }
@@ -35,6 +37,7 @@ export function ExitForm({ initialAsset }: { initialAsset: string }) {
   const [exitType, setExitType] = useState<ExitType>("allocation");
   const [assignedTo, setAssignedTo] = useState("");
   const [office, setOffice] = useState<Office | "">("");
+  const [lastField, setLastField] = useState("");
   const [pending, setPending] = useState(false);
   const [formError, setFormError] = useState("");
   const [quantityError, setQuantityError] = useState("");
@@ -47,6 +50,8 @@ export function ExitForm({ initialAsset }: { initialAsset: string }) {
   const stockRequest = useRef(0);
   const officeTouched = useRef("");
   const [stockAttempt, setStockAttempt] = useState(0);
+  const dirty = assetId !== "" || quantity !== "" || assignedTo !== "" || office !== "";
+  const markSubmitted = useFlowAbandon("inventory_outbound", dirty, lastField);
 
   useEffect(() => {
     setAssetId(initialAsset);
@@ -86,6 +91,7 @@ export function ExitForm({ initialAsset }: { initialAsset: string }) {
 
   function onExitType(next: ExitType) {
     setExitType(next);
+    setLastField("exit_type");
     if (next === "consumption") setAssignedTo("");
     setFieldErrors((current) => ({ ...current, assigned_to: "", exit_type: "" }));
   }
@@ -114,6 +120,7 @@ export function ExitForm({ initialAsset }: { initialAsset: string }) {
     setQuantityError("");
     setConfirmation(null);
     try {
+      const previousStock = stock.kind === "ready" ? stock.asset.current_stock : null;
       const order = await createAssetExit({
         asset_id: selected.id,
         quantity: parsed,
@@ -122,6 +129,22 @@ export function ExitForm({ initialAsset }: { initialAsset: string }) {
         office,
       });
       if (id !== submitId.current) return;
+      const fact = {
+        liveCategory: selected.category,
+        productId: String(order.asset_id),
+        productSku: order.asset_sku,
+        office: order.office,
+        quantity: order.quantity,
+        orderId: order.id,
+        occurredAt: order.created_at,
+        exitType: order.exit_type,
+        assignedTo: order.assigned_to,
+        previousStock: previousStock ?? undefined,
+        currentStock: previousStock == null ? undefined : previousStock - order.quantity,
+      };
+      markSubmitted();
+      trackMaterialEvent("outbound_order_created", fact);
+      if (previousStock != null) trackMaterialEvent("stock_threshold_triggered", fact);
       setConfirmation(order);
       setQuantity("");
       setAssignedTo("");
@@ -135,6 +158,18 @@ export function ExitForm({ initialAsset }: { initialAsset: string }) {
       if (id !== submitId.current) return;
       if (reason instanceof ApiError) {
         setFieldErrors(reason.fields);
+        if (selected && (office === "Valencia" || office === "Miami" || reason.status === 400 || reason.status === 404)) {
+          trackOrderValidation({
+            status: reason.status,
+            route: "/inventory/orders/outbound",
+            fields: reason.fields,
+            productId: String(selected.id),
+            productSku: selected.sku,
+            office: office === "Valencia" || office === "Miami" ? office : undefined,
+            quantity: parsed ?? undefined,
+            exitType,
+          });
+        }
         if (reason.status === 400) {
           setQuantityError(reason.message);
           setFormError("");
@@ -198,6 +233,7 @@ export function ExitForm({ initialAsset }: { initialAsset: string }) {
               aria-invalid={fieldErrors.asset_id ? true : undefined}
               onChange={(event) => {
                 setAssetId(event.target.value);
+                setLastField("asset_id");
                 setQuantityError("");
                 setFormError("");
               }}
@@ -235,6 +271,7 @@ export function ExitForm({ initialAsset }: { initialAsset: string }) {
               aria-describedby="quantity-warning quantity-api-error"
               onChange={(event) => {
                 setQuantity(event.target.value);
+                setLastField("quantity");
                 setQuantityError("");
               }}
             />
@@ -294,7 +331,9 @@ export function ExitForm({ initialAsset }: { initialAsset: string }) {
               value={exitType === "consumption" ? "" : assignedTo}
               disabled={exitType === "consumption"}
               aria-invalid={fieldErrors.assigned_to ? true : undefined}
-              onChange={(event) => setAssignedTo(event.target.value)}
+              onChange={(event) => {
+                setAssignedTo(event.target.value);
+              }}
             />
             <p className="note">
               {exitType === "allocation"
@@ -310,7 +349,10 @@ export function ExitForm({ initialAsset }: { initialAsset: string }) {
               name="office"
               value={office}
               aria-invalid={fieldErrors.office ? true : undefined}
-              onChange={(event) => setOffice(event.target.value === "Miami" ? "Miami" : event.target.value === "Valencia" ? "Valencia" : "")}
+              onChange={(event) => {
+                setOffice(event.target.value === "Miami" ? "Miami" : event.target.value === "Valencia" ? "Valencia" : "");
+                setLastField("office");
+              }}
             >
               <option value="">Elige una oficina</option>
               <option value="Valencia">Valencia</option>

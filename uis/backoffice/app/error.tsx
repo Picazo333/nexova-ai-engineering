@@ -1,6 +1,13 @@
 "use client";
 
-export default function Error({ reset }: { error: Error; reset: () => void }) {
+import { useEffect } from "react";
+
+import { recordException } from "@/lib/telemetry";
+
+export default function Error({ error, reset }: { error: Error; reset: () => void }) {
+  useEffect(() => {
+    void recordException(error);
+  }, [error]);
   return (
     <main id="contenido" className="panel">
       <div className="wrap">

@@ -42,6 +42,7 @@ class AssetEntryCreate(BaseModel):
     quantity: int = Field(gt=0)
     supplier: str = Field(min_length=1, max_length=200)
     office: Office
+    unit_cost_minor: int | None = Field(default=None, ge=0, le=100_000_000_000)
 
 
 class AssetExitCreate(BaseModel):
@@ -82,3 +83,6 @@ class InventoryOrderRead(BaseModel):
     supplier: str | None = None
     exit_type: str | None = None
     assigned_to: str | None = None
+    unit_cost_minor: int | None = None
+    historical_unit_cost_minor: int | None = None
+    variance_ratio: float | None = None

@@ -3,10 +3,13 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { useFlowAbandon } from "@/components/telemetry/useFlowAbandon";
 import { ApiError } from "@/lib/http";
 import { login } from "@/lib/auth";
 import { safeNext, viewLabel } from "@/lib/paths";
 import { writeToken } from "@/lib/session";
+import { beginTelemetrySession } from "@/lib/telemetry";
+import { trackLoginFailed, trackLoginSucceeded } from "@/lib/telemetry-catalog";
 
 export function LoginScreen({ nextRaw, reason }: { nextRaw: string | null; reason: string | null }) {
   const router = useRouter();
@@ -16,8 +19,10 @@ export function LoginScreen({ nextRaw, reason }: { nextRaw: string | null; reaso
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState("");
   const [pending, setPending] = useState(false);
+  const [lastField, setLastField] = useState("");
   const request = useRef(0);
   const alertRef = useRef<HTMLDivElement>(null);
+  const markSubmitted = useFlowAbandon("login", email.trim() !== "" || password !== "", lastField);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -44,9 +49,13 @@ export function LoginScreen({ nextRaw, reason }: { nextRaw: string | null; reaso
         alertRef.current?.focus();
         return;
       }
+      beginTelemetrySession(token.user_uuid);
+      trackLoginSucceeded(token.expires_in);
+      markSubmitted();
       router.push(next);
     } catch (error: unknown) {
       if (id !== request.current) return;
+      if (error instanceof ApiError && error.status === 401) trackLoginFailed();
       setFormError(error instanceof ApiError ? error.message : "No se pudo iniciar sesión.");
       alertRef.current?.focus();
     } finally {
@@ -84,7 +93,10 @@ export function LoginScreen({ nextRaw, reason }: { nextRaw: string | null; reaso
               type="email"
               autoComplete="username"
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event) => {
+                setEmail(event.target.value);
+                setLastField("email");
+              }}
               required
             />
           </div>
@@ -96,7 +108,10 @@ export function LoginScreen({ nextRaw, reason }: { nextRaw: string | null; reaso
               type="password"
               autoComplete="current-password"
               value={password}
-              onChange={(event) => setPassword(event.target.value)}
+              onChange={(event) => {
+                setPassword(event.target.value);
+                setLastField("password");
+              }}
               required
             />
           </div>

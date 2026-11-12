@@ -21,6 +21,32 @@ from app.inventory.schemas import (
 )
 
 OFFICES = {"Valencia", "Miami"}
+COST_VARIANCE_THRESHOLD = 0.1
+
+
+def median_unit_cost(values: list[int]) -> int | None:
+    """Median of prior unit costs. An even count rounds half up to an integer."""
+    if not values:
+        return None
+    ordered = sorted(values)
+    mid = len(ordered) // 2
+    if len(ordered) % 2 == 1:
+        median = ordered[mid]
+    else:
+        median = int((ordered[mid - 1] + ordered[mid]) / 2 + 0.5)
+    if median < 1:
+        return None
+    return median
+
+
+def cost_variance_ratio(unit_cost_minor: int, historical: int) -> float | None:
+    """Absolute relative deviation. None when it does not cross the 10% line."""
+    if historical < 1:
+        return None
+    ratio = abs(unit_cost_minor - historical) / historical
+    if ratio <= COST_VARIANCE_THRESHOLD:
+        return None
+    return ratio
 
 
 def _office_filter(office: str | None) -> str | None:
@@ -119,9 +145,27 @@ def create_entry(session: Session, body: AssetEntryCreate, user_uuid: str) -> In
     )
     if not entry.supplier:
         raise HTTPException(status_code=422, detail="supplier no puede estar vacío.")
+    if body.unit_cost_minor is not None:
+        entry.unit_cost_minor = body.unit_cost_minor
     session.add(entry)
     session.flush()
     assert entry.id is not None and asset.id is not None
+    historical: int | None = None
+    variance: float | None = None
+    if entry.unit_cost_minor is not None:
+        prior = session.exec(
+            select(AssetEntry.unit_cost_minor).where(
+                AssetEntry.asset_id == asset.id,
+                AssetEntry.supplier == entry.supplier,
+                AssetEntry.office == entry.office,
+                AssetEntry.unit_cost_minor.is_not(None),
+                AssetEntry.id != entry.id,
+            )
+        ).all()
+        costs = [int(value) for value in prior if isinstance(value, int)]
+        historical = median_unit_cost(costs)
+        if historical is not None:
+            variance = cost_variance_ratio(entry.unit_cost_minor, historical)
     return InventoryOrderRead(
         id=entry.id,
         order_type="inbound",
@@ -134,6 +178,9 @@ def create_entry(session: Session, body: AssetEntryCreate, user_uuid: str) -> In
         created_at=entry.created_at,
         user_uuid=entry.user_uuid,
         supplier=entry.supplier,
+        unit_cost_minor=entry.unit_cost_minor,
+        historical_unit_cost_minor=historical,
+        variance_ratio=variance,
     )
 
 

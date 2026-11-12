@@ -40,6 +40,7 @@ from app.routers.profiles import router as profiles_router
 from app.routers.inventory import router as inventory_router
 from app.routers.knowledge import router as knowledge_router
 from app.routers.users import router as users_router
+from app.telemetry.router import router as telemetry_router
 from routes.suppliers import router as suppliers_router
 
 KNOWLEDGE_UI = Path(__file__).resolve().parents[3] / "uis" / "knowledge-query"
@@ -48,7 +49,7 @@ AGENT_UI = Path(__file__).resolve().parents[3] / "uis" / "agent-compare"
 logger = logging.getLogger("nexova.api")
 timing_logger = logging.getLogger("api.timing")
 
-API_ROOTS = ("/api/", "/users", "/auth", "/profiles", "/agent", "/inventory")
+API_ROOTS = ("/api/", "/users", "/auth", "/profiles", "/agent", "/inventory", "/telemetry")
 
 
 @asynccontextmanager
@@ -101,6 +102,8 @@ def create_app() -> FastAPI:
             "Content-Type",
             "X-Report-Fragment",
             "X-Directory-Fragment",
+            "X-Request-Id",
+            "X-Nexova-Session",
         ],
         expose_headers=["X-Nexova-Cache"],
     )
@@ -139,6 +142,7 @@ def create_app() -> FastAPI:
     app.include_router(knowledge_router)
     app.include_router(agent_router)
     app.include_router(inventory_router)
+    app.include_router(telemetry_router)
     app.mount("/ui", StaticFiles(directory=KNOWLEDGE_UI), name="knowledge-ui")
     app.mount("/css", StaticFiles(directory=BACKOFFICE_DIR / "css"), name="css")
     app.mount("/js", StaticFiles(directory=BACKOFFICE_DIR / "js"), name="js")

@@ -1,0 +1,35 @@
+[
+  {
+    "file": "OFFICIAL_README.md",
+    "official_path": "content/projects/ai-eng-telemetry-capture/README.md",
+    "resource_uri": "repo://4GeeksAcademy/ai-engineering-syllabus/sha/fd2da034894ba93ba738559280ccde074ab1d953/contents/content/projects/ai-eng-telemetry-capture/README.md",
+    "download_url": "https://raw.githubusercontent.com/4GeeksAcademy/ai-engineering-syllabus/fd2da034894ba93ba738559280ccde074ab1d953/content/projects/ai-eng-telemetry-capture/README.md",
+    "sha256": "d4c6d2b76c7f4b580e04c568e0fa8a6ec64bbac0dcfd54e8e0cad4113cb67159",
+    "method": "curl_raw_githubusercontent",
+    "fetched_at": "2026-11-06 America/Mexico_City",
+    "registry_slug": "ai-eng-telemetry-capture",
+    "syllabus_folder": "ai-eng-telemetry-capture"
+  },
+  {
+    "file": "OFFICIAL_README.es.md",
+    "official_path": "content/projects/ai-eng-telemetry-capture/README.es.md",
+    "resource_uri": "repo://4GeeksAcademy/ai-engineering-syllabus/sha/fd2da034894ba93ba738559280ccde074ab1d953/contents/content/projects/ai-eng-telemetry-capture/README.es.md",
+    "download_url": "https://raw.githubusercontent.com/4GeeksAcademy/ai-engineering-syllabus/fd2da034894ba93ba738559280ccde074ab1d953/content/projects/ai-eng-telemetry-capture/README.es.md",
+    "sha256": "493fc02d6c75d3b4ed234cd363bafe2ad643fe2ae7a95dbabb01773358cbe514",
+    "method": "curl_raw_githubusercontent",
+    "fetched_at": "2026-11-06 America/Mexico_City",
+    "registry_slug": "ai-eng-telemetry-capture",
+    "syllabus_folder": "ai-eng-telemetry-capture"
+  },
+  {
+    "file": "learn.json",
+    "official_path": "content/projects/ai-eng-telemetry-capture/learn.json",
+    "resource_uri": "repo://4GeeksAcademy/ai-engineering-syllabus/sha/fd2da034894ba93ba738559280ccde074ab1d953/contents/content/projects/ai-eng-telemetry-capture/learn.json",
+    "download_url": "https://raw.githubusercontent.com/4GeeksAcademy/ai-engineering-syllabus/fd2da034894ba93ba738559280ccde074ab1d953/content/projects/ai-eng-telemetry-capture/learn.json",
+    "sha256": "5eeef669427526dc6ff8fa66b76346b183d32ae90f5f2d84be5095aa576cdb65",
+    "method": "curl_raw_githubusercontent",
+    "fetched_at": "2026-11-06 America/Mexico_City",
+    "registry_slug": "ai-eng-telemetry-capture",
+    "syllabus_folder": "ai-eng-telemetry-capture"
+  }
+]

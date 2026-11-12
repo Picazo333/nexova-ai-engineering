@@ -36,6 +36,7 @@ class AssetEntry(SQLModel, table=True):
     quantity: int
     supplier: str = Field(max_length=200)
     office: str = Field(max_length=32)
+    unit_cost_minor: int | None = Field(default=None)
     created_at: datetime = Field(
         default_factory=_utcnow,
         sa_type=DateTime(timezone=True),

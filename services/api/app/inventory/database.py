@@ -114,6 +114,16 @@ def create_all(engine: Engine) -> None:
     SQLModel.metadata.create_all(engine)
 
 
+def ensure_unit_cost_column(engine: Engine) -> None:
+    """Add the capture-phase cost column on databases created before it existed.
+
+    create_all does not alter an existing table. The column stays nullable:
+    a row without a cost is not a variance.
+    """
+    with engine.begin() as connection:
+        connection.execute(text("ALTER TABLE assetentry ADD COLUMN IF NOT EXISTS unit_cost_minor INTEGER"))
+
+
 def init_databases() -> None:
     """Open TinyDB auth and, when DATABASE_URL is set, the SQLModel engine."""
     from app.auth.store import get_auth_db
@@ -124,6 +134,7 @@ def init_databases() -> None:
         return
     engine = get_engine()
     create_all(engine)
+    ensure_unit_cost_column(engine)
     if os.environ.get("INVENTORY_AUTOSEED", "1") != "0":
         from app.inventory.seed import seed_if_empty
 
