@@ -11,6 +11,7 @@ Extensión aditiva de la captura 026. No se modifica ni se elimina ningún event
 - `rating`: `good`, `needs-improvement`, `poor`.
 - `path_template` reutiliza la lista cerrada de `page_load_recorded`. Sin query y sin PII.
 - El catálogo de `x-nexova.schemaVersion` pasa de `1.0.0` a `1.1.0`.
+- El `$id` pasa a `https://nexova.local/schemas/telemetry/event-envelope-1.1.0.json`. No había un archivo con el nombre antiguo: el esquema sigue en `event-schemas.json` y los `$ref` internos no cambian.
 
 ## 1.0.0 — 2026-11-12
 

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://nexova.local/schemas/telemetry/event-envelope-1.0.0.json",
+  "$id": "https://nexova.local/schemas/telemetry/event-envelope-1.1.0.json",
   "title": "Nexova telemetry event envelope",
   "description": "Envelope común de telemetría de Nexova. properties solo admite la allowlist del event_type.",
   "type": "object",

@@ -15,7 +15,7 @@ Slug LMS `ai-eng-telemetry-capture`.
 
 ## Contrato de la fase anterior
 
-`docs/telemetry/telemetry-plan.md` y `docs/telemetry/event-schemas.json` en `feature/telemetry-plan` @ `da3525b9cf1e6fedfd158f2200eb1371227261e1`. No se modifican. El enunciado los declara contrato: los `event_type` y las allowlist salen de ahí, no de nombres genéricos del README.
+`docs/telemetry/telemetry-plan.md` y `docs/telemetry/event-schemas.json` partieron de `feature/telemetry-plan` @ `da3525b9cf1e6fedfd158f2200eb1371227261e1`. En 1.1.0 se añade `web_vital_recorded` sin cambiar las claves de los eventos anteriores. El `$id` del esquema es `event-envelope-1.1.0.json`.
 
 ## Briefing
 
