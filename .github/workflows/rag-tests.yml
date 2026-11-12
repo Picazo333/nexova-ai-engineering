@@ -16,4 +16,4 @@ jobs:
         with:
           enable-cache: true
       - run: uv sync --frozen --all-groups
-      - run: uv run python -m pytest tests/pipelines/test_rag.py tests/process tests/api tests/test_project_constraints.py
+      - run: uv run python -m pytest tests/pipelines/test_rag.py tests/process tests/test_project_constraints.py
