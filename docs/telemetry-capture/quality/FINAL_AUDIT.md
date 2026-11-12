@@ -12,6 +12,8 @@ No es `READY_TO_SUBMIT`. No hubo merge ni envío al LMS.
 - Título: `feat: telemetry event capture`
 - Head anterior a R22: `76e70b159b49783f2114b84a2b72d611bb14df4d`
 - Commit de R22: `83604b7b7ccd95c72a9dde7a3fe8d2e2c5303282`
+- Head aprobado por Rodrigo antes de este pulido: `631e01a1fb640f7c0e2a894c2d4ee70f9e03cb8f`
+- Commit de este pulido: `9a9e28ee7ccb8dd473fbb5eab705059cc08d9910`
 
 ## Conteo
 
@@ -41,7 +43,7 @@ El check de CI `rag-tests.yml` no se toca. Ya falla en las ramas base por una ru
 ## Límites que el orquestador debe ver
 
 1. No hay una captura del panel Network de Chrome. El 200 del stub sigue siendo la petición real del navegador de la pasada anterior.
-2. `outbound_order_created`, `stock_threshold_triggered` y `direct_stock_edit_rejected` están instrumentados y validados contra el esquema. No salieron en el lote fotografiado.
+2. `outbound_order_created` y `stock_threshold_triggered` salieron de una salida real (NXV-IT-001, 14 → 9). `direct_stock_edit_rejected` no: no hay un control en el panel que envíe `current_stock`.
 3. El vacío y el error de la lista se forzaron en el navegador. No se usan como PASS de la integración.
 4. Supabase no persiste eventos. El stub no escribe.
 5. El portal no emite telemetría. `web_vital_recorded` sale del backoffice. `app` admite `portal` para cuando esa captura exista.

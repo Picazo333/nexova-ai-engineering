@@ -12,7 +12,7 @@
     "El webm de Playwright duraba 13,36 s. Se reencodificó a 9,0 s."
   ],
   "not_repaired_on_purpose": [
-    "Web Vitals no entra en event-schemas.json. page_load_recorded cubre la carga del documento. Un event_type nuevo sería 422.",
+    "direct_stock_edit_rejected no sale de un flujo de pantalla: el panel no envía current_stock. Un POST fabricado no cuenta como captura.",
     "El portal, asset_created y password_reset_requested no tienen pantalla en este backoffice. No se fabrica una para emitir el evento.",
     "bad_signature y el resto de credential_rejected que dependen del secreto JWT no se adivinan en el cliente."
   ],

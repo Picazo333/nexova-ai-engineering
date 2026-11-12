@@ -26,10 +26,10 @@ El vídeo de Playwright medía 13,36 s. Se recortó y se reencodificó a 9,0 s.
 
 ## Límites
 
-La foto del panel Network de Chrome no está. La evidencia del 200 es la petición que hizo el propio Chrome a través de Playwright, el cuerpo `{ "received": 6 }` y el log del stub con `inbound_order_created`, `catalogue_gap_recorded` y `kit_cost_variance_detected`.
+La foto del panel Network de Chrome no está. La evidencia del 200 es la petición que hizo Chrome a través de Playwright.
 
-`outbound_order_created`, `stock_threshold_triggered` y `direct_stock_edit_rejected` están en el código y en los tests de esquema. No salieron en el lote de la captura de pantalla. El lote de esa captura sí incluye dos obligatorios: la entrada y la desviación de costo.
+Una salida real de 5 unidades de NXV-IT-001, con el stock en 14, emitió `outbound_order_created` y `stock_threshold_triggered`. El archivo es `evidence/telemetry-batch-outbound.json`. `direct_stock_edit_rejected` no está en ese lote: el panel no envía `current_stock`, y un POST armado a mano no sería el flujo de la pantalla.
 
 El indicador de Next en desarrollo tapaba el lockup. `devIndicators` queda en false. No cambia el build de producción.
 
-Esta revisión no es la aprobación visual del dueño. El estado sigue en `PENDIENTE_REVISION_ORQUESTADOR`.
+Rodrigo aprobó el head anterior. Este pulido añade conteos, el `$id` 1.1.0 y la salida real. El estado de estos commits sigue en `PENDIENTE_REVISION_ORQUESTADOR`. No hay envío al LMS.
