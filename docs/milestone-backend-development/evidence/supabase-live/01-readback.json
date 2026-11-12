@@ -1,0 +1,75 @@
+{
+ "server_version": "17.11",
+ "tables": [
+  "asset",
+  "assetentry",
+  "assetexit"
+ ],
+ "asset_columns": [
+  "id",
+  "name",
+  "sku",
+  "category",
+  "office"
+ ],
+ "has_current_stock_column": false,
+ "has_user_or_profile_table": false,
+ "foreign_keys": [
+  "assetentry -> asset",
+  "assetexit -> asset"
+ ],
+ "rls": [
+  {
+   "table": "asset",
+   "rls": true
+  },
+  {
+   "table": "assetentry",
+   "rls": true
+  },
+  {
+   "table": "assetexit",
+   "rls": true
+  }
+ ],
+ "stock": [
+  {
+   "sku": "NXV-IT-001",
+   "office": "Valencia",
+   "current_stock": 12
+  },
+  {
+   "sku": "NXV-IT-002",
+   "office": "Miami",
+   "current_stock": 6
+  },
+  {
+   "sku": "NXV-OFF-001",
+   "office": "Valencia",
+   "current_stock": 18
+  },
+  {
+   "sku": "NXV-PER-001",
+   "office": "Valencia",
+   "current_stock": 20
+  },
+  {
+   "sku": "NXV-PER-002",
+   "office": "Miami",
+   "current_stock": 0
+  },
+  {
+   "sku": "NXV-TRN-001",
+   "office": "Valencia",
+   "current_stock": 15
+  }
+ ],
+ "counts": {
+  "asset": 6,
+  "assetentry": 6,
+  "assetexit": 3
+ },
+ "check_quantity_positive": "rejected",
+ "fk_asset": "rejected",
+ "probe_rows_left": 0
+}
