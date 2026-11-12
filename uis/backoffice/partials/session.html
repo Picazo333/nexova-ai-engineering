@@ -1,0 +1,48 @@
+<section class="panel" id="session-panel" aria-labelledby="session-titulo">
+  <h2 id="session-titulo">Sesión</h2>
+  <p id="session-status" role="status">No hay una sesión en esta pestaña. El análisis, el gestor de incidencias y el directorio piden un token.</p>
+  <p id="session-error" role="alert" tabindex="-1" hidden></p>
+  <form id="session-login">
+    <div class="form-grid two">
+      <div>
+        <label for="session-email">Correo</label>
+        <input id="session-email" name="email" type="email" autocomplete="username" required maxlength="200">
+      </div>
+      <div>
+        <label for="session-password">Contraseña</label>
+        <input id="session-password" name="password" type="password" autocomplete="current-password" required minlength="8">
+      </div>
+    </div>
+    <p class="actions session-actions">
+      <button class="button" id="session-login-submit" type="submit">Entrar</button>
+      <button class="button button-secondary" id="session-show-register" type="button">Crear cuenta</button>
+      <button class="button button-secondary" id="session-logout" type="button" hidden>Cerrar sesión</button>
+    </p>
+  </form>
+  <form id="session-register" hidden>
+    <div class="form-grid two">
+      <div>
+        <label for="register-email">Correo de la cuenta</label>
+        <input id="register-email" name="email" type="email" autocomplete="username" required maxlength="200">
+      </div>
+      <div>
+        <label for="register-password">Contraseña nueva</label>
+        <input id="register-password" name="password" type="password" autocomplete="new-password" required minlength="8" aria-describedby="register-hint">
+      </div>
+      <div>
+        <label for="register-name">Nombre visible</label>
+        <input id="register-name" name="name" type="text" autocomplete="name" maxlength="200">
+      </div>
+      <div>
+        <label for="register-phone">Teléfono</label>
+        <input id="register-phone" name="phone" type="tel" autocomplete="tel" maxlength="40">
+      </div>
+    </div>
+    <div>
+      <label for="register-address">Dirección</label>
+      <input id="register-address" name="address" type="text" autocomplete="street-address" maxlength="400">
+    </div>
+    <p id="register-hint">Mínimo 8 caracteres. El nombre, el teléfono y la dirección se guardan en el perfil, no junto a la contraseña.</p>
+    <p class="actions"><button class="button" id="session-register-submit" type="submit">Registrar usuario</button></p>
+  </form>
+</section>

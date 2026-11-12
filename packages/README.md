@@ -8,3 +8,11 @@ Each subfolder under `packages/` should represent **one versionable package** (f
 - **Recommendation**: document packages as you add them—their public API and how they are consumed from `apps/`, `agents/`, and `workflows/`.
 
 > _Spanish version: [README.es.md](./README.es.md)._
+
+## `shared/nexova_incidents/`
+
+Validación del CSV de tickets y reglas del gestor de incidencias (categorías, sedes, ciclo de vida y mapa CSV → modelo). La importa quien tenga `packages/shared` en el `PYTHONPATH`.
+
+## `incident_analysis/`
+
+Python rules for the Nexova support CSV, shared by `scripts/analyze.py` and `services/api`. See [`incident_analysis/README.md`](./incident_analysis/README.md).

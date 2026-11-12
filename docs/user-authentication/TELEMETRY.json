@@ -1,0 +1,54 @@
+{
+  "started_at": "2026-11-06T09:24:00Z",
+  "finished_at": "2026-11-06T09:50:35Z",
+  "eval_repair_iterations": 2,
+  "failures_found": [
+    {
+      "where": "GET /proveedores",
+      "failure": "FastAPI rechazó la anotación HTMLResponse | JSONResponse al construir la ruta.",
+      "repair": "response_model=None en el decorador. La ruta sigue devolviendo HTML o JSON."
+    },
+    {
+      "where": "test_secret_and_lifetime_come_from_the_environment",
+      "failure": "El texto 'import sqlmodel' aparecía dentro del propio test, y el escaneo se incluía a sí mismo.",
+      "repair": "El escaneo excluye tests y .venv. El código de la API no importa sqlmodel ni supabase."
+    },
+    {
+      "where": "test_existing_monorepo_routes_require_a_token_and_still_run",
+      "failure": "GET /api/incidents/results/export devolvía 200 porque el almacén en memoria conservaba el análisis de un test anterior.",
+      "repair": "El fixture llama a reset_store con el directorio temporal. Sin análisis previo la ruta vuelve a 404, que es el contrato de 009."
+    },
+    {
+      "where": "captura session-loading-390.png",
+      "failure": "La captura a página completa se tomó con scroll y el encabezado sticky quedó cosido en medio del formulario.",
+      "repair": "Nueva captura del viewport con scroll en 0. El estado dice 'Comprobando la sesión…'."
+    },
+    {
+      "where": "uis/backoffice/js/auth.js",
+      "failure": "Durante la petición, Crear cuenta seguía pulsable.",
+      "repair": "setBusy también deshabilita ese botón."
+    }
+  ],
+  "verification_commands": [
+    "cd services/api && uv add \"python-jose[cryptography]\" \"libpass[bcrypt]\"",
+    "cd services/api && uv add --dev pytest==9.2.0 httpx==0.28.1",
+    "services/api/.venv/bin/python -m pytest -q --tb=line",
+    "services/api/.venv/bin/python /tmp/nexova-http-evidence.py",
+    "npx lighthouse http://127.0.0.1:8000/ --preset=desktop --chrome-flags='--headless --no-sandbox' --only-categories=performance",
+    "npx lighthouse http://127.0.0.1:8000/ --config-path=/tmp/lh-mobile.cjs --chrome-flags='--headless --no-sandbox'",
+    "npx lighthouse http://127.0.0.1:8000/proveedores --preset=desktop",
+    "npx lighthouse http://127.0.0.1:8000/proveedores --config-path=/tmp/lh-mobile.cjs"
+  ],
+  "tokens_used": null,
+  "tokens_unmeasurable_reason": "Este runtime no entrega al proceso un contador de tokens de entrada o de salida. No hay cifra real que copiar.",
+  "tokens_proxy": {
+    "method": "Volumen de la entrega y duración, no un conteo de tokens del modelo.",
+    "started_at": "2026-11-06T09:24:00Z",
+    "finished_at": "2026-11-06T09:50:35Z",
+    "duration_minutes": 26,
+    "pytest": "45 passed",
+    "tracked_diff_insertions_before_new_files": 720,
+    "tracked_diff_deletions_before_new_files": 53,
+    "new_areas": "services/api/app/auth, routers de auth/users/profiles, tests/test_auth.py, docs/user-authentication, uis/backoffice/js/auth.js"
+  }
+}

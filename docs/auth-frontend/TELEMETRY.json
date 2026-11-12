@@ -1,0 +1,51 @@
+{
+  "started_at": "2026-11-06T09:58:00Z",
+  "finished_at": "2026-11-06T10:39:00Z",
+  "eval_repair_iterations": 3,
+  "failures_found": [
+    {
+      "where": "e2e/auth.spec.ts",
+      "failure": "getByText del correo y getByRole('alert') coincidían con dos nodos.",
+      "repair": "El correo se afirma en .meta dd y el error de login en .alert."
+    },
+    {
+      "where": "Lighthouse /login",
+      "failure": "CLS 0,76. El formulario sustituía al fallback de Suspense de useSearchParams.",
+      "repair": "La página de servidor lee searchParams y pinta el formulario en el HTML inicial. CLS de login quedó en 0."
+    },
+    {
+      "where": "Lighthouse / incidencias",
+      "failure": "CLS 0,36 y luego 0,18. La cabecera aparecía al validar el token y empujaba el main.",
+      "repair": "La cabecera reserva altura también durante la comprobación. CLS móvil de las vistas protegidas quedó en 0,017."
+    }
+  ],
+  "verification_commands": [
+    "services/api/.venv/bin/python -m pytest -q --tb=line",
+    "cd uis/portal && npx tsc --noEmit && npx next build",
+    "cd uis/portal && npx playwright test",
+    "python3 verificación SHA-256 de tokens y lockups contra MANIFEST.json",
+    "node /tmp/lighthouse-runs.mjs",
+    "python3 comprobación de configSettings en los 30 JSON"
+  ],
+  "pytest": "45 passed",
+  "playwright": "9 passed",
+  "lighthouse": {
+    "runs": 30,
+    "config_bad": 0,
+    "mobile": {"rttMs": 150, "throughputKbps": 1638.4, "cpuSlowdownMultiplier": 4, "screen": "390x844"},
+    "desktop": {"rttMs": 40, "throughputKbps": 10240, "cpuSlowdownMultiplier": 1},
+    "worst_lcp_ms": 2334.4755,
+    "worst_cls": 0.01689652074302015
+  },
+  "tokens_used": null,
+  "tokens_unmeasurable_reason": "Este runtime no entrega al proceso un contador de tokens de entrada o de salida. No hay cifra real que copiar.",
+  "tokens_proxy": {
+    "method": "Volumen de la entrega y duración, no un conteo de tokens del modelo.",
+    "started_at": "2026-11-06T09:58:00Z",
+    "finished_at": "2026-11-06T10:39:00Z",
+    "duration_minutes": 41,
+    "pytest": "45 passed",
+    "playwright": "9 passed",
+    "lighthouse_runs": 30
+  }
+}

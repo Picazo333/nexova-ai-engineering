@@ -1,0 +1,92 @@
+implementation_commit: d7952db5a37fffeec3f98dedf9a8ec20da5cb95b
+items:
+  - id: EV-pytest
+    type: test_output
+    source: python -m pytest -q
+    captured_at: "2026-11-06T08:20:00+00:00"
+    supports: [R01, R02, R03, R04, R05, R06, R07, R08, R09, R10, R11, R12, R13, R14, R20, R22, S01, S14]
+    verifier: pytest 9.2.0, 24 passed
+    location: packages/incident_analysis/tests and services/api/tests
+    repo_commit: d7952db5a37fffeec3f98dedf9a8ec20da5cb95b
+    freshness: CURRENT
+    notes: Salida local. No incluye correos.
+  - id: EV-cli
+    type: runtime_output
+    source: python3 scripts/analyze.py scripts/incidents-nexova.csv --no-export
+    captured_at: "2026-11-06T08:25:00+00:00"
+    supports: [R08, R11, R22, R23]
+    verifier: archivo de salida sin carácter @
+    location: /opt/cursor/artifacts/cli-output.txt
+    repo_commit: d7952db5a37fffeec3f98dedf9a8ec20da5cb95b
+    freshness: CURRENT
+    notes: También se ejecutó en una terminal de escritorio, con respuesta y, y se vieron 100, 96, 4 y 3.84.
+  - id: EV-cli-png
+    type: screenshot
+    source: stdout real volcado a imagen
+    captured_at: "2026-11-06T08:33:00+00:00"
+    supports: [R23]
+    verifier: el texto es el de EV-cli
+    location: /opt/cursor/artifacts/cli-stdout.png
+    repo_commit: d7952db5a37fffeec3f98dedf9a8ec20da5cb95b
+    freshness: CURRENT
+    notes: No es una foto de la ventana de terminal; es el stdout capturado, mostrado en Consolas para leerlo.
+  - id: EV-ui-widths
+    type: screenshot
+    source: Chrome headless vía Playwright
+    captured_at: "2026-11-06T08:18:00+00:00"
+    supports: [R17, R19, S06, S07, S10]
+    verifier: overflow 0 y axe sin serious
+    location: /opt/cursor/artifacts/ui-success-390.png
+    repo_commit: d7952db5a37fffeec3f98dedf9a8ec20da5cb95b
+    freshness: CURRENT
+    notes: También ui-success-768.png, ui-success-1280.png, ui-idle-390.png, ui-idle-768.png, ui-idle-1280.png.
+  - id: EV-desktop
+    type: screenshot
+    source: fotograma del vídeo de escritorio
+    captured_at: "2026-11-06T08:32:00+00:00"
+    supports: [R16, R17, R19, R23]
+    verifier: revisión del fotograma
+    location: /opt/cursor/artifacts/ui-desktop-results.png
+    repo_commit: d7952db5a37fffeec3f98dedf9a8ec20da5cb95b
+    freshness: CURRENT
+    notes: Muestra 3.84, CLOSED 56 y NXV-000017 sin correo.
+  - id: EV-video
+    type: runtime_output
+    source: grabación de pantalla del escritorio
+    captured_at: "2026-11-06T08:31:00+00:00"
+    supports: [R16, R17, R18, S08]
+    verifier: ffprobe duration 65.92 s
+    location: /opt/cursor/artifacts/incidents-backoffice-upload.mp4
+    repo_commit: d7952db5a37fffeec3f98dedf9a8ec20da5cb95b
+    freshness: CURRENT
+    notes: Diálogo de fichero, análisis, scroll y descarga de results.csv.
+  - id: EV-axe
+    type: external_report
+    source: axe-core inyectado en Chrome
+    captured_at: "2026-11-06T08:18:00+00:00"
+    supports: [S05]
+    verifier: cero violaciones serious o critical
+    location: /tmp/evidence/report.json
+    repo_commit: d7952db5a37fffeec3f98dedf9a8ec20da5cb95b
+    freshness: CURRENT
+    notes: No certifica WCAG.
+  - id: EV-lighthouse
+    type: external_report
+    source: lighthouse 13.6.0 Chrome 156 headless, throttling-method simulate, 3 runs mobile and 3 desktop
+    captured_at: "2026-11-06T08:38:19Z"
+    supports: [S15]
+    verifier: numericValue of largest-contentful-paint, cumulative-layout-shift, total-blocking-time
+    location: docs/incidents-analysis/lighthouse-summary.json
+    repo_commit: d7952db5a37fffeec3f98dedf9a8ec20da5cb95b
+    freshness: CURRENT
+    notes: Full JSON reports at /opt/cursor/artifacts/lighthouse/. Mobile median LCP 904.2 ms, CLS 0, TBT 0. Desktop median LCP 903.9 ms, CLS 0, TBT 0. Served by uvicorn without --reload. There is no separate frontend bundle.
+  - id: EV-csv-hash
+    type: asset_integrity
+    source: sha256sum del CSV copiado del syllabus
+    captured_at: "2026-11-06T08:00:00+00:00"
+    supports: [R11, R22]
+    verifier: dadd5a0b65eebff2a395f672afb94c1d931db7918b711f98ee80e1319b5e8cb8
+    location: scripts/incidents-nexova.csv
+    repo_commit: d7952db5a37fffeec3f98dedf9a8ec20da5cb95b
+    freshness: CURRENT
+    notes: Blob git del syllabus 388f4bd85612b8748edf6dc0028c0882992fe460 en fd2da034.

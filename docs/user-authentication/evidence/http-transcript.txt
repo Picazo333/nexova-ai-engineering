@@ -1,0 +1,170 @@
+===== 200-class register POST /users =====
+POST http://127.0.0.1:8000/users
+HTTP 201
+response headers: {"content-type": "application/json"}
+{"id":"7bd308f8-2fc2-4476-b8ce-747e2e62f949","email":"ana.evidence@nexova.test","is_active":true,"role":"user","created_at":"2026-11-06T09:39:51+00:00","profile":{"id":"cdd2819c-4cb6-4344-bf71-ffc15ebb1623","user_id":"7bd308f8-2fc2-4476-b8ce-747e2e62f949","name":"Ana Evidence","phone":"+34 600 111 222","address":"Calle Mayor 1"}}
+
+===== register second user =====
+POST http://127.0.0.1:8000/users
+HTTP 201
+response headers: {"content-type": "application/json"}
+{"id":"806b479a-d1ac-4bab-8a3c-3d7b6703b5ac","email":"luis.evidence@nexova.test","is_active":true,"role":"user","created_at":"2026-11-06T09:39:51+00:00","profile":{"id":"44456a9c-2f5d-453b-98da-96da0320431a","user_id":"806b479a-d1ac-4bab-8a3c-3d7b6703b5ac","name":"Luis Evidence","phone":null,"address":null}}
+
+===== 200 POST /auth/login =====
+POST http://127.0.0.1:8000/auth/login
+HTTP 200
+response headers: {"content-type": "application/json"}
+{"access_token":"<REDACTED_EXPIRED_DEV_JWT>","token_type":"bearer","expires_in":1800,"user_uuid":"7bd308f8-2fc2-4476-b8ce-747e2e62f949"}
+
+===== 200 GET /auth/me =====
+GET http://127.0.0.1:8000/auth/me
+request Authorization: Bearer <jwt length 256>
+HTTP 200
+response headers: {"content-type": "application/json"}
+{"id":"7bd308f8-2fc2-4476-b8ce-747e2e62f949","email":"ana.evidence@nexova.test","role":"user","profile":{"id":"cdd2819c-4cb6-4344-bf71-ffc15ebb1623","user_id":"7bd308f8-2fc2-4476-b8ce-747e2e62f949","name":"Ana Evidence","phone":"+34 600 111 222","address":"Calle Mayor 1"}}
+
+===== 200 PUT /profiles/me =====
+PUT http://127.0.0.1:8000/profiles/me
+request Authorization: Bearer <jwt length 256>
+HTTP 200
+response headers: {"content-type": "application/json"}
+{"id":"cdd2819c-4cb6-4344-bf71-ffc15ebb1623","user_id":"7bd308f8-2fc2-4476-b8ce-747e2e62f949","name":"Ana Soler","phone":"+34 600 111 222","address":"Calle Mayor 1"}
+
+===== 200 GET /suppliers with token =====
+GET http://127.0.0.1:8000/suppliers
+request Authorization: Bearer <jwt length 256>
+HTTP 200
+response headers: {"content-type": "application/json"}
+[{"id":1,"name":"LinkedIn Talent Solutions","country":"Spain","categories":["job_boards"],"monthly_rate":1200.0,"currency":"EUR","updated_at":"2026-11-06T09:38:14.019939Z","status":"active","contract_renewal_date":"2025-03-31","contact_email":"account@linkedin.com","notes":"Licencia corporativa para publicación de ofertas y búsqueda de candidatos."},{"id":2,"name":"InfoJobs Premium","country":"Spain","categories":["job_boards"],"monthly_rate":490.0,"currency":"EUR","updated_at":"2026-11-06T09:38:14.019939Z","status":"active","contract_renewal_date":"2025-06-30","contact_email":"empresas@infojobs.net","notes":null},{"id":3,"name":"Indeed Sponsored","country":"USA","categories":["job_boards"],"monthly_rate":850.0,"currency":"USD","updated_at":"2026-11-06T09:38:14.019939Z","status":"active","contract_renewal_date":null,"contact_email":"sales@indeed.com","notes":"Campañas de pago por clic para perfiles de customer support en Miami."},{"id":4,"name":"Workable","country":"Spain","categories":["ats_software"],"monthly_rate":299.0,"currency":"EUR","updated_at":"2026-11-06T09:38:14.019939Z","status":"active","contract_renewal_date":"2025-09-15","contact_email":"support@workable.com","notes":"ATS principal para el equipo de selección de Valencia."},{"id":5,"name":"Greenhouse","country":"USA","categories":["ats_software"],"monthly_rate":620.0,"currency":"USD","updated_at":"2026-11-06T09:38:14.019939Z","status":"suspended","contract_renewal_date":null,"contact_email":"accounts@greenhouse.io","notes":"Suspendido tras no renovar. Sergio está evaluando si migrar todo a Workable."},{"id":6,"name":"Thomas International","country":"Spain","categories":["assessment_tools"],"monthly_rate":380.0,"currency":"EUR","updated_at":"2026-11-06T09:38:14.019939Z","status":"active","contract_renewal_date":"2025-12-01","contact_email":"clientes@thomas.es","notes":"Tests de personalidad y aptitud para procesos de mandos intermedios."},{"id":7,"name":"HireVue","country":"USA","categories":["video_interview"],"monthly_rate":540.0,"currency":"USD","updated_at":"2026-11-06T09:38:14.019939Z","status":"active","contract_renewal_date":"2025-08-31","contact_email":"support@hirevue.com","notes":null},{"id":8,"name":"Udemy Business","country":"Spain","categories":["training_platforms"],"monthly_rate":420.0,"currency":"EUR","updated_at":"2026-11-06T09:38:14.019939Z","status":"active","contract_renewal_date":"2026-01-15","contact_email":"business@udemy.com","notes":"Licencias para el equipo interno. Gestionado por Elena Vargas."},{"id":9,"name":"Coursera for Teams","country":"USA","categories":["training_platforms"],"monthly_rate":399.0,"currency":"USD","updated_at":"2026-11-06T09:38:14.019939Z","status":"suspended","contract_renewal_date":null,"contact_email":"teams@coursera.com","notes":"Suspendido por bajo uso. Revisar antes de Q4."},{"id":10,"name":"Sage HR","country":"Spain","categories":["payroll_and_hr_software"],"monthly_rate":310.0,"currency":"EUR","updated_at":"2026-11-06T09:38:14.019939Z","status":"active","contract_renewal_date":"2025-10-01","contact_email":"soporte@sage.com","notes":"Software de nóminas y gestión de personal para la sede de Valencia."},{"id":11,"name":"Gusto","country":"USA","categories":["payroll_and_hr_software"],"monthly_rate":280.0,"currency":"USD","updated_at":"2026-11-06T09:38:14.019939Z","status":"active","contract_renewal_date":null,"contact_email":"support@gusto.com","notes":"Gestión de nóminas para los empleados de la oficina de Miami."},{"id":12,"name":"Checkr","country":"USA","categories":["background_check"],"monthly_rate":195.0,"currency":"USD","updated_at":"2026-11-06T09:38:14.019939Z","status":"active","contract_renewal_date":"2025-11-30","contact_email":"sales@checkr.com","notes":null},{"id":13,"name":"Microsoft 365 Business","country":"Spain","categories":["it_and_software_licenses"],"monthly_rate":760.0,"currency":"EUR","updated_at":"2026-11-06T09:38:14.019939Z","status":"active","contract_renewal_date":null,"contact_email
+…[truncated]
+
+===== 401 GET /profiles/me without token =====
+GET http://127.0.0.1:8000/profiles/me
+HTTP 401
+response headers: {"www-authenticate": "Bearer", "content-type": "application/json"}
+{"error":"unauthorized","message":"Falta el token de acceso.","detail":"Falta el token de acceso."}
+
+===== 401 GET /suppliers without token =====
+GET http://127.0.0.1:8000/suppliers
+HTTP 401
+response headers: {"www-authenticate": "Bearer", "content-type": "application/json"}
+{"error":"unauthorized","message":"Falta el token de acceso.","detail":"Falta el token de acceso."}
+
+===== 401 GET /auth/me malformed token =====
+GET http://127.0.0.1:8000/auth/me
+request Authorization: Bearer <jwt length 17>
+HTTP 401
+response headers: {"www-authenticate": "Bearer", "content-type": "application/json"}
+{"error":"unauthorized","message":"El token no es válido o ha caducado.","detail":"El token no es válido o ha caducado."}
+
+===== 401 GET /suppliers expired token =====
+GET http://127.0.0.1:8000/suppliers
+request Authorization: Bearer <jwt length 233>
+HTTP 401
+response headers: {"www-authenticate": "Bearer", "content-type": "application/json"}
+{"error":"unauthorized","message":"El token no es válido o ha caducado.","detail":"El token no es válido o ha caducado."}
+
+===== 403 PUT /users/{other} =====
+PUT http://127.0.0.1:8000/users/806b479a-d1ac-4bab-8a3c-3d7b6703b5ac
+request Authorization: Bearer <jwt length 256>
+HTTP 403
+response headers: {"content-type": "application/json"}
+{"error":"forbidden","message":"No puedes consultar ni modificar las credenciales de otro usuario.","detail":"No puedes consultar ni modificar las credenciales de otro usuario."}
+
+===== 403 GET /users/{other} =====
+GET http://127.0.0.1:8000/users/806b479a-d1ac-4bab-8a3c-3d7b6703b5ac
+request Authorization: Bearer <jwt length 256>
+HTTP 403
+response headers: {"content-type": "application/json"}
+{"error":"forbidden","message":"No puedes consultar ni modificar las credenciales de otro usuario.","detail":"No puedes consultar ni modificar las credenciales de otro usuario."}
+
+===== GET /proveedores without token (shell, no supplier rows) =====
+GET http://127.0.0.1:8000/proveedores
+HTTP 200
+response headers: {"content-type": "text/html; charset=utf-8"}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Directorio de proveedores · Nexova</title>
+  <meta name="description" content="Directorio de contratos externos de Nexova: país, categoría, tarifa mensual y estado active o suspended.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/tokens/tokens.css">
+  <link rel="stylesheet" href="/tokens/motion.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <script src="/js/motion-pref.js"></script>
+</head>
+<body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/">Nexova <span>Backoffice</span></a>
+      <nav aria-label="Secciones">
+        <a href="/">Análisis de incidencias</a>
+        <a href="/proveedores" aria-current="page">Directorio de proveedores</a>
+        <a href="/privacidad">Privacidad de los datos</a>
+      </nav>
+    </div>
+  </header>
+  <main id="contenido" class="wrap">
+    
+<h1>Directorio de proveedores</h1><section class="panel" id="session-panel" aria-labelledby="session-titulo">
+  <h2 id="session-titulo">Sesión</h2>
+  <p id="session-status" role="status">No hay una sesión en esta pestaña. El análisis y el directorio piden un token.</p>
+  <p id="session-error" role="alert" tabindex="-1" hidden></p>
+  <form id="session-login">
+    <div class="form-grid two">
+      <div>
+        <label for="session-email">Correo</label>
+        <input id="session-email" name="email" type="email" autocomplete="username" required maxlength="200">
+      </div>
+      <div>
+        <label for="session-password">Contraseña</label>
+        <input id="session-password" name="password" type="password" autocomplete="current-password" required minlength="8">
+      </div>
+    </div>
+    <p class="actions session-actions">
+      <button class="button" id="session-login-submit" type="submit">Entrar</button>
+      <button class="button button-secondary" id="session-show-register" type="button">Crear cuenta</button>
+      <button class="button button-secondary" id="session-logout" type="button" hidden>Cerrar sesión</button>
+    </p>
+  </form>
+  <form id="session-register" hidden>
+    <div class="form-grid two">
+      <div>
+        <label for="register-email">Correo de la cuenta</label>
+        <input id="register-email" name="email" type="email" autocomplete="username" required maxlength="200">
+      </div>
+      <div>
+        <label for="register-password">Contraseña nueva</label>
+        <input id="register-password" name="password" type="password" autocomplete="new-password" required minlength="8" aria-describedby="register-hint">
+      </div>
+      <div>
+        <label for="register-name">Nombre visible</label>
+        <input id="register-name" name="name" type="text" autocomplete="name" maxlength="200">
+      </div>
+      <div>
+        <label for="register-phone">Teléfono</label>
+        <input id="register-phone" name="phone" type="tel" autocomplete="tel" maxlength="40">
+      </div>
+    </div>
+    <div>
+      <label for="register-address">Dirección</label>
+      <input id="register-address" name="address" type="text" autocomplete="street-address" maxlength="400">
+    </div>
+    <p id="register-hint">Mínimo 8 caracteres. El nombre, el teléfono y la dirección se guardan en el perfil, no junto a la contraseña.</p>
+    <p class="actions"><button class="button" id="session-register-submit" type="submit">Registrar usuario</button></p>
+  </form>
+</section>
+
+<p class="lead">Contratos externos de Nexova que Patricia Solís mantenía en una hoja de cálculo. Cada fila muestra el proveedor, el país del contrato, la categoría, la tarifa mensual y si está activo o suspendido.</p>
+<p id="filter-memory">El país, la categoría y el estado elegidos se conservan en esta pestaña al ir a otra sección y volver.</p>
+<p id=
+…[truncated]
+
+===== GET /proveedores with token (names present) =====
+HTTP 200
+contains LinkedIn Talent Solutions: True
+contains hashed password field: False
