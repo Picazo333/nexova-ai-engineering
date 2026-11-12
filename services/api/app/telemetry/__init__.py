@@ -1,1 +1,1 @@
-"""Telemetry stub. Phase 3 replaces this package with persistence."""
+"""Telemetry ingest. Valid events are stored. Invalid events are counted."""
