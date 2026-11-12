@@ -1,6 +1,6 @@
 # Revisión de excelencia — 014
 
-Los extras no sustituyen la rúbrica. El correo real sigue en BLOCKED_HITL.
+Los extras no sustituyen la rúbrica. V01 está en PASS: 1 correo real, Resend HTTP 200, id `01a1d1be-6006-77ab-ad3c-26f86f632b58`, 2026-11-12 15:51 CST (`evidence/resend-live/send-result.json`).
 
 ## Extra visible — IMPLEMENTADO
 

@@ -53,5 +53,9 @@ items:
     note: "Horizontal 85459232bf51e7bf7c94225fd4f2cd6b71a681b6d701cb4ffd6d2a142cf57a81. Igual al paquete SIGNAL."
   - id: mailer-blocked
     path: services/api/app/auth/mailer.py
-    rubric: [R07, R08, V01]
-    note: "Integración Resend y SendGrid por entorno. V01 BLOCKED_HITL: no hubo envío real."
+    rubric: [R07, R08]
+    note: "Integración Resend y SendGrid por entorno. El envío real de V01 está en evidence/resend-live/send-result.json."
+  - id: resend-live
+    path: evidence/resend-live/send-result.json
+    rubric: [V01]
+    note: "1 correo real. Resend HTTP 200. id 01a1d1be-6006-77ab-ad3c-26f86f632b58. 2026-11-12 15:51 CST."

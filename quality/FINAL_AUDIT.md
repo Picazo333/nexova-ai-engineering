@@ -6,11 +6,14 @@ Estado: **PENDIENTE_REVISION_ORQUESTADOR**. No es READY_TO_SUBMIT. No hubo merge
 
 22/22 criterios que cuentan: PASS.
 
+| ID | Estado | Evidencia |
+| --- | --- | --- |
+| V01 | PASS | 1 correo real, Resend HTTP 200, id `01a1d1be-6006-77ab-ad3c-26f86f632b58`, 2026-11-12 15:51 CST. `evidence/resend-live/send-result.json`. |
+
 No cuentan y quedan pendientes:
 
 | ID | Estado | Qué falta |
 | --- | --- | --- |
-| V01 | BLOCKED_HITL | Un correo real de Resend o SendGrid. El mock no vale como PASS. |
 | D01 | HITL_ENVIO_MIGUEL | Entrega al instructor o al LMS. |
 | D02 | HITL_MIGUEL | Merge a `main` cuando el PR esté aprobado. |
 | H01 | HITL_MIGUEL | Crear la cuenta del proveedor y definir `RESEND_API_KEY` (o `SENDGRID_API_KEY` si se cambia el transporte). |
@@ -21,7 +24,7 @@ Extras X01 y X02: PASS. Están en `quality/EXCELLENCE_REVIEW.md`.
 ## Checklist de Miguel
 
 1. Revisar el PR contra `feature/langgraph-external-tools`. No merge automático.
-2. Si el envío real debe demostrarse: crear la cuenta en Resend o SendGrid, poner la clave solo en el entorno del servidor, pedir un enlace a un buzón autorizado y guardar esa evidencia. Hasta entonces V01 sigue BLOCKED_HITL.
+2. V01 está en PASS: 1 correo real, Resend HTTP 200, id `01a1d1be-6006-77ab-ad3c-26f86f632b58`, 2026-11-12 15:51 CST. Evidencia: `evidence/resend-live/send-result.json`. La clave no está en el repositorio.
 3. Entregar al instructor o al LMS, si toca. D01.
 4. Merge a `main` solo después de aprobar. D02.
 
@@ -35,7 +38,7 @@ Extras X01 y X02: PASS. Están en `quality/EXCELLENCE_REVIEW.md`.
 
 ## Límites
 
-- No se envió ningún correo fuera de la máquina. No se creó cuenta de proveedor.
+- Se envió 1 correo real el 2026-11-12 15:51 CST (Resend HTTP 200, id `01a1d1be-6006-77ab-ad3c-26f86f632b58`). Evidencia: `evidence/resend-live/send-result.json`. La clave no está en el repositorio.
 - El mock escribe el enlace en `PASSWORD_RESET_CAPTURE_FILE` solo si esa variable está puesta y el transporte es `mock`. Las pruebas del portal la usan en `/tmp`. No es un buzón.
 - Con Resend de verdad, el tiempo de respuesta puede diferir entre un correo que existe y uno que no, porque la llamada solo se hace si hay cuenta activa. El cuerpo HTTP no cambia. Queda anotado en la revisión de excelencia.
 - El JWT de sesión no se anula al cambiar la contraseña. Los enlaces de restablecimiento sí.

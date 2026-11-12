@@ -1,6 +1,6 @@
 # Justificación — 014 ai-eng-user-authentication-restore
 
-Base de la rama: `feature/langgraph-external-tools` en `54b86218ad5bb752cb23463b313f5214a3dbf689` (PR #20). Esa punta ya incluye 011, 012 y 013. El correo real no se envió: no hay clave y no se creó cuenta.
+Base de la rama: `feature/langgraph-external-tools` en `54b86218ad5bb752cb23463b313f5214a3dbf689` (PR #20). Esa punta ya incluye 011, 012 y 013. V01 está en PASS con 1 correo real de Resend. La clave no está en el repositorio. Evidencia: `evidence/resend-live/send-result.json`.
 
 | ID | Estado | Cómo se cumple | Evidencia |
 | --- | --- | --- | --- |
@@ -17,7 +17,7 @@ Base de la rama: `feature/langgraph-external-tools` en `54b86218ad5bb752cb23463b
 | R11 | PASS | La vista protegida exige la actual, la nueva y la confirmación. Si no coinciden, no hay petición. La API pinta el error de la actual o el aviso de éxito. | `uis/portal/components/ChangePasswordScreen.tsx` línea 31. `uis/portal/app/(protected)/account/change-password/page.tsx`. E2E de cambio. Capturas `restore-change-idle-*` y `restore-change-error-*`. |
 | R12 | PASS | En `/login` el enlace se llama «¿Olvidaste tu contraseña?» y apunta a `/forgot-password`. | `uis/portal/components/LoginScreen.tsx` línea 150. E2E «login muestra el enlace». Capturas `restore-login-*`. |
 | R13 | PASS | En TinyDB se guarda el SHA-256, no el token. Una repetición responde `used` y no aplica la segunda contraseña. Una fila con `expires_at` pasado se rechaza aunque la firma siga dentro de plazo. Un enlace nuevo anula el anterior. | Tests `test_reset_link_is_signed_hashed_and_absent_from_the_database`, `test_reset_updates_the_password_and_a_replay_does_not`, `test_a_newer_link_invalidates_the_previous_one`. |
-| V01 | BLOCKED_HITL | Hace falta un envío real de Resend o SendGrid a un buzón. No hay clave en el entorno. El mock y el `httpx` parcheado demuestran el cuerpo de la petición, no el correo. No se marcó PASS. | `services/api/README.md`. Test de Resend con `httpx` sustituido. Ninguna llamada salió a `api.resend.com` ni a SendGrid en esta ejecución. |
+| V01 | PASS | 1 correo real por `POST /auth/forgot-password` con `EMAIL_TRANSPORT=resend`. Resend HTTP 200, id `01a1d1be-6006-77ab-ad3c-26f86f632b58`, 2026-11-12 15:51 CST. | `evidence/resend-live/send-result.json`. |
 | D01 | HITL_ENVIO_MIGUEL | Subir el trabajo al instructor o al LMS es un paso de Miguel. Esta ejecución no lo hace. | Checklist de `quality/FINAL_AUDIT.md`. |
 | D02 | HITL_MIGUEL | El enunciado pide merge a `main` tras la aprobación. No se hace merge. El PR se abre contra `feature/langgraph-external-tools` para no perder 011, 012 y 013. | Instrucción de lanzamiento y de esta tarea. PR de esta rama. |
 | H01 | HITL_MIGUEL | Crear la cuenta del proveedor y pegar la clave es una acción humana. No se crearon cuentas ni se gastó nada. | `services/api/.env.example`. |
