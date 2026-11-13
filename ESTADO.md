@@ -4,7 +4,7 @@ Las 83 actividades, en el orden de la plataforma (no la numeración interna del 
 
 - En esta caja: `/workspace/ESTADO/` (`4GEEKS_ESTADO_COHORTE.csv`, `.json`, `.md` y `README.md`).
 - En GitHub: https://github.com/Picazo333/4geeks-control-tower/tree/estado-cohorte-2026-11-13/estado
-- Rama: `estado-cohorte-2026-11-13`. El PR se abre contra `main` y **no se hace merge** hasta que Miguel lo decida.
+- PR (abierto, **sin merge**): https://github.com/Picazo333/4geeks-control-tower/pull/32
 
 Para retomar desde cero, lee el `README.md` de esa carpeta. Para refrescar entregas y retroalimentación del LMS: `python3 refresh_estado.py` (usa `FOURGEEKS_API_TOKEN`; nunca imprime el token).
 
