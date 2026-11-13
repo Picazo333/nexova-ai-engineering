@@ -1,0 +1,147 @@
+{
+  "stockText": "Stock actual (current_stock) de Laptop 14\" Business: \n14\nSaludable",
+  "events": [
+    {
+      "event_type": "page_load_recorded",
+      "schemaVersion": "1.0.0",
+      "sessionId": "present",
+      "userId": "present",
+      "properties": {
+        "app": "backoffice",
+        "path_template": "/backoffice/inventory/orders/outbound",
+        "duration_ms": 1052,
+        "nav_type": "navigate"
+      }
+    },
+    {
+      "event_type": "section_viewed",
+      "schemaVersion": "1.0.0",
+      "sessionId": "present",
+      "userId": "present",
+      "properties": {
+        "app": "backoffice",
+        "section": "backoffice_inventory_outbound"
+      }
+    },
+    {
+      "event_type": "web_vital_recorded",
+      "schemaVersion": "1.1.0",
+      "sessionId": "present",
+      "userId": "present",
+      "properties": {
+        "app": "backoffice",
+        "path_template": "/backoffice/inventory/orders/outbound",
+        "metric_name": "FCP",
+        "value": 732,
+        "rating": "good"
+      }
+    },
+    {
+      "event_type": "web_vital_recorded",
+      "schemaVersion": "1.1.0",
+      "sessionId": "present",
+      "userId": "present",
+      "properties": {
+        "app": "backoffice",
+        "path_template": "/backoffice/inventory/orders/outbound",
+        "metric_name": "TTFB",
+        "value": 698.3999999999069,
+        "rating": "good"
+      }
+    },
+    {
+      "event_type": "flow_abandoned",
+      "schemaVersion": "1.0.0",
+      "sessionId": "present",
+      "userId": "present",
+      "properties": {
+        "app": "backoffice",
+        "flow": "inventory_outbound",
+        "elapsed_ms": 0
+      }
+    },
+    {
+      "event_type": "web_vital_recorded",
+      "schemaVersion": "1.1.0",
+      "sessionId": "present",
+      "userId": "present",
+      "properties": {
+        "app": "backoffice",
+        "path_template": "/backoffice/inventory/orders/outbound",
+        "metric_name": "LCP",
+        "value": 1384,
+        "rating": "good"
+      }
+    },
+    {
+      "event_type": "outbound_order_created",
+      "schemaVersion": "1.0.0",
+      "sessionId": "present",
+      "userId": "present",
+      "properties": {
+        "office": "valencia",
+        "product_id": "1",
+        "product_category": "onboarding_equipment",
+        "programme_id": "unassigned",
+        "quantity": 5,
+        "currency": "EUR",
+        "product_sku": "NXV-IT-001",
+        "category_map_version": "proposed-2026-11-12",
+        "order_id": 4,
+        "exit_type": "consumption",
+        "occurred_at": "2026-11-12T21:26:20.734498Z"
+      }
+    },
+    {
+      "event_type": "catalogue_gap_recorded",
+      "schemaVersion": "1.0.0",
+      "sessionId": "present",
+      "userId": "present",
+      "properties": {
+        "gap": "missing_programme",
+        "affected_event": "outbound_order_created",
+        "product_id": "1",
+        "product_sku": "NXV-IT-001",
+        "office": "valencia",
+        "live_category": "hardware"
+      }
+    },
+    {
+      "event_type": "stock_threshold_triggered",
+      "schemaVersion": "1.0.0",
+      "sessionId": "present",
+      "userId": "present",
+      "properties": {
+        "office": "valencia",
+        "product_id": "1",
+        "product_category": "onboarding_equipment",
+        "programme_id": "unassigned",
+        "quantity": 5,
+        "currency": "EUR",
+        "product_sku": "NXV-IT-001",
+        "category_map_version": "proposed-2026-11-12",
+        "current_stock": 9,
+        "previous_stock": 14,
+        "threshold": 10,
+        "direction": "fell_below",
+        "order_type": "outbound",
+        "order_id": 4
+      }
+    },
+    {
+      "event_type": "catalogue_gap_recorded",
+      "schemaVersion": "1.0.0",
+      "sessionId": "present",
+      "userId": "present",
+      "properties": {
+        "gap": "missing_programme",
+        "affected_event": "stock_threshold_triggered",
+        "product_id": "1",
+        "product_sku": "NXV-IT-001",
+        "office": "valencia",
+        "live_category": "hardware"
+      }
+    }
+  ],
+  "note": "Salida real de 5 unidades de NXV-IT-001. El stock mostrado antes era 14. Orden 4. Sin correo."
+}

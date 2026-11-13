@@ -511,3 +511,54 @@ def test_two_exits_cannot_oversell_the_same_asset(inventory_client: TestClient, 
         thread.join(timeout=10)
     assert sorted(results) == [201, 400]
     assert inventory_client.get(f"/inventory/products/{asset_id}").json()["current_stock"] == 1
+
+
+@pytest.mark.skipif(
+    not os.environ.get("NEXOVA_TEST_DATABASE_URL", "").strip(),
+    reason="NEXOVA_TEST_DATABASE_URL no está definido; no se simula PostgreSQL.",
+)
+def test_unit_cost_variance_uses_prior_rows_of_the_same_supplier(inventory_client: TestClient, token: str) -> None:
+    products = inventory_client.get("/inventory/products").json()
+    laptop = next(row for row in products if row["sku"] == "NXV-IT-001")
+    first = inventory_client.post(
+        "/inventory/orders/inbound",
+        json={
+            "asset_id": laptop["id"],
+            "quantity": 1,
+            "supplier": "TechDistrib Valencia S.L.",
+            "office": "Valencia",
+            "unit_cost_minor": 10000,
+        },
+        headers=bearer(token),
+    )
+    assert first.status_code == 201, first.text
+    assert first.json()["unit_cost_minor"] == 10000
+    assert first.json()["historical_unit_cost_minor"] is None
+    assert first.json()["variance_ratio"] is None
+    second = inventory_client.post(
+        "/inventory/orders/inbound",
+        json={
+            "asset_id": laptop["id"],
+            "quantity": 1,
+            "supplier": "TechDistrib Valencia S.L.",
+            "office": "Valencia",
+            "unit_cost_minor": 13000,
+        },
+        headers=bearer(token),
+    )
+    assert second.status_code == 201, second.text
+    assert second.json()["historical_unit_cost_minor"] == 10000
+    assert second.json()["variance_ratio"] == 0.3
+    quiet = inventory_client.post(
+        "/inventory/orders/inbound",
+        json={
+            "asset_id": laptop["id"],
+            "quantity": 1,
+            "supplier": "Otro proveedor",
+            "office": "Valencia",
+            "unit_cost_minor": 50000,
+        },
+        headers=bearer(token),
+    )
+    assert quiet.status_code == 201, quiet.text
+    assert quiet.json()["variance_ratio"] is None

@@ -1,0 +1,39 @@
+{
+  "project": "026-ai-eng-telemetry-capture",
+  "started_at": "2026-11-12T20:41:00Z",
+  "finished_at": "2026-11-12T21:20:00Z",
+  "timezone": "UTC",
+  "eval_repair_iterations": 5,
+  "repairs": [
+    "R22: web_vital_recorded se añade en el esquema 1.1.0. Los eventos 1.0.0 no cambian. useReportWebVitals llama a track().",
+    "El 422 del stub se renderizaba como HTML porque /telemetry no estaba en API_ROOTS. El error pasa a JSON.",
+    "El estrechamiento de product category no compilaba. mappedLive devuelve null cuando la categoría no tiene fila en proposed-2026-11-12.",
+    "La captura del listado vacío llegaba después de la petición real. La ruta del navegador se instala antes del login.",
+    "El webm de Playwright duraba 13,36 s. Se reencodificó a 9,0 s."
+  ],
+  "not_repaired_on_purpose": [
+    "direct_stock_edit_rejected no sale de un flujo de pantalla: el panel no envía current_stock. Un POST fabricado no cuenta como captura.",
+    "El portal, asset_created y password_reset_requested no tienen pantalla en este backoffice. No se fabrica una para emitir el evento.",
+    "bad_signature y el resto de credential_rejected que dependen del secreto JWT no se adivinan en el cliente."
+  ],
+  "commands": [
+    "cd services/api && NEXOVA_TEST_DATABASE_URL=<postgresql local> uv run pytest tests",
+    "cd /workspace && services/api/.venv/bin/python -m pytest tests",
+    "cd uis/portal && npx jest --coverage=false",
+    "cd uis/backoffice && npx jest --coverage=false",
+    "cd uis/backoffice && npx tsc --noEmit && npx next build",
+    "cd uis/portal && npx playwright test"
+  ],
+  "results": {
+    "schema_validator": "300 pass, 0 fail",
+    "api_pytest_postgres": "171 passed",
+    "root_pytest": "47 passed, 1 skipped",
+    "portal_jest": "23 passed",
+    "backoffice_jest": "29 passed",
+    "backoffice_build": "typecheck EXIT 0",
+    "portal_playwright": "14 passed"
+  },
+  "tokens_used": null,
+  "tokens_unmeasurable_reason": "Este runtime no expone un contador de tokens de la sesión.",
+  "comparison_to_estimate": "No hubo una estimación de tokens previa. La reparación de R22 cierra en 2026-11-12T21:20:00Z."
+}

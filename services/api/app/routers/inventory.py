@@ -67,7 +67,13 @@ def add_outbound(
 def _orders_body(rows: list[InventoryOrderRead]) -> bytes:
     # The hit returns these bytes. Building the models is the expensive part;
     # encoding them again on every hit would spend most of the saved time.
-    payload = [row.model_dump(mode="json") for row in rows]
+    payload = []
+    for row in rows:
+        item = row.model_dump(mode="json")
+        for key in ("unit_cost_minor", "historical_unit_cost_minor", "variance_ratio"):
+            if item.get(key) is None:
+                item.pop(key, None)
+        payload.append(item)
     return json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
 
 

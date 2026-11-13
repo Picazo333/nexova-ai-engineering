@@ -1,4 +1,6 @@
 import { clearToken, readToken } from "@/lib/session";
+import { observeHttp } from "@/lib/telemetry-catalog";
+import { currentSessionId, openCorrelation, readJwtClaims } from "@/lib/telemetry";
 
 export class ApiError extends Error {
   status: number;
@@ -87,40 +89,86 @@ function cacheMarkOf(response: Response): CacheMark {
 
 export async function apiFetch<T>(path: string, init: RequestInit = {}, options?: Options): Promise<T> {
   const auth = options?.auth !== false;
+  const method = (init.method || "GET").toUpperCase();
+  const started = typeof performance !== "undefined" ? performance.now() : Date.now();
+  const correlation = openCorrelation();
   const headers = new Headers(init.headers);
   if (!headers.has("Accept")) headers.set("Accept", "application/json");
   if (init.body != null && !headers.has("Content-Type")) headers.set("Content-Type", "application/json");
-  if (auth) {
-    const token = readToken();
-    if (!token) {
-      redirectToLogin();
-      throw new ApiError(401, "Falta la sesión. Entra de nuevo para continuar.");
-    }
-    headers.set("Authorization", `Bearer ${token}`);
-  }
-  let response: Response;
-  try {
-    response = await fetch(`${inventoryApiBase()}${path}`, { ...init, headers, cache: "no-store" });
-  } catch {
-    throw new ApiError(0, "No hay conexión con la API. Los datos escritos se conservan.");
-  }
-  const text = await response.text();
-  let body: unknown = null;
-  if (text) {
+  headers.set("X-Request-Id", correlation.id);
+  const sessionId = currentSessionId();
+  if (sessionId !== "missing") headers.set("X-Nexova-Session", sessionId);
+  const note = (
+    status: number,
+    cache: CacheMark,
+    fields: Record<string, string>,
+    hadToken: boolean,
+    token: string,
+    missingToken = false,
+  ) => {
+    const duration = (typeof performance !== "undefined" ? performance.now() : Date.now()) - started;
+    const claims = token ? readJwtClaims(token) : null;
     try {
-      body = JSON.parse(text) as unknown;
+      observeHttp({
+        method,
+        path,
+        status,
+        durationMs: duration,
+        cache,
+        body: init.body,
+        hadToken,
+        missingToken,
+        tokenExpPassed: Boolean(claims && claims.exp * 1000 <= Date.now()),
+        tokenSub: claims?.sub ?? null,
+        fields,
+      });
     } catch {
-      body = null;
+      /* A telemetry failure must not block the inventory call. */
     }
+  };
+  try {
+    if (auth) {
+      const token = readToken();
+      if (!token) {
+        note(401, "", {}, false, "", true);
+        redirectToLogin();
+        throw new ApiError(401, "Falta la sesión. Entra de nuevo para continuar.");
+      }
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+    let response: Response;
+    try {
+      response = await fetch(`${inventoryApiBase()}${path}`, { ...init, headers, cache: "no-store" });
+    } catch {
+      note(0, "", {}, auth && Boolean(readToken()), auth ? readToken() : "");
+      throw new ApiError(0, "No hay conexión con la API. Los datos escritos se conservan.");
+    }
+    const text = await response.text();
+    let body: unknown = null;
+    if (text) {
+      try {
+        body = JSON.parse(text) as unknown;
+      } catch {
+        body = null;
+      }
+    }
+    const token = readToken();
+    if (response.status === 401 && auth) {
+      note(401, cacheMarkOf(response), {}, true, token);
+      clearToken();
+      redirectToLogin("expired");
+      throw errorFrom(401, body);
+    }
+    if (!response.ok) {
+      const error = errorFrom(response.status, body);
+      note(response.status, cacheMarkOf(response), error.fields, auth, token);
+      throw error;
+    }
+    const cache = cacheMarkOf(response);
+    note(response.status, cache, {}, auth, token);
+    options?.onCache?.(cache);
+    return body as T;
+  } finally {
+    setTimeout(correlation.close, 0);
   }
-  if (response.status === 401 && auth) {
-    clearToken();
-    redirectToLogin("expired");
-    throw errorFrom(401, body);
-  }
-  if (!response.ok) {
-    throw errorFrom(response.status, body);
-  }
-  options?.onCache?.(cacheMarkOf(response));
-  return body as T;
 }

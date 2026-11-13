@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { FooterLockup } from "@/components/FooterLockup";
 import { MotionPref } from "@/components/MotionPref";
 import { SiteHeader } from "@/components/SiteHeader";
+import { WebVitalsReporter } from "@/components/WebVitalsReporter";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,6 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es">
       <body>
         <MotionPref />
+        <WebVitalsReporter />
         <a className="skip" href="#contenido">
           Saltar al contenido
         </a>

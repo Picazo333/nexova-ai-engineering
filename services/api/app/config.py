@@ -32,3 +32,8 @@ def data_dir() -> Path:
 def cors_origins() -> list[str]:
     raw = os.environ.get("INCIDENTS_CORS_ORIGINS", ",".join(DEFAULT_CORS_ORIGINS))
     return [item.strip() for item in raw.split(",") if item.strip()]
+
+
+def telemetry_endpoint() -> str:
+    """URL declared for the next phase. The stub does not redirect to it."""
+    return os.environ.get("TELEMETRY_ENDPOINT", "").strip()

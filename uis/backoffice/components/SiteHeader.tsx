@@ -1,8 +1,11 @@
 "use client";
 
+import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
+import { TelemetryStatus } from "@/components/TelemetryStatus";
 import { apiOrigin, portalUrl } from "@/lib/public-urls";
+import { installTelemetryRuntime, trackSection } from "@/lib/telemetry";
 
 const LINKS = [
   { href: "/", label: "Panel", match: (path: string) => path === "/" },
@@ -18,6 +21,12 @@ export function SiteHeader() {
   const pathname = usePathname() || "/";
   const portal = portalUrl();
   const api = apiOrigin();
+  useEffect(() => {
+    installTelemetryRuntime();
+  }, []);
+  useEffect(() => {
+    trackSection(pathname);
+  }, [pathname]);
   return (
     <header className="site-header">
       <div className="wrap header-inner">
@@ -34,6 +43,7 @@ export function SiteHeader() {
           <a href={portal}>Portal</a>
           <a href={`${api}/incidencias`}>Gestor en la API</a>
         </nav>
+        <TelemetryStatus />
       </div>
     </header>
   );

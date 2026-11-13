@@ -34,6 +34,9 @@ export type InventoryOrder = {
   supplier: string | null;
   exit_type: string | null;
   assigned_to: string | null;
+  unit_cost_minor?: number | null;
+  historical_unit_cost_minor?: number | null;
+  variance_ratio?: number | null;
 };
 
 export type AssetEntryInput = {
@@ -41,6 +44,7 @@ export type AssetEntryInput = {
   quantity: number;
   supplier: string;
   office: Office;
+  unit_cost_minor?: number;
 };
 
 export type AssetExitInput = {
@@ -115,9 +119,16 @@ export function getAsset(assetId: number): Promise<Asset> {
 }
 
 export function createAssetEntry(input: AssetEntryInput): Promise<InventoryOrder> {
+  const body: Record<string, unknown> = {
+    asset_id: input.asset_id,
+    quantity: input.quantity,
+    supplier: input.supplier,
+    office: input.office,
+  };
+  if (input.unit_cost_minor != null) body.unit_cost_minor = input.unit_cost_minor;
   return apiFetch<unknown>("/inventory/orders/inbound", {
     method: "POST",
-    body: JSON.stringify(input),
+    body: JSON.stringify(body),
   }).then(asOrder);
 }
 

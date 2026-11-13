@@ -2,7 +2,7 @@
 
 Respuesta al RFI de dirección: qué puede contar hoy el sistema de inventario y el resto del backoffice, antes de instrumentar nada. Este documento y `event-schemas.json` son el contrato. Otro desarrollador puede emitir cada evento desde el código que ya está en el monorepo sin volver a preguntar el nombre, la clave o la condición.
 
-Hay **19 eventos**. **5 son obligatorios** (vienen del briefing de telemetría de Nexova). **14 son oportunidades identificadas** en el código actual. Las categorías son negocio, autenticación, rendimiento, errores y navegación.
+Hay **20 eventos**. **5 son obligatorios** (vienen del briefing de telemetría de Nexova). **15 son oportunidades identificadas** en el código actual. Las categorías son negocio, autenticación, rendimiento, errores y navegación. El catálogo está en `1.1.0`.
 
 No hay código de captura en esta entrega. El validador de `docs/telemetry/validate_event_schemas.py` comprueba el esquema contra ejemplos. No envía eventos.
 
@@ -87,7 +87,7 @@ La moneda se deriva de la oficina. El cliente no la elige. Valencia en euros y M
 
 ## 3. Envelope
 
-Todos los eventos llevan el mismo sobre. `schemaVersion` de esta entrega es `1.0.0`.
+Todos los eventos llevan el mismo sobre. El catálogo está en `1.1.0`. Los diecinueve eventos anteriores conservan `schemaVersion` `1.0.0`. `web_vital_recorded` usa `1.1.0`.
 
 | Campo | Regla |
 | --- | --- |
@@ -96,7 +96,7 @@ Todos los eventos llevan el mismo sobre. `schemaVersion` de esta entrega es `1.0
 | `sessionId` | UUID v4 guardado en `sessionStorage` con la clave `nexova.telemetry.session`, enviado en `X-Nexova-Session`. Si la cabecera no viene, el valor es `missing`. |
 | `userId` | El id de TinyDB, el mismo `user_uuid` de `AssetEntry` y `AssetExit`. Si no hay cuenta, `anonymous`. Nunca el correo. |
 | `event_type` | `entidad_accion`, de la lista cerrada del esquema. |
-| `schemaVersion` | `1.0.0`. |
+| `schemaVersion` | `1.0.0` en los eventos del catálogo original. `1.1.0` en `web_vital_recorded`. |
 | `requestId` | UUID v4 de `X-Request-Id`. Si la petición no lo trae, el middleware lo crea, lo guarda en la petición y lo devuelve en la misma cabecera. |
 | `properties` | Objeto. Solo las claves de la allowlist de ese `event_type`. |
 
@@ -150,6 +150,7 @@ Clasificación de un bearer, en `get_current_user` y `decode_access_token` (`app
 | `password_reset_requested` | identificada | autenticación | batch | cada hora |
 | `api_latency_recorded` | identificada | rendimiento | stream | en el momento |
 | `page_load_recorded` | identificada | rendimiento | batch | cada noche |
+| `web_vital_recorded` | identificada | rendimiento | batch | cada noche |
 | `frontend_exception_recorded` | identificada | errores | stream | en el momento |
 | `api_response_failed` | identificada | errores | stream | en el momento |
 | `section_viewed` | identificada | navegación | batch | cada hora |
@@ -576,6 +577,30 @@ Allowlist: app, path_template, duration_ms, nav_type
 | duration_ms | número 0…600000 | sí | Duración de la carga del documento. |
 | nav_type | string `navigate` \| `reload` \| `back_forward` | sí | Tipo de navegación. |
 
+<!-- event: web_vital_recorded | origin: identified | category: performance | delivery: batch -->
+
+### web_vital_recorded
+
+Capturamos `web_vital_recorded` porque necesitamos saber qué pantalla empeora LCP, INP, CLS, FCP o TTFB, lo que nos permite tomar la decisión, en la revisión semanal, de qué ruta se mira primero.
+
+**Clase:** identificada. Añadida en el catálogo 1.1.0. No sustituye a `page_load_recorded`: esa mide la carga del documento y esta mide una Web Vital. **Enganche:** `useReportWebVitals` de Next en el layout del backoffice. El nombre que no esté en LCP, INP, CLS, FCP o TTFB no se emite. FID queda fuera. `path_template` es la misma lista cerrada que `page_load_recorded`. Si la ruta no está en la lista, no hay evento. `rating` lo calcula el cliente con los cortes públicos: el corte de good entra en good, el segundo corte entra en needs-improvement, y por encima es poor. LCP 2500 y 4000. INP 200 y 500. CLS 0,1 y 0,25. FCP 1800 y 3000. TTFB 800 y 1800. `schemaVersion` de este evento es `1.1.0`. Los demás siguen en `1.0.0`.
+
+**PII:** la ruta de la lista. Sin query, sin nodo del DOM y sin identificador de la métrica.
+
+**Entrega: batch, cada noche.** Un LCP lento no cambia el turno. La decisión es la misma revisión semanal que la carga de pantalla.
+
+Obligatorias: app, path_template, metric_name, value, rating
+
+Allowlist: app, path_template, metric_name, value, rating
+
+| Propiedad | Tipo | Obligatorio | Descripción |
+| --- | --- | --- | --- |
+| app | string `backoffice` \| `portal` | sí | Aplicación. Esta captura emite backoffice. |
+| path_template | string de la lista cerrada | sí | Ruta, sin query. |
+| metric_name | string `LCP` \| `INP` \| `CLS` \| `FCP` \| `TTFB` | sí | Web Vital. |
+| value | número 0…600000 | sí | CLS adimensional. El resto, milisegundos. |
+| rating | string `good` \| `needs-improvement` \| `poor` | sí | Corte público de esa métrica. |
+
 <!-- event: frontend_exception_recorded | origin: identified | category: errors | delivery: stream -->
 
 ### frontend_exception_recorded
@@ -802,10 +827,12 @@ Ejemplos listos para esa prueba: `docs/telemetry/examples/valid/` y los rechazos
 
 | | |
 | --- | --- |
-| Eventos | 19 |
+| Eventos | 20 |
 | Obligatorios | 5: `inbound_order_created`, `outbound_order_created`, `stock_threshold_triggered`, `direct_stock_edit_rejected`, `kit_cost_variance_detected` |
-| Identificados | 14 |
-| Categorías | negocio (8), autenticación (5), rendimiento (2), errores (2), navegación (2) |
+| Identificados | 15, incluido `web_vital_recorded` |
+| Categorías | negocio (8), autenticación (5), rendimiento (3), errores (2), navegación (2) |
 | Decisión más dura | El enum del briefing no coincide con `asset.category` y no existe `programme_id`. La tabla `proposed-2026-11-12` traduce portátiles y periféricos a `onboarding_equipment` y el workbook a `training_kit`, deja el papel fuera, y usa `unassigned` en vez de inventar `basic-leadership` o `liderazgo-basico` para un SKU. |
 
 El esquema es JSON Schema draft-07 en `docs/telemetry/event-schemas.json`. Cada `event_type` tiene su definición con `additionalProperties: false`, y el sobre elige esa definición con `if` / `then`.
+
+Esos conteos ya incluyen `web_vital_recorded`. Los 19 anteriores no cambian de claves ni de `schemaVersion`. El detalle está en `CHANGELOG.md`. El `$id` del esquema es `event-envelope-1.1.0.json`.
