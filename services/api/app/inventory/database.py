@@ -64,6 +64,9 @@ def reset_engine() -> None:
         _engine.dispose()
     _engine = None
     _engine_key = None
+    from app.telemetry.store import reset_telemetry_cache
+
+    reset_telemetry_cache()
 
 
 def get_engine() -> Engine:
@@ -135,6 +138,9 @@ def init_databases() -> None:
     engine = get_engine()
     create_all(engine)
     ensure_unit_cost_column(engine)
+    from app.telemetry.store import ensure_telemetry_table
+
+    ensure_telemetry_table(engine)
     if os.environ.get("INVENTORY_AUTOSEED", "1") != "0":
         from app.inventory.seed import seed_if_empty
 

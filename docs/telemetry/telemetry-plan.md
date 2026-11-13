@@ -835,4 +835,41 @@ Ejemplos listos para esa prueba: `docs/telemetry/examples/valid/` y los rechazos
 
 El esquema es JSON Schema draft-07 en `docs/telemetry/event-schemas.json`. Cada `event_type` tiene su definición con `additionalProperties: false`, y el sobre elige esa definición con `if` / `then`.
 
-Esos conteos ya incluyen `web_vital_recorded`. Los 19 anteriores no cambian de claves ni de `schemaVersion`. El detalle está en `CHANGELOG.md`. El `$id` del esquema es `event-envelope-1.1.0.json`.
+Esos conteos ya incluyen `web_vital_recorded`. Los 19 anteriores no cambian de claves ni de `schemaVersion`. El detalle está en `CHANGELOG.md`. El `$id` del esquema es el URI `https://nexova.local/schemas/telemetry/event-envelope-1.1.0.json`. El archivo en disco sigue siendo `docs/telemetry/event-schemas.json`.
+
+## 13. Almacenamiento
+
+La tabla es `telemetry_events`. La migración está en `services/api/app/telemetry/sql/001_telemetry_events.sql`. El endpoint `POST /telemetry/events` la aplica cuando existe `DATABASE_URL`. No hay proyecto Supabase en esta rama: quien opera la base de la compañía ejecuta ese SQL en la suya.
+
+| Columna | Origen |
+| --- | --- |
+| `timestamp` | `timestamp` del sobre, como `timestamptz`. |
+| `service` | `properties.app` si vale `backoffice` o `portal`. Si no, `properties.surface` si vale `api`, `backoffice` o `portal`. Si no hay ninguno, `backoffice`, que es el emisor de esta captura. |
+| `event_type` | `event_type`. |
+| `level` | La tabla de abajo. Siempre `info`, `warn` o `error`. |
+| `value` | El número de la tabla de abajo. Si el evento no tiene ese número, null. |
+| `message` | Una frase corta con claves de la allowlist. No lleva correo, token, ni el texto del error. |
+| `tags` | Las `properties` que ya pasaron el esquema, más cinco campos del sobre. |
+
+Esos cinco campos van dentro de `tags` porque la tabla no tiene columna para ellos y este plan los usa para analizar: `userId` identifica la cuenta, `requestId` une pantalla, API y log, `sessionId` agrupa la sesión, `schemaVersion` separa 1.0.0 de 1.1.0, y `eventId` distingue dos filas del mismo tipo. Esos nombres no están en ninguna allowlist. No se copia ninguna otra clave. El archivo que valida es `docs/telemetry/event-schemas.json`. Su `$id` es un URI, no la ruta del archivo.
+
+| `event_type` | `level` |
+| --- | --- |
+| `frontend_exception_recorded`, `api_response_failed` | `error` |
+| `login_failed`, `credential_rejected`, `session_expired`, `stock_threshold_triggered`, `direct_stock_edit_rejected`, `kit_cost_variance_detected`, `order_validation_failed`, `catalogue_gap_recorded`, `api_latency_recorded` | `warn` |
+| `web_vital_recorded` con `rating = poor` | `warn` |
+| El resto, incluido un Web Vital que no es `poor` | `info` |
+
+| `event_type` | `value` |
+| --- | --- |
+| `web_vital_recorded` | `value` |
+| `api_latency_recorded`, `page_load_recorded`, `api_response_failed` | `duration_ms` |
+| `kit_cost_variance_detected` | `variance_ratio` |
+| `stock_threshold_triggered` | `current_stock` |
+| `inbound_order_created`, `outbound_order_created`, `order_validation_failed` | `quantity` |
+| `login_succeeded` | `expires_in_seconds` |
+| El resto | null |
+
+Hay tres índices: `timestamp`, `event_type`, y un GIN sobre `tags`. Un trigger rechaza `UPDATE`, `DELETE` y `TRUNCATE`. La tabla tiene RLS activo y ninguna política: el rol dueño, el de `DATABASE_URL`, inserta; la clave anónima no lee ni escribe.
+
+Los eventos válidos de un lote entran en un solo `INSERT` y una sola transacción. Uno que no cumple `TelemetryEvent` o el esquema no entra en ese `INSERT`. El resto sí. La respuesta es `{ "received", "stored", "rejected" }`. Si no hay base y el lote trae eventos válidos, la respuesta es 503 y no afirma `stored`. El tope de una petición es 500 eventos. El navegador manda como mucho 20.

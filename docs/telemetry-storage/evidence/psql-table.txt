@@ -1,0 +1,62 @@
+SET
+                    Table "evidence_storage.telemetry_events"
+   Column   |           Type           | Collation | Nullable |      Default      
+------------+--------------------------+-----------+----------+-------------------
+ id         | uuid                     |           | not null | gen_random_uuid()
+ timestamp  | timestamp with time zone |           | not null | 
+ service    | text                     |           | not null | 
+ event_type | text                     |           | not null | 
+ level      | text                     |           | not null | 'info'::text
+ value      | numeric                  |           |          | 
+ message    | text                     |           |          | 
+ tags       | jsonb                    |           | not null | '{}'::jsonb
+Indexes:
+    "telemetry_events_pkey" PRIMARY KEY, btree (id)
+    "telemetry_events_event_type_idx" btree (event_type)
+    "telemetry_events_tags_gin_idx" gin (tags)
+    "telemetry_events_timestamp_idx" btree ("timestamp")
+Check constraints:
+    "telemetry_events_level_check" CHECK (level = ANY (ARRAY['info'::text, 'warn'::text, 'error'::text]))
+    "telemetry_events_tags_object_check" CHECK (jsonb_typeof(tags) = 'object'::text)
+Policies (row security enabled): (none)
+Triggers:
+    telemetry_events_no_delete BEFORE DELETE ON telemetry_events FOR EACH ROW EXECUTE FUNCTION telemetry_events_reject_mutation()
+    telemetry_events_no_truncate BEFORE TRUNCATE ON telemetry_events FOR EACH STATEMENT EXECUTE FUNCTION telemetry_events_reject_mutation()
+    telemetry_events_no_update BEFORE UPDATE ON telemetry_events FOR EACH ROW EXECUTE FUNCTION telemetry_events_reject_mutation()
+
+            indexname            |                                                  indexdef                                                  
+---------------------------------+------------------------------------------------------------------------------------------------------------
+ telemetry_events_event_type_idx | CREATE INDEX telemetry_events_event_type_idx ON evidence_storage.telemetry_events USING btree (event_type)
+ telemetry_events_pkey           | CREATE UNIQUE INDEX telemetry_events_pkey ON evidence_storage.telemetry_events USING btree (id)
+ telemetry_events_tags_gin_idx   | CREATE INDEX telemetry_events_tags_gin_idx ON evidence_storage.telemetry_events USING gin (tags)
+ telemetry_events_timestamp_idx  | CREATE INDEX telemetry_events_timestamp_idx ON evidence_storage.telemetry_events USING btree ("timestamp")
+(4 rows)
+
+            tgname            
+------------------------------
+ telemetry_events_no_delete
+ telemetry_events_no_truncate
+ telemetry_events_no_update
+(3 rows)
+
+ relrowsecurity 
+----------------
+ t
+(1 row)
+
+         event_type          |  service   | level | value  |                 message                  |  office  | programme  | currency | schema_version | leaked 
+-----------------------------+------------+-------+--------+------------------------------------------+----------+------------+----------+----------------+--------
+ api_latency_recorded        | backoffice | warn  | 1105.0 | GET /inventory/orders 200                |          |            |          | 1.0.0          | f
+ frontend_exception_recorded | backoffice | error |        | TypeError /backoffice/inventory/products |          |            |          | 1.0.0          | f
+ inbound_order_created       | backoffice | info  |     10 | entrada 10 NXV-IT-001 valencia           | valencia | unassigned | EUR      | 1.0.0          | f
+ login_failed                | backoffice | warn  |        | login rechazado                          |          |            |          | 1.0.0          | f
+ outbound_order_created      | backoffice | info  |      2 | salida 2 NXV-IT-002 miami                | miami    | unassigned | USD      | 1.0.0          | f
+ web_vital_recorded          | backoffice | info  |   3200 | LCP needs-improvement /login             |          |            |          | 1.1.0          | f
+ web_vital_recorded          | backoffice | info  |   3200 | LCP needs-improvement /login             |          |            |          | 1.1.0          | f
+(7 rows)
+
+ rows 
+------
+    7
+(1 row)
+

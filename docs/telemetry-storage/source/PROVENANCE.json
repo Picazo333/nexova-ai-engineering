@@ -1,0 +1,35 @@
+[
+  {
+    "file": "OFFICIAL_README.md",
+    "official_path": "content/projects/ai-eng-telemetry-storage/README.md",
+    "resource_uri": "repo://4GeeksAcademy/ai-engineering-syllabus/sha/fd2da034894ba93ba738559280ccde074ab1d953/contents/content/projects/ai-eng-telemetry-storage/README.md",
+    "download_url": "https://raw.githubusercontent.com/4GeeksAcademy/ai-engineering-syllabus/fd2da034894ba93ba738559280ccde074ab1d953/content/projects/ai-eng-telemetry-storage/README.md",
+    "sha256": "a81f51aa28bf769c030b822a9e6c077e6529784c4b7ae05b23f594c02c4ab15d",
+    "method": "curl_raw_githubusercontent",
+    "fetched_at": "2026-11-06 America/Mexico_City",
+    "registry_slug": "ai-eng-telemetry-storage",
+    "syllabus_folder": "ai-eng-telemetry-storage"
+  },
+  {
+    "file": "OFFICIAL_README.es.md",
+    "official_path": "content/projects/ai-eng-telemetry-storage/README.es.md",
+    "resource_uri": "repo://4GeeksAcademy/ai-engineering-syllabus/sha/fd2da034894ba93ba738559280ccde074ab1d953/contents/content/projects/ai-eng-telemetry-storage/README.es.md",
+    "download_url": "https://raw.githubusercontent.com/4GeeksAcademy/ai-engineering-syllabus/fd2da034894ba93ba738559280ccde074ab1d953/content/projects/ai-eng-telemetry-storage/README.es.md",
+    "sha256": "76263bdd1160bb90022417b6db0fca91a1eaa683840f5a7e0c239226a417abe4",
+    "method": "curl_raw_githubusercontent",
+    "fetched_at": "2026-11-06 America/Mexico_City",
+    "registry_slug": "ai-eng-telemetry-storage",
+    "syllabus_folder": "ai-eng-telemetry-storage"
+  },
+  {
+    "file": "learn.json",
+    "official_path": "content/projects/ai-eng-telemetry-storage/learn.json",
+    "resource_uri": "repo://4GeeksAcademy/ai-engineering-syllabus/sha/fd2da034894ba93ba738559280ccde074ab1d953/contents/content/projects/ai-eng-telemetry-storage/learn.json",
+    "download_url": "https://raw.githubusercontent.com/4GeeksAcademy/ai-engineering-syllabus/fd2da034894ba93ba738559280ccde074ab1d953/content/projects/ai-eng-telemetry-storage/learn.json",
+    "sha256": "ba75201ac75218417263b55531180670199ae2472a12fd010054605a5641a807",
+    "method": "curl_raw_githubusercontent",
+    "fetched_at": "2026-11-06 America/Mexico_City",
+    "registry_slug": "ai-eng-telemetry-storage",
+    "syllabus_folder": "ai-eng-telemetry-storage"
+  }
+]

@@ -1,0 +1,45 @@
+{
+  "project": "027-ai-eng-telemetry-storage",
+  "started_at": "2026-11-12T21:16:00Z",
+  "finished_at": "2026-11-12T21:32:20Z",
+  "timezone": "UTC",
+  "eval_repair_iterations": 2,
+  "repairs": [
+    "El separador del SQL cortaba el COMMENT en un punto y coma interior. Ahora respeta comillas simples y dollar quotes. La migración aplica.",
+    "El guardia del handler trataba list[TelemetryEvent] del log como si fuera el tipo del body. El guardia busca events: list[TelemetryEvent].",
+    "El docstring del validador nombraba el URI versionado y el test lo prohibía. El docstring ya no nombra ese archivo.",
+    "feature/telemetry-capture avanzó a 6cc066f. Merge normal. El conflicto de telemetry-plan.md se resolvió conservando el conteo 1.1.0 y la sección 13."
+  ],
+  "not_repaired_on_purpose": [
+    "La tabla no se crea en Supabase. No hay proyecto Supabase en esta ejecución.",
+    "No se instrumenta el backoffice desplegado ni se fotografían filas de Supabase.",
+    "No se toca .github/workflows. rag-tests sigue fallando por tests/api.",
+    "No se hace merge a main ni envío al LMS."
+  ],
+  "commands": [
+    "cd services/api && NEXOVA_TEST_DATABASE_URL=postgresql://ubuntu@/nexova_test uv run pytest",
+    "cd services/api && NEXOVA_TEST_DATABASE_URL=postgresql://ubuntu@/nexova_test uv run pytest tests",
+    "cd /workspace && services/api/.venv/bin/python -m pytest tests",
+    "cd /workspace && services/api/.venv/bin/python docs/telemetry/validate_event_schemas.py",
+    "cd uis/portal && npx jest --coverage=false",
+    "cd uis/backoffice && npx jest --coverage=false",
+    "cd uis/portal && npx playwright test",
+    "curl POST /telemetry/events contra uvicorn y psql sobre evidence_storage"
+  ],
+  "results": {
+    "schema_validator": "300 pass, 0 fail",
+    "api_pytest_default": "196 passed",
+    "api_pytest_tests_dir": "179 passed",
+    "api_pytest_tests_dir_baseline_026": "171 passed",
+    "root_pytest": "47 passed, 1 skipped",
+    "portal_jest": "23 passed",
+    "backoffice_jest": "29 passed",
+    "portal_playwright": "14 passed",
+    "curl_mixed_batch": "200 received=9 stored=6 rejected=3",
+    "postgres_insert_statements_for_two_batches": 2,
+    "postgres_rows_after_curl_and_beacon": 7
+  },
+  "tokens_used": null,
+  "tokens_unmeasurable_reason": "Este runtime no expone un contador de tokens de la sesión.",
+  "comparison_to_estimate": "No hubo una estimación de tokens previa. La base se movió durante la ejecución; el merge y la segunda pasada de suites cierran en 2026-11-12T21:32:20Z."
+}

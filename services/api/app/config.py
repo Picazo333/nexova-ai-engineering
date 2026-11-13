@@ -35,5 +35,5 @@ def cors_origins() -> list[str]:
 
 
 def telemetry_endpoint() -> str:
-    """URL declared for the next phase. The stub does not redirect to it."""
+    """Declared URL. Storage stays on this service and does not forward the batch."""
     return os.environ.get("TELEMETRY_ENDPOINT", "").strip()

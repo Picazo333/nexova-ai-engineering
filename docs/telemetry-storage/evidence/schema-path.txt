@@ -1,0 +1,4 @@
+path=/workspace/docs/telemetry/event-schemas.json
+id=https://nexova.local/schemas/telemetry/event-envelope-1.1.0.json
+catalogue=1.1.0
+opened_by_filename=event-schemas.json
