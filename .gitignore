@@ -1,5 +1,10 @@
 node_modules/
 .next/
+.env.local
+**/.env.local
+uis/backoffice/coverage/
+uis/backoffice/test-results/
+uis/backoffice/playwright-report/
 *.tsbuildinfo
 __pycache__/
 *.py[cod]

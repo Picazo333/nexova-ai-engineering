@@ -1,0 +1,53 @@
+[1A[2K[WebServer] INFO:     Started server process [11536]
+[WebServer] INFO:     Waiting for application startup.
+
+[1A[2K[WebServer] INFO:     Application startup complete.
+
+[1A[2K[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+
+[1A[2K[WebServer] 127.0.0.1 - - [06/Nov/2026 17:36:55] "GET /index.html HTTP/1.1" 200 -
+
+
+Running 14 tests using 1 worker
+
+[1A[2K(node:11569) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:11569) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/14] [chrome] › e2e/auth.spec.ts:33:5 › no hay middleware de Next para leer localStorage
+[1A[2K[2/14] [chrome] › e2e/auth.spec.ts:38:5 › el registro guarda el token y el perfil muestra los datos de la API
+[1A[2K[3/14] [chrome] › e2e/auth.spec.ts:61:5 › el login fallido conserva la contraseña y el registro muestra errores de campo
+[1A[2K[4/14] [chrome] › e2e/auth.spec.ts:79:5 › un correo repetido marca el campo
+[1A[2K[5/14] [chrome] › e2e/auth.spec.ts:90:5 › sin token la vista protegida va a login y no muestra contratos
+[1A[2K[6/14] [chrome] › e2e/auth.spec.ts:97:5 › un 401 limpia la sesión y al entrar se vuelve a la vista protegida
+[1A[2K[7/14] [chrome] › e2e/auth.spec.ts:114:5 › el logout borra el token y la vista protegida vuelve a pedir login
+[1A[2K[8/14] [chrome] › e2e/incidents-manager.spec.ts:5:5 › el formulario valida, resalta la sede y el panel sobrevive a un resumen fallido
+[1A[2K[9/14] [chrome] › e2e/password.spec.ts:22:5 › login muestra el enlace y la recuperación no distingue correos
+[1A[2K[10/14] [chrome] › e2e/password.spec.ts:39:5 › el enlace mock restablece la contraseña y el cambio exige la actual
+[1A[2K[11/14] [chrome] › e2e/password.spec.ts:116:5 › un enlace caducado o ya usado ofrece otro
+[1A[2K[12/14] [chrome] › e2e/password.spec.ts:157:5 › reduced motion deja el indicador de carga quieto
+[1A[2K[13/14] [chrome] › e2e/public.spec.ts:7:5 › el website público no redirige a login ni guarda el token
+[1A[2K[WebServer] 127.0.0.1 - - [06/Nov/2026 17:37:03] "GET /index.html HTTP/1.1" 200 -
+
+[1A[2K[WebServer] 127.0.0.1 - - [06/Nov/2026 17:37:03] "GET /application.html HTTP/1.1" 200 -
+
+[1A[2K[WebServer] 127.0.0.1 - - [06/Nov/2026 17:37:03] "GET /index.html HTTP/1.1" 200 -
+
+[1A[2K[WebServer] 127.0.0.1 - - [06/Nov/2026 17:37:03] "GET /assets/fonts/newsreader-latin-wght.woff2 HTTP/1.1" 200 -
+
+[1A[2K[WebServer] 127.0.0.1 - - [06/Nov/2026 17:37:03] "GET /assets/img/hero-p1-1440.avif HTTP/1.1" 200 -
+
+[1A[2K[WebServer] 127.0.0.1 - - [06/Nov/2026 17:37:03] "GET /assets/js/experience.js HTTP/1.1" 200 -
+
+[1A[2K[WebServer] 127.0.0.1 - - [06/Nov/2026 17:37:03] "GET /assets/fonts/inter-latin-400-normal.woff2 HTTP/1.1" 200 -
+
+[1A[2K[WebServer] 127.0.0.1 - - [06/Nov/2026 17:37:03] "GET /assets/fonts/inter-latin-600-normal.woff2 HTTP/1.1" 200 -
+
+[1A[2K[WebServer] 127.0.0.1 - - [06/Nov/2026 17:37:03] "GET /assets/favicon.svg HTTP/1.1" 200 -
+
+[1A[2K[14/14] [chrome] › e2e/public.spec.ts:27:5 › las rutas HTML de la API siguen públicas y no saltan al portal
+[1A[2K  14 passed (10.0s)

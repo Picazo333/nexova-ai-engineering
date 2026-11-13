@@ -204,7 +204,7 @@ La última llamada responde `400` con `Insufficient stock for asset '...'` y el 
 | --- | --- | --- |
 | `INCIDENTS_DATA_DIR` | `services/api/.data` | Carpeta del último resumen |
 | `INCIDENTS_MAX_UPLOAD_BYTES` | `33554432` | Tope del CSV |
-| `INCIDENTS_CORS_ORIGINS` | localhost en los puertos 8000 y 3000 | Orígenes permitidos, lista separada por comas. Sin credenciales y sin comodín. |
+| `INCIDENTS_CORS_ORIGINS` | localhost en los puertos 8000, 3000 y 3001 | Orígenes permitidos, lista separada por comas. Sin credenciales y sin comodín. El 3001 es el backoffice Next.js. |
 | `SUPPLIERS_DATA_DIR` | `services/api/.data` | Carpeta de `suppliers.json`. |
 | `SUPPLIERS_AUTOSEED` | `1` | `0` arranca sin cargar el briefing. |
 | `JWT_SECRET` | ninguna | Secreto de firma. Obligatorio, mínimo 16 caracteres, solo en `.env` o en el entorno. |
@@ -228,4 +228,4 @@ El enlace es un JWT firmado (`purpose=password_reset`, caducidad y un `jti`) y e
 
 ## Portal Next.js
 
-`uis/portal` es el frontend de los flujos de autenticación. Corre en el puerto 3000 y llama a esta API en el 8000. El JWT va en `localStorage` del origen del portal y en la cabecera `Authorization`. El backoffice que sirve esta API en `/` y `/proveedores` no cambia: sigue usando `sessionStorage` de esa otra origen. El sitio público de la raíz del repositorio no pasa por aquí.
+`uis/portal` es el frontend de los flujos de autenticación. Corre en el puerto 3000 y llama a esta API en el 8000. El JWT va en `localStorage` del origen del portal y en la cabecera `Authorization`. El HTML que esta API sirve en `/` y `/proveedores` no cambia: sigue usando `sessionStorage` de esa otra origen. El Next.js de `uis/backoffice` (puerto 3001) usa la misma clave `nexova-access-token` en el `localStorage` de su origen, porque el almacenamiento no se comparte entre puertos, y llama a `/inventory` con `Authorization: Bearer`. El sitio público de la raíz del repositorio no pasa por aquí.

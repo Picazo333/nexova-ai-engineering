@@ -1,0 +1,257 @@
+{
+  "summary": [
+    {
+      "surface": "home",
+      "form": "mobile",
+      "config_ok": true,
+      "final": "http://127.0.0.1:3010/",
+      "lcp_ms": {
+        "values": [
+          1883.59,
+          1889.95,
+          1890.09
+        ],
+        "median": 1889.95,
+        "worst": 1890.09
+      },
+      "cls": {
+        "values": [
+          0.023,
+          0.023,
+          0.023
+        ],
+        "median": 0.023,
+        "worst": 0.023
+      },
+      "tbt_ms": {
+        "values": [
+          13,
+          14.5,
+          13.5
+        ],
+        "median": 13.5,
+        "worst": 14.5
+      },
+      "score": {
+        "values": [
+          1,
+          1,
+          1
+        ],
+        "median": 1,
+        "worst": 1
+      }
+    },
+    {
+      "surface": "home",
+      "form": "desktop",
+      "config_ok": true,
+      "final": "http://127.0.0.1:3010/",
+      "lcp_ms": {
+        "values": [
+          449.19,
+          455.18,
+          454.16
+        ],
+        "median": 454.16,
+        "worst": 455.18
+      },
+      "cls": {
+        "values": [
+          0.053,
+          0.053,
+          0.053
+        ],
+        "median": 0.053,
+        "worst": 0.053
+      },
+      "tbt_ms": {
+        "values": [
+          0,
+          0,
+          0
+        ],
+        "median": 0,
+        "worst": 0
+      },
+      "score": {
+        "values": [
+          1,
+          1,
+          1
+        ],
+        "median": 1,
+        "worst": 1
+      }
+    },
+    {
+      "surface": "login",
+      "form": "mobile",
+      "config_ok": true,
+      "final": "http://127.0.0.1:3010/login",
+      "lcp_ms": {
+        "values": [
+          1895.8,
+          1891.93,
+          1897.39
+        ],
+        "median": 1895.8,
+        "worst": 1897.39
+      },
+      "cls": {
+        "values": [
+          0,
+          0,
+          0
+        ],
+        "median": 0,
+        "worst": 0
+      },
+      "tbt_ms": {
+        "values": [
+          14.5,
+          14.5,
+          15
+        ],
+        "median": 14.5,
+        "worst": 15
+      },
+      "score": {
+        "values": [
+          1,
+          1,
+          1
+        ],
+        "median": 1,
+        "worst": 1
+      }
+    },
+    {
+      "surface": "login",
+      "form": "desktop",
+      "config_ok": true,
+      "final": "http://127.0.0.1:3010/login",
+      "lcp_ms": {
+        "values": [
+          458.08,
+          471.72,
+          469.6
+        ],
+        "median": 469.6,
+        "worst": 471.72
+      },
+      "cls": {
+        "values": [
+          0,
+          0,
+          0
+        ],
+        "median": 0,
+        "worst": 0
+      },
+      "tbt_ms": {
+        "values": [
+          0,
+          0,
+          0
+        ],
+        "median": 0,
+        "worst": 0
+      },
+      "score": {
+        "values": [
+          1,
+          1,
+          1
+        ],
+        "median": 1,
+        "worst": 1
+      }
+    },
+    {
+      "surface": "products",
+      "form": "mobile",
+      "config_ok": true,
+      "final": "http://127.0.0.1:3010/backoffice/inventory/products",
+      "lcp_ms": {
+        "values": [
+          1962.76,
+          1960.99,
+          1970.34
+        ],
+        "median": 1962.76,
+        "worst": 1970.34
+      },
+      "cls": {
+        "values": [
+          0.027,
+          0.027,
+          0.027
+        ],
+        "median": 0.027,
+        "worst": 0.027
+      },
+      "tbt_ms": {
+        "values": [
+          15,
+          14.5,
+          17.5
+        ],
+        "median": 15,
+        "worst": 17.5
+      },
+      "score": {
+        "values": [
+          0.99,
+          0.99,
+          0.99
+        ],
+        "median": 0.99,
+        "worst": 0.99
+      }
+    },
+    {
+      "surface": "products",
+      "form": "desktop",
+      "config_ok": true,
+      "final": "http://127.0.0.1:3010/backoffice/inventory/products",
+      "lcp_ms": {
+        "values": [
+          481.42,
+          479.05,
+          483.06
+        ],
+        "median": 481.42,
+        "worst": 483.06
+      },
+      "cls": {
+        "values": [
+          0,
+          0,
+          0
+        ],
+        "median": 0,
+        "worst": 0
+      },
+      "tbt_ms": {
+        "values": [
+          0,
+          0,
+          0
+        ],
+        "median": 0,
+        "worst": 0
+      },
+      "score": {
+        "values": [
+          1,
+          1,
+          1
+        ],
+        "median": 1,
+        "worst": 1
+      }
+    }
+  ],
+  "inp": "Lighthouse en laboratorio con throttling simulate no emite INP. El sustituto medido es TBT."
+}

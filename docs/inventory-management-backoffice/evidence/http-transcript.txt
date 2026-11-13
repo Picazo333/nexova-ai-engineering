@@ -1,0 +1,37 @@
+Verificación contra la API de 021 en PostgreSQL 16.15 local.
+Semilla de arranque, antes de registrar la entrada de evidencia.
+
+GET /inventory/products
+NXV-IT-001 12 Valencia
+NXV-IT-002 6 Miami
+NXV-PER-001 20 Valencia
+NXV-PER-002 0 Miami
+NXV-OFF-001 18 Valencia
+NXV-TRN-001 15 Valencia
+
+Origen del navegador http://127.0.0.1:3001
+access-control-allow-origin: http://127.0.0.1:3001
+
+POST /inventory/orders/outbound
+asset NXV-IT-001, quantity 99, exit_type allocation, assigned_to NXV-EMP-1042, office Valencia
+401 sin token. Con Bearer:
+400
+{"error":"http_error","message":"Insufficient stock for asset 'Laptop 14\" Business'. Available: 12, requested: 99.","detail":"Insufficient stock for asset 'Laptop 14\" Business'. Available: 12, requested: 99."}
+La fila no se escribió.
+
+POST /inventory/orders/inbound
+1 unidad de NXV-IT-001, supplier TechDistrib Valencia S.L., office Valencia
+201. user_uuid igual al id de GET /auth/me.
+
+GET /inventory/products después de esa entrada
+NXV-IT-001 13
+El resto de la semilla no cambió.
+
+Esquema inventory_empty, INVENTORY_AUTOSEED=0, puerto 8012
+GET /inventory/products
+[]
+
+Proceso sin DATABASE_URL, puerto 8013
+GET /inventory/products
+503
+{"error":"http_error","message":"No se pudo completar la operación. Inténtalo de nuevo."}
