@@ -148,6 +148,56 @@ Son 10, todas fuera de `/users` y `/auth`:
 
 En `/docs`, la descripción de la API es una guía en cinco pasos: registro, login, perfil, 401 y 403.
 
+## Inventario
+
+Los activos de Nexova viven en PostgreSQL con SQLModel. Los usuarios siguen en TinyDB. No hay tabla `user` ni `profile` en PostgreSQL. El stock no es una columna: `current_stock` es la suma de `AssetEntry.quantity` menos la suma de `AssetExit.quantity` de ese activo.
+
+Las tablas se crean al arrancar con `SQLModel.metadata.create_all(engine)` si `DATABASE_URL` está definida. Eso vale para este aprendizaje. No lo uses contra una base compartida de producción. Sin `DATABASE_URL`, el resto de la API arranca y `/inventory` responde `503`.
+
+| Método | Ruta | Quién | Resultado |
+| --- | --- | --- | --- |
+| `GET` | `/inventory/products` | Pública | Lista con `current_stock`. Filtro opcional `office=Valencia` o `Miami`. |
+| `POST` | `/inventory/products` | Token | Alta. Empieza en stock 0. Un `current_stock` en el cuerpo es `422`. |
+| `GET` | `/inventory/products/{id}` | Pública | Un activo y su stock, o `404`. |
+| `POST` | `/inventory/orders/inbound` | Token | `AssetEntry`. El `user_uuid` es el id de TinyDB, no un campo del cuerpo. |
+| `POST` | `/inventory/orders/outbound` | Token | `AssetExit`. Si no hay stock, `400` y no se escribe la fila. |
+| `GET` | `/inventory/orders` | Pública | Entradas y salidas con el activo y `user_uuid`. |
+
+`assigned_to` es obligatorio si `exit_type` es `allocation` y tiene que ir vacío si es `consumption`. Si no, `422`.
+
+La semilla sale del briefing de backend de Nexova (nombres y SKU de la versión en inglés; la española traduce los mismos seis activos). El marcador `00000000-0000-4000-8000-000000000201` solo identifica esas filas de arranque. No es una cuenta. Una orden hecha con token guarda el id real de TinyDB.
+
+| SKU | Stock sembrado |
+| --- | --- |
+| `NXV-IT-001` | 12 (entradas 10 y 5, salida 3) |
+| `NXV-IT-002` | 6 (entrada 8, salida 2) |
+| `NXV-PER-001` | 20 |
+| `NXV-PER-002` | 0 |
+| `NXV-OFF-001` | 18 (entrada 30, consumo 12) |
+| `NXV-TRN-001` | 15 |
+
+Ejemplo con la API ya en marcha. La contraseña del ejemplo es de una cuenta local que tú creas en ese momento:
+
+```bash
+curl -s -X POST http://127.0.0.1:8000/users \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"ops@nexova.test","password":"una-clave-local","name":"Operaciones IT"}'
+
+TOKEN=$(curl -s -X POST http://127.0.0.1:8000/auth/login \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"ops@nexova.test","password":"una-clave-local"}' \
+  | python -c 'import json,sys; print(json.load(sys.stdin)["access_token"])')
+
+curl -s http://127.0.0.1:8000/inventory/products
+
+curl -s -X POST http://127.0.0.1:8000/inventory/orders/outbound \
+  -H "Authorization: Bearer $TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{"asset_id":1,"quantity":100,"exit_type":"allocation","assigned_to":"NXV-EMP-1042","office":"Valencia"}'
+```
+
+La última llamada responde `400` con `Insufficient stock for asset '...'` y el stock no cambia. Sin `Authorization`, el `POST` responde `401`.
+
 ## Variables
 
 | Variable | Defecto | Uso |
@@ -168,6 +218,9 @@ En `/docs`, la descripción de la API es una guía en cinco pasos: registro, log
 | `PASSWORD_RESET_EXPIRE_MINUTES` | `30` | Vida del enlace, entre 15 y 60. |
 | `PASSWORD_RESET_MAX_PER_HOUR` | `5` | Tope de solicitudes por correo y hora. La respuesta sigue siendo la misma. |
 | `PUBLIC_APP_URL` | `http://127.0.0.1:3000` | Origen del enlace `/reset-password`. |
+| `DATABASE_URL` | ninguna | URI de PostgreSQL para el inventario. Vacía: `/inventory` responde `503`. No pongas la cadena en el código. |
+| `INVENTORY_AUTOSEED` | `1` | `0` no carga la semilla del briefing. |
+| `INVENTORY_SCHEMA` | `public` | Esquema de PostgreSQL. Las pruebas usan uno distinto y lo borran. |
 
 El proveedor elegido para el envío real es **Resend** (`RESEND_API_KEY`). SendGrid queda como la otra opción del enunciado. La clave no se escribe en el código ni se manda al navegador. Sin clave, `POST /auth/forgot-password` responde 200 y no abre una conexión. `EMAIL_TRANSPORT=mock` guarda el mensaje en memoria para las pruebas; ese modo no demuestra un envío real.
 

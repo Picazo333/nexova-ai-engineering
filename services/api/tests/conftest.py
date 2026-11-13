@@ -21,6 +21,10 @@ def auth_environment(monkeypatch: pytest.MonkeyPatch, tmp_path: Path):
     monkeypatch.delenv("RESEND_API_KEY", raising=False)
     monkeypatch.delenv("SENDGRID_API_KEY", raising=False)
     monkeypatch.delenv("PASSWORD_RESET_CAPTURE_FILE", raising=False)
+    # Inventory tests opt in with NEXOVA_TEST_DATABASE_URL. A developer URL
+    # must not make the rest of the suite open PostgreSQL.
+    monkeypatch.delenv("DATABASE_URL", raising=False)
+    monkeypatch.delenv("INVENTORY_SCHEMA", raising=False)
     from app.auth.mailer import clear_mock_outbox
     from app.auth.store import reset_auth_db
 
