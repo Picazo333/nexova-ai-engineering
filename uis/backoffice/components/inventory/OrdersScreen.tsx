@@ -1,19 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { EmptyState, ErrorBanner, LoadingState } from "@/components/AsyncStatus";
 import { OfficeFilter, cleanOffice } from "@/components/inventory/OfficeFilter";
-import { listOrders, type InventoryOrder } from "@/lib/inventory";
-import { messageOf } from "@/lib/http";
-import { exitTypeLabel, formatTimestamp, orderTypeLabel } from "@/lib/labels";
+import { listOrdersView, type InventoryOrder } from "@/lib/inventory";
+import { messageOf, type CacheMark } from "@/lib/http";
+import { prepareHistory } from "@/lib/orders-rollup";
 
 export function OrdersScreen({ initialOffice }: { initialOffice: string }) {
   const router = useRouter();
   const pathname = usePathname();
   const [office, setOffice] = useState(cleanOffice(initialOffice));
   const [orders, setOrders] = useState<InventoryOrder[]>([]);
+  const [cache, setCache] = useState<CacheMark>("");
   const [phase, setPhase] = useState<"loading" | "ready" | "error">("loading");
   const [error, setError] = useState("");
   const [attempt, setAttempt] = useState(0);
@@ -25,10 +26,11 @@ export function OrdersScreen({ initialOffice }: { initialOffice: string }) {
   useEffect(() => {
     let cancelled = false;
     setPhase("loading");
-    listOrders(office || undefined)
-      .then((rows) => {
+    listOrdersView(office || undefined)
+      .then((view) => {
         if (cancelled) return;
-        setOrders(rows);
+        setOrders(view.rows);
+        setCache(view.cache);
         setError("");
         setPhase("ready");
       })
@@ -41,6 +43,9 @@ export function OrdersScreen({ initialOffice }: { initialOffice: string }) {
       cancelled = true;
     };
   }, [office, attempt]);
+
+  const history = useMemo(() => prepareHistory(orders), [orders]);
+  const summary = history.summary;
 
   function onOffice(next: string) {
     const cleaned = cleanOffice(next);
@@ -59,6 +64,25 @@ export function OrdersScreen({ initialOffice }: { initialOffice: string }) {
         edita ni se borra ninguna orden.
       </p>
       <OfficeFilter id="office-orders" value={office} onChange={onOffice} />
+      {orders.length > 0 ? (
+        <p>
+          {summary.inbound === 1 ? "1 entrada" : `${summary.inbound} entradas`} ({summary.unitsIn}{" "}
+          {summary.unitsIn === 1 ? "unidad" : "unidades"}) y{" "}
+          {summary.outbound === 1 ? "1 salida" : `${summary.outbound} salidas`} ({summary.unitsOut}{" "}
+          {summary.unitsOut === 1 ? "unidad" : "unidades"})
+          {summary.offices.length > 0
+            ? `. ${summary.offices
+                .map((item) => `${item.office}: ${item.orders === 1 ? "1 orden" : `${item.orders} órdenes`}`)
+                .join(". ")}.`
+            : "."}
+        </p>
+      ) : null}
+      {cache === "HIT" && orders.length > 0 ? (
+        <p className="note" role="status">
+          Lista leída de la caché en memoria de la API. Caduca a los 30 segundos, o antes si alguien registra una
+          entrada o una salida.
+        </p>
+      ) : null}
       {phase === "loading" && orders.length === 0 ? <LoadingState label="Cargando el historial…" /> : null}
       {phase === "loading" && orders.length > 0 ? <LoadingState label="Actualizando el historial…" /> : null}
       {phase === "error" && orders.length === 0 ? (
@@ -94,28 +118,20 @@ export function OrdersScreen({ initialOffice }: { initialOffice: string }) {
               </tr>
             </thead>
             <tbody>
-              {orders.map((order) => (
+              {history.rows.map((order) => (
                 <tr key={`${order.order_type}-${order.id}`}>
                   <td>
                     <span className={order.order_type === "inbound" ? "tag tag-in" : "tag tag-out"}>
-                      {orderTypeLabel(order.order_type)}
+                      {order.typeLabel}
                     </span>
                   </td>
                   <th scope="row">
                     {order.asset_name} <span className="mono note">{order.asset_sku}</span>
                   </th>
                   <td>{order.quantity}</td>
-                  <td>{formatTimestamp(order.created_at)}</td>
+                  <td>{order.when}</td>
                   <td className="mono">{order.user_uuid}</td>
-                  <td>
-                    {order.order_type === "inbound" ? `Proveedor: ${order.supplier ?? "—"}. ` : null}
-                    {order.order_type === "outbound"
-                      ? `${exitTypeLabel(order.exit_type ?? "")} (${order.exit_type ?? "—"}). ${
-                          order.assigned_to ? `assigned_to ${order.assigned_to}.` : "Sin assigned_to."
-                        } `
-                      : null}
-                    Oficina: {order.office}.
-                  </td>
+                  <td>{order.detail}</td>
                 </tr>
               ))}
             </tbody>

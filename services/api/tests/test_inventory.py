@@ -412,6 +412,59 @@ def test_listing_orders_does_not_query_once_per_row(inventory_client: TestClient
     not os.environ.get("NEXOVA_TEST_DATABASE_URL", "").strip(),
     reason="NEXOVA_TEST_DATABASE_URL no está definido; no se simula PostgreSQL.",
 )
+def test_orders_cache_hits_until_a_successful_write(inventory_client: TestClient, token: str) -> None:
+    products = inventory_client.get("/inventory/products")
+    assert products.status_code == 200
+    assert "x-nexova-cache" not in products.headers
+    laptop = next(row for row in products.json() if row["sku"] == "NXV-IT-001")
+
+    first = inventory_client.get("/inventory/orders")
+    assert first.status_code == 200
+    assert first.headers["x-nexova-cache"] == "MISS"
+    assert len(first.json()) == 9
+    second = inventory_client.get("/inventory/orders")
+    assert second.headers["x-nexova-cache"] == "HIT"
+    assert second.json() == first.json()
+
+    miami = inventory_client.get("/inventory/orders?office=Miami")
+    assert miami.headers["x-nexova-cache"] == "MISS"
+    assert inventory_client.get("/inventory/orders?office=Miami").headers["x-nexova-cache"] == "HIT"
+    assert inventory_client.get("/inventory/orders").headers["x-nexova-cache"] == "HIT"
+
+    denied = inventory_client.post(
+        "/inventory/orders/outbound",
+        json={
+            "asset_id": laptop["id"],
+            "quantity": 10000,
+            "exit_type": "consumption",
+            "office": "Valencia",
+        },
+        headers=bearer(token),
+    )
+    assert denied.status_code == 400, denied.text
+    assert inventory_client.get("/inventory/orders").headers["x-nexova-cache"] == "HIT"
+
+    created = inventory_client.post(
+        "/inventory/orders/inbound",
+        json={
+            "asset_id": laptop["id"],
+            "quantity": 1,
+            "supplier": "TechDistrib Valencia S.L.",
+            "office": "Valencia",
+        },
+        headers=bearer(token),
+    )
+    assert created.status_code == 201, created.text
+    fresh = inventory_client.get("/inventory/orders")
+    assert fresh.headers["x-nexova-cache"] == "MISS"
+    assert len(fresh.json()) == 10
+    assert inventory_client.get("/inventory/orders?office=Miami").headers["x-nexova-cache"] == "MISS"
+
+
+@pytest.mark.skipif(
+    not os.environ.get("NEXOVA_TEST_DATABASE_URL", "").strip(),
+    reason="NEXOVA_TEST_DATABASE_URL no está definido; no se simula PostgreSQL.",
+)
 def test_two_exits_cannot_oversell_the_same_asset(inventory_client: TestClient, token: str) -> None:
     from app.inventory.database import get_engine
     from app.inventory.service import create_exit

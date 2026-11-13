@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 
+import { prepareHistory, rollupOrders } from "@/lib/orders-rollup";
 import { loginRedirect, safeNext } from "@/lib/paths";
 import { parseQuantity } from "@/lib/quantity";
 import { LOW_STOCK_BELOW, stockLabel, stockLevel } from "@/lib/stock";
@@ -248,6 +249,137 @@ describe("lib/inventory y errores HTTP", () => {
     expect((fetch as jest.Mock).mock.calls[0][0]).toBe("http://localhost:8000/inventory/products?office=Valencia");
     delete process.env.NEXT_PUBLIC_INVENTORY_API_URL;
     jest.resetModules();
+  });
+});
+
+describe("resumen del historial", () => {
+  test("suma entradas y salidas y ordena las oficinas", () => {
+    const summary = rollupOrders([
+      { order_type: "outbound", quantity: 2, office: "Valencia" },
+      { order_type: "inbound", quantity: 5, office: "Miami" },
+      { order_type: "inbound", quantity: 1, office: "Valencia" },
+    ]);
+    expect(summary).toEqual({
+      inbound: 2,
+      outbound: 1,
+      unitsIn: 6,
+      unitsOut: 2,
+      offices: [
+        { office: "Miami", orders: 1, units: 5 },
+        { office: "Valencia", orders: 2, units: 3 },
+      ],
+    });
+    expect(rollupOrders([])).toEqual({
+      inbound: 0,
+      outbound: 0,
+      unitsIn: 0,
+      unitsOut: 0,
+      offices: [],
+    });
+  });
+
+  test("prepara la fecha y el detalle una vez por fila", () => {
+    const view = prepareHistory([
+      {
+        id: 1,
+        order_type: "inbound",
+        quantity: 5,
+        office: "Valencia",
+        created_at: "2026-03-02T09:00:00Z",
+        asset_name: "Laptop",
+        asset_sku: "NXV-IT-001",
+        user_uuid: "user-1",
+        supplier: "TechDistrib Valencia S.L.",
+        exit_type: null,
+        assigned_to: null,
+      },
+      {
+        id: 2,
+        order_type: "outbound",
+        quantity: 1,
+        office: "Miami",
+        created_at: "no-es-fecha",
+        asset_name: "Hub",
+        asset_sku: "NXV-PER-002",
+        user_uuid: "user-1",
+        supplier: null,
+        exit_type: "allocation",
+        assigned_to: "NXV-EMP-1042",
+      },
+      {
+        id: 3,
+        order_type: "outbound",
+        quantity: 2,
+        office: "Valencia",
+        created_at: "2026-03-02T10:00:00Z",
+        asset_name: "Resma",
+        asset_sku: "NXV-OFF-001",
+        user_uuid: "user-1",
+        supplier: null,
+        exit_type: "consumption",
+        assigned_to: null,
+      },
+    ]);
+    expect(view.rows[0].typeLabel).toBe("Entrada");
+    expect(view.rows[0].when).toContain("UTC");
+    expect(view.rows[0].detail).toContain("TechDistrib Valencia S.L.");
+    expect(view.rows[1].when).toBe("no-es-fecha");
+    expect(view.rows[1].detail).toContain("Asignación");
+    expect(view.rows[1].detail).toContain("NXV-EMP-1042");
+    expect(view.rows[2].detail).toContain("Sin assigned_to.");
+    expect(view.rows[2].detail).toContain("Consumo");
+    expect(view.summary.inbound).toBe(1);
+    expect(view.summary.outbound).toBe(2);
+  });
+});
+
+describe("marca de caché en el historial", () => {
+  beforeEach(() => {
+    memory.clear();
+    writeToken("jwt-demo");
+    jest.restoreAllMocks();
+    jest.resetModules();
+  });
+
+  function orderBody() {
+    return [
+      {
+        id: 1,
+        order_type: "inbound",
+        asset_id: 1,
+        asset_name: "Laptop",
+        asset_sku: "NXV-IT-001",
+        asset_category: "hardware",
+        quantity: 4,
+        office: "Valencia",
+        created_at: "2026-03-02T09:00:00Z",
+        user_uuid: "user-1",
+        supplier: "TechDistrib Valencia S.L.",
+        exit_type: null,
+        assigned_to: null,
+      },
+    ];
+  }
+
+  function mockOrders(mark: string | null) {
+    jest.spyOn(global, "fetch").mockResolvedValue({
+      ok: true,
+      status: 200,
+      headers: {
+        get: (name: string) => (name.toLowerCase() === "x-nexova-cache" ? mark : null),
+      },
+      text: async () => JSON.stringify(orderBody()),
+    } as Response);
+  }
+
+  test("HIT, MISS y una cabecera desconocida", async () => {
+    mockOrders("HIT");
+    const { listOrdersView } = await import("@/lib/inventory");
+    await expect(listOrdersView()).resolves.toMatchObject({ cache: "HIT", rows: [{ id: 1 }] });
+    mockOrders("MISS");
+    await expect(listOrdersView("Valencia")).resolves.toMatchObject({ cache: "MISS" });
+    mockOrders("STALE");
+    await expect(listOrdersView()).resolves.toMatchObject({ cache: "" });
   });
 });
 

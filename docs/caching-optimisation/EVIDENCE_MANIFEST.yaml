@@ -1,0 +1,55 @@
+project: ai-eng-application-caching
+branch: feature/caching-optimisation
+base: feature/performance-web-vitals
+base_sha: 1d690a3dc44b97e4c27f6fc82db74e6bb18a903c
+items:
+  - id: report
+    path: CACHING_REPORT.md
+    rubric: [R01, R05, R06, R10, R11, R12, R13]
+  - id: measurements
+    path: docs/caching-optimisation/evidence/measurements.json
+    rubric: [R03, R04, R06, R13]
+  - id: cache-module
+    path: services/api/app/cache.py
+    rubric: [R07, R08, R09, X02]
+  - id: orders-route
+    path: services/api/app/routers/inventory.py
+    rubric: [R07, R08]
+  - id: suppliers
+    path: services/api/routes/suppliers.py
+    rubric: [R07, R08]
+  - id: cache-tests
+    path: services/api/tests/test_cache.py
+    rubric: [R07, R08, R09, X02, R14]
+  - id: orders-test
+    path: services/api/tests/test_inventory.py
+    rubric: [R08, R14]
+  - id: lazy-entry
+    path: uis/backoffice/components/inventory/LazyEntryForm.tsx
+    rubric: [R01, R02]
+  - id: lazy-exit
+    path: uis/backoffice/components/inventory/LazyExitForm.tsx
+    rubric: [R01, R02]
+  - id: incident-result
+    path: uis/portal/components/IncidentResult.tsx
+    rubric: [R01, R02]
+  - id: usememo
+    path: uis/backoffice/components/inventory/OrdersScreen.tsx
+    rubric: [R04, X01]
+  - id: shots-hit
+    path: docs/caching-optimisation/evidence/orders-hit-1280.png
+    rubric: [X01]
+  - id: shots-states
+    path: docs/caching-optimisation/evidence/
+    rubric: [X01]
+    note: "También orders-hit-390, orders-hit-768, orders-loading-390, orders-empty-768, orders-error-1280, orders-reduced-1280, entry-form-390."
+  - id: video
+    path: docs/caching-optimisation/evidence/recorrido-historial.webm
+    rubric: [X01]
+    note: "7,44 s."
+  - id: axe
+    path: docs/caching-optimisation/evidence/axe.json
+    rubric: [X01]
+    note: "0 violaciones en el historial con HIT y en el formulario de salida. No certifica WCAG."
+content_sha: 1de0e9aa3cf3026e2bb926056ae3e2221d9ffddb
+commit_sha_note: "1de0e9a es el commit del informe, el código y las capturas. Este commit solo escribe ese SHA."

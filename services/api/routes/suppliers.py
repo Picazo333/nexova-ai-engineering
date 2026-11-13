@@ -8,6 +8,8 @@ from urllib.parse import urlencode
 from fastapi import APIRouter, Depends, Request
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse, RedirectResponse, Response
+
+from app.cache import SUPPLIERS_LIST_JSON, SUPPLIERS_LIST_TTL_SECONDS, fetch_cached
 from pydantic import ValidationError
 
 import directory
@@ -142,12 +144,23 @@ def list_suppliers(
         )
     except ValidationError as exc:
         return _validation_error(exc)
-    rows = directory.list_suppliers(
-        country=filters.country.value if filters.country else None,
-        category=filters.category.value if filters.category else None,
-        status=filters.status.value if filters.status else None,
+    country = filters.country.value if filters.country else None
+    category = filters.category.value if filters.category else None
+    status = filters.status.value if filters.status else None
+
+    def load() -> bytes:
+        rows = directory.list_suppliers(country=country, category=category, status=status)
+        return json.dumps(rows, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+
+    body = fetch_cached(
+        SUPPLIERS_LIST_JSON,
+        {"country": country or "", "category": category or "", "status": status or ""},
+        SUPPLIERS_LIST_TTL_SECONDS,
+        load,
+        private=False,
+        user_id=None,
     )
-    return JSONResponse(content=rows)
+    return Response(content=body, media_type="application/json")
 
 
 @router.get("/suppliers/{supplier_id}")

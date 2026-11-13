@@ -73,7 +73,17 @@ export function messageOf(error: unknown): string {
   return "No se pudo completar la operación.";
 }
 
-type Options = { auth?: boolean };
+export type CacheMark = "" | "HIT" | "MISS";
+
+type Options = { auth?: boolean; onCache?: (mark: CacheMark) => void };
+
+function cacheMarkOf(response: Response): CacheMark {
+  const read = response.headers?.get?.bind(response.headers);
+  if (!read) return "";
+  const value = read("X-Nexova-Cache");
+  if (value === "HIT" || value === "MISS") return value;
+  return "";
+}
 
 export async function apiFetch<T>(path: string, init: RequestInit = {}, options?: Options): Promise<T> {
   const auth = options?.auth !== false;
@@ -111,5 +121,6 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}, options?
   if (!response.ok) {
     throw errorFrom(response.status, body);
   }
+  options?.onCache?.(cacheMarkOf(response));
   return body as T;
 }
