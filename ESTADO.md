@@ -1,11 +1,13 @@
-# Estado portable de la cohorte 4Geeks (latam-aie-pt-6)
+# Estado de esta actividad
 
-Las 83 actividades, en el orden de la plataforma (no la numeración interna del TRACKER), están aquí:
+La tabla canónica de la cohorte (las 83 actividades, entrega, retroalimentación, material y calendario) vive en el Control Tower, no en la caja ni en este repositorio:
 
-- En esta caja: `/workspace/ESTADO/` (`4GEEKS_ESTADO_COHORTE.csv`, `.json`, `.md` y `README.md`).
-- En GitHub: https://github.com/Picazo333/4geeks-control-tower/tree/estado-cohorte-2026-11-13/estado
-- PR (abierto, **sin merge**): https://github.com/Picazo333/4geeks-control-tower/pull/32
+https://github.com/Picazo333/4geeks-control-tower/tree/estado-cohorte-2026-11-13/estado
 
-Para retomar desde cero, lee el `README.md` de esa carpeta. Para refrescar entregas y retroalimentación del LMS: `python3 refresh_estado.py` (usa `FOURGEEKS_API_TOKEN`; nunca imprime el token).
+Empieza por `ESTADO.md` de esa carpeta. La tabla es `4GEEKS_ESTADO_COHORTE.csv`. El calendario por submódulo (llegada a Architecture: lunes 14 dic 2026; entrega de las actividades 32, 33 y 40: lunes 7 dic 2026) está en `CALENDARIO.md`. El material de las actividades 19 a 73 está en `MATERIAL_DIDACTICO.csv`.
 
-Reglas: un agente no hace merge ni envía al LMS. Un autor nunca audita su propio trabajo. No hay secretos en estos archivos.
+PR del estado (abierto, **sin merge**): https://github.com/Picazo333/4geeks-control-tower/pull/32
+
+La caja solo apunta, desde `/workspace/INDICE_ESTADO.md`. Para refrescar entregas y retroalimentación del LMS, en el Control Tower: `python3 estado/refresh_estado.py` (el token va en el entorno; nunca se imprime ni se guarda en un repo).
+
+Este repositorio tiene el código de la actividad y su checkpoint de auditoría. Un agente no hace merge ni envía nada al LMS. Un autor no audita su propio trabajo. No hay secretos en estos archivos.
