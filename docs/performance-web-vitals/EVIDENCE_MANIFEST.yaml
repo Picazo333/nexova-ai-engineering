@@ -1,0 +1,48 @@
+project: ai-eng-performance-web-vitals
+branch: feature/performance-web-vitals
+base: feature/inventory-management-backoffice
+base_sha: 3de3faea2bdb7ebe3c608f63d8ec787dbf00c071
+lighthouse: "13.6.0"
+inp: null
+inp_reason: "Lighthouse simulate no emite INP. El sustituto medido es TBT."
+items:
+  - id: lh-summary
+    path: docs/performance-web-vitals/evidence/lighthouse-summary.json
+    rubric: [R01, R02, R03, R04, R11, R13]
+    note: "Medianas y peores. Los JSON completos no van en el repo."
+  - id: lh-full
+    path: /opt/cursor/artifacts/lighthouse/
+    rubric: [R01, R02, R04, R11]
+    note: "JSON y HTML de cada corrida, antes y después."
+  - id: shots-before
+    path: audit/before/
+    rubric: [R05]
+  - id: shots-after
+    path: audit/after/
+    rubric: [R11, R13]
+  - id: gallery
+    path: audit/index.html
+    rubric: [X01]
+  - id: audit-md
+    path: AUDIT.md
+    rubric: [R06, R07]
+  - id: report-md
+    path: REPORT.md
+    rubric: [R12, R13]
+  - id: site-css
+    path: assets/css/site.css
+    rubric: [R09]
+  - id: hook
+    path: uis/backoffice/components/inventory/useAssetCatalog.ts
+    rubric: [R08, X02]
+  - id: lockup
+    path: uis/portal/components/StableLockup.tsx
+    rubric: [R08, X02]
+  - id: catalog-test
+    path: uis/backoffice/__tests__/catalog.test.ts
+    rubric: [X02, R14]
+  - id: lockup-test
+    path: uis/portal/__tests__/lockup.test.ts
+    rubric: [X02, R14]
+content_sha: bc8e3bbf7435fe0f4fa980779c8fb1ae94d10f64
+commit_sha_note: "bc8e3bb es el commit de AUDIT, REPORT y las capturas. El commit siguiente solo escribe este SHA."
