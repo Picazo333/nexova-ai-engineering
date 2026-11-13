@@ -16,8 +16,8 @@
 | Repositorio | `Picazo333/nexova-ai-engineering` (Nexova original) |
 | PR | https://github.com/Picazo333/nexova-ai-engineering/pull/29 |
 | Rama | `feature/telemetry-plan` |
-| Head al emitir este archivo | `da3525b9cf` — [árbol](https://github.com/Picazo333/nexova-ai-engineering/tree/feature/telemetry-plan) |
-| Estado LMS (13 nov 2026, API viva) | No |
+| Head auditado (esta pasada) | `7325bd2da116c598f1253e62be639ec73244558f` |
+| Estado LMS (13 nov 2026, API viva, GET) | PENDING / PENDING, `github_url` vacío (tarea 1022014) |
 
 ## Rúbrica de referencia
 
@@ -41,16 +41,24 @@ El auditor no usa como única fuente la autoevaluación del autor. Contrasta con
 
 | ID | Severidad (GRAVE / MENOR / IRRELEVANTE) | Dónde (archivo, línea, SHA, comando) | Qué se observó | Criterio de rúbrica afectado | ¿Bloquea? |
 |---|---|---|---|---|---|
-| H1 |  |  |  |  |  |
-| H2 |  |  |  |  |  |
+| H1 | MENOR | PR #29, base distinta de `main`. Head `7325bd2da116c598f1253e62be639ec73244558f`. | Cola serial. Igual que el recibo del 12 nov. | Proceso, no L96–L105. | No |
+| H2 | IRRELEVANTE | CI `rag-tests.yml`, fallo heredado de `tests/api`. | Diseño; el PR no introduce el fallo. | No | No |
 
-Añade filas según haga falta. Si no hay hallazgos, dilo explícitamente.
+No hay hallazgos GRAVE. Se mantiene el 24/24 del recibo `025_INDEPENDENT_REVIEW.md` (SHA `da3525b9cf1e6fedfd158f2200eb1371227261e1`). Delta posterior: solo ESTADO y este checkpoint. El esquema de esta rama no cambió.
+
+HITL abiertos, no bloquean: envío al LMS (tarea 1022014, PENDING); merge.
 
 ## Veredicto
 
 - **READY** — pasa la rúbrica oficial. Los MENOR e IRRELEVANTE no lo impiden.
 - **NO READY** — hay al menos un GRAVE, o un criterio obligatorio en FAIL / UNVERIFIED que no sea HITL explícito de Miguel.
 - Los HITL de Miguel (merge, envío al LMS, VPS, key de LLM, prueba en dispositivo, video) no restan del porcentaje de la rúbrica y no los cierra el auditor.
+
+## Veredicto del auditor (13 nov 2026)
+
+- **READY / PASA.** 24/24 vigentes. 0 GRAVE. Diseño; sin código de captura en esta entrega.
+- Conteos: GRAVE 0, MENOR 1, IRRELEVANTE 1.
+- Informe: `audit/AUDIT_REPORT_43_ai-eng-telemetry-plan.md`.
 
 ## Dónde dejar el reporte
 
@@ -60,4 +68,4 @@ Añade filas según haga falta. Si no hay hallazgos, dilo explícitamente.
 
 ## Estado portable de la cohorte
 
-Las 83 actividades, en el orden de la plataforma, están en `Picazo333/4geeks-control-tower`, carpeta `estado/`, rama `estado-cohorte-2026-11-13` (PR abierto, sin merge). En esta caja: `/workspace/ESTADO/`.
+Las 83 actividades, en el orden de la plataforma, están en `Picazo333/4geeks-control-tower`, carpeta `estado/`, rama `estado-cohorte-2026-11-13`, PR https://github.com/Picazo333/4geeks-control-tower/pull/32 (sin merge). En esta caja: `/workspace/ESTADO/`.
