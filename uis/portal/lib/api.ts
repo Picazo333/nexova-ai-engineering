@@ -4,12 +4,14 @@ import { clearToken, readToken } from "@/lib/session";
 export class ApiError extends Error {
   status: number;
   fields: Record<string, string>;
+  code: string;
 
-  constructor(status: number, message: string, fields: Record<string, string> = {}) {
+  constructor(status: number, message: string, fields: Record<string, string> = {}, code = "") {
     super(message);
     this.name = "ApiError";
     this.status = status;
     this.fields = fields;
+    this.code = code;
   }
 }
 
@@ -45,6 +47,12 @@ function fieldErrors(body: unknown): Record<string, string> {
     fields[name] = fieldMessage(raw);
   }
   return fields;
+}
+
+function codeFrom(body: unknown): string {
+  if (!body || typeof body !== "object") return "";
+  const code = (body as { code?: unknown }).code;
+  return typeof code === "string" ? code : "";
 }
 
 function messageFrom(body: unknown, status: number): string {
@@ -89,7 +97,7 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}, options?
   if (!response.ok) {
     const fields = fieldErrors(body);
     if (response.status === 409) fields.email = "Ya existe una cuenta con ese correo.";
-    throw new ApiError(response.status, messageFrom(body, response.status), fields);
+    throw new ApiError(response.status, messageFrom(body, response.status), fields, codeFrom(body));
   }
   return body as T;
 }

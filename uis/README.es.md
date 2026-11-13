@@ -22,6 +22,6 @@ El formulario de sesión de 012 guarda el JWT en `sessionStorage`. No es el guar
 
 ## `portal/`
 
-Aplicación Next.js con login, registro, perfil y las vistas internas protegidas. Llama a la misma API con `Authorization: Bearer` y guarda el JWT en `localStorage`. Ver [`portal/README.md`](./portal/README.md).
+Aplicación Next.js con login, registro, restablecimiento de contraseña, perfil y las vistas internas protegidas. Llama a la misma API con `Authorization: Bearer` y guarda el JWT en `localStorage`. Ver [`portal/README.md`](./portal/README.md).
 
 El sitio público sigue en la raíz del repositorio. No lo sirve el portal y no comprueba token.

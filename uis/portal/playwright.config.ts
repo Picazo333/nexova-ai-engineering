@@ -4,7 +4,7 @@ import path from "node:path";
 
 const root = path.resolve(__dirname, "../..");
 const secret = randomBytes(32).toString("hex");
-const data = "/tmp/nexova-013-e2e";
+const data = "/tmp/nexova-014-e2e";
 
 export default defineConfig({
   testDir: "./e2e",
@@ -34,6 +34,11 @@ export default defineConfig({
         SUPPLIERS_DATA_DIR: `${data}/suppliers`,
         INCIDENTS_DATA_DIR: `${data}/incidents`,
         SUPPLIERS_AUTOSEED: "1",
+        EMAIL_TRANSPORT: "mock",
+        PUBLIC_APP_URL: "http://127.0.0.1:3000",
+        PASSWORD_RESET_EXPIRE_MINUTES: "30",
+        PASSWORD_RESET_MAX_PER_HOUR: "5",
+        PASSWORD_RESET_CAPTURE_FILE: `${data}/reset-link.txt`,
         PYTHONPATH: "packages:services/api",
       },
       url: "http://127.0.0.1:8000/docs",

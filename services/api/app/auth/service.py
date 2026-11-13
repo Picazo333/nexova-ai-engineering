@@ -154,7 +154,12 @@ def update_user(user_id: str, changes: dict[str, Any]) -> dict[str, Any]:
             stored["is_active"] = bool(changes["is_active"])
         for field in ("name", "phone", "address", "password"):
             stored.pop(field, None)
+        password_changed = "password" in changes
         table.update(stored, Query().id == user_id)
+    if password_changed:
+        from app.auth.recovery import revoke_reset_tokens
+
+        revoke_reset_tokens(user_id)
     updated = get_user_by_id(user_id)
     if updated is None:
         raise ServiceError(404, "No existe un usuario con ese id.")
@@ -171,6 +176,9 @@ def delete_user(user_id: str) -> dict[str, Any]:
         stored = dict(current)
         table.remove(Query().id == user_id)
         profiles_table().remove(Query().user_id == user_id)
+    from app.auth.recovery import revoke_reset_tokens
+
+    revoke_reset_tokens(user_id)
     return stored
 
 

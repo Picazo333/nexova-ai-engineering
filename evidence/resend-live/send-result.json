@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-11-12 15:51:17 CST (America/Mexico_City)",
+  "http_status_resend": 200,
+  "http_status_app": 200,
+  "resend_message_id": "01a1d1be-6006-77ab-ad3c-26f86f632b58",
+  "recipient_masked": "m***@gmail.com",
+  "code_path": "FastAPI TestClient POST /auth/forgot-password on the real app.routers.auth router → request_password_reset (app.auth.recovery) → deliver → mailer._resend_send (app.auth.mailer). Local TinyDB via AUTH_DATA_DIR (isolated temp dir, not the repo). EMAIL_TRANSPORT=resend. from=Nexova <onboarding@resend.dev>. POST https://api.resend.com/emails. App SHA 3b156de (origin/feature/user-authentication-restore). Exactly one Resend HTTP call.",
+  "resend_calls": 1,
+  "app_response_message": {
+    "message": "Si esa dirección está registrada, recibirás un enlace en breve."
+  },
+  "transport": "resend",
+  "from_header": "Nexova <onboarding@resend.dev>",
+  "response_keys": [
+    "id"
+  ]
+}

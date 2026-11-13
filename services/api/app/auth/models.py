@@ -208,6 +208,66 @@ class TokenResponse(BaseModel):
     user_uuid: str
 
 
+class ForgotPasswordBody(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    email: str
+
+    @field_validator("email", mode="before")
+    @classmethod
+    def email_ok(cls, value: Any) -> str:
+        return normalize_email(value)
+
+
+class ResetPasswordBody(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    token: str
+    new_password: str
+
+    @field_validator("token", mode="before")
+    @classmethod
+    def token_ok(cls, value: Any) -> str:
+        if not isinstance(value, str):
+            raise ValueError("El enlace no es válido. Pide otro.")
+        text = value.strip()
+        if not text or len(text) > 2000:
+            raise ValueError("El enlace no es válido. Pide otro.")
+        return text
+
+    @field_validator("new_password", mode="before")
+    @classmethod
+    def new_password_ok(cls, value: Any) -> str:
+        return require_password(value)
+
+
+class ChangePasswordBody(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    current_password: str
+    new_password: str
+
+    @field_validator("current_password", mode="before")
+    @classmethod
+    def current_ok(cls, value: Any) -> str:
+        if not isinstance(value, str) or value == "":
+            raise ValueError("La contraseña actual es obligatoria.")
+        if len(value) > 200:
+            raise ValueError("La contraseña actual no es válida.")
+        return value
+
+    @field_validator("new_password", mode="before")
+    @classmethod
+    def new_password_ok(cls, value: Any) -> str:
+        return require_password(value)
+
+
+class MessageResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    message: str
+
+
 def validation_message(exc: ValidationError) -> str:
     parts: list[str] = []
     for err in exc.errors():
