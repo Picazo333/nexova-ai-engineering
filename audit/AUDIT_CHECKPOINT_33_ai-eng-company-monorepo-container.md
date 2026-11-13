@@ -41,16 +41,25 @@ El auditor no usa como única fuente la autoevaluación del autor. Contrasta con
 
 | ID | Severidad (GRAVE / MENOR / IRRELEVANTE) | Dónde (archivo, línea, SHA, comando) | Qué se observó | Criterio de rúbrica afectado | ¿Bloquea? |
 |---|---|---|---|---|---|
-| H1 |  |  |  |  |  |
-| H2 |  |  |  |  |  |
+| H1 | MENOR | README raíz documenta `make up` (llena `.env` gitignorado y lanza Compose). `docker compose.yml` declara `env_file` con `required: false`. `jwt_secret()` en `services/api/app/auth/security.py` L50–54 lanza `AuthConfigError` si `JWT_SECRET` falta o es corto. | Enunciado: «`docker compose up` desde la raíz arranca la plataforma sin pasos extra». Sin `make up`, el login fallaría por secreto vacío; salud y contenedores pueden arrancar. El atajo documentado cubre el caso. | No |
+| H2 | MENOR | PR #22, `mergeable=false`, `mergeable_state=dirty`. La base `feature/user-authentication-restore` se movió de `d69a3b954c` a `639bc6fcb2` (checkpoint + ESTADO, 13 nov 10:40–10:42 CST). | No es un criterio de la rúbrica oficial. Afecta al merge (HITL). | No |
+| H3 | IRRELEVANTE | En este sandbox no hay CLI de Docker. `tests/infra/test_compose_contract.py::test_rendered_compose_keeps_qdrant_off_public_interfaces` se salta (diseñado así). `test_env_is_gitignored_and_absent_from_history` falló aquí con `git log --all` exit 128 por un objeto ausente del clone parcial (`97e7bb36`); la API de GitHub devuelve 0 commits para `.env` y variantes. `.env` está en `.gitignore` L14 y no está en el índice. | El criterio «`.env` en `.gitignore` y ausente del historial» se verifica por esas otras vías, no por el fallo local. | No |
 
-Añade filas según haga falta. Si no hay hallazgos, dilo explícitamente.
+No hay hallazgos GRAVE. Los criterios oficiales no-HITL pasan. El criterio de evaluación «contenedores desplegados y en producción en el VPS» queda en **HITL** (acceso SSH y autorización de Miguel; runbook en `docs/container/RUNBOOK.md`, estado BLOCKED_HITL, sin URL inventada). No es GRAVE y no bloquea.
+
+HITL abiertos, no bloquean: VPS; envío al LMS (tarea 1022000, GET 13 nov 2026: `PENDING`, `github_url` vacío); merge.
 
 ## Veredicto
 
 - **READY** — pasa la rúbrica oficial. Los MENOR e IRRELEVANTE no lo impiden.
 - **NO READY** — hay al menos un GRAVE, o un criterio obligatorio en FAIL / UNVERIFIED que no sea HITL explícito de Miguel.
 - Los HITL de Miguel (merge, envío al LMS, VPS, key de LLM, prueba en dispositivo, video) no restan del porcentaje de la rúbrica y no los cierra el auditor.
+
+## Veredicto del auditor (13 nov 2026)
+
+- **READY / PASA.** Criterios oficiales no-HITL en PASS. VPS en HITL. 0 GRAVE.
+- Conteos: GRAVE 0, MENOR 2, IRRELEVANTE 1.
+- Informe: `audit/AUDIT_REPORT_33_ai-eng-company-monorepo-container.md`.
 
 ## Dónde dejar el reporte
 
@@ -60,4 +69,4 @@ Añade filas según haga falta. Si no hay hallazgos, dilo explícitamente.
 
 ## Estado portable de la cohorte
 
-Las 83 actividades, en el orden de la plataforma, están en `Picazo333/4geeks-control-tower`, carpeta `estado/`, rama `estado-cohorte-2026-11-13` (PR abierto, sin merge). En esta caja: `/workspace/ESTADO/`.
+Las 83 actividades, en el orden de la plataforma, están en `Picazo333/4geeks-control-tower`, carpeta `estado/`, rama `estado-cohorte-2026-11-13`, PR https://github.com/Picazo333/4geeks-control-tower/pull/32 (sin merge). En esta caja: `/workspace/ESTADO/`.
