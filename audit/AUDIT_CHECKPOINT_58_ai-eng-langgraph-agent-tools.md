@@ -1,7 +1,7 @@
 # Checkpoint de auditoría — actividad 58 de la plataforma
 
 **Para:** Auditor — Rodrigo Salcedo (independiente; nunca es el autor de este trabajo).
-**Fecha de este checkpoint:** 13 nov 2026, 10:35 (hora de CDMX).
+**Fecha de este checkpoint:** 13 nov 2026, 11:15 (hora de CDMX).
 **Regla de veredicto:** si el trabajo **pasa la rúbrica oficial**, se da por bueno aunque haya hallazgos menores o irrelevantes. Solo un hallazgo **GRAVE** bloquea. GRAVE = rompe un criterio de la rúbrica o la seguridad (secretos, auth, inyección, pérdida de datos). MENOR se reporta y no bloquea. IRRELEVANTE se anota y no retrasa.
 
 ## Actividad
@@ -13,17 +13,18 @@
 | Slug | `ai-eng-langgraph-agent-tools` |
 | Tarea LMS | 1022028 |
 | Enlace LMS | https://learn.4geeks.com/main-cohort/latam-aie-pt-6/syllabus/latam-agentic-engineering/project/ai-eng-langgraph-agent-tools?moduleId=1 |
-| Repositorio | `Picazo333/nexova-ai-engineering` (Nexova original) |
+| Repositorio | `Picazo333/nexova-ai-engineering` (monorepo Nexova) |
 | PR | https://github.com/Picazo333/nexova-ai-engineering/pull/20 |
 | Rama | `feature/langgraph-external-tools` |
-| Head al emitir este archivo | `341ba45c0f` — [árbol](https://github.com/Picazo333/nexova-ai-engineering/tree/feature/langgraph-external-tools) |
-| Estado LMS (13 nov 2026, API viva) | No |
+| Head auditado (esta pasada) | `d38ee7cb7ad1aeee1f21f41400ebefc4b00544a5` |
+| Estado LMS (13 nov 2026, API viva, GET) | PENDING / PENDING, `github_url` vacío (tarea 1022028) |
 
 ## Rúbrica de referencia
 
-Enunciado oficial: /workspace/ejecucion/040-ai-eng-langgraph-agent-tools/source/. HITL: una key de LLM.
+Enunciado oficial: `/workspace/ejecucion/040-ai-eng-langgraph-agent-tools/source/OFFICIAL_README.md` @ syllabus `fd2da034`, L84–L92. Primera pasada (monorepo). Inventario stretch NO_APLICA.
 
 El auditor no usa como única fuente la autoevaluación del autor. Contrasta con el enunciado oficial. No reescribe el código, no hace merge, no envía al LMS y un autor nunca audita su propio trabajo.
+
 
 ## Qué intentar romper (de todas las formas razonables)
 
@@ -41,10 +42,11 @@ El auditor no usa como única fuente la autoevaluación del autor. Contrasta con
 
 | ID | Severidad (GRAVE / MENOR / IRRELEVANTE) | Dónde (archivo, línea, SHA, comando) | Qué se observó | Criterio de rúbrica afectado | ¿Bloquea? |
 |---|---|---|---|---|---|
-| H1 |  |  |  |  |  |
-| H2 |  |  |  |  |  |
+| H1 | MENOR | PR #20, `mergeable_state=dirty`; el cuerpo aún cita `e4b81e87`. | Cola serial. | Proceso, no L84–L92. | No |
 
-Añade filas según haga falta. Si no hay hallazgos, dilo explícitamente.
+No hay hallazgos GRAVE. GRAVE 0, MENOR 1, IRRELEVANTE 0.
+
+HITL abiertos, no bloquean: envío al LMS (tarea 1022028, PENDING); merge. No son GRAVE.
 
 ## Veredicto
 
@@ -52,10 +54,16 @@ Añade filas según haga falta. Si no hay hallazgos, dilo explícitamente.
 - **NO READY** — hay al menos un GRAVE, o un criterio obligatorio en FAIL / UNVERIFIED que no sea HITL explícito de Miguel.
 - Los HITL de Miguel (merge, envío al LMS, VPS, key de LLM, prueba en dispositivo, video) no restan del porcentaje de la rúbrica y no los cierra el auditor.
 
+## Veredicto del auditor (13 nov 2026)
+
+- **READY / PASA. Primera pasada. Herramienta de tickets solo lectura, timeout 4 s. Inventario stretch NO_APLICA. 0 GRAVE.**
+- Conteos: GRAVE 0, MENOR 1, IRRELEVANTE 0.
+- Informe: `audit/AUDIT_REPORT_58_ai-eng-langgraph-agent-tools.md`.
+
 ## Dónde dejar el reporte
 
-1. En esta misma rama, en `audit/AUDIT_REPORT_58_ai-eng-langgraph-agent-tools.md` (no en `main`; no se hace merge).
-2. Una copia en `/workspace/intake/zip_1112/runtime-private/academic/` con un nombre que no pise un recibo anterior.
+1. En esta misma rama, en `audit/AUDIT_REPORT_58_ai-eng-langgraph-agent-tools.md` (no en `main`; no se hace merge). Solo se publica lo que está bajo `audit/`.
+2. Una copia en `/workspace/intake/zip_1112/runtime-private/academic/058_ADVERSARIAL_AUDIT_2026-11-13.md` (sin pisar recibos `*_INDEPENDENT_REVIEW.md`).
 3. Avisa al Orquestador. No comentes en el LMS ni pidas tú más datos a los profesores.
 
 ## Estado portable de la cohorte
