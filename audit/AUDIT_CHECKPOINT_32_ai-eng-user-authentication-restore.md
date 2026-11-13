@@ -41,16 +41,24 @@ El auditor no usa como única fuente la autoevaluación del autor. Contrasta con
 
 | ID | Severidad (GRAVE / MENOR / IRRELEVANTE) | Dónde (archivo, línea, SHA, comando) | Qué se observó | Criterio de rúbrica afectado | ¿Bloquea? |
 |---|---|---|---|---|---|
-| H1 |  |  |  |  |  |
-| H2 |  |  |  |  |  |
+| H1 | MENOR | PR #21, base `feature/langgraph-external-tools` @ `341ba45c0f` (API `mergeable=true`, `mergeable_state=unstable`). Head `639bc6fcb248b148785acd77946c911731fd9890`. | El enunciado (L135) pide abrir el PR contra `main`. La cola serial del monorepo usa la rama padre, igual que 024–027. | No |
+| H2 | IRRELEVANTE | CI `rag-tests.yml` en la rama (y en la base): fallo heredado de `tests/api`, código de salida 4. | No es un criterio de esta actividad. | No |
 
-Añade filas según haga falta. Si no hay hallazgos, dilo explícitamente.
+No hay hallazgos GRAVE. El trabajo pasa los 12 criterios oficiales de evaluación (OFFICIAL_README.md L118–L129).
+
+HITL abiertos, no bloquean: envío al LMS (tarea 1022070, GET 13 nov 2026: `task_status=PENDING`, `github_url` vacío); merge (decisión de Miguel). No se reenvió correo real (gasto de créditos): la evidencia `evidence/resend-live/send-result.json` del 12 nov 2026, 15:51 CST, registra HTTP 200 de Resend y de la app, `resend_calls=1`, sin clave en el fichero.
 
 ## Veredicto
 
 - **READY** — pasa la rúbrica oficial. Los MENOR e IRRELEVANTE no lo impiden.
 - **NO READY** — hay al menos un GRAVE, o un criterio obligatorio en FAIL / UNVERIFIED que no sea HITL explícito de Miguel.
 - Los HITL de Miguel (merge, envío al LMS, VPS, key de LLM, prueba en dispositivo, video) no restan del porcentaje de la rúbrica y no los cierra el auditor.
+
+## Veredicto del auditor (13 nov 2026)
+
+- **READY / PASA.** 12/12 criterios oficiales PASS. 0 GRAVE.
+- Conteos: GRAVE 0, MENOR 1, IRRELEVANTE 1.
+- Informe: `audit/AUDIT_REPORT_32_ai-eng-user-authentication-restore.md`.
 
 ## Dónde dejar el reporte
 
@@ -60,4 +68,4 @@ Añade filas según haga falta. Si no hay hallazgos, dilo explícitamente.
 
 ## Estado portable de la cohorte
 
-Las 83 actividades, en el orden de la plataforma, están en `Picazo333/4geeks-control-tower`, carpeta `estado/`, rama `estado-cohorte-2026-11-13` (PR abierto, sin merge). En esta caja: `/workspace/ESTADO/`.
+Las 83 actividades, en el orden de la plataforma, están en `Picazo333/4geeks-control-tower`, carpeta `estado/`, rama `estado-cohorte-2026-11-13`, PR https://github.com/Picazo333/4geeks-control-tower/pull/32 (sin merge). En esta caja: `/workspace/ESTADO/`.
