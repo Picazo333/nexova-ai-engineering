@@ -41,16 +41,24 @@ El auditor no usa como única fuente la autoevaluación del autor. Contrasta con
 
 | ID | Severidad (GRAVE / MENOR / IRRELEVANTE) | Dónde (archivo, línea, SHA, comando) | Qué se observó | Criterio de rúbrica afectado | ¿Bloquea? |
 |---|---|---|---|---|---|
-| H1 |  |  |  |  |  |
-| H2 |  |  |  |  |  |
+| H1 | IRRELEVANTE | `GET /inventory/products` en la API no exige autenticación (diseño de la entrega 021; el propio test `test_inventory.py` lo documenta: `security` ausente en OpenAPI). Las cuatro páginas del backoffice están detrás de `SessionGate` (`app/backoffice/inventory/layout.tsx`). Las escrituras sí exigen JWT (`test_writes_require_the_tinydb_user`). Head `b7ceed40ad3c1552dad156e1a07320127c82bc34`. | El enunciado pide Authorization en los endpoints protegidos y redirección en las cuatro páginas, no que el GET de listado de la API deje de ser público. | No |
+| H2 | IRRELEVANTE | CI `rag-tests.yml` en rojo, heredado de la base (`tests/api`, código 4). `mergeable_state=unstable`. | No es un criterio de esta actividad. | No |
 
-Añade filas según haga falta. Si no hay hallazgos, dilo explícitamente.
+No hay hallazgos GRAVE. El trabajo pasa los 10 criterios oficiales de evaluación (OFFICIAL_README.md L114–L123).
+
+HITL abiertos, no bloquean: envío al LMS (tarea 1022082, GET 13 nov 2026: `PENDING`, `github_url` vacío); merge. B01 (Supabase) no es criterio del enunciado oficial.
 
 ## Veredicto
 
 - **READY** — pasa la rúbrica oficial. Los MENOR e IRRELEVANTE no lo impiden.
 - **NO READY** — hay al menos un GRAVE, o un criterio obligatorio en FAIL / UNVERIFIED que no sea HITL explícito de Miguel.
 - Los HITL de Miguel (merge, envío al LMS, VPS, key de LLM, prueba en dispositivo, video) no restan del porcentaje de la rúbrica y no los cierra el auditor.
+
+## Veredicto del auditor (13 nov 2026)
+
+- **READY / PASA.** 10/10 criterios oficiales PASS. 0 GRAVE.
+- Conteos: GRAVE 0, MENOR 0, IRRELEVANTE 2.
+- Informe: `audit/AUDIT_REPORT_40_ai-eng-inventory-management-backoffice.md`.
 
 ## Dónde dejar el reporte
 
@@ -60,4 +68,4 @@ Añade filas según haga falta. Si no hay hallazgos, dilo explícitamente.
 
 ## Estado portable de la cohorte
 
-Las 83 actividades, en el orden de la plataforma, están en `Picazo333/4geeks-control-tower`, carpeta `estado/`, rama `estado-cohorte-2026-11-13` (PR abierto, sin merge). En esta caja: `/workspace/ESTADO/`.
+Las 83 actividades, en el orden de la plataforma, están en `Picazo333/4geeks-control-tower`, carpeta `estado/`, rama `estado-cohorte-2026-11-13`, PR https://github.com/Picazo333/4geeks-control-tower/pull/32 (sin merge). En esta caja: `/workspace/ESTADO/`.
