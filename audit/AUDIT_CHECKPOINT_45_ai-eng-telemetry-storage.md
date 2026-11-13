@@ -16,8 +16,8 @@
 | Repositorio | `Picazo333/nexova-ai-engineering` (Nexova original) |
 | PR | https://github.com/Picazo333/nexova-ai-engineering/pull/31 |
 | Rama | `feature/telemetry-storage` |
-| Head al emitir este archivo | `df0f5988c0` — [árbol](https://github.com/Picazo333/nexova-ai-engineering/tree/feature/telemetry-storage) |
-| Estado LMS (13 nov 2026, API viva) | No |
+| Head auditado (esta pasada) | `bef494b4523568c8ee7525d5b6ff63f74ea18a21` |
+| Estado LMS (13 nov 2026, API viva, GET) | PENDING / PENDING, `github_url` vacío (tarea 1022097) |
 
 ## Rúbrica de referencia
 
@@ -41,16 +41,24 @@ El auditor no usa como única fuente la autoevaluación del autor. Contrasta con
 
 | ID | Severidad (GRAVE / MENOR / IRRELEVANTE) | Dónde (archivo, línea, SHA, comando) | Qué se observó | Criterio de rúbrica afectado | ¿Bloquea? |
 |---|---|---|---|---|---|
-| H1 |  |  |  |  |  |
-| H2 |  |  |  |  |  |
+| H1 | MENOR | PR #31, base distinta de `main`. Head `bef494b4523568c8ee7525d5b6ff63f74ea18a21`. | Cola serial. | Proceso, no L139–L147. | No |
+| H2 | IRRELEVANTE | CI `rag-tests.yml`, fallo heredado de `tests/api`. | El almacenamiento no introduce el fallo. | No | No |
 
-Añade filas según haga falta. Si no hay hallazgos, dilo explícitamente.
+No hay hallazgos GRAVE. Se mantiene el 14/14 no-HITL del recibo `027_INDEPENDENT_REVIEW.md` (SHA `df0f5988c03b0af75ca69ec453ab8603719a1859`). Delta posterior: solo este checkpoint.
+
+HITL abiertos, no bloquean: tabla y filas en el Supabase alojado (H01–H03 del recibo); envío al LMS (tarea 1022097, PENDING); merge. No son GRAVE.
 
 ## Veredicto
 
 - **READY** — pasa la rúbrica oficial. Los MENOR e IRRELEVANTE no lo impiden.
 - **NO READY** — hay al menos un GRAVE, o un criterio obligatorio en FAIL / UNVERIFIED que no sea HITL explícito de Miguel.
 - Los HITL de Miguel (merge, envío al LMS, VPS, key de LLM, prueba en dispositivo, video) no restan del porcentaje de la rúbrica y no los cierra el auditor.
+
+## Veredicto del auditor (13 nov 2026)
+
+- **READY / PASA.** 14/14 no-HITL vigentes. 0 GRAVE. Delta: solo docs.
+- Conteos: GRAVE 0, MENOR 1, IRRELEVANTE 1.
+- Informe: `audit/AUDIT_REPORT_45_ai-eng-telemetry-storage.md`.
 
 ## Dónde dejar el reporte
 
