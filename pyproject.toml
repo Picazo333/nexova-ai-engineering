@@ -1,0 +1,22 @@
+[project]
+name = "nexova-ai-engineering"
+version = "0.1.0"
+description = "Pronostico de ingresos mensuales de Nexova con features causales de serie de tiempo."
+requires-python = ">=3.12"
+readme = "pipelines/README.md"
+dependencies = [
+    "matplotlib>=3.11.2",
+    "pandas>=3.1.1",
+    "scikit-learn>=1.9.1",
+    "scipy>=1.18.1",
+    "statsmodels>=0.15.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

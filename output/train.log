@@ -1,0 +1,18 @@
+Nexova — pronóstico de ingresos mensuales
+Dataset: data/raw/nexova_sales.csv
+SHA-256: e3af15657506fae36a81eec6a9a544a54473bf38f41f2ee1bb066799ff94440a
+Hash oficial: True
+Nulos eliminados: 0
+Split: entrenamiento 2017-01-01 → 2023-12-01 (84 meses); prueba 2024-01-01 → 2025-12-01 (24 meses). Calentamiento causal descartado: 12 meses.
+Modelo: RandomForestRegressor (scikit-learn), random_state=42
+Métricas en prueba (no en entrenamiento):
+  MSE: 4,612,858,070.60 USD²
+  RMSE: 67,918.02 USD (7.08 % del ingreso mensual medio de la prueba)
+  PSI nivel: 6.3753
+  PSI forma: 0.1659
+  Gini: 0.8639
+  K²: 2.0454 (p=0.3596)
+  RMSE de referencia (lag 1): 94,696.72 USD
+Estacionalidad: agosto -21.55 % frente a la media del año; dirección alineada con el briefing: True; bandas exactas: True.
+Gráficas: output/forecast_vs_actual.png, output/decomposition.png, output/feature_importance.png
+Detalle: output/metrics.md
