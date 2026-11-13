@@ -1,7 +1,7 @@
 # Checkpoint de auditoría — actividad 56 de la plataforma
 
 **Para:** Auditor — Rodrigo Salcedo (independiente; nunca es el autor de este trabajo).
-**Fecha de este checkpoint:** 13 nov 2026, 10:35 (hora de CDMX).
+**Fecha de este checkpoint:** 13 nov 2026, 11:15 (hora de CDMX).
 **Regla de veredicto:** si el trabajo **pasa la rúbrica oficial**, se da por bueno aunque haya hallazgos menores o irrelevantes. Solo un hallazgo **GRAVE** bloquea. GRAVE = rompe un criterio de la rúbrica o la seguridad (secretos, auth, inyección, pérdida de datos). MENOR se reporta y no bloquea. IRRELEVANTE se anota y no retrasa.
 
 ## Actividad
@@ -13,17 +13,18 @@
 | Slug | `ai-eng-milestone-rag-knowledge-base` |
 | Tarea LMS | 1022129 |
 | Enlace LMS | https://learn.4geeks.com/main-cohort/latam-aie-pt-6/syllabus/latam-models-training-rag/project/ai-eng-milestone-rag-knowledge-base?moduleId=8 |
-| Repositorio | `Picazo333/nexova-ai-engineering` (Nexova original) |
+| Repositorio | `Picazo333/nexova-ai-engineering` (monorepo Nexova) |
 | PR | https://github.com/Picazo333/nexova-ai-engineering/pull/16 |
 | Rama | `feature/rag-knowledge-base` |
-| Head al emitir este archivo | `429cbc26df` — [árbol](https://github.com/Picazo333/nexova-ai-engineering/tree/feature/rag-knowledge-base) |
-| Estado LMS (13 nov 2026, API viva) | No |
+| Head auditado (esta pasada) | `3dd61b9696582ffa6b3236fd25e8fdee9a2fb531` |
+| Estado LMS (13 nov 2026, API viva, GET) | PENDING / PENDING, `github_url` vacío (tarea 1022129) |
 
 ## Rúbrica de referencia
 
-Enunciado oficial: /workspace/ejecucion/038-ai-eng-milestone-rag-knowledge-base/source/. Rúbrica y evidencia en docs/rag/ del PR.
+Enunciado oficial: `/workspace/ejecucion/038-ai-eng-milestone-rag-knowledge-base/source/OFFICIAL_README.md` @ syllabus `fd2da034`, L132–L148 (Recall@3 ≥ 80 %). Primera pasada (monorepo). Sin gastar créditos de LLM.
 
 El auditor no usa como única fuente la autoevaluación del autor. Contrasta con el enunciado oficial. No reescribe el código, no hace merge, no envía al LMS y un autor nunca audita su propio trabajo.
+
 
 ## Qué intentar romper (de todas las formas razonables)
 
@@ -41,10 +42,11 @@ El auditor no usa como única fuente la autoevaluación del autor. Contrasta con
 
 | ID | Severidad (GRAVE / MENOR / IRRELEVANTE) | Dónde (archivo, línea, SHA, comando) | Qué se observó | Criterio de rúbrica afectado | ¿Bloquea? |
 |---|---|---|---|---|---|
-| H1 |  |  |  |  |  |
-| H2 |  |  |  |  |  |
+| H1 | MENOR | PR #16, `mergeable_state=dirty`; base `error-handling` se movió. | Cola serial: la base avanzó. No afecta el código RAG. | Proceso, no L132–L148. | No |
 
-Añade filas según haga falta. Si no hay hallazgos, dilo explícitamente.
+No hay hallazgos GRAVE. GRAVE 0, MENOR 1, IRRELEVANTE 0.
+
+HITL abiertos, no bloquean: envío al LMS (tarea 1022129, PENDING); merge. No se gastaron créditos de LLM en esta pasada; la evidencia live de Recall@3 27/27 ya está en el repo. No son GRAVE.
 
 ## Veredicto
 
@@ -52,10 +54,16 @@ Añade filas según haga falta. Si no hay hallazgos, dilo explícitamente.
 - **NO READY** — hay al menos un GRAVE, o un criterio obligatorio en FAIL / UNVERIFIED que no sea HITL explícito de Miguel.
 - Los HITL de Miguel (merge, envío al LMS, VPS, key de LLM, prueba en dispositivo, video) no restan del porcentaje de la rúbrica y no los cierra el auditor.
 
+## Veredicto del auditor (13 nov 2026)
+
+- **READY / PASA. Primera pasada. Código completo; Recall@3 27/27 en evidencia live. 0 GRAVE. MENOR de proceso.**
+- Conteos: GRAVE 0, MENOR 1, IRRELEVANTE 0.
+- Informe: `audit/AUDIT_REPORT_56_ai-eng-milestone-rag-knowledge-base.md`.
+
 ## Dónde dejar el reporte
 
-1. En esta misma rama, en `audit/AUDIT_REPORT_56_ai-eng-milestone-rag-knowledge-base.md` (no en `main`; no se hace merge).
-2. Una copia en `/workspace/intake/zip_1112/runtime-private/academic/` con un nombre que no pise un recibo anterior.
+1. En esta misma rama, en `audit/AUDIT_REPORT_56_ai-eng-milestone-rag-knowledge-base.md` (no en `main`; no se hace merge). Solo se publica lo que está bajo `audit/`.
+2. Una copia en `/workspace/intake/zip_1112/runtime-private/academic/056_ADVERSARIAL_AUDIT_2026-11-13.md` (sin pisar recibos `*_INDEPENDENT_REVIEW.md`).
 3. Avisa al Orquestador. No comentes en el LMS ni pidas tú más datos a los profesores.
 
 ## Estado portable de la cohorte
