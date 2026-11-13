@@ -1,0 +1,19 @@
+{
+  "eventId": "00000000-0000-4000-8000-00000000001a",
+  "timestamp": "2026-11-12T20:21:59Z",
+  "sessionId": "11111111-1111-4111-8111-111111111111",
+  "userId": "00000000-0000-4000-8000-000000000201",
+  "event_type": "order_validation_failed",
+  "schemaVersion": "1.0.0",
+  "requestId": "22222222-2222-4222-8222-222222222222",
+  "properties": {
+    "failure_code": "insufficient_stock",
+    "route_template": "/inventory/orders/outbound",
+    "http_status": 400,
+    "product_id": "2",
+    "product_sku": "NXV-IT-002",
+    "office": "miami",
+    "quantity": 9,
+    "exit_type": "allocation"
+  }
+}

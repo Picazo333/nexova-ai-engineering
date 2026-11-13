@@ -1,0 +1,289 @@
+PASS el esquema draft-07 compila
+PASS el sobre rechaza claves de más
+PASS el sobre exige los ocho campos del enunciado
+PASS el enum de event_type coincide 1:1 con las definiciones
+PASS inbound_order_created tiene allowlist cerrada
+PASS outbound_order_created tiene allowlist cerrada
+PASS stock_threshold_triggered tiene allowlist cerrada
+PASS direct_stock_edit_rejected tiene allowlist cerrada
+PASS kit_cost_variance_detected tiene allowlist cerrada
+PASS login_failed tiene allowlist cerrada
+PASS login_succeeded tiene allowlist cerrada
+PASS session_expired tiene allowlist cerrada
+PASS credential_rejected tiene allowlist cerrada
+PASS password_reset_requested tiene allowlist cerrada
+PASS api_latency_recorded tiene allowlist cerrada
+PASS page_load_recorded tiene allowlist cerrada
+PASS frontend_exception_recorded tiene allowlist cerrada
+PASS api_response_failed tiene allowlist cerrada
+PASS section_viewed tiene allowlist cerrada
+PASS flow_abandoned tiene allowlist cerrada
+PASS order_validation_failed tiene allowlist cerrada
+PASS asset_created tiene allowlist cerrada
+PASS catalogue_gap_recorded tiene allowlist cerrada
+PASS el plan y el esquema nombran los mismos eventos
+PASS inbound_order_created origen mandatory
+PASS inbound_order_created categoría business
+PASS inbound_order_created entrega batch
+PASS inbound_order_created obligatorias
+PASS inbound_order_created allowlist
+PASS inbound_order_created tabla de propiedades
+PASS inbound_order_created.office marcado sí
+PASS inbound_order_created.product_id marcado sí
+PASS inbound_order_created.product_category marcado sí
+PASS inbound_order_created.programme_id marcado sí
+PASS inbound_order_created.quantity marcado sí
+PASS inbound_order_created.currency marcado sí
+PASS inbound_order_created.order_id marcado sí
+PASS inbound_order_created.product_sku marcado sí
+PASS inbound_order_created.category_map_version marcado sí
+PASS inbound_order_created.supplier marcado no
+PASS inbound_order_created.occurred_at marcado no
+PASS inbound_order_created tiene hipótesis y decisión
+PASS inbound_order_created lleva el piso del briefing
+PASS outbound_order_created origen mandatory
+PASS outbound_order_created categoría business
+PASS outbound_order_created entrega batch
+PASS outbound_order_created obligatorias
+PASS outbound_order_created allowlist
+PASS outbound_order_created tabla de propiedades
+PASS outbound_order_created.office marcado sí
+PASS outbound_order_created.product_id marcado sí
+PASS outbound_order_created.product_category marcado sí
+PASS outbound_order_created.programme_id marcado sí
+PASS outbound_order_created.quantity marcado sí
+PASS outbound_order_created.currency marcado sí
+PASS outbound_order_created.order_id marcado sí
+PASS outbound_order_created.product_sku marcado sí
+PASS outbound_order_created.exit_type marcado sí
+PASS outbound_order_created.category_map_version marcado sí
+PASS outbound_order_created.assignee_ref marcado no
+PASS outbound_order_created.assignee_redacted marcado no
+PASS outbound_order_created.occurred_at marcado no
+PASS outbound_order_created tiene hipótesis y decisión
+PASS outbound_order_created lleva el piso del briefing
+PASS stock_threshold_triggered origen mandatory
+PASS stock_threshold_triggered categoría business
+PASS stock_threshold_triggered entrega stream
+PASS stock_threshold_triggered obligatorias
+PASS stock_threshold_triggered allowlist
+PASS stock_threshold_triggered tabla de propiedades
+PASS stock_threshold_triggered.office marcado sí
+PASS stock_threshold_triggered.product_id marcado sí
+PASS stock_threshold_triggered.product_category marcado sí
+PASS stock_threshold_triggered.programme_id marcado sí
+PASS stock_threshold_triggered.quantity marcado sí
+PASS stock_threshold_triggered.currency marcado sí
+PASS stock_threshold_triggered.product_sku marcado sí
+PASS stock_threshold_triggered.current_stock marcado sí
+PASS stock_threshold_triggered.previous_stock marcado sí
+PASS stock_threshold_triggered.threshold marcado sí
+PASS stock_threshold_triggered.direction marcado sí
+PASS stock_threshold_triggered.order_type marcado sí
+PASS stock_threshold_triggered.category_map_version marcado sí
+PASS stock_threshold_triggered.order_id marcado no
+PASS stock_threshold_triggered tiene hipótesis y decisión
+PASS stock_threshold_triggered lleva el piso del briefing
+PASS direct_stock_edit_rejected origen mandatory
+PASS direct_stock_edit_rejected categoría business
+PASS direct_stock_edit_rejected entrega stream
+PASS direct_stock_edit_rejected obligatorias
+PASS direct_stock_edit_rejected allowlist
+PASS direct_stock_edit_rejected tabla de propiedades
+PASS direct_stock_edit_rejected.office marcado sí
+PASS direct_stock_edit_rejected.product_id marcado sí
+PASS direct_stock_edit_rejected.product_category marcado sí
+PASS direct_stock_edit_rejected.programme_id marcado sí
+PASS direct_stock_edit_rejected.quantity marcado sí
+PASS direct_stock_edit_rejected.currency marcado sí
+PASS direct_stock_edit_rejected.product_sku marcado sí
+PASS direct_stock_edit_rejected.http_status marcado sí
+PASS direct_stock_edit_rejected.rejected_field marcado sí
+PASS direct_stock_edit_rejected.route_template marcado sí
+PASS direct_stock_edit_rejected.category_map_version marcado sí
+PASS direct_stock_edit_rejected tiene hipótesis y decisión
+PASS direct_stock_edit_rejected lleva el piso del briefing
+PASS kit_cost_variance_detected origen mandatory
+PASS kit_cost_variance_detected categoría business
+PASS kit_cost_variance_detected entrega stream
+PASS kit_cost_variance_detected obligatorias
+PASS kit_cost_variance_detected allowlist
+PASS kit_cost_variance_detected tabla de propiedades
+PASS kit_cost_variance_detected.office marcado sí
+PASS kit_cost_variance_detected.product_id marcado sí
+PASS kit_cost_variance_detected.product_category marcado sí
+PASS kit_cost_variance_detected.programme_id marcado sí
+PASS kit_cost_variance_detected.quantity marcado sí
+PASS kit_cost_variance_detected.currency marcado sí
+PASS kit_cost_variance_detected.order_id marcado sí
+PASS kit_cost_variance_detected.product_sku marcado sí
+PASS kit_cost_variance_detected.supplier marcado sí
+PASS kit_cost_variance_detected.unit_cost_minor marcado sí
+PASS kit_cost_variance_detected.historical_unit_cost_minor marcado sí
+PASS kit_cost_variance_detected.variance_ratio marcado sí
+PASS kit_cost_variance_detected.threshold_ratio marcado sí
+PASS kit_cost_variance_detected.category_map_version marcado sí
+PASS kit_cost_variance_detected.occurred_at marcado no
+PASS kit_cost_variance_detected tiene hipótesis y decisión
+PASS kit_cost_variance_detected lleva el piso del briefing
+PASS login_failed origen identified
+PASS login_failed categoría authentication
+PASS login_failed entrega stream
+PASS login_failed obligatorias
+PASS login_failed allowlist
+PASS login_failed tabla de propiedades
+PASS login_failed.failure_code marcado sí
+PASS login_failed tiene hipótesis y decisión
+PASS login_succeeded origen identified
+PASS login_succeeded categoría authentication
+PASS login_succeeded entrega batch
+PASS login_succeeded obligatorias
+PASS login_succeeded allowlist
+PASS login_succeeded tabla de propiedades
+PASS login_succeeded.expires_in_seconds marcado sí
+PASS login_succeeded tiene hipótesis y decisión
+PASS session_expired origen identified
+PASS session_expired categoría authentication
+PASS session_expired entrega batch
+PASS session_expired obligatorias
+PASS session_expired allowlist
+PASS session_expired tabla de propiedades
+PASS session_expired.surface marcado sí
+PASS session_expired.reason marcado sí
+PASS session_expired tiene hipótesis y decisión
+PASS credential_rejected origen identified
+PASS credential_rejected categoría authentication
+PASS credential_rejected entrega stream
+PASS credential_rejected obligatorias
+PASS credential_rejected allowlist
+PASS credential_rejected tabla de propiedades
+PASS credential_rejected.failure_code marcado sí
+PASS credential_rejected.surface marcado sí
+PASS credential_rejected.dropped_count marcado no
+PASS credential_rejected tiene hipótesis y decisión
+PASS password_reset_requested origen identified
+PASS password_reset_requested categoría authentication
+PASS password_reset_requested entrega batch
+PASS password_reset_requested obligatorias
+PASS password_reset_requested allowlist
+PASS password_reset_requested tabla de propiedades
+PASS password_reset_requested.outcome marcado sí
+PASS password_reset_requested tiene hipótesis y decisión
+PASS api_latency_recorded origen identified
+PASS api_latency_recorded categoría performance
+PASS api_latency_recorded entrega stream
+PASS api_latency_recorded obligatorias
+PASS api_latency_recorded allowlist
+PASS api_latency_recorded tabla de propiedades
+PASS api_latency_recorded.http_method marcado sí
+PASS api_latency_recorded.route_template marcado sí
+PASS api_latency_recorded.status_code marcado sí
+PASS api_latency_recorded.duration_ms marcado sí
+PASS api_latency_recorded.dropped_count marcado no
+PASS api_latency_recorded.cache_mark marcado no
+PASS api_latency_recorded tiene hipótesis y decisión
+PASS page_load_recorded origen identified
+PASS page_load_recorded categoría performance
+PASS page_load_recorded entrega batch
+PASS page_load_recorded obligatorias
+PASS page_load_recorded allowlist
+PASS page_load_recorded tabla de propiedades
+PASS page_load_recorded.app marcado sí
+PASS page_load_recorded.path_template marcado sí
+PASS page_load_recorded.duration_ms marcado sí
+PASS page_load_recorded.nav_type marcado sí
+PASS page_load_recorded tiene hipótesis y decisión
+PASS frontend_exception_recorded origen identified
+PASS frontend_exception_recorded categoría errors
+PASS frontend_exception_recorded entrega stream
+PASS frontend_exception_recorded obligatorias
+PASS frontend_exception_recorded allowlist
+PASS frontend_exception_recorded tabla de propiedades
+PASS frontend_exception_recorded.app marcado sí
+PASS frontend_exception_recorded.path_template marcado sí
+PASS frontend_exception_recorded.error_name marcado sí
+PASS frontend_exception_recorded.message_sha256 marcado sí
+PASS frontend_exception_recorded.dropped_count marcado no
+PASS frontend_exception_recorded tiene hipótesis y decisión
+PASS api_response_failed origen identified
+PASS api_response_failed categoría errors
+PASS api_response_failed entrega stream
+PASS api_response_failed obligatorias
+PASS api_response_failed allowlist
+PASS api_response_failed tabla de propiedades
+PASS api_response_failed.app marcado sí
+PASS api_response_failed.http_method marcado sí
+PASS api_response_failed.route_template marcado sí
+PASS api_response_failed.status_code marcado sí
+PASS api_response_failed.duration_ms marcado no
+PASS api_response_failed tiene hipótesis y decisión
+PASS section_viewed origen identified
+PASS section_viewed categoría navigation
+PASS section_viewed entrega batch
+PASS section_viewed obligatorias
+PASS section_viewed allowlist
+PASS section_viewed tabla de propiedades
+PASS section_viewed.app marcado sí
+PASS section_viewed.section marcado sí
+PASS section_viewed tiene hipótesis y decisión
+PASS flow_abandoned origen identified
+PASS flow_abandoned categoría navigation
+PASS flow_abandoned entrega batch
+PASS flow_abandoned obligatorias
+PASS flow_abandoned allowlist
+PASS flow_abandoned tabla de propiedades
+PASS flow_abandoned.app marcado sí
+PASS flow_abandoned.flow marcado sí
+PASS flow_abandoned.elapsed_ms marcado sí
+PASS flow_abandoned.last_field marcado no
+PASS flow_abandoned tiene hipótesis y decisión
+PASS order_validation_failed origen identified
+PASS order_validation_failed categoría business
+PASS order_validation_failed entrega batch
+PASS order_validation_failed obligatorias
+PASS order_validation_failed allowlist
+PASS order_validation_failed tabla de propiedades
+PASS order_validation_failed.failure_code marcado sí
+PASS order_validation_failed.route_template marcado sí
+PASS order_validation_failed.http_status marcado sí
+PASS order_validation_failed.product_id marcado no
+PASS order_validation_failed.product_sku marcado no
+PASS order_validation_failed.office marcado no
+PASS order_validation_failed.quantity marcado no
+PASS order_validation_failed.exit_type marcado no
+PASS order_validation_failed tiene hipótesis y decisión
+PASS asset_created origen identified
+PASS asset_created categoría business
+PASS asset_created entrega batch
+PASS asset_created obligatorias
+PASS asset_created allowlist
+PASS asset_created tabla de propiedades
+PASS asset_created.product_id marcado sí
+PASS asset_created.product_sku marcado sí
+PASS asset_created.office marcado sí
+PASS asset_created.currency marcado sí
+PASS asset_created.live_category marcado sí
+PASS asset_created.product_category marcado no
+PASS asset_created.programme_id marcado no
+PASS asset_created.category_map_version marcado no
+PASS asset_created tiene hipótesis y decisión
+PASS catalogue_gap_recorded origen identified
+PASS catalogue_gap_recorded categoría business
+PASS catalogue_gap_recorded entrega stream
+PASS catalogue_gap_recorded obligatorias
+PASS catalogue_gap_recorded allowlist
+PASS catalogue_gap_recorded tabla de propiedades
+PASS catalogue_gap_recorded.gap marcado sí
+PASS catalogue_gap_recorded.affected_event marcado sí
+PASS catalogue_gap_recorded.product_id marcado sí
+PASS catalogue_gap_recorded.product_sku marcado sí
+PASS catalogue_gap_recorded.live_category marcado no
+PASS catalogue_gap_recorded.office marcado no
+PASS catalogue_gap_recorded tiene hipótesis y decisión
+PASS están las cinco métricas obligatorias
+PASS hay 14 eventos identificados
+PASS los identificados cubren ['authentication', 'business', 'errors', 'navigation', 'performance']
+PASS 20 ejemplos válidos cubren los 19 eventos
+PASS 8 ejemplos inválidos se rechazan
+summary pass=287 fail=0
+EXIT:0

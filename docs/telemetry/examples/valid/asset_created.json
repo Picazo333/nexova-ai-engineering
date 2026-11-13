@@ -1,0 +1,18 @@
+{
+  "eventId": "00000000-0000-4000-8000-00000000001b",
+  "timestamp": "2026-11-12T20:21:59Z",
+  "sessionId": "11111111-1111-4111-8111-111111111111",
+  "userId": "00000000-0000-4000-8000-000000000201",
+  "event_type": "asset_created",
+  "schemaVersion": "1.0.0",
+  "requestId": "22222222-2222-4222-8222-222222222222",
+  "properties": {
+    "product_id": "7",
+    "product_sku": "NXV-PER-010",
+    "office": "miami",
+    "currency": "USD",
+    "live_category": "peripherals",
+    "product_category": "onboarding_equipment",
+    "category_map_version": "proposed-2026-11-12"
+  }
+}
