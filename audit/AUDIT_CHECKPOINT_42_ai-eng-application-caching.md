@@ -16,8 +16,8 @@
 | Repositorio | `Picazo333/nexova-ai-engineering` (Nexova original) |
 | PR | https://github.com/Picazo333/nexova-ai-engineering/pull/26 |
 | Rama | `feature/caching-optimisation` |
-| Head al emitir este archivo | `3be83a0225` — [árbol](https://github.com/Picazo333/nexova-ai-engineering/tree/feature/caching-optimisation) |
-| Estado LMS (13 nov 2026, API viva) | No |
+| Head auditado (esta pasada) | `a600dd4a9b3aeda123f5aef2687269877cedacd3` |
+| Estado LMS (13 nov 2026, API viva, GET) | PENDING / PENDING, `github_url` vacío (tarea 1022086) |
 
 ## Rúbrica de referencia
 
@@ -41,16 +41,24 @@ El auditor no usa como única fuente la autoevaluación del autor. Contrasta con
 
 | ID | Severidad (GRAVE / MENOR / IRRELEVANTE) | Dónde (archivo, línea, SHA, comando) | Qué se observó | Criterio de rúbrica afectado | ¿Bloquea? |
 |---|---|---|---|---|---|
-| H1 |  |  |  |  |  |
-| H2 |  |  |  |  |  |
+| H1 | MENOR | PR #26, base distinta de `main`. Head `a600dd4a9b3aeda123f5aef2687269877cedacd3`. | Cola serial del monorepo. Igual que en el recibo del 12 nov. | Proceso, no L157–L164. | No |
+| H2 | IRRELEVANTE | CI `rag-tests.yml` en la rama (y en la base): fallo heredado de `tests/api`. | No es un criterio de esta actividad. El código de caché no cambió desde `3be83a02`. | No | No |
 
-Añade filas según haga falta. Si no hay hallazgos, dilo explícitamente.
+No hay hallazgos GRAVE. Se mantiene el 18/18 del recibo `024_INDEPENDENT_REVIEW.md` (SHA `3be83a02252f2de46e57e67b52194bd70eff9d7d`). El único delta posterior es documentación (ESTADO + este checkpoint).
+
+HITL abiertos, no bloquean: envío al LMS (tarea 1022086, PENDING); merge.
 
 ## Veredicto
 
 - **READY** — pasa la rúbrica oficial. Los MENOR e IRRELEVANTE no lo impiden.
 - **NO READY** — hay al menos un GRAVE, o un criterio obligatorio en FAIL / UNVERIFIED que no sea HITL explícito de Miguel.
 - Los HITL de Miguel (merge, envío al LMS, VPS, key de LLM, prueba en dispositivo, video) no restan del porcentaje de la rúbrica y no los cierra el auditor.
+
+## Veredicto del auditor (13 nov 2026)
+
+- **READY / PASA.** 18/18 vigentes. 0 GRAVE. Delta posterior al recibo: solo docs.
+- Conteos: GRAVE 0, MENOR 1, IRRELEVANTE 1.
+- Informe: `audit/AUDIT_REPORT_42_ai-eng-application-caching.md`.
 
 ## Dónde dejar el reporte
 
@@ -60,4 +68,4 @@ Añade filas según haga falta. Si no hay hallazgos, dilo explícitamente.
 
 ## Estado portable de la cohorte
 
-Las 83 actividades, en el orden de la plataforma, están en `Picazo333/4geeks-control-tower`, carpeta `estado/`, rama `estado-cohorte-2026-11-13` (PR abierto, sin merge). En esta caja: `/workspace/ESTADO/`.
+Las 83 actividades, en el orden de la plataforma, están en `Picazo333/4geeks-control-tower`, carpeta `estado/`, rama `estado-cohorte-2026-11-13`, PR https://github.com/Picazo333/4geeks-control-tower/pull/32 (sin merge). En esta caja: `/workspace/ESTADO/`.
