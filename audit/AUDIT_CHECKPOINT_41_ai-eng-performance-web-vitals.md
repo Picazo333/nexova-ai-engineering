@@ -16,8 +16,8 @@
 | Repositorio | `Picazo333/nexova-ai-engineering` (Nexova original) |
 | PR | https://github.com/Picazo333/nexova-ai-engineering/pull/25 |
 | Rama | `feature/performance-web-vitals` |
-| Head al emitir este archivo | `782a71c167` — [árbol](https://github.com/Picazo333/nexova-ai-engineering/tree/feature/performance-web-vitals) |
-| Estado LMS (13 nov 2026, API viva) | No |
+| Head auditado (esta pasada) | `81912f3a0dbff0a28b760efb2d7b885530e2c464` |
+| Estado LMS (13 nov 2026, API viva, GET) | PENDING / PENDING, `github_url` vacío (tarea 1022010) |
 
 ## Rúbrica de referencia
 
@@ -41,16 +41,25 @@ El auditor no usa como única fuente la autoevaluación del autor. Contrasta con
 
 | ID | Severidad (GRAVE / MENOR / IRRELEVANTE) | Dónde (archivo, línea, SHA, comando) | Qué se observó | Criterio de rúbrica afectado | ¿Bloquea? |
 |---|---|---|---|---|---|
-| H1 |  |  |  |  |  |
-| H2 |  |  |  |  |  |
+| H1 | MENOR | PR #25, base `feature/inventory-management-backoffice`. Head `81912f3a0dbff0a28b760efb2d7b885530e2c464`. | El enunciado pide abrir el PR contra `main`. La cola serial del monorepo usa la rama padre. | Proceso de entrega, no una casilla de L129–L135. | No |
+| H2 | IRRELEVANTE | `REPORT.md`: el JSON bruto de cada corrida Lighthouse está en `/opt/cursor/artifacts/lighthouse/`, fuera del repo. | El enunciado (L129, L90, L115) pide capturas en `audit/before/` y `audit/after/`, que sí están (14 PNG por ronda), más el resumen con mediana y peor cifra. | No exige el JSON bruto. | No |
+| H3 | IRRELEVANTE | `lighthouse-summary.json`, `portal-home\|mobile`: TBT mediana 16→26,5 ms. Performance sigue en 100. | El portal ya estaba en 100/100/100/63 (`noindex`). No hay caída de puntuación. Ruido de laboratorio. | L135 (regresiones): las cuatro puntuaciones no bajan. | No |
 
-Añade filas según haga falta. Si no hay hallazgos, dilo explícitamente.
+No hay hallazgos GRAVE. El trabajo pasa los 7 criterios oficiales de evaluación (OFFICIAL_README.md L129–L135).
+
+HITL abiertos, no bloquean: envío al LMS (tarea 1022010, GET 13 nov 2026: PENDING, `github_url` vacío); merge (decisión de Miguel). No se relanzó Lighthouse (evidencia de laboratorio ya presente; se evitó un relanzamiento costoso).
 
 ## Veredicto
 
 - **READY** — pasa la rúbrica oficial. Los MENOR e IRRELEVANTE no lo impiden.
 - **NO READY** — hay al menos un GRAVE, o un criterio obligatorio en FAIL / UNVERIFIED que no sea HITL explícito de Miguel.
 - Los HITL de Miguel (merge, envío al LMS, VPS, key de LLM, prueba en dispositivo, video) no restan del porcentaje de la rúbrica y no los cierra el auditor.
+
+## Veredicto del auditor (13 nov 2026)
+
+- **READY / PASA.** 7/7 criterios oficiales de evaluación PASS. 0 GRAVE.
+- Conteos: GRAVE 0, MENOR 1, IRRELEVANTE 2.
+- Informe: `audit/AUDIT_REPORT_41_ai-eng-performance-web-vitals.md`.
 
 ## Dónde dejar el reporte
 
@@ -60,4 +69,4 @@ Añade filas según haga falta. Si no hay hallazgos, dilo explícitamente.
 
 ## Estado portable de la cohorte
 
-Las 83 actividades, en el orden de la plataforma, están en `Picazo333/4geeks-control-tower`, carpeta `estado/`, rama `estado-cohorte-2026-11-13` (PR abierto, sin merge). En esta caja: `/workspace/ESTADO/`.
+Las 83 actividades, en el orden de la plataforma, están en `Picazo333/4geeks-control-tower`, carpeta `estado/`, rama `estado-cohorte-2026-11-13`, PR https://github.com/Picazo333/4geeks-control-tower/pull/32 (sin merge). En esta caja: `/workspace/ESTADO/`.
