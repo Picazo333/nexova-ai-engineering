@@ -10,6 +10,6 @@ permissions:
 
 jobs:
   noema:
-    uses: Picazo333/noema/.github/workflows/reusable-conformance.yml@5aa4289178b92f299887aaa1f73d12e97478b1a8
+    uses: Picazo333/noema/.github/workflows/reusable-conformance.yml@a55ff929582baaf13911a2388ecf65eb935f7d28
     with:
       project_root: "."
